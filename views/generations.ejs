@@ -1,0 +1,37 @@
+<div class="layout-brands">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href="/brands" class="nav-link ">Autocatalog</a>
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="/brands/<%= generations[0].brand_id %>/models" class="nav-link "><%= generations[0].brand_title %></a>
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link active"><%= generations[0].model_title %></a>
+    </li>
+  </ul>
+</div>
+
+<div class="generations">
+  <% let currentLetter = ''; %>
+  <% generations.forEach(generation => { %>
+      <% if (generation.title[0].toUpperCase() !== currentLetter) { %>
+          <% currentLetter = generation.title[0].toUpperCase(); %>
+          <div class="letter"><%= currentLetter %></div>
+      <% } %>
+      <div class="generation-card">
+          <img src="data:image/webp;base64,<%= generation.image %>" alt="<%= generation.title %>">
+          <div>
+            <h3><%= generation.title %></h3>
+            <p><span><%= generation.end %></span>  <%= generation.chas %></p>
+            <p>Power : <%= generation.power_info %> | Dimensions : <%= generation.dimensions_info %></p>
+          </div>
+      </div>
+  <% }) %>
+</div>

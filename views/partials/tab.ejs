@@ -1,0 +1,19 @@
+<div class="layout-brands">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href="/brands" class="nav-link <%= currentPage === 'brands' ? 'active' : '' %>"><%= brands[0].name %></a>
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="/models" class="nav-link <%= currentPage === 'models' ? 'active' : '' %>"><%= models[0].title %></a>
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="/generations" class="nav-link <%= currentPage === 'generations' ? 'active' : '' %>"><%= generations[0].title %></a>
+    </li>
+  </ul>
+</div>

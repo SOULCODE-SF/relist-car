@@ -1,0 +1,15 @@
+<header class="header">
+    <div class="header-nav">
+      INI HEADER
+    </div>
+    <nav class="navbar">
+      <div class="logo">
+        INI LOGO
+      </div>
+      <div class="nav-links">
+        <a href="/" class="nav-link <%= currentPage === 'home' ? 'active' : '' %>">Home</a>
+        <a href="/brands" class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>">Autocatalog</a>
+        <a href="/others" class="nav-link <%= currentPage === 'others' ? 'active' : '' %>">Halaman Lain</a>
+      </div>
+    </nav>
+</header>
