@@ -43,14 +43,15 @@
               </tr>
             </thead>
             <tbody>
+              <% banners.forEach((data, i) => { %>
               <tr>
-                <td>1</td>
-                <td>Iklan Titipan</td>
-                <td>Code</td>
-                <td>Bawah Judul</td>
-                <td>21-06-2024</td>
-                <td>31-07-2024</td>
-                <td>Enabled</td>
+                <td><%= data.id %></td>
+                <td><%= data.adsname %></td>
+                <td><%= data.type %></td>
+                <td><%= data.position %></td>
+                <td><%= data.start_date %></td>
+                <td><%= data.end_date %></td>
+                <td><%= data.status %></td>
                 <td class="tw-100">
                   <a
                     href="#"
@@ -72,64 +73,7 @@
                   ></a>
                 </td>
               </tr>
-              <tr>
-                <td>2</td>
-                <td>Iklan Titipan</td>
-                <td>Code</td>
-                <td>Bawah Judul</td>
-                <td>21-06-2024</td>
-                <td>31-07-2024</td>
-                <td>Enabled</td>
-                <td class="tw-100">
-                  <a
-                    href="#"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Edit"
-                    class="btn btn-warning btn-sm"
-                    data-id="id-post"
-                    ><i class="icon-edit"></i
-                  ></a>
-                  <a
-                    href="#"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Delete"
-                    class="btn btn-danger btn-sm"
-                    data-id="id-post"
-                    ><i class="icon-trash-alt"></i
-                  ></a>
-                </td>
-              </tr>
-              <tr>
-                <td>3</td>
-                <td>Iklan Titipan</td>
-                <td>Code</td>
-                <td>Bawah Judul</td>
-                <td>21-06-2024</td>
-                <td>31-07-2024</td>
-                <td>Enabled</td>
-                <td class="tw-100">
-                  <a
-                    href="#"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Edit"
-                    class="btn btn-warning btn-sm"
-                    data-id="id-post"
-                    ><i class="icon-edit"></i
-                  ></a>
-                  <a
-                    href="#"
-                    data-bs-toggle="tooltip"
-                    data-bs-placement="top"
-                    title="Delete"
-                    class="btn btn-danger btn-sm"
-                    data-id="id-post"
-                    ><i class="icon-trash-alt"></i
-                  ></a>
-                </td>
-              </tr>
+              <% }) %>
             </tbody>
           </table>
         </div>
