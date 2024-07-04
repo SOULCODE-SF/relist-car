@@ -16,8 +16,10 @@ app.set('views', path.join(__dirname, 'views'));
 app.use(express.static(path.join(__dirname, 'public')));
 
 var router = require('./routes');
+var adminRouter = require('./routes/admin');
 
 app.use(router);
+app.use('/admin', adminRouter);
 
 // Start the server
 const PORT = process.env.PORT || 3000;

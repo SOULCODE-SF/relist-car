@@ -1,0 +1,149 @@
+<aside id="sidebar" class="sidebar">
+  <ul class="sidebar-nav" id="sidebar-nav">
+    <li class="nav-item">
+      <a
+        class="nav-link <%= currentPage === 'admin-index' ? 'active' : 'collapsed' %>"
+        href="/admin"
+      >
+        <i class="icon-tachometer-alt-fast"></i>
+        <span>Dashboard</span>
+      </a>
+    </li>
+    <li class="nav-heading">CMS</li>
+    <li class="nav-item">
+      <a
+        class="nav-link <%= currentPage === 'admin-banner' ? 'active' : 'collapsed' %>"
+        href="/admin/banner"
+      >
+        <i class="icon-buysellads"></i>
+        <span>Banner</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="faq-list.html">
+        <i class="icon-question-circle"></i>
+        <span>FAQ</span>
+      </a>
+    </li>
+    <!-- End CMS -->
+    <li class="nav-heading">Pages</li>
+    <li class="nav-item">
+      <a
+        class="nav-link <%= currentPage === 'admin-page' ? 'active' : 'collapsed' %>"
+        href="/admin/page"
+      >
+        <i class="icon-file-alt"></i>
+        <span>Page</span>
+      </a>
+    </li>
+    <!-- End Page Nav -->
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#blog-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="icon-blog"></i><span>Blogs</span
+        ><i class="icon-chevron-right arrow-down ms-auto"></i>
+      </a>
+      <ul
+        id="blog-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="post-list.html">
+            <span>Posts</span>
+          </a>
+        </li>
+        <li>
+          <a href="category-list.html">
+            <span>Categories</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Blogs Nav -->
+    <li class="nav-item">
+      <a
+        class="nav-link collapsed"
+        data-bs-target="#users-nav"
+        data-bs-toggle="collapse"
+        href="#"
+      >
+        <i class="icon-user"></i><span>User Manage</span
+        ><i class="icon-chevron-right arrow-down ms-auto"></i>
+      </a>
+      <ul
+        id="users-nav"
+        class="nav-content collapse"
+        data-bs-parent="#sidebar-nav"
+      >
+        <li>
+          <a href="users-list.html">
+            <span>Users List</span>
+          </a>
+        </li>
+        <li>
+          <a href="users-profile.html">
+            <span>Users Profile</span>
+          </a>
+        </li>
+      </ul>
+    </li>
+    <!-- End Users Nav -->
+    <li class="nav-item">
+      <a class="nav-link collapsed" href="setting.html">
+        <i class="icon-cog"></i>
+        <span>Settings</span>
+      </a>
+    </li>
+    <!-- End Setting Page Nav -->
+    <!--
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="pages-contact.html">
+              <i class="icon-envelope"></i>
+              <span>Contact</span>
+              </a>
+            </li>
+            //-->
+    <!-- End Contact Page Nav -->
+    <!--
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="pages-register.html">
+              <i class="icon-address-card"></i>
+              <span>Register</span>
+              </a>
+            </li>
+            //-->
+    <!-- End Register Page Nav -->
+    <!--
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="pages-login.html">
+              <i class="icon-sign-in"></i>
+              <span>Login</span>
+              </a>
+            </li>
+            //-->
+    <!-- End Login Page Nav -->
+    <!--
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="pages-error-404.html">
+              <i class="icon-exclamation-triangle"></i>
+              <span>Error 404</span>
+              </a>
+            </li>
+            //-->
+    <!-- End Error 404 Page Nav -->
+    <!--
+            <li class="nav-item">
+              <a class="nav-link collapsed" href="pages-blank.html">
+              <i class="icon-sticky-note"></i>
+              <span>Blank</span>
+              </a>
+            </li>
+            //-->
+    <!-- End Blank Page Nav -->
+  </ul>
+</aside>

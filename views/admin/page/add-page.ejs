@@ -1,0 +1,161 @@
+<div class="pagetitle mb-2">
+  <div class="row align-items-center">
+    <div class="col-md-8 mt-2">
+      <h1 class="fs-4 mb-1">Page Form</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+          <li class="breadcrumb-item">Page List</li>
+          <li class="breadcrumb-item active">Page Form</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col-md-4">
+      <div class="text-end">
+        <button type="submit" title="Save" class="btn btn-primary">Save</button>
+        <a href="/admin/page" class="btn btn-secondary">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Page Title -->
+<section class="section">
+  <!-- Horizontal Form -->
+  <form class="row" id="page-form" action="">
+    <div class="col-lg-8 col-md-8">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Page Form</h5>
+          <div class="form-group mb-2">
+            <label class="col-form-label">Title</label>
+            <input
+              type="text"
+              name="title"
+              placeholder="Title"
+              id="title"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group mb-2">
+            <label class="col-form-label">Slug</label>
+            <input
+              type="text"
+              name="slug"
+              placeholder="Slug"
+              id="slug"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group mb-2">
+            <label class="col-form-label">Content</label>
+            <textarea
+              name="content"
+              placeholder="Content"
+              id="content"
+              class="form-control"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">SEO</h5>
+          <!-- Multi Columns Form -->
+          <div class="form-group mb-2">
+            <label class="col-form-label">Meta Title</label>
+            <input
+              type="text"
+              name="meta-title"
+              placeholder="Meta Title"
+              id="meta-title"
+              class="form-control"
+            />
+          </div>
+          <div class="form-group mb-2">
+            <label class="col-form-label">Meta Description</label>
+            <textarea
+              name="meta-description"
+              placeholder="Meta Description"
+              rows="4"
+              id="meta-description"
+              class="form-control"
+            ></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 col-md-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Featured Image</h5>
+          <div class="form-group mb-2 col-12 text-center">
+            <img
+              src="assets/img/preview.png"
+              width="200"
+              height="200"
+              alt="jika image_alt_tag isset dan tidak kosong, echo image_alt_tag sebaliknya echo Featured Image"
+              class="img-thumbnail"
+            />
+            <div class="pt-2">
+              <a href="#" class="btn btn-primary btn-sm" title="Upload image"
+                ><i class="icon-upload"></i
+              ></a>
+              <a href="#" class="btn btn-danger btn-sm" title="Remove image"
+                ><i class="icon-trash-alt"></i
+              ></a>
+            </div>
+          </div>
+          <div class="form-group mb-2">
+            <label for="image-alt" class="col-form-label">Image Alt Tag</label>
+            <input
+              type="image-alt"
+              class="form-control"
+              id="image-alt"
+              placeholder="Image Alt"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Option & Publishing</h5>
+          <div class="form-group mb-2">
+            <label for="sort-order" class="col-form-label">Sort Order</label>
+            <input
+              type="number"
+              class="form-control"
+              name="sort_order"
+              id="sort-order"
+              placeholder=""
+            />
+          </div>
+          <div class="form-group mb-2">
+            <label class="form-check-label col-form-label">Status</label>
+            <div class="form-check form-switch">
+              <input
+                class="form-check-input"
+                type="checkbox"
+                id="statusChecked"
+                checked
+              />
+              <label class="form-check-label" for="statusChecked"
+                >Published</label
+              >
+            </div>
+          </div>
+          <div class="form-group mb-2">
+            <label for="date-published" class="col-form-label"
+              >Date Published</label
+            >
+            <input
+              type="date-published"
+              class="form-control"
+              id="date-published"
+              placeholder="Pakai datepicker"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

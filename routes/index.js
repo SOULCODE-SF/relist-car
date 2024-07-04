@@ -2,21 +2,21 @@ const express = require('express');
 const router = express.Router();
 const mysql = require('mysql2');
 
-const connection = mysql.createConnection({
-  host: 'localhost',
-  port: 3306,
-  user: 'myuser',
-  password: 'myuser',
-  database: 'db_car_specs',
-});
+// const connection = mysql.createConnection({
+//   host: 'localhost',
+//   port: 3306,
+//   user: 'myuser',
+//   password: 'myuser',
+//   database: 'db_car_specs',
+// });
 
-connection.connect((err) => {
-  if (err) {
-    console.error('Error connecting to database:', err);
-    return;
-  }
-  console.log('Connected to database!');
-});
+// connection.connect((err) => {
+//   if (err) {
+//     console.error('Error connecting to database:', err);
+//     return;
+//   }
+//   console.log('Connected to database!');
+// });
 
 // Route untuk halaman index
 router.get('/', (req, res) => {

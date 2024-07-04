@@ -1,0 +1,60 @@
+<div class="pagetitle mb-3">
+  <div class="row align-items-center">
+    <div class="col-md-8 mt-2">
+      <h1>Users List</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item active">Users List</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- End Page Title -->
+<section class="section">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">User List</h5>
+
+          <table
+            id="datatable"
+            class="table table-bordered dt-responsive nowrap"
+            style="border-collapse: collapse; border-spacing: 0; width: 100%"
+          >
+            <thead>
+              <tr>
+                <th>UserId</th>
+                <th>Image</th>
+                <th>User</th>
+                <th>Phone</th>
+                <th>Email</th>
+                <th>Last Login</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% data.forEach(item => { %>
+              <tr>
+                <td>1</td>
+                <td>
+                  <img
+                    src="assets/img/preview.png"
+                    class="img-thumbnail"
+                    width="50"
+                  />
+                </td>
+                <td><%= item.name %></td>
+                <td>085690914465</td>
+                <td>ululazmi@gmail.com</td>
+                <td>17 Maret 2020</td>
+              </tr>
+              <% }); %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
