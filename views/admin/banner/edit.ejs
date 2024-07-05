@@ -1,0 +1,207 @@
+<div class="pagetitle mb-2">
+  <div class="row align-items-center">
+    <div class="col-md-8 mt-2">
+      <h1 class="fs-4 mb-1">Banner Form</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+          <li class="breadcrumb-item">
+            <a href="/admin/banner">Banner List</a>
+          </li>
+          <li class="breadcrumb-item active">Banner Form</li>
+        </ol>
+      </nav>
+    </div>
+  </div>
+</div>
+<!-- End Page Title -->
+<section class="section">
+  <!-- Horizontal Form -->
+  <form
+    class="row"
+    id="testimonial-form"
+    action="/admin/banner/edit/<%= banner.id %>"
+    method="post"
+    enctype="multipart/form-data"
+  >
+    <div class="col-md-4">
+      <div class="text-end">
+        <button type="submit" title="Save" class="btn btn-primary">Save</button>
+        <a href="/admin/banner" class="btn btn-secondary">Cancel</a>
+      </div>
+    </div>
+    <div class="col-lg-12 col-md-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Edit Banner Form</h5>
+          <div class="form-group d-grid gap-3">
+            <div class="row">
+              <label for="ads_name" class="col-md-2 col-lg-2 col-form-label"
+                >Ads Name</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="ads_name"
+                  type="text"
+                  class="form-control"
+                  id="input-ads-name"
+                  value="<%= banner.adsname %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label for="ads_position" class="col-md-2 col-lg-2 col-form-label"
+                >Ads Position</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <select
+                  name="ads_position"
+                  id="input-ads-position"
+                  aria-label="Ads Position"
+                  class="form-select"
+                >
+                    <option value="bawah-judul" <%= banner.position === 'bawah-judul' ? 'selected' : '' %>>Bawah Judul</option>
+                    <option value="bawah-konten" <%= banner.position === 'bawah-konten' ? 'selected' : '' %>>Bawah Konten</option>
+                </select>
+              </div>
+            </div>
+            <div class="row">
+              <label
+                for="ads_start_date"
+                class="col-md-2 col-lg-2 col-form-label"
+                >Start Date</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="ads_start_date"
+                  type="date"
+                  class="form-control"
+                  id="input-ads-start-date"
+                  value="<%= banner.start_date %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label for="ads_end_date" class="col-md-2 col-lg-2 col-form-label"
+                >End Date</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="ads_end_date"
+                  type="date"
+                  class="form-control"
+                  id="input-ads-end-date"
+                  value="<%= banner.end_date %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label for="ads_type" class="col-md-2 col-lg-2 col-form-label"
+                >Ads Type</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <select
+                  name="ads_type"
+                  id="input-ads-type"
+                  aria-label="Ads Type"
+                  class="form-select"
+                >
+                    <option value="code" <%= banner.type === 'code' ? 'selected' : '' %>>Code</option>
+                    <option value="image" <%= banner.type === 'image' ? 'selected' : '' %>>Image</option>
+                </select>
+              </div>
+            </div>
+            <div class="row" id="ads-code">
+              <label
+                for="input-ads-code"
+                class="col-md-2 col-lg-2 col-form-label"
+                >Ads Code</label
+              >
+              <div class="col-md-6 col-lg-6">
+                <textarea
+                  name="ads_code"
+                  placeholder=""
+                  id="input-ads-code"
+                  style="height: 150px"
+                  class="form-control"
+                ><%= banner.code %></textarea>
+              </div>
+            </div>
+            <div class="row" id="ads-image">
+              <label
+                for="input-ads-image"
+                class="col-md-2 col-lg-2 col-form-label"
+                >Ads Image</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <div id="image-preview-container">
+                  <img
+                    id="image-preview"
+                    src="<%= banner.image %>"
+                    class="img-thumbnail"
+                  />
+                </div>
+                <div class="pt-2">
+                  <label
+                    for="input-image"
+                    class="btn btn-primary btn-sm"
+                    title="Upload image"
+                  >
+                    <i class="icon-upload"></i>
+                    <input
+                      name="ads_image"
+                      type="file"
+                      id="input-image"
+                      accept="image/*"
+                      style="display: none"
+                    />
+                  </label>
+                  <a
+                    href="#"
+                    class="btn btn-danger btn-sm"
+                    title="Remove image"
+                    id="remove-image"
+                  >
+                    <i class="icon-trash-alt"></i>
+                  </a>
+                </div>
+              </div>
+            </div>
+            <div class="row" id="ads-url">
+              <label
+                for="input-ads-url"
+                class="col-md-2 col-lg-2 col-form-label"
+                >Ads Url</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="ads_url"
+                  type="text"
+                  class="form-control"
+                  id="input-ads-url"
+                  value="<%= banner.url %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label for="ads_status" class="col-md-2 col-lg-2 col-form-label"
+                >Ads Status</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <select
+                  name="ads_status"
+                  id="input-ads-status"
+                  aria-label="Ads Status"
+                  class="form-select"
+                >
+                    <option value="enabled" <%= banner.status === 'enabled' ? 'selected' : '' %>>Enabled</option>
+                    <option value="disabled" <%= banner.status === 'disabled' ? 'selected' : '' %>>Disabled</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>

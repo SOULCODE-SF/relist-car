@@ -1,7 +1,38 @@
 const express = require('express');
 const router = express.Router();
-const mysql = require('mysql2');
-const { getUser } = require('../src/controllers/adminController');
+const multer = require('multer');
+const path = require('path');
+
+const { getUser, addUser } = require('../src/controllers/adminController');
+const {
+  addBanner,
+  getAllBanners,
+  getBannerById,
+  updateBanner,
+} = require('../src/controllers/adminController/banners');
+
+// Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
+const dynamicStorage = (type) => {
+  return multer.diskStorage({
+    destination: function (req, file, cb) {
+      let uploadDir = path.join(__dirname, `../public/uploads/${type}`);
+      cb(null, uploadDir);
+    },
+    filename: function (req, file, cb) {
+      cb(
+        null,
+        file.fieldname +
+          '-' +
+          Date.now() +
+          path.extname(file.originalname) +
+          '.webp'
+      );
+    },
+  });
+};
+
+// Inisialisasi Multer dengan konfigurasi storage dinamis
+const upload = (type) => multer({ storage: dynamicStorage(type) });
 
 router.get('/', (req, res) => {
   res.render('admin/index', {
@@ -27,13 +58,7 @@ router.get('/page/add', (req, res) => {
   });
 });
 
-router.get('/banner', (req, res) => {
-  res.render('admin/banner/index', {
-    title: 'Banner List',
-    currentPage: 'admin-banner',
-    layout: './admin/layouts/layout',
-  });
-});
+router.get('/banner', getAllBanners);
 
 router.get('/banner/add', (req, res) => {
   res.render('admin/banner/add', {
@@ -43,6 +68,11 @@ router.get('/banner/add', (req, res) => {
   });
 });
 
+router.post('/banner/add', upload('banners').single('ads_image'), addBanner);
+router.get('/banner/edit/:banner_id', getBannerById);
+router.post('/banner/edit/:banner_id', updateBanner);
+
 router.get('/users', getUser);
+router.post('/users/add', addUser);
 
 module.exports = router;
