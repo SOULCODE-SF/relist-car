@@ -4,5 +4,10 @@ let query = {
   addBannerCodeQuery: 'INSERT INTO banner_code(code, banner_id) VALUES (?,?)',
   addBannerImageQuery:
     'INSERT INTO banner_image(image, url, banner_id) VALUES (?,?,?)',
+  updateBannerQuery: `UPDATE banners SET adsname = ?, position = ?, type = ?, date_start = ?, date_end = ?, status = ? WHERE id = ?`,
+  updateBannerCodeQuery: 'UPDATE banner_code SET code = ? WHERE banner_id = ?',
+  updateBannerImageQuery:
+    'UPDATE banner_image SET image = ?, url = ? WHERE banner_id = ?',
+  getBannerByIdQuery: 'select * from banner_image where banner_id  = ?',
 };
 module.exports = query;

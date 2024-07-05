@@ -32,16 +32,14 @@ CREATE TABLE banners (
 CREATE TABLE banner_code (
     id INT AUTO_INCREMENT PRIMARY KEY,
     code TEXT NOT NULL,
-    banner_id INT NOT NULL,
-    FOREIGN KEY (banner_id) REFERENCES banners(id)
+    banner_id INT NOT NULL
 );
 
 CREATE TABLE banner_image (
     id INT AUTO_INCREMENT PRIMARY KEY,
     image TEXT NOT NULL,
     url VARCHAR(250) NOT NULL,
-    banner_id INT NOT NULL,
-    FOREIGN KEY (banner_id) REFERENCES banners(id)
+    banner_id INT NOT NULL
 );
 
 

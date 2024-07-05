@@ -3,12 +3,13 @@ const router = express.Router();
 const multer = require('multer');
 const path = require('path');
 
+const { getUser, addUser } = require('../src/controllers/adminController');
 const {
-  getUser,
-  getAllBanners,
   addBanner,
-  addUser,
-} = require('../src/controllers/adminController');
+  getAllBanners,
+  getBannerById,
+  updateBanner,
+} = require('../src/controllers/adminController/banners');
 
 // Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
 const dynamicStorage = (type) => {
@@ -68,6 +69,8 @@ router.get('/banner/add', (req, res) => {
 });
 
 router.post('/banner/add', upload('banners').single('ads_image'), addBanner);
+router.get('/banner/edit/:banner_id', getBannerById);
+router.post('/banner/edit/:banner_id', updateBanner);
 
 router.get('/users', getUser);
 router.post('/users/add', addUser);
