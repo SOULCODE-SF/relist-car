@@ -14,5 +14,8 @@ const pool = mysql.createPool({
   queueLimit: 0,
 });
 
-// Export pool untuk digunakan dalam aplikasi
-module.exports = pool.promise();
+// Buat objek db untuk diexport
+const db = pool.promise();
+
+// Export objek db untuk digunakan dalam aplikasi
+module.exports = db;

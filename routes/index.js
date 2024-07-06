@@ -1,4 +1,9 @@
 const express = require('express');
+const {
+  getAllBrands,
+  getModelByBrand,
+  getGenerationByModel,
+} = require('../src/controllers/indexController');
 const router = express.Router();
 
 router.get('/', (req, res) => {
@@ -6,26 +11,7 @@ router.get('/', (req, res) => {
 });
 
 // Tambahkan rute untuk brands.ejs
-router.get('/brands', (req, res) => {
-  let searchTerm = req.query.q || '';
-
-  const query = `SELECT id, name, image FROM brands WHERE name LIKE '%${searchTerm}%'`;
-
-  connection.query(query, (err, results) => {
-    if (err) {
-      console.error('Error querying database:', err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
-    res.render('brands', {
-      brands: results,
-      title: 'Daftar Merek Mobil',
-      currentPage: 'brands',
-      searchTerm: searchTerm,
-    });
-  });
-});
+router.get('/brands', getAllBrands);
 
 router.get('/models', (req, res) => {
   const modelsQuery =
@@ -45,47 +31,9 @@ router.get('/models', (req, res) => {
   });
 });
 
-router.get('/brands/:id/models', (req, res) => {
-  const brandId = req.params.id;
+router.get('/brands/:brand_id/models', getModelByBrand);
 
-  const modelsQuery =
-    'SELECT m.id, m.title, m.image , b.name FROM models m JOIN brands b on b.id = m.brand_id WHERE m.brand_id = ?';
-  connection.query(modelsQuery, [brandId], (err, modelResults) => {
-    if (err) {
-      console.error('Error querying database:', err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
-    res.render('models', {
-      brandId: brandId,
-      models: modelResults,
-      title: `Models`,
-      currentPage: 'models',
-    });
-  });
-});
-
-router.get('/brands/models/:id/generations', (req, res) => {
-  const modelId = req.params.id;
-
-  const modelsQuery =
-    'SELECT g.* ,m.title as model_title, b.name as brand_title, b.id as brand_id from generations g join models m on g.model_id = m.id JOIN brands b on b.id = m.brand_id where m.id = ?';
-  connection.query(modelsQuery, [modelId], (err, result) => {
-    if (err) {
-      console.error('Error querying database:', err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
-    res.render('generations', {
-      modelId: modelId,
-      generations: result,
-      title: `Generations`,
-      currentPage: 'generations',
-    });
-  });
-});
+router.get('/brands/models/:model_id/generations', getGenerationByModel);
 
 router.get('/others', (req, res) => {
   res.render('other', { title: 'Halaman Lain', currentPage: 'others' });

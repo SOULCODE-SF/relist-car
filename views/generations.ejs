@@ -7,13 +7,13 @@
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/brands/<%= generations[0].brand_id %>/models" class="nav-link "><%= generations[0].brand_title %></a>
+      <a href="/brands/<%= generations[0].brand_id %>/models" class="nav-link "><%= generations[0].brand_name %></a>
     </li>
     <li class="nav-item">
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link active"><%= generations[0].model_title %></a>
+      <a href="#" class="nav-link active"><%= generations[0].model_name %></a>
     </li>
   </ul>
 </div>
@@ -26,10 +26,10 @@
           <div class="letter"><%= currentLetter %></div>
       <% } %>
       <div class="generation-card">
-          <img src="data:image/webp;base64,<%= generation.image %>" alt="<%= generation.title %>">
+          <img src="<%= generation.image_path %>" alt="<%= generation.title %>">
           <div>
             <h3><%= generation.title %></h3>
-            <p><span><%= generation.end %></span>  <%= generation.chas %></p>
+            <p><span><%= generation.start_production %></span> - <span><%= generation.end_production %></span> <%= generation.body_type%></p>
             <p>Power : <%= generation.power_info %> | Dimensions : <%= generation.dimensions_info %></p>
           </div>
       </div>
