@@ -60,8 +60,11 @@
                   aria-label="Ads Position"
                   class="form-select"
                 >
-                  <option value="bawah-judul">Bawah Judul</option>
-                  <option value="bawah-konten">Bawah Konten</option>
+                  <% positions.forEach(position => { %>
+                  <option value="<%= position.value %>">
+                    <%= position.label %>
+                  </option>
+                  <% }); %>
                 </select>
               </div>
             </div>
@@ -181,6 +184,7 @@
                 />
               </div>
             </div>
+
             <div class="row">
               <label for="ads_status" class="col-md-2 col-lg-2 col-form-label"
                 >Ads Status</label

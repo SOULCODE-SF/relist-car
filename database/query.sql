@@ -42,5 +42,11 @@ CREATE TABLE banner_image (
     banner_id INT NOT NULL
 );
 
+create table banner_positions (
+	value VARCHAR(250) not null,
+	label VARCHAR(250) not null
+);
+
+insert into banner_positions (value, label) values('paling-awal','Paling Awal')
 
 
