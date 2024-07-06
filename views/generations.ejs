@@ -27,10 +27,11 @@
       <% } %>
       <div class="generation-card">
           <img src="<%= generation.image_path %>" alt="<%= generation.title %>">
-          <div>
+          <div class="detail">
             <h3><%= generation.title %></h3>
-            <p><span><%= generation.start_production %></span> - <span><%= generation.end_production %></span> <%= generation.body_type%></p>
-            <p>Power : <%= generation.power_info %> | Dimensions : <%= generation.dimensions_info %></p>
+            <h4><span><%= generation.start_production %></span> - <span><%= generation.end_production %></span> <%= generation.body_type%></h4>
+            <p>Power : <%= generation.power %></p>
+            <p>Dimension : <%= generation.dimension %></p>
           </div>
       </div>
   <% }) %>
