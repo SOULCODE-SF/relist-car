@@ -16,6 +16,7 @@ exports.getAllBrands = async (req, res) => {
       searchTerm: searchTerm,
     });
   } catch (error) {
+    console.log(error.message);
     res.status(500).send('Internal Server Error');
   }
 };
@@ -33,6 +34,7 @@ exports.getModelByBrand = async (req, res) => {
       currentPage: 'models',
     });
   } catch (error) {
+    console.error(error.message);
     res.status(500).send('Internal Server Error');
   }
 };
@@ -43,7 +45,7 @@ exports.getGenerationByModel = async (req, res) => {
 
     const [datas] = await db.query(
       query.generations.getGenerationByModelQuery,
-      [model_id],
+      [model_id]
     );
 
     res.render('generations', {

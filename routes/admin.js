@@ -9,6 +9,8 @@ const {
   getAllBanners,
   getBannerById,
   updateBanner,
+  deleteBanner,
+  getAddBanner,
 } = require('../src/controllers/adminController/banners');
 
 // Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
@@ -60,17 +62,16 @@ router.get('/page/add', (req, res) => {
 
 router.get('/banner', getAllBanners);
 
-router.get('/banner/add', (req, res) => {
-  res.render('admin/banner/add', {
-    title: 'Add Banner',
-    currentPage: 'admin-add-banner',
-    layout: './admin/layouts/layout',
-  });
-});
+router.get('/banner/add', getAddBanner);
 
 router.post('/banner/add', upload('banners').single('ads_image'), addBanner);
 router.get('/banner/edit/:banner_id', getBannerById);
-router.post('/banner/edit/:banner_id', updateBanner);
+router.post(
+  '/banner/update/:banner_id',
+  upload('banners').single('ads_image'),
+  updateBanner
+);
+router.get('/banner/delete/:banner_id', deleteBanner);
 
 router.get('/users', getUser);
 router.post('/users/add', addUser);
