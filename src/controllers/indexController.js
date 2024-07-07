@@ -1,13 +1,30 @@
 const db = require('../../db');
 const query = require('../store/query');
+const nodecache = require('node-cache');
+
+const cache = new nodecache();
 
 exports.getAllBrands = async (req, res) => {
   try {
+    const key = req.originalUrl;
+    const cachedData = cache.get(key);
+
     let searchTerm = req.query.q || '';
+
+    if (cachedData) {
+      return res.render('brands', {
+        brands: cachedData,
+        title: 'Brands Lists',
+        currentPage: 'brands',
+        searchTerm: searchTerm,
+      });
+    }
 
     const [datas] = await db.query(query.brands.getAllBrands, [
       `%${searchTerm}%`,
     ]);
+
+    cache.set(key, datas, 3600);
 
     res.render('brands', {
       brands: datas,
