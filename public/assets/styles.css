@@ -247,12 +247,21 @@ button:hover {
 .generation-card {
   display: flex;
   flex-direction: column;
-  width: 240px;
+  width: 300px;
   background-color: #ffff;
   padding: 10px 10px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
   margin-bottom: 10px;
   border-radius: 5px;
+  overflow: hidden; /* Hide overflow to contain the frame */
+}
+
+.generation-card .frame {
+  height: auto; /* Fixed height for the frame */
+  overflow: hidden; /* Hide overflow to contain the image */
+  border-radius: 8px; /* Rounded corners */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  position: relative; /* Relative positioning for child elements */
 }
 
 .generation-card span {
@@ -273,13 +282,18 @@ button:hover {
   transition: transform 0.3s;
 }
 
+.generation-card .detail {
+  padding: 0px 5px;
+}
+
 .generation-card .detail h3 {
   text-align: center;
   margin-bottom: 5px;
 }
 
 .generation-card .detail h4 {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
   font-size: 0.9rem;
   margin-bottom: 10px;
   color: #666;
@@ -289,8 +303,31 @@ button:hover {
   margin-bottom: 8px; /* Atur margin bottom sesuai kebutuhan */
 }
 
+.generation-card:hover {
+  cursor: pointer;
+}
+
+.generation-card:hover img{
+  transform: scale(1.1); /* Zoom in effect */
+  transform-origin: center center;
+}
+
+.generation-list .list {
+  padding: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.generation-list .fred {
+  border: 2px solid red;
+}
+
+.generation-list .fgreen {
+  border: 2px solid green;
+}
+
 .layout-brands {
-  max-width: 500px;
+  max-width: 1000px;
 }
 
 .nav-tabs {
@@ -334,7 +371,117 @@ button:hover {
   display: block;
 }
 
+/* Style for the spec section */
+.spec {
+  margin-top: 20px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+}
 
+.spec .top {
+  margin-bottom: 20px;
+}
+
+.spec .detail {
+  overflow-x: auto; /* Horizontal scroll if necessary */
+}
+
+.spec .cardetailsout {
+  width: 100%;
+  margin-bottom: 20px;
+  border-collapse: collapse;
+}
+
+.spec .cardetailsout th,
+.spec .cardetailsout td {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.spec .cardetailsout th {
+  text-align: left;
+  background-color: #f0f0f0;
+}
+
+.spec .cardetailsout th.car {
+  font-size: 1.2em;
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+
+.spec .cardetailsout th.no {
+  border-bottom: none;
+  padding-top: 20px;
+}
+
+.spec .cardetailsout th.no strong {
+  color: red;
+}
+
+.spec .cardetailsout td a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+.spec .cardetailsout td a:hover {
+  text-decoration: underline;
+}
+
+.spec .cardetailsout .val2 {
+  font-size: 0.9em;
+  color: #777;
+}
+
+.spec .cardetailsout .no2 .adin.top {
+  height: 0;
+}
+
+.spec .e th,
+.spec .e td {
+  padding: 5px;
+  text-align: center;
+}
+
+.spec .e th.e {
+  background-color: #f0f0f0;
+  padding: 10px;
+}
+
+.spec .no2 {
+  border-top: 1px solid #ddd;
+}
+
+.spec .no2 .adin.top {
+  height: 10px;
+}
+
+.spec .no2 .car {
+  font-size: 1.2em;
+  padding-top: 15px;
+  padding-bottom: 10px;
+}
+
+.spec .no2 .no {
+  border-bottom: none;
+}
+
+/* Additional styles for specific elements */
+.spec .cardetailsout tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.spec .cardetailsout caption h2.car {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .spec .cardetailsout {
+    font-size: 0.9em;
+  }
+}
 
 
 @media (max-width: 768px) {

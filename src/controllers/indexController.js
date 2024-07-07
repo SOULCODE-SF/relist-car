@@ -45,13 +45,48 @@ exports.getGenerationByModel = async (req, res) => {
 
     const [datas] = await db.query(
       query.generations.getGenerationByModelQuery,
-      [model_id]
+      [model_id],
     );
 
     res.render('generations', {
       generations: datas,
       title: 'Generations',
       currentPage: 'generations',
+    });
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+exports.getGenerationLists = async (req, res) => {
+  try {
+    let generation_id = req.params.id;
+    const [datas] = await db.query('CALL sp_get_generation_list(?)', [
+      generation_id,
+    ]);
+
+    console.log(datas);
+
+    res.render('generations_list', {
+      datas: datas[0],
+      title: 'List Generation',
+      currentPage: 'list-generation',
+    });
+  } catch (error) {
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+exports.getSpec = async (req, res) => {
+  try {
+    let generation_link_id = req.params.id;
+    const [datas] = await db.query('CALL get_spec(?)', [generation_link_id]);
+
+    console.log(datas[0][0]);
+    res.render('specs', {
+      data: datas[0][0],
+      title: 'Spec',
+      currentPage: 'specs',
     });
   } catch (error) {
     res.status(500).send('Internal Server Error');

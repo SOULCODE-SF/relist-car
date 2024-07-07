@@ -1,0 +1,39 @@
+<div class="layout-brands">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href="/brands" class="nav-link ">Autocatalog</a>
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="/brands/<%= datas[0].brand_id %>/models" class="nav-link "><%= datas[0].brand_name %></a>
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link"><%= datas[0].model_name %></a>
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link active"><%= datas[0].generation_name %></a>
+    </li>
+  </ul>
+</div>
+
+<div class="generation-list">Ini generation List
+  <% datas.forEach(item => { %>
+   <a href="/specs/<%= item.id%>">
+    <div class="list <%= item.flag === 'red' ? 'fred' : 'fgreen' %>">
+      <h3><%= item.title %></h3>
+      <span><%= item.start_production %> - <%= item.end_production %></span>
+      <div>
+        <p>List</p>
+      </div>
+     </div>
+   </a>
+  <% }) %>
+</div>

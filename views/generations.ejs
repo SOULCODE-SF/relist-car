@@ -26,13 +26,17 @@
           <div class="letter"><%= currentLetter %></div>
       <% } %>
       <div class="generation-card">
-          <img src="<%= generation.image_path %>" alt="<%= generation.title %>">
-          <div class="detail">
-            <h3><%= generation.title %></h3>
-            <h4><span><%= generation.start_production %></span> - <span><%= generation.end_production %></span> <%= generation.body_type%></h4>
-            <p>Power : <%= generation.power %></p>
-            <p>Dimension : <%= generation.dimension %></p>
-          </div>
+          <a href="/generation-list/<%=generation.id%>">
+            <div class="frame">
+              <img src="<%= generation.image_path %>" alt="<%= generation.title %>">
+            </div>
+            <div class="detail">
+              <h3><%= generation.title %></h3>
+              <h4><span><%= generation.start_production %> - <%= generation.end_production %></span> <%= generation.body_type%></h4>
+              <p>Power : <%= generation.power %></p>
+              <p>Dimension : <%= generation.dimension %> mm</p>
+            </div>
+          </a>
       </div>
   <% }) %>
 </div>
