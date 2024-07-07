@@ -1,4 +1,8 @@
 let query = {
+  home: {
+    recentCars:
+      'SELECT gl.id as gl_id, g.id, g.title as name, g.image_path, gl.title as engine, gi.body_type, dbss.drive_wheel, ps.fuel_consumption_combined FROM generation_links_2 gl JOIN generations g ON g.id = gl.generation_id LEFT JOIN general_information gi ON gl.id = gi.generation_link_id LEFT JOIN dimensions d ON gl.id = d.generation_link_id LEFT JOIN drivetrain_brakes_suspension_specs dbss on gl.id = dbss.generation_link_id LEFT JOIN performance_specs ps ON gl.id = ps.generation_link_id ORDER BY RAND() LIMIT ?;',
+  },
   brands: {
     getAllBrands:
       'SELECT b.id, b.name, b.image_path  FROM brands b WHERE b.name LIKE ?',

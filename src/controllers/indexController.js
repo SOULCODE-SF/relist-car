@@ -4,6 +4,38 @@ const nodecache = require('node-cache');
 
 const cache = new nodecache();
 
+exports.getHomePage = async (req, res) => {
+  try {
+    const key = req.originalUrl;
+    const cachedData = cache.get(key);
+
+    if (cachedData) {
+      return res.render('index', {
+        recentCars: cachedData.recentCars,
+        title: 'Home',
+        currentPage: 'homes',
+      });
+    }
+
+    const [recentCars] = await db.query(query.home.recentCars, [20]);
+
+    let datas = {
+      recentCars,
+    };
+
+    cache.set(key, datas, 3600);
+
+    res.render('index', {
+      recentCars: recentCars,
+      title: 'Home',
+      currentPage: 'homes',
+    });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
 exports.getAllBrands = async (req, res) => {
   try {
     const key = req.originalUrl;
@@ -12,6 +44,7 @@ exports.getAllBrands = async (req, res) => {
     let searchTerm = req.query.q || '';
 
     if (cachedData) {
+      console.log('kene');
       return res.render('brands', {
         brands: cachedData,
         title: 'Brands Lists',
@@ -26,6 +59,7 @@ exports.getAllBrands = async (req, res) => {
 
     cache.set(key, datas, 3600);
 
+    console.log('sini');
     res.render('brands', {
       brands: datas,
       title: 'Brands Lists',

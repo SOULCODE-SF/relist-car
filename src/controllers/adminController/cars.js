@@ -9,8 +9,6 @@ exports.getBrandsName = async (req, res) => {
       [`%${brand_name[1]}%`],
     );
 
-    console.log(brand_name, datas);
-
     return res.json({
       datas,
     });
@@ -27,8 +25,6 @@ exports.getModelName = async (req, res) => {
       [brand_id],
     );
 
-    console.log(brand_id, datas);
-
     return res.json({
       datas,
     });
@@ -42,6 +38,7 @@ exports.addCar = async (req, res) => {
     const { brand_name, model_name } = req.body;
 
     const data = { brand_name, model_name };
+    console.log(data);
     return res.json(data);
   } catch (error) {
     res.status(500).send(error.message);

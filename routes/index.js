@@ -5,12 +5,11 @@ const {
   getGenerationByModel,
   getSpec,
   getGenerationLists,
+  getHomePage,
 } = require('../src/controllers/indexController');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.render('index', { title: 'Home', currentPage: 'home' });
-});
+router.get('/', getHomePage);
 
 // Tambahkan rute untuk brands.ejs
 router.get('/brands', getAllBrands);
