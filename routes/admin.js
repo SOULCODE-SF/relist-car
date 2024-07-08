@@ -17,6 +17,7 @@ const {
   getModelName,
   addCar,
   getCarsList,
+  getGenerationName,
 } = require('../src/controllers/adminController/cars');
 const {
   getDashboardPage,
@@ -93,5 +94,6 @@ router.post('/cars/add', addCar);
 
 router.get('/brands-name', getBrandsName);
 router.get('/models-name/:brand_id', getModelName);
+router.get('/generations-name/:model_id', getGenerationName);
 
 module.exports = router;

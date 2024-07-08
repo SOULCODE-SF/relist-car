@@ -29,11 +29,15 @@ let query = {
       'delete from banners where id = ? ; delete from banner_image where banner_id = ? ; delete from banner_code where banner_id = ? ;',
   },
   dashboard: {
-    cars: 'SELECT (SELECT COUNT(*) FROM generation_links_2) AS count_cars,(SELECT COUNT(*) FROM brands) AS count_brands,(SELECT COUNT(*) FROM models) AS count_models,(SELECT COUNT(*) FROM generations) AS count_generations; ',
+    cars: 'SELECT (SELECT COUNT(*) FROM cars) AS count_cars, (SELECT COUNT(DISTINCT b_id) FROM cars) AS count_brands, (select COUNT(distinct m_id) from cars) as count_models, (select count(distinct g_id) from cars) as count_generations',
   },
   cars: {
     getAllCars:
-      'SELECT gl.id as gl_id, g.id, b.id as brand_id, b.name as brand_name, m.id as model_id, m.name as model_name, g.title as name, g.image_path, gl.title as engine, gi.body_type, dbss.drive_wheel, ps.fuel_consumption_combined FROM generation_links_2 gl JOIN generations g ON g.id = gl.generation_id join models m on m.id = g.model_id join brands b on b.id = m.brand_id LEFT JOIN general_information gi ON gl.id = gi.generation_link_id LEFT join dimensions d ON gl.id = d.generation_link_id LEFT JOIN drivetrain_brakes_suspension_specs dbss on gl.id = dbss.generation_link_id LEFT JOIN performance_specs ps ON gl.id = ps.generation_link_id LIMIT 100',
+      'SELECT gl.id as gl_id, g.id, b.id as brand_id, b.name as brand_name, m.id as model_id, m.name as model_name, g.title as name, g.image_path, gl.title as engine, gi.body_type, dbss.drive_wheel, ps.fuel_consumption_combined FROM generation_links_2 gl JOIN generations g ON g.id = gl.generation_id join models m on m.id = g.model_id join brands b on b.id = m.brand_id LEFT JOIN general_information gi ON gl.id = gi.generation_link_id LEFT join dimensions d ON gl.id = d.generation_link_id LEFT JOIN drivetrain_brakes_suspension_specs dbss on gl.id = dbss.generation_link_id LEFT JOIN performance_specs ps ON gl.id = ps.generation_link_id WHERE b.id = ?',
+  },
+  specs: {
+    addGeneralInformation:
+      'insert into general_information( generation_link_id, engine, start_production, end_production, powertrain_architecture, body_type, seat, door ) values (?, ?, ?, ?, ?, ?, ?, ?);',
   },
 };
 module.exports = query;
