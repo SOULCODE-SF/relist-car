@@ -1,8 +1,8 @@
 module.exports = {
   apps: [
     {
-      name: 'relist', // Replace with your application's name
-      script: './index.js', // Replace with your application's entry point
+      name: 'relist',
+      script: './app.js', // Replace with your application's entry point
       instances: 1, // Number of instances to be started (adjust as needed)
       autorestart: true, // Restart the app if it crashes
       watch: false, // Watch for file changes and restart
@@ -14,7 +14,7 @@ module.exports = {
       out_file: './logs/pm2-out.log', // Path to output log file
       log_date_format: 'YYYY-MM-DD HH:mm:ss Z', // Log date format
       merge_logs: true, // Merge logs across instances
-      time: true, // Timestamps in PM2 logs
+      time: true,
     },
   ],
 };
