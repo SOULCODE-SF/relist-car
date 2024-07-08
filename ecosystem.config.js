@@ -2,7 +2,7 @@ module.exports = {
   apps: [
     {
       name: 'relist',
-      script: './app.js', // Replace with your application's entry point
+      script: './bin/www', // Replace with your application's entry point
       instances: 1, // Number of instances to be started (adjust as needed)
       autorestart: true, // Restart the app if it crashes
       watch: false, // Watch for file changes and restart
