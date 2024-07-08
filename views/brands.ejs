@@ -5,30 +5,32 @@
     </li>
   </ul>
 </div>
-<div class="brands">
+<section class="brands">
 
   <form action="/brands" method="GET" class="search-form">
     <input type="text" id="searchTerm" name="q" placeholder="Input brand name..." value="<%= searchTerm %>">
     <button type="submit">Cari</button>
   </form>
 
-  <div class="alphabet-list">
-    <% 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(letter => { %>
-      <a href="#<%= letter.toLowerCase() %>"><%= letter %></a>
+  <div class="brand-list">
+    <div class="alphabet-list">
+      <% 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(letter => { %>
+        <a href="#<%= letter.toLowerCase() %>"><%= letter %></a>
+      <% }) %>
+    </div>
+    
+    <% let currentLetter = ''; %>
+    <% brands.forEach(brand => { %>
+      <% if (brand.name[0].toUpperCase() !== currentLetter) { %>
+        <% currentLetter = brand.name[0].toUpperCase(); %>
+        <div class="letter" id="<%= currentLetter.toLowerCase() %>"><%= currentLetter %></div>
+      <% } %>
+      <a href="/brands/<%= brand.id %>/models" class="brand-card">
+        <div class="brand">
+          <img src="<%= brand.image_path %>" alt="<%= brand.name %>" onerror="this.onerror=null; this.src='/notbrands.webp';">
+          <h3><%= brand.name %></h3>
+        </div>
+      </a>
     <% }) %>
   </div>
-  
-  <% let currentLetter = ''; %>
-  <% brands.forEach(brand => { %>
-    <% if (brand.name[0].toUpperCase() !== currentLetter) { %>
-      <% currentLetter = brand.name[0].toUpperCase(); %>
-      <div class="letter" id="<%= currentLetter.toLowerCase() %>"><%= currentLetter %></div>
-    <% } %>
-    <a href="/brands/<%= brand.id %>/models" class="brand-card">
-      <div class="brand">
-        <img src="<%= brand.image_path %>" alt="<%= brand.name %>" onerror="this.onerror=null; this.src='/notbrands.webp';">
-        <h3><%= brand.name %></h3>
-      </div>
-    </a>
-  <% }) %>
 </div>

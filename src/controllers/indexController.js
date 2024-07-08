@@ -96,7 +96,7 @@ exports.getGenerationByModel = async (req, res) => {
 
     const [datas] = await db.query(
       query.generations.getGenerationByModelQuery,
-      [model_id],
+      [model_id]
     );
 
     res.render('generations', {
@@ -131,15 +131,16 @@ exports.getGenerationLists = async (req, res) => {
 exports.getSpec = async (req, res) => {
   try {
     let generation_link_id = req.params.id;
+
     const [datas] = await db.query('CALL get_spec(?)', [generation_link_id]);
 
-    console.log(datas[0][0]);
     res.render('specs', {
       data: datas[0][0],
       title: 'Spec',
       currentPage: 'specs',
     });
   } catch (error) {
+    console.log(error.message);
     res.status(500).send('Internal Server Error');
   }
 };

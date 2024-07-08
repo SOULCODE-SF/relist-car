@@ -1,4 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;900&display=swap');
+/* public/styles/main.css */
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-Regular.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-Bold.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-ExtraBold.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-Light.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-Medium.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-SemiBold.ttf') format('truetype');
+  font-weight: normal; /* untuk Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-Bold.ttf') format('truetype');
+  font-weight: bold; /* untuk Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-ExtraBold.ttf')
+    format('truetype');
+  font-weight: 800; /* untuk Extra Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-Light.ttf') format('truetype');
+  font-weight: 300; /* untuk Light */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-Medium.ttf') format('truetype');
+  font-weight: 500; /* untuk Medium */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-SemiBold.ttf') format('truetype');
+  font-weight: 600; /* untuk Semi Bold */
+  font-style: normal;
+}
 
 /* Menggunakan font Mulish untuk seluruh body */
 body {
@@ -15,21 +62,32 @@ a {
   background-color: #fdfdfd;
 }
 
+.home {
+  padding: 0px 40px;
+}
+
 .recent-cars {
   text-align: center; /* Memastikan konten di dalam .recent-cars terpusat secara horizontal */
 }
 
+.recent-cars h1 span {
+  color: red;
+}
+
 .recently-added {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* Menentukan 3 kolom dengan lebar yang sama */
-  gap: 20px; 
+  grid-template-columns: repeat(
+    4,
+    1fr
+  ); /* Menentukan 3 kolom dengan lebar yang sama */
+  gap: 20px;
   justify-items: center; /* Memusatkan item di dalam grid secara horizontal */
 }
 
 .car-card {
   margin: 10px;
   padding: 8px;
-  border-radius: 4px;
+  border-radius: 8px;
   width: 250px; /* Adjust width as needed */
   text-align: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -39,20 +97,44 @@ a {
   display: inline-block;
 }
 
-.car-card .frame img {
+.car-card .frame {
+  border: 1px slategrey solid;
   height: 180px; /* Fixed height for the frame */
   overflow: hidden; /* Hide overflow to contain the image */
   border-radius: 8px; /* Rounded corners */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  position: relative; 
+  position: relative;
+}
+
+.car-card .frame img {
+  width: 100%; /* Ensure image fills the frame */
+  height: auto; /* Maintain aspect ratio */
+  transition: transform 0.3s; /* Transition for zoom effect */
+  display: block; /* Remove extra space below image */
+  border-radius: 8px; /* Rounded corners */
+}
+
+.car-card:hover .frame img {
+  transform: scale(1.1); /* Zoom in effect */
+  transform-origin: center center; /* Transform origin at the center */
+}
+
+.car-card h6 {
+  color: #666;
 }
 
 /* CSS untuk container merek */
 .brands {
+  padding: 20px;
   margin-top: 20px;
+
+  justify-content: left;
+}
+
+.brands .brand-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: left;
+  justify-content: center;
 }
 
 .brands .search-form {
@@ -74,7 +156,7 @@ button {
   color: white;
   font-weight: bold;
   border-radius: 5px;
-  transition: background-color 0.5s ease; 
+  transition: background-color 0.5s ease;
 }
 
 button:hover {
@@ -121,7 +203,6 @@ button:hover {
   color: red; /* Warna teks menjadi merah saat di-hover */
 }
 
-
 .brand img {
   max-width: 100%;
   height: auto;
@@ -160,8 +241,8 @@ button:hover {
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
-  border-top: 1px solid #d0d0d0; 
-  border-bottom: 1px solid #d0d0d0; 
+  border-top: 1px solid #d0d0d0;
+  border-bottom: 1px solid #d0d0d0;
 }
 .alphabet-list a {
   margin: 0 10px;
@@ -188,7 +269,7 @@ button:hover {
   font-weight: bold;
 }
 
-.navbar{
+.navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -267,7 +348,6 @@ button:hover {
   transform-origin: center center; /* Transform origin at the center */
 }
 
-
 .generations {
   padding: 20px;
   overflow: hidden;
@@ -339,7 +419,7 @@ button:hover {
   cursor: pointer;
 }
 
-.generation-card:hover img{
+.generation-card:hover img {
   transform: scale(1.1); /* Zoom in effect */
   transform-origin: center center;
 }
@@ -508,25 +588,135 @@ button:hover {
   font-size: 1.5em;
   margin-bottom: 15px;
 }
+/* 
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+} */
 
-/* Responsive styles */
-@media (max-width: 768px) {
-  .spec .cardetailsout {
-    font-size: 0.9em;
-  }
+.navbar {
+  display: flex;
+  align-items: center;
 }
 
+.logo {
+  margin-right: auto; /* Menempatkan logo di sebelah kiri */
+}
 
+.menu-icon {
+  display: none; /* Sembunyikan ikon menu secara default */
+  cursor: pointer; /* Ubah kursor saat diarahkan ke ikon */
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: black;
+  margin: 4px 0;
+  transition: transform 0.3s, opacity 0.3s; /* Animasi untuk ikon bar */
+}
+
+.nav-links {
+  display: flex;
+  gap: 20px;
+}
+
+.nav-links .nav-link {
+  text-decoration: none;
+  color: black;
+  font-size: 1rem;
+}
+
+.nav-links .nav-link.active {
+  font-weight: bold;
+}
+
+/* Media query untuk layar kurang dari 768px */
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
-    align-items: flex-start;
   }
 
   .navbar {
     width: 100%;
     justify-content: flex-start;
+  }
+
+  .nav-links {
+    display: none; /* Sembunyikan link navigasi pada awalnya */
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }
+
+  .nav-links.show {
+    display: flex; /* Tampilkan link navigasi saat tombol menu diklik */
+  }
+
+  .menu-icon {
+    display: block; /* Tampilkan ikon menu (hamburger icon) */
+  }
+
+  .bar {
+    transition: transform 0.3s, opacity 0.3s;
+  }
+
+  .bar:nth-child(1) {
+    transform-origin: top left;
+  }
+
+  .bar:nth-child(2) {
+    transform-origin: top right;
+  }
+
+  .menu-icon.open .bar:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+  }
+
+  .menu-icon.open .bar:nth-child(2) {
+    transform: rotate(-45deg) translate(7px, -6px);
+  }
+
+  .menu-icon.open .bar:nth-child(3) {
+    opacity: 0;
+  }
+
+  .recently-added {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .car-card {
+    min-width: 200px;
+    width: 100%;
+    max-width: 100%;
+  }
+}
+
+@media (max-width: 420px) {
+  .main-content {
+    overflow: hidden;
+  }
+  .home {
+    padding: 0px 10px;
+    overflow: hidden;
+  }
+
+  .recently-added {
+    grid-template-columns: repeat(1, 1fr);
+  }
+
+  .car-card {
+    min-width: 200px;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .navbar {
+    width: 100%;
     padding-left: 20px;
+    justify-content: space-between;
   }
 
   .nav-links {
@@ -536,5 +726,9 @@ button:hover {
 
   .nav-links .nav-link {
     font-size: 1.2rem; /* Adjust font size for smaller screens */
+  }
+
+  .spec .cardetailsout {
+    font-size: 0.9em;
   }
 }

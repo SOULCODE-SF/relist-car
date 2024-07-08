@@ -11,12 +11,85 @@
     </div>
     <div class="col-md-4">
       <div class="text-end">
+        <!-- Button to add a new car -->
         <a href="/admin/cars/add" type="button" class="btn btn-primary"
-          >Add Banner</a
+          >Add Car</a
         >
       </div>
     </div>
   </div>
 </div>
-<!-- End Page Title -->
 
+<section class="section">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Cars List</h5>
+          <form id="carFilterForm" action="/admin/cars" method="GET">
+            <div class="row">
+              <label for="filter-brand" class="col-md-2 col-lg-2 col-form-label"
+                >Brand</label
+              >
+              <div id="area-filter" class="col-md-6 col-lg-4">
+                <select
+                  id="filter-brand"
+                  name="brand_id"
+                  class="form-select"
+                  style="width: 100%"
+                  aria-label="Brand"
+                ></select>
+              </div>
+            </div>
+          </form>
+
+          <!-- Table displaying cars -->
+          <table
+            id="datatable"
+            class="table table-hover table-bordered dt-responsive"
+            style="border-collapse: collapse; border-spacing: 0; width: 100%"
+          >
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Loop through cars data -->
+              <% datas.forEach((data, i) => { %>
+              <tr>
+                <td><%= data.gl_id %></td>
+                <td><%= data.brand_name %></td>
+                <td><%= data.model_name %></td>
+                <td class="tw-100">
+                  <!-- Buttons for edit and delete actions -->
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Edit"
+                    class="btn btn-warning btn-sm"
+                    ><i class="icon-edit"></i
+                  ></a>
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Delete"
+                    class="btn btn-danger btn-sm"
+                    ><i class="icon-trash-alt"></i
+                  ></a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Page Title -->

@@ -1,25 +1,28 @@
-<div class="content">
-  <h1>Selamat datang di halaman utama!</h1>
-  <p>Ini adalah halaman utama dari aplikasi Anda.</p>
-
+<div class="home">
   <section class="recent-cars">
+    <h3>NEW ARRIVALS</h3>
+    <h1>Let's Check Latest <span>Cars</span></h1>
     <div class="recently-added">
       <% recentCars.forEach(item => { %>
-        <a href="/specs/<%= item.gl_id %>">
-          <div class="car-card">
-            <div class="frame">
-              <img src="<%= item.image_path %>" alt="Relist">
-            </div>
-            <div class="detail">
-              <h5><%= item.name %></h5>
-              <h6><%= item.engine %></h6>
-              <h6>
-                <span><%= item.body_type %></span>
-                <span><%= item.wheel_drive %></span>
-              </h6>
-            </div>
+      <a href="/specs/<%= item.id %>">
+        <div class="car-card">
+          <div class="frame">
+            <img
+              src="<%= item.image_path %>"
+              alt="Relist"
+              onerror="this.onerror=null; this.src='/nomodels.webp';"
+            />
           </div>
-        </a>
+          <div class="detail">
+            <h5><%= item.name %></h5>
+            <h6><%= item.engine %></h6>
+            <h5>
+              <span><%= item.body_type %></span>
+              <span><%= item.wheel_drive %></span>
+            </h5>
+          </div>
+        </div>
+      </a>
       <% }) %>
     </div>
   </section>
