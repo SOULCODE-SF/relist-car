@@ -1,4 +1,51 @@
-@import url('https://fonts.googleapis.com/css2?family=Mulish:wght@300;400;600;700;900&display=swap');
+/* public/styles/main.css */
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-Regular.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-Bold.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-ExtraBold.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-Light.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-Medium.ttf') format('truetype'),
+    url('/assets/fonts/Mulish/static/Mulish-SemiBold.ttf') format('truetype');
+  font-weight: normal; /* untuk Regular */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-Bold.ttf') format('truetype');
+  font-weight: bold; /* untuk Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-ExtraBold.ttf')
+    format('truetype');
+  font-weight: 800; /* untuk Extra Bold */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-Light.ttf') format('truetype');
+  font-weight: 300; /* untuk Light */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-Medium.ttf') format('truetype');
+  font-weight: 500; /* untuk Medium */
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Mulish';
+  src: url('/assets/fonts/Mulish/static/Mulish-SemiBold.ttf') format('truetype');
+  font-weight: 600; /* untuk Semi Bold */
+  font-style: normal;
+}
 
 /* Menggunakan font Mulish untuk seluruh body */
 body {
@@ -585,8 +632,6 @@ button:hover {
 .nav-links .nav-link.active {
   font-weight: bold;
 }
-
-
 
 /* Media query untuk layar kurang dari 768px */
 @media (max-width: 768px) {
