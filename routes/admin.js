@@ -12,6 +12,11 @@ const {
   deleteBanner,
   getAddBanner,
 } = require('../src/controllers/adminController/banners');
+const {
+  getBrandsName,
+  getModelName,
+  addCar,
+} = require('../src/controllers/adminController/cars');
 
 // Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
 const dynamicStorage = (type) => {
@@ -27,7 +32,7 @@ const dynamicStorage = (type) => {
           '-' +
           Date.now() +
           path.extname(file.originalname) +
-          '.webp'
+          '.webp',
       );
     },
   });
@@ -69,11 +74,32 @@ router.get('/banner/edit/:banner_id', getBannerById);
 router.post(
   '/banner/update/:banner_id',
   upload('banners').single('ads_image'),
-  updateBanner
+  updateBanner,
 );
 router.get('/banner/delete/:banner_id', deleteBanner);
 
 router.get('/users', getUser);
 router.post('/users/add', addUser);
+
+router.get('/cars', (req, res) => {
+  res.render('admin/car/index', {
+    title: 'Car List',
+    currentPage: 'admin-car-list',
+    layout: './admin/layouts/layout',
+  });
+});
+
+router.get('/cars/add', (req, res) => {
+  res.render('admin/car/add', {
+    title: 'Car Add',
+    currentPage: 'admin-car-add',
+    layout: './admin/layouts/layout',
+  });
+});
+
+router.post('/cars/add', addCar);
+
+router.get('/brands-name', getBrandsName);
+router.get('/models-name/:brand_id', getModelName);
 
 module.exports = router;

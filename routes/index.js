@@ -3,12 +3,13 @@ const {
   getAllBrands,
   getModelByBrand,
   getGenerationByModel,
+  getSpec,
+  getGenerationLists,
+  getHomePage,
 } = require('../src/controllers/indexController');
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.render('index', { title: 'Home', currentPage: 'home' });
-});
+router.get('/', getHomePage);
 
 // Tambahkan rute untuk brands.ejs
 router.get('/brands', getAllBrands);
@@ -34,6 +35,9 @@ router.get('/models', (req, res) => {
 router.get('/brands/:brand_id/models', getModelByBrand);
 
 router.get('/brands/models/:model_id/generations', getGenerationByModel);
+
+router.get('/generation-list/:id', getGenerationLists);
+router.get('/specs/:id', getSpec);
 
 router.get('/others', (req, res) => {
   res.render('other', { title: 'Halaman Lain', currentPage: 'others' });

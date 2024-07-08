@@ -1,0 +1,124 @@
+<div class="col-lg-12 col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">General Information</h5>
+      <div class="form-group d-grid gap-3">
+        <div class="row">
+          <label for="input-brand" class="col-md-2 col-lg-2 col-form-label">Brand</label>
+          <div class="col-md-6 col-lg-4">
+            <select
+              id="input-brand"
+              name="brand_name"
+              class="form-select"
+              style="width: 100%;"
+              aria-label="Brand"
+            >
+            </select>
+          </div>
+        </div>
+        <div class="row">
+          <label for="input-model" class="col-md-2 col-lg-2 col-form-label">Model</label>
+          <div class="col-md-6 col-lg-4">
+            <select
+              id="input-model"
+              name="model_name"
+              class="form-select"
+              style="width: 100%;"
+              aria-label="Model"
+            >
+            </select>
+          </div>
+        </div>
+        <div class="row" id="ads-code">
+          <label
+            for="input-ads-code"
+            class="col-md-2 col-lg-2 col-form-label"
+            >Ads Code</label
+          >
+          <div class="col-md-6 col-lg-6">
+            <textarea
+              name="ads_code"
+              placeholder=""
+              id="input-ads-code"
+              style="height: 150px"
+              class="form-control"
+            ></textarea>
+          </div>
+        </div>
+        <div class="row" id="ads-image">
+          <label
+            for="input-ads-image"
+            class="col-md-2 col-lg-2 col-form-label"
+            >Ads Image</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <div id="image-preview-container">
+              <img
+                id="image-preview"
+                src="/assets/nice-iconly/assets/img/preview.png"
+                class="img-thumbnail"
+              />
+            </div>
+            <div class="pt-2">
+              <label
+                for="input-image"
+                class="btn btn-primary btn-sm"
+                title="Upload image"
+              >
+                <i class="icon-upload"></i>
+                <input
+                  name="ads_image"
+                  type="file"
+                  id="input-image"
+                  accept="image/*"
+                  style="display: none"
+                />
+              </label>
+              <a
+                href="#"
+                class="btn btn-danger btn-sm"
+                title="Remove image"
+                id="remove-image"
+              >
+                <i class="icon-trash-alt"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="row" id="ads-url">
+          <label
+            for="input-ads-url"
+            class="col-md-2 col-lg-2 col-form-label"
+            >Ads Url</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <input
+              name="ads_url"
+              type="text"
+              class="form-control"
+              id="input-ads-url"
+              value="http://kamuskita.com"
+            />
+          </div>
+        </div>
+
+        <div class="row">
+          <label for="ads_status" class="col-md-2 col-lg-2 col-form-label"
+            >Ads Status</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <select
+              name="ads_status"
+              id="input-ads-status"
+              aria-label="Ads Status"
+              class="form-select"
+            >
+              <option value="enabled">Enabled</option>
+              <option value="disabled">Disabled</option>
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
