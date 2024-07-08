@@ -12,11 +12,65 @@
     <div class="col-md-4">
       <div class="text-end">
         <a href="/admin/cars/add" type="button" class="btn btn-primary"
-          >Add Banner</a
+          >Add Car</a
         >
       </div>
     </div>
   </div>
 </div>
-<!-- End Page Title -->
 
+<section class="section">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Cars List</h5>
+          <table
+            id="datatable"
+            class="table table-hover table-bordered dt-responsive"
+            style="border-collapse: collapse; border-spacing: 0; width: 100%"
+          >
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Brand</th>
+                <th>Model</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% datas.forEach((data, i) => { %>
+              <tr>
+                <td><%= data.gl_id %></td>
+                <td><%= data.brand_name %></td>
+                <td><%= data.model_name %></td>
+                <td class="tw-100">
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Edit"
+                    class="btn btn-warning btn-sm"
+                    data-id="id-post"
+                    ><i class="icon-edit"></i
+                  ></a>
+                  <a
+                    href="#"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Delete"
+                    class="btn btn-danger btn-sm"
+                    data-id="id-post"
+                    ><i class="icon-trash-alt"></i
+                  ></a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<!-- End Page Title -->

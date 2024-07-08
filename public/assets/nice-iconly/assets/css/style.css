@@ -2161,3 +2161,26 @@ h6 {
   border-bottom-right-radius: 0;
 }
 /* Floating label End */
+
+#area-input {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+#area-input a {
+  display: flex;
+  align-items: center;
+  font-size: 20px;
+}
+
+#area-input a i {
+  color: #012970;
+  font-weight: 600;
+  transition: all;
+  transition-duration: 0.3s;
+}
+
+#area-input a i:hover {
+  color: #009ef7;
+}
