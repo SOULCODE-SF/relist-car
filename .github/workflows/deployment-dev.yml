@@ -5,7 +5,7 @@ name: CI/CD with Express and PM2
 on:
   push:
     branches:
-      - main  # Ganti dengan nama branch utama Anda
+      - development  # Ganti dengan nama branch utama Anda
 
 jobs:
   build:
