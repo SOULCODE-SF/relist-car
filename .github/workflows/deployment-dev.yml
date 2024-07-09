@@ -5,7 +5,7 @@ name: CI/CD with Express and PM2
 on:
   push:
     branches:
-      - development  # Ganti dengan nama branch utama Anda
+      - main # Ganti dengan nama branch utama Anda
 
 jobs:
   build:
@@ -17,9 +17,6 @@ jobs:
 
       - name: Install Dependencies
         run: npm install
-
-      - name: Build and Test
-        run: npm start
 
       - name: Deploy with PM2
         run: |
