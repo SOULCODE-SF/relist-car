@@ -12,6 +12,16 @@ const {
   deleteBanner,
   getAddBanner,
 } = require('../src/controllers/adminController/banners');
+const {
+  getBrandsName,
+  getModelName,
+  addCar,
+  getCarsList,
+  getGenerationName,
+} = require('../src/controllers/adminController/cars');
+const {
+  getDashboardPage,
+} = require('../src/controllers/adminController/dashboard');
 
 // Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
 const dynamicStorage = (type) => {
@@ -36,13 +46,7 @@ const dynamicStorage = (type) => {
 // Inisialisasi Multer dengan konfigurasi storage dinamis
 const upload = (type) => multer({ storage: dynamicStorage(type) });
 
-router.get('/', (req, res) => {
-  res.render('admin/index', {
-    title: 'Dashboard Admin',
-    currentPage: 'admin-index',
-    layout: './admin/layouts/layout',
-  });
-});
+router.get('/', getDashboardPage);
 
 router.get('/page', (req, res) => {
   res.render('admin/page/index', {
@@ -75,5 +79,21 @@ router.get('/banner/delete/:banner_id', deleteBanner);
 
 router.get('/users', getUser);
 router.post('/users/add', addUser);
+
+router.get('/cars', getCarsList);
+
+router.get('/cars/add', (req, res) => {
+  res.render('admin/car/add', {
+    title: 'Car Add',
+    currentPage: 'admin-car-add',
+    layout: './admin/layouts/layout',
+  });
+});
+
+router.post('/cars/add', addCar);
+
+router.get('/brands-name', getBrandsName);
+router.get('/models-name/:brand_id', getModelName);
+router.get('/generations-name/:model_id', getGenerationName);
 
 module.exports = router;

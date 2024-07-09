@@ -6,7 +6,7 @@ const logger = require('morgan');
 const app = express();
 
 app.use(expressLayouts);
-app.use(logger('dev'));
+// app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
@@ -27,8 +27,4 @@ var adminRouter = require('./routes/admin');
 app.use(router);
 app.use('/admin', adminRouter);
 
-// Start the server
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+module.exports = app;

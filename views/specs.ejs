@@ -1,0 +1,425 @@
+<div class="layout-brands">
+  <ul class="nav nav-tabs">
+    <li class="nav-item">
+      <a href="/brands" class="nav-link">Autocatalog</a>
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="/brands/<%= data.brand_id %>/models" class="nav-link"
+        ><%= data.brand_name %></a
+      >
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="/brands/models/<%= data.model_id %>/generations" class="nav-link"
+        ><%= data.model_name %></a
+      >
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="/generation-list/<%= data.generation_id %>" class="nav-link"
+        ><%= data.generation_name %></a
+      >
+    </li>
+    <li class="nav-item">
+      <span class="arrow">&rarr;</span>
+    </li>
+    <li class="nav-item">
+      <a href="#" class="nav-link active"><%= data.engine%></a>
+    </li>
+  </ul>
+</div>
+
+<div class="spec">
+  <div class="top">
+    <div></div>
+  </div>
+  <div class="detail">
+    <table class="cardetailsout car2">
+      <caption>
+        <h2 class="car"><%= data.name %></h2>
+      </caption>
+      <tbody>
+        <tr class="no">
+          <th colspan="2" class="no">
+            <strong class="car" id="_general">General information</strong>
+          </th>
+        </tr>
+        <tr>
+          <th>Brand</th>
+          <td>
+            <a href="/brands/<%=data.brand_id%>/models"
+              ><%= data.brand_name %></a
+            >
+          </td>
+        </tr>
+        <tr>
+          <th>Model</th>
+          <td>
+            <a href="/brands/models/<%= data.model_id %>/generations"
+              ><%= data.model_name %></a
+            >
+          </td>
+        </tr>
+        <tr>
+          <th>Generation</th>
+          <td>
+            <a href="/generation-list/<%= data.generation_id %>"
+              ><%= data.generation_name %></a
+            >
+          </td>
+        </tr>
+        <tr>
+          <th>Modification (Engine)</th>
+          <td><%= data.engine %></td>
+        </tr>
+        <tr>
+          <th>Start of production</th>
+          <td><%= data.start_production %></td>
+        </tr>
+        <% if (data.end_production !== '') { %>
+        <tr>
+          <th>End of Production</th>
+          <td><%= data.end_production %></td>
+        </tr>
+        <% } %>
+        <tr>
+          <th>Powertrain Architecture</th>
+          <td><%= data.powertrain_architecture %></td>
+        </tr>
+        <tr>
+          <th>Body type</th>
+          <td><%= data.body_type %></td>
+        </tr>
+        <tr>
+          <th>Seats</th>
+          <td><%= data.seat %></td>
+        </tr>
+        <tr>
+          <th>Doors</th>
+          <td><%= data.door %></td>
+        </tr>
+        <tr class="no">
+          <th colspan="2" class="no">
+            <strong class="car" id="_performance">Performance specs</strong>
+          </th>
+        </tr>
+        <tr>
+          <th>Fuel Type</th>
+          <td><%= data.fuel_type %></td>
+        </tr>
+        <% if (data.acceleration_100kmh !== '') { %>
+        <tr>
+          <th>Acceleration 0 - 100 km/h</th>
+          <td><%= data.acceleration_100kmh %></td>
+        </tr>
+        <% } %> <% if (data.acceleration_62mph !== '') { %>
+        <tr>
+          <th>Acceleration 0 - 62 mph</th>
+          <td><%= data.acceleration_62mph %></td>
+        </tr>
+        <% } %> <% if (data.acceleration_60mph !== '') { %>
+        <tr>
+          <th>Acceleration 0 - 60 mph</th>
+          <td><%= data.acceleration_60mph %></td>
+        </tr>
+        <% } %> <% if (data.emission_standard !== '') { %>
+        <tr>
+          <th>Emission standard</th>
+          <td><%= data.emission_standard %></td>
+        </tr>
+        <% } %> <% if (data.weight_power_ratio !== '') { %>
+        <tr>
+          <th>Weight-to-power ratio</th>
+          <td><%= data.weight_power_ratio %></td>
+        </tr>
+        <% } %> <% if (data.weight_power_torque !== '') { %>
+        <tr>
+          <th>Weight-to-torque ratio</th>
+          <td><%= data.weight_power_torque %></td>
+        </tr>
+        <% } %>
+        <tr class="no">
+          <th colspan="2" class="no">
+            <strong class="car" id="_electric"
+              >Electric cars and hybrids specs</strong
+            >
+          </th>
+        </tr>
+        <tr>
+          <th>Gross battery capacity</th>
+          <td>40 kWh</td>
+        </tr>
+        <tr>
+          <th>Battery technology</th>
+          <td>Lithium-ion (Li-Ion)</td>
+        </tr>
+        <tr>
+          <th>Battery location</th>
+          <td>Below the floor</td>
+        </tr>
+        <tr>
+          <th>All-electric range (WLTC)</th>
+          <td>
+            160-200 km
+            <span class="val2">99.42 - 124.27 mi</span>
+          </td>
+        </tr>
+        <tr class="e">
+          <th class="e">Charging ports</th>
+          <th>Location</th>
+        </tr>
+        <tr class="e">
+          <th>GB/T 20234.2 AC</th>
+          <td>Rear left</td>
+        </tr>
+        <tr class="e">
+          <th>GB/T 20234.3 DC</th>
+          <td>Rear left</td>
+        </tr>
+        <tr class="e">
+          <th colspan="2" class="e">Electric motor 1</th>
+        </tr>
+        <tr class="e">
+          <th>Electric motor power</th>
+          <td>272 Hp</td>
+        </tr>
+        <tr class="e">
+          <th>Electric motor Torque</th>
+          <td>
+            360 Nm
+            <span class="val2">265.52 lb.-ft.</span>
+          </td>
+        </tr>
+        <tr class="e">
+          <th>Electric motor location</th>
+          <td>Rear axle, Transverse</td>
+        </tr>
+        <tr>
+          <th>System power</th>
+          <td>272 Hp</td>
+        </tr>
+        <tr>
+          <th>System torque</th>
+          <td>
+            360 Nm
+            <span class="val2">265.52 lb.-ft.</span>
+          </td>
+        </tr>
+        <tr class="no">
+          <th colspan="2" class="no">
+            <strong class="car" id="_engine"
+              >Internal combustion engine specs</strong
+            >
+          </th>
+        </tr>
+        <% if (data.power !== '') { %>
+        <tr>
+          <th>Power</th>
+          <td><%= data.power %></td>
+        </tr>
+
+        <tr>
+          <% } %> <% if (data.power_per_litre !== '') { %>
+        </tr>
+
+        <tr>
+          <th>Power per litre</th>
+          <td><%= data.power_per_litre %></td>
+        </tr>
+
+        <tr>
+          <% } %> <% if (data.engine_layout !== '') { %>
+        </tr>
+
+        <tr>
+          <th>Engine layout</th>
+          <td><%= data.engine_layout %></td>
+        </tr>
+        <% } %> <% if (data.engine_model !== '') { %>
+        <tr>
+          <th>Engine Model/Code</th>
+          <td><%= data.engine_model %></td>
+        </tr>
+        <% } %> <% if (data.engine_displacement !== '') { %>
+        <tr>
+          <th>Engine displacement</th>
+          <td><%= data.engine_displacement %></td>
+        </tr>
+        <% } %>
+
+        <tr>
+          <th>Number of cylinders</th>
+          <td><%= data.number_cylinders %></td>
+        </tr>
+        <tr>
+          <th>Engine configuration</th>
+          <td><%= data.engine_configuration %></td>
+        </tr>
+        <tr>
+          <th>Number of valves per cylinder</th>
+          <td><%= data.number_of_valves_per_cylinder %></td>
+        </tr>
+        <tr>
+          <th>Fuel injection system</th>
+          <td><%= data.fuel_injection_system %></td>
+        </tr>
+        <tr>
+          <th>Engine aspiration</th>
+          <td><%= data.engine_aspiration %></td>
+        </tr>
+        <tr>
+          <th>Engine systems</th>
+          <td>Start &amp; Stop System<br /></td>
+        </tr>
+        <tr>
+          <th>Coolant</th>
+          <td><%= data.coolant %></td>
+        </tr>
+        <tr class="no">
+          <th colspan="2" class="no2">
+            <div class="adin top" style="height: 0px"></div>
+          </th>
+        </tr>
+        <tr class="no">
+          <th colspan="2" class="no">
+            <strong class="car" id="_volume">Space, Volume and weights</strong>
+          </th>
+        </tr>
+        <tr>
+          <th>Kerb Weight</th>
+          <td>
+            2220 kg
+            <span class="val2">4894.26 lbs.</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Trunk (boot) space - minimum</th>
+          <td>
+            369 l
+            <span class="val2">13.03 cu. ft.</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Trunk (boot) space - maximum</th>
+          <td>
+            776 l
+            <span class="val2">27.4 cu. ft.</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Fuel tank capacity</th>
+          <td>
+            56 l
+            <span class="val2">14.79 US gal | 12.32 UK gal</span>
+          </td>
+        </tr>
+        <tr class="no">
+          <th colspan="2" class="no">
+            <strong class="car" id="_dimensions">Dimensions</strong>
+          </th>
+        </tr>
+        <tr>
+          <th>Length</th>
+          <td>
+            <%= data.length%>
+            <span class="val2">187.8 in.</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Width</th>
+          <td>
+            <%= data.width%>
+            <span class="val2">75.98 in.</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Height</th>
+          <td>
+            <%= data.height %>
+            <span class="val2">63.98 in.</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Wheelbase</th>
+          <td>
+            <%= data.wheelbase %>
+            <span class="val2">113.39 in.</span>
+          </td>
+        </tr>
+        <tr>
+          <th>Ride height (ground clearance)</th>
+          <td>
+            150 mm
+            <span class="val2">5.91 in.</span>
+          </td>
+        </tr>
+        <tr class="no">
+          <th colspan="2" class="no">
+            <strong class="car" id="_drivetrain"
+              >Drivetrain, brakes and suspension specs</strong
+            >
+          </th>
+        </tr>
+        <tr>
+          <th>Drivetrain Architecture</th>
+          <td>
+            The Internal combustion engine (ICE) drives the generator only, with
+            no mechanical connection to the drive. An electric motor drives the
+            rear wheels.
+          </td>
+        </tr>
+        <tr>
+          <th>Drive wheel</th>
+          <td>Rear wheel drive</td>
+        </tr>
+        <tr>
+          <th>Number of gears and type of gearbox</th>
+          <td>1 gears, automatic transmission</td>
+        </tr>
+        <tr>
+          <th>Front suspension</th>
+          <td>Double wishbone</td>
+        </tr>
+        <tr>
+          <th>Rear suspension</th>
+          <td>Independent multi-link suspension</td>
+        </tr>
+        <tr>
+          <th>Front brakes</th>
+          <td>Ventilated discs</td>
+        </tr>
+        <tr>
+          <th>Rear brakes</th>
+          <td>Ventilated discs</td>
+        </tr>
+        <tr>
+          <th>Assisting systems</th>
+          <td>ABS (Anti-lock braking system)<br /></td>
+        </tr>
+        <tr>
+          <th>Steering type</th>
+          <td>Steering rack and pinion</td>
+        </tr>
+        <tr>
+          <th>Power steering</th>
+          <td>Electric Steering</td>
+        </tr>
+        <tr>
+          <th>Tires size</th>
+          <td>255/50 R19; 255/45 R20</td>
+        </tr>
+        <tr>
+          <th>Wheel rims size</th>
+          <td>19; 20</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

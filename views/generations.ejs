@@ -1,13 +1,15 @@
 <div class="layout-brands">
   <ul class="nav nav-tabs">
     <li class="nav-item">
-      <a href="/brands" class="nav-link ">Autocatalog</a>
+      <a href="/brands" class="nav-link">Autocatalog</a>
     </li>
     <li class="nav-item">
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/brands/<%= generations[0].brand_id %>/models" class="nav-link "><%= generations[0].brand_name %></a>
+      <a href="/brands/<%= generations[0].brand_id %>/models" class="nav-link"
+        ><%= generations[0].brand_name %></a
+      >
     </li>
     <li class="nav-item">
       <span class="arrow">&rarr;</span>
@@ -19,20 +21,33 @@
 </div>
 
 <div class="generations">
-  <% let currentLetter = ''; %>
-  <% generations.forEach(generation => { %>
-      <% if (generation.title[0].toUpperCase() !== currentLetter) { %>
-          <% currentLetter = generation.title[0].toUpperCase(); %>
-          <div class="letter"><%= currentLetter %></div>
-      <% } %>
-      <div class="generation-card">
-          <img src="<%= generation.image_path %>" alt="<%= generation.title %>">
-          <div class="detail">
-            <h3><%= generation.title %></h3>
-            <h4><span><%= generation.start_production %></span> - <span><%= generation.end_production %></span> <%= generation.body_type%></h4>
-            <p>Power : <%= generation.power %></p>
-            <p>Dimension : <%= generation.dimension %></p>
-          </div>
+  <% let currentLetter = ''; %> <% generations.forEach(generation => { %> <% if
+  (generation.title[0].toUpperCase() !== currentLetter) { %> <% currentLetter =
+  generation.title[0].toUpperCase(); %>
+  <div class="letter"><%= currentLetter %></div>
+  <% } %>
+  <div class="generation-card">
+    <a href="/generation-list/<%=generation.id%>">
+      <div class="frame">
+        <img
+          src="<%= generation.image_path %>"
+          alt="Relist"
+          onerror="this.onerror=null; this.src='/nomodels.webp';"
+        />
       </div>
+      <div class="detail">
+        <h3><%= generation.title %></h3>
+        <h4>
+          <span
+            ><%= generation.start_production %> - <%= generation.end_production
+            %></span
+          >
+          <%= generation.body_type%>
+        </h4>
+        <p>Power : <%= generation.power %></p>
+        <p>Dimension : <%= generation.dimension %> mm</p>
+      </div>
+    </a>
+  </div>
   <% }) %>
 </div>

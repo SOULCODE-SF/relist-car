@@ -114,7 +114,7 @@
    * Initiate tooltips
    */
   var tooltipTriggerList = [].slice.call(
-    document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    document.querySelectorAll('[data-bs-toggle="tooltip"]'),
   );
   var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
     return new bootstrap.Tooltip(tooltipTriggerEl);
@@ -136,7 +136,7 @@
 
         form.classList.add('was-validated');
       },
-      false
+      false,
     );
   });
 
@@ -174,15 +174,15 @@
     }
   }
 
-  // Add event listener to ads type dropdown
-  document
-    .getElementById('input-ads-type')
-    .addEventListener('change', function () {
+  const adsTypeDropdown = document.getElementById('input-ads-type');
+  if (adsTypeDropdown) {
+    adsTypeDropdown.addEventListener('change', function () {
       toggleAdsElements();
     });
 
-  // Initial call to set initial visibility based on ads type
-  toggleAdsElements();
+    // Initial call to set initial visibility based on ads type
+    toggleAdsElements();
+  }
 
   $(document).ready(function () {
     // Ketika tombol upload gambar diklik
@@ -206,6 +206,14 @@
       $('#image-preview').attr('src', 'assets/img/preview.png');
       // Reset input file (optional)
       $('#input-image').val('');
+    });
+  });
+
+  $(document).ready(function () {
+    // Menangani peristiwa klik pada tab link
+    $('#myTab a').on('click', function (e) {
+      e.preventDefault();
+      $(this).tab('show');
     });
   });
 })();
