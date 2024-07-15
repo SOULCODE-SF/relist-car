@@ -1,4 +1,33 @@
 <div class="home">
+  <section class="slider owl-carousel" aria-label="Slider">
+    <div class="item">
+      <figure class="slide-content">
+        <img src="/assets/images/hero-1.png" alt="Slider Image 1" />
+        <figcaption>
+          <h2>Slider Image 1</h2>
+          <p>This is the description for Slider Image 1.</p>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="item">
+      <figure class="slide-content">
+        <img src="/assets/images/hero-2.png" alt="Slider Image 2" />
+        <figcaption>
+          <h2>Slider Image 2</h2>
+          <p>This is the description for Slider Image 2.</p>
+        </figcaption>
+      </figure>
+    </div>
+    <div class="item">
+      <figure class="slide-content">
+        <img src="/assets/images/hero-3.png" alt="Slider Image 3" />
+        <figcaption>
+          <h2>Slider Image 3</h2>
+          <p>This is the description for Slider Image 3.</p>
+        </figcaption>
+      </figure>
+    </div>
+  </section>  
   <section class="recent-cars">
     <h3>NEW ARRIVALS</h3>
     <h1>Let's Check Latest <span>Cars</span></h1>
@@ -8,7 +37,7 @@
         <div class="car-card">
           <div class="frame">
             <img
-              src="<%= item.image_path %>"
+              src="/assets/<%= item.image_path %>"
               alt="Relist"
               onerror="this.onerror=null; this.src='/nomodels.webp';"
             />

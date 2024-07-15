@@ -63,8 +63,96 @@ a {
 }
 
 .home {
-  padding: 0px 40px;
+  margin-top: 110px;
+  width: 100%;
 }
+
+.home .slider {
+  overflow: hidden;
+  position: relative; 
+  background-color: #333;
+}
+
+.slider-container {
+  display: flex;
+  overflow-x: hidden;
+  transition: transform 0.5s ease; /* Transisi untuk animasi perpindahan slide */
+}
+
+.slide {
+  flex: 0 0 100%; /* Mengatur lebar slide */
+}
+
+.prev-slide {
+  transform: translateX(-100%); /* Geser slide ke kiri */
+}
+
+.active-slide {
+  transform: translateX(0); /* Slide aktif ditampilkan tanpa translasi */
+}
+
+.next-slide {
+  transform: translateX(100%); /* Geser slide ke kanan */
+}
+
+.home .slide-content {
+  display: flex;
+  align-items: center;
+  position: relative;
+  justify-content: end;
+  height: 80vh;
+}
+
+.home .slide-content img {
+  width: 50%;
+}
+
+.home .slide-content figcaption {
+  position: absolute;
+  left: 10%;
+}
+
+.slider-controls {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  height: 20px;
+  padding: 10px;
+  box-sizing: border-box;
+  z-index: 1;
+}
+
+.prev-btn,
+.next-btn {
+  width: 80px;
+  height: 80px;
+  border-radius: 100%;
+  background-color: rgba(255, 255, 255, 0.3);
+  border: none;
+  padding: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.prev-btn {
+  margin-left: 20px;
+}
+
+.next-btn {
+  margin-right: 20px;
+}
+
+.prev-btn:hover,
+.next-btn:hover {
+  background-color: #fff;
+  color: red;
+}
+
 
 .recent-cars {
   text-align: center; /* Memastikan konten di dalam .recent-cars terpusat secara horizontal */
@@ -98,7 +186,6 @@ a {
 }
 
 .car-card .frame {
-  border: 1px slategrey solid;
   height: 180px; /* Fixed height for the frame */
   overflow: hidden; /* Hide overflow to contain the image */
   border-radius: 8px; /* Rounded corners */
@@ -257,21 +344,24 @@ button:hover {
 }
 
 .header {
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Memberikan shadow yang lebih halus */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000; /* Adjust as needed */
   background-color: #d0d0d0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
-/* CSS untuk bagian header nav */
 .header-nav {
   background-color: black;
-  color: white; /* Teks berwarna putih untuk kontras yang baik */
+  color: white;
   padding: 10px;
   font-weight: bold;
 }
 
 .navbar {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   background-color: white;
   height: 70px;
@@ -279,7 +369,9 @@ button:hover {
 }
 
 .nav-links {
+  width: 50%;
   display: flex;
+  justify-content: center;
   gap: 20px;
 }
 
@@ -327,7 +419,7 @@ button:hover {
 }
 
 .model-card .model .frame {
-  height: 160px; /* Fixed height for the frame */
+  height: 180px; /* Fixed height for the frame */
   overflow: hidden; /* Hide overflow to contain the image */
   border-radius: 8px; /* Rounded corners */
   box-sizing: border-box; /* Include padding and border in the element's total width and height */

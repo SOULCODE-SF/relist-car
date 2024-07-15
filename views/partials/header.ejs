@@ -3,11 +3,11 @@
   <nav class="navbar">
     <div class="logo">INI LOGO</div>
     <!-- Tambahkan elemen untuk hamburger icon -->
-    <div class="menu-icon">
+    <!-- <div class="menu-icon">
       <div class="bar"></div>
       <div class="bar"></div>
       <div class="bar"></div>
-    </div>
+    </div> -->
     <div class="nav-links">
       <a
         href="/"
@@ -17,9 +17,18 @@
       <a
         href="/brands"
         class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>"
-        >Autocatalog</a
+        >Cars</a
       >
-      <!-- <a href="/others" class="nav-link <%= currentPage === 'others' ? 'active' : '' %>">Halaman Lain</a> -->
+      <a
+        href="/brands"
+        class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>"
+        >Privacy Policy</a
+      >
+      <a
+        href="/brands"
+        class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>"
+        >Contact Us</a
+      >
     </div>
   </nav>
 </header>

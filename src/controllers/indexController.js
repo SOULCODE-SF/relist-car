@@ -23,6 +23,8 @@ exports.getHomePage = async (req, res) => {
       recentCars,
     };
 
+    console.log(datas);
+
     cache.set(key, datas, 3600);
 
     res.render('index', {
@@ -96,7 +98,7 @@ exports.getGenerationByModel = async (req, res) => {
 
     const [datas] = await db.query(
       query.generations.getGenerationByModelQuery,
-      [model_id]
+      [model_id],
     );
 
     res.render('generations', {
