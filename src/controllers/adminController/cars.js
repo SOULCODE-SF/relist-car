@@ -99,6 +99,16 @@ exports.addCar = async (req, res) => {
       body_type,
       seat,
       door,
+      fuel_consumption_urban,
+      fuel_consumption_extraurban,
+      fuel_type,
+      acceleration_100kmh,
+      acceleration_62mph,
+      acceleration_60mph,
+      maximum_speed,
+      emission_standard,
+      weight_to_power_ratio,
+      weight_to_torque_ratio
     } = req.body;
 
     connection = await db.getConnection();
@@ -115,17 +125,38 @@ exports.addCar = async (req, res) => {
       door,
     ];
 
+    const performance_specs = [
+      fuel_consumption_urban ?? '',
+      fuel_consumption_extraurban ?? '',
+      fuel_type ?? '',
+      acceleration_100kmh ?? '',
+      acceleration_62mph ?? '',
+      acceleration_60mph ?? '',
+      maximum_speed ?? '',
+      emission_standard ?? '',
+      weight_to_power_ratio ?? '',
+      weight_to_torque_ratio ?? ''
+    ]
+
+    console.log(performance_specs)
     const gi = await connection.query(
       query.specs.addGeneralInformation,
       generalInformation
     );
 
-    const inserCars = [generation_id, brand_id, model_id, gi[0].insertId];
+    const ps = await connection.query(
+      query.specs.addPerformanceSpecs, 
+      performance_specs
+    )
+
+    const inserCars = [generation_id, brand_id, model_id, gi[0].insertId, ps[0].insertId];
 
     await connection.query(
-      'INSERT INTO cars(g_id, b_id, m_id, gi_id) VALUES(?,?,?,?)',
+      'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id) VALUES(?,?,?,?,?)',
       inserCars
     );
+
+
 
     await connection.commit();
 
