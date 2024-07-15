@@ -38,7 +38,8 @@ let query = {
   specs: {
     addGeneralInformation:
       'insert into general_information( generation_link_id, engine, start_production, end_production, powertrain_architecture, body_type, seat, door ) values (?, ?, ?, ?, ?, ?, ?, ?);',
-    addPerformanceSpecs: 'insert into performance_specs (generation_link_id, fuel_consumption_urban, fuel_consumption_extra_urban, fuel_type, acceleration_100kmh, acceleration_62mph, acceleration_60mph, maximum_speed, emission_standard, weight_power_ratio, weight_power_torque) values (100000,?,?,?,?,?,?,?,?,?,?)'
+    addPerformanceSpecs: 'insert into performance_specs (generation_link_id, fuel_consumption_urban, fuel_consumption_extra_urban, fuel_type, acceleration_100kmh, acceleration_62mph, acceleration_60mph, maximum_speed, emission_standard, weight_power_ratio, weight_power_torque) values (100000,?,?,?,?,?,?,?,?,?,?)',
+    addEngineSpecs: 'insert into engine_specs ( generation_link_id, power, power_per_litre, torque, engine_layout, engine_model, engine_displacement, number_cylinders, engine_configuration, cylinder_bore, piston_stroke, compression_ratio, number_valves_per_cylinder, fuel_injection_system, engine_aspiration, engine_oil_capacity, engine_oil_specification, coolant ) values (10000,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
   },
 };
 module.exports = query;

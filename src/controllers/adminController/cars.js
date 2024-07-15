@@ -108,7 +108,24 @@ exports.addCar = async (req, res) => {
       maximum_speed,
       emission_standard,
       weight_to_power_ratio,
-      weight_to_torque_ratio
+      weight_to_torque_ratio,
+      power,
+      power_per_litre,
+      torque,
+      engine_layout,
+      engine_model,
+      engine_displacement,
+      number_cylinders,
+      engine_configuration,
+      cylinder_bore,
+      piston_stroke,
+      compression_ratio,
+      number_valves_per_cylinder,
+      fuel_injection_system,
+      engine_aspiration,
+      engine_oil_capacity,
+      engine_oil_specification,
+      coolant
     } = req.body;
 
     connection = await db.getConnection();
@@ -138,7 +155,26 @@ exports.addCar = async (req, res) => {
       weight_to_torque_ratio ?? ''
     ]
 
-    console.log(performance_specs)
+    const engine_specs = [
+      power ?? '',
+      power_per_litre ?? '',
+      torque ?? '',
+      engine_layout ?? '',
+      engine_model ?? '',
+      engine_displacement ?? '',
+      number_cylinders ?? '',
+      engine_configuration ?? '',
+      cylinder_bore ?? '',
+      piston_stroke ?? '',
+      compression_ratio ?? '',
+      number_valves_per_cylinder ?? '',
+      fuel_injection_system ?? '',
+      engine_aspiration ?? '',
+      engine_oil_capacity ?? '',
+      engine_oil_specification ?? '',
+      coolant ?? ''
+    ]
+
     const gi = await connection.query(
       query.specs.addGeneralInformation,
       generalInformation
@@ -149,10 +185,15 @@ exports.addCar = async (req, res) => {
       performance_specs
     )
 
-    const inserCars = [generation_id, brand_id, model_id, gi[0].insertId, ps[0].insertId];
+    const es = await connection.query(
+      query.specs.addEngineSpecs,
+      engine_specs
+    )
+
+    const inserCars = [generation_id, brand_id, model_id, gi[0].insertId, ps[0].insertId, es[0].insertId];
 
     await connection.query(
-      'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id) VALUES(?,?,?,?,?)',
+      'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id, es_id) VALUES(?,?,?,?,?, ?)',
       inserCars
     );
 

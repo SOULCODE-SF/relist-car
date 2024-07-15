@@ -2,18 +2,18 @@ module.exports = {
   apps: [
     {
       name: 'relist',
-      script: './bin/www', // Replace with your application's entry point
-      instances: 1, // Number of instances to be started (adjust as needed)
-      autorestart: true, // Restart the app if it crashes
-      watch: false, // Watch for file changes and restart
-      max_memory_restart: '1G', // Restart if memory usage exceeds this amount
+      script: './bin/www',
+      instances: 1,
+      autorestart: true, 
+      watch: false, 
+      max_memory_restart: '1G', 
       env: {
-        NODE_ENV: 'production', // Environment mode
+        NODE_ENV: 'production', 
       },
-      error_file: './logs/pm2-error.log', // Path to error log file
-      out_file: './logs/pm2-out.log', // Path to output log file
-      log_date_format: 'YYYY-MM-DD HH:mm:ss Z', // Log date format
-      merge_logs: true, // Merge logs across instances
+      error_file: './logs/pm2-error.log', 
+      out_file: './logs/pm2-out.log', 
+      log_date_format: 'YYYY-MM-DD HH:mm:ss Z',
+      merge_logs: true, 
       time: true,
     },
   ],
