@@ -32,14 +32,21 @@ let query = {
     cars: 'SELECT (SELECT COUNT(*) FROM cars) AS count_cars, (SELECT COUNT(DISTINCT b_id) FROM cars) AS count_brands, (select COUNT(distinct m_id) from cars) as count_models, (select count(distinct g_id) from cars) as count_generations',
   },
   cars: {
-    getAllCars:
-      `select c.*, concat(g.title, ' ', gi.engine) as car_title, b.name as brand_name, m.name as model_name from cars c join brands b on c.b_id = b.id join models m on c.m_id = m.id join generations g on c.g_id = g.id left join general_information gi on c.gi_id = gi.id WHERE c.b_id = ?`,
+    getAllCars: `select c.*, concat(g.title, ' ', gi.engine) as car_title, b.name as brand_name, m.name as model_name from cars c join brands b on c.b_id = b.id join models m on c.m_id = m.id join generations g on c.g_id = g.id left join general_information gi on c.gi_id = gi.id WHERE c.b_id = ?`,
   },
   specs: {
     addGeneralInformation:
       'insert into general_information( generation_link_id, engine, start_production, end_production, powertrain_architecture, body_type, seat, door ) values (?, ?, ?, ?, ?, ?, ?, ?);',
-    addPerformanceSpecs: 'insert into performance_specs (generation_link_id, fuel_consumption_urban, fuel_consumption_extra_urban, fuel_type, acceleration_100kmh, acceleration_62mph, acceleration_60mph, maximum_speed, emission_standard, weight_power_ratio, weight_power_torque) values (100000,?,?,?,?,?,?,?,?,?,?)',
-    addEngineSpecs: 'insert into engine_specs ( generation_link_id, power, power_per_litre, torque, engine_layout, engine_model, engine_displacement, number_cylinders, engine_configuration, cylinder_bore, piston_stroke, compression_ratio, number_valves_per_cylinder, fuel_injection_system, engine_aspiration, engine_oil_capacity, engine_oil_specification, coolant ) values (10000,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)'
+    addPerformanceSpecs:
+      'insert into performance_specs (generation_link_id, fuel_consumption_urban, fuel_consumption_extra_urban, fuel_type, acceleration_100kmh, acceleration_62mph, acceleration_60mph, maximum_speed, emission_standard, weight_power_ratio, weight_power_torque) values (100000,?,?,?,?,?,?,?,?,?,?)',
+    addEngineSpecs:
+      'insert into engine_specs ( generation_link_id, power, power_per_litre, torque, engine_layout, engine_model, engine_displacement, number_cylinders, engine_configuration, cylinder_bore, piston_stroke, compression_ratio, number_valves_per_cylinder, fuel_injection_system, engine_aspiration, engine_oil_capacity, engine_oil_specification, coolant ) values (10000,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
+  },
+  users: {
+    addUser: `INSERT INTO users (username, email, password, name, location) VALUES (?,?,?,?,?);`,
+    getLoginData: `SELECT * FROM users WHERE (username = ? OR email = ?);`,
+    cekUsername: `SELECT username FROM users WHERE username = ?;`,
+    cekEmail: `SELECT email FROM users WHERE email = ?;`,
   },
 };
 module.exports = query;

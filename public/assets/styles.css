@@ -59,6 +59,7 @@ a {
 }
 
 .main-content {
+  margin-top: 110px;
   background-color: #fdfdfd;
 }
 
@@ -382,6 +383,10 @@ button:hover {
   text-decoration: none;
   transition: color 0.3s;
   font-size: 1rem;
+}
+
+.nav-links .nav-link.active {
+  color: red;
 }
 
 .nav-links .nav-link:hover {

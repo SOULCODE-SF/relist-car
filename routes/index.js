@@ -7,6 +7,7 @@ const {
   getGenerationLists,
   getHomePage,
 } = require('../src/controllers/indexController');
+const { addUser } = require('../src/controllers/authController');
 const router = express.Router();
 
 router.get('/', getHomePage);
@@ -42,5 +43,7 @@ router.get('/specs/:id', getSpec);
 router.get('/others', (req, res) => {
   res.render('other', { title: 'Halaman Lain', currentPage: 'others' });
 });
+
+router.post('/users/register', addUser);
 
 module.exports = router;
