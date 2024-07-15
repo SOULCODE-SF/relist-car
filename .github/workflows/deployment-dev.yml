@@ -1,27 +1,35 @@
-# File: .github/workflows/ci-cd.yml
-
-name: CI/CD with Express and PM2
+name: Deploy to Production
 
 on:
   push:
     branches:
-      - development  # Ganti dengan nama branch utama Anda
+      - main  # Ganti dengan nama branch yang kamu gunakan untuk produksi
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v3
 
-      - name: Install Dependencies
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20.5' 
+
+      - name: Install dependencies
         run: npm install
 
-      - name: Build and Test
-        run: npm start
+      - name: Run tests
+        run: npm test
 
-      - name: Deploy with PM2
+      - name: Deploy
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
+          HOST: ${{ secrets.HOST }}
+          USER: ${{ secrets.USER }}
+          PORT: ${{ secrets.PORT }}
         run: |
-          npm install pm2 -g
-          pm2 reload ecosystem.config.js --env production
+          echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh -o StrictHostKeyChecking=no $USER@$HOST -p $PORT 'cd /path/to/your/app && git pull origin main && npm install && npm run deploy'

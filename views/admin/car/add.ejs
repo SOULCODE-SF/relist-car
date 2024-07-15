@@ -27,6 +27,18 @@
     <li class="nav-item">
       <a
         class="nav-link"
+        id="engine-specs-tab"
+        data-toggle="tab"
+        href="#engine-specs"
+        role="tab"
+        aria-controls="engine-specs"
+        aria-selected="false"
+        >Engines</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
         id="electric-tab"
         data-toggle="tab"
         href="#electric"
@@ -34,18 +46,6 @@
         aria-controls="electric"
         aria-selected="false"
         >Electric and Hybrid</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="engine-tab"
-        data-toggle="tab"
-        href="#engine"
-        role="tab"
-        aria-controls="engine"
-        aria-selected="false"
-        >Engine Specs</a
       >
     </li>
     <li class="nav-item">
@@ -93,6 +93,14 @@
       >
         <%- include('./partials/form/performance_specs.ejs') %>
       </div>
+      <div
+        class="tab-pane fade"
+        id="engine-specs"
+        role="tabpanel"
+        aria-labelledby="engine-specs-tab"
+      >
+        <%- include('./partials/form/engine_specs.ejs') %>
+      </div>
 
       <div
         class="tab-pane fade"
@@ -107,19 +115,13 @@
         <input type="text" id="range" name="range" /><br /><br />
         <!-- More fields here -->
       </div>
-
       <div
         class="tab-pane fade"
         id="engine"
         role="tabpanel"
         aria-labelledby="engine-tab"
       >
-        <h3>Engine Specs</h3>
-        <label for="engineType">Engine Type:</label>
-        <input type="text" id="engineType" name="engineType" /><br /><br />
-        <label for="displacement">Displacement:</label>
-        <input type="text" id="displacement" name="displacement" /><br /><br />
-        <!-- More fields here -->
+        <%- include('./partials/form/engine_specs.ejs') %>
       </div>
 
       <div
@@ -128,12 +130,7 @@
         role="tabpanel"
         aria-labelledby="dimensions-tab"
       >
-        <h3>Dimensions</h3>
-        <label for="length">Length:</label>
-        <input type="text" id="length" name="length" /><br /><br />
-        <label for="width">Width:</label>
-        <input type="text" id="width" name="width" /><br /><br />
-        <!-- More fields here -->
+        <%- include('./partials/form/engine_specs.ejs') %>
       </div>
 
       <div
@@ -154,6 +151,7 @@
         <!-- More fields here -->
       </div>
     </div>
+
 
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
   </form>

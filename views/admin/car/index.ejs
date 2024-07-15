@@ -52,6 +52,7 @@
             <thead>
               <tr>
                 <th>Id</th>
+                <th>Title</th>
                 <th>Brand</th>
                 <th>Model</th>
                 <th>Action</th>
@@ -61,7 +62,8 @@
               <!-- Loop through cars data -->
               <% datas.forEach((data, i) => { %>
               <tr>
-                <td><%= data.gl_id %></td>
+                <td><%= data.id %></td>
+                <td><%= data.car_title %></td>
                 <td><%= data.brand_name %></td>
                 <td><%= data.model_name %></td>
                 <td class="tw-100">

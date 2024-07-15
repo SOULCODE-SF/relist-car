@@ -1,6 +1,5 @@
-/* public/styles/main.css */
 @font-face {
-  font-family: 'Mulish';
+  font-family: Mulish;
   src: url('/assets/fonts/Mulish/static/Mulish-Regular.ttf') format('truetype'),
     url('/assets/fonts/Mulish/static/Mulish-Bold.ttf') format('truetype'),
     url('/assets/fonts/Mulish/static/Mulish-ExtraBold.ttf') format('truetype'),
@@ -12,14 +11,14 @@
 }
 
 @font-face {
-  font-family: 'Mulish';
+  font-family: Mulish;
   src: url('/assets/fonts/Mulish/static/Mulish-Bold.ttf') format('truetype');
   font-weight: bold; /* untuk Bold */
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Mulish';
+  font-family: Mulish;
   src: url('/assets/fonts/Mulish/static/Mulish-ExtraBold.ttf')
     format('truetype');
   font-weight: 800; /* untuk Extra Bold */
@@ -27,21 +26,21 @@
 }
 
 @font-face {
-  font-family: 'Mulish';
+  font-family: Mulish;
   src: url('/assets/fonts/Mulish/static/Mulish-Light.ttf') format('truetype');
   font-weight: 300; /* untuk Light */
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Mulish';
+  font-family: Mulish;
   src: url('/assets/fonts/Mulish/static/Mulish-Medium.ttf') format('truetype');
   font-weight: 500; /* untuk Medium */
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Mulish';
+  font-family: Mulish;
   src: url('/assets/fonts/Mulish/static/Mulish-SemiBold.ttf') format('truetype');
   font-weight: 600; /* untuk Semi Bold */
   font-style: normal;
@@ -49,10 +48,11 @@
 
 /* Menggunakan font Mulish untuk seluruh body */
 body {
-  font-family: 'Mulish', sans-serif;
+  font-family: Mulish, sans-serif;
   background-color: #fdfdfd;
 }
 
+/* Hapus deklarasi yang duplikat dan perbaiki penulisan sisa CSS */
 a {
   text-decoration: none;
   color: black;
@@ -164,10 +164,7 @@ a {
 
 .recently-added {
   display: grid;
-  grid-template-columns: repeat(
-    4,
-    1fr
-  ); /* Menentukan 3 kolom dengan lebar yang sama */
+  grid-template-columns: repeat(4, 1fr);
   gap: 20px;
   justify-items: center; /* Memusatkan item di dalam grid secara horizontal */
 }
@@ -178,8 +175,8 @@ a {
   border-radius: 8px;
   width: 250px; /* Adjust width as needed */
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #ffff;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+  background-color: #fff;
   transition: background-color 0.3s;
   overflow: hidden; /* Hide overflow to contain the frame */
   display: inline-block;
@@ -214,7 +211,6 @@ a {
 .brands {
   padding: 20px;
   margin-top: 20px;
-
   justify-content: left;
 }
 
@@ -230,9 +226,9 @@ a {
 
 input {
   height: 100%;
-  border: red 1px solid;
+  border: 1px solid red;
   border-radius: 5px;
-  padding: 0px 10px;
+  padding: 0 10px;
 }
 
 button {
@@ -259,7 +255,7 @@ button:hover {
   border-radius: 8px;
   width: 120px;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
   background-color: #f0f0f0; /* Warna abu-abu terang */
   transition: background-color 0.3s, transform 0.3s; /* Transisi background dan transform */
   position: relative; /* Position relative untuk animasi */
@@ -268,7 +264,7 @@ button:hover {
 
 .brand:hover {
   cursor: pointer;
-  background-color: #ffffff; /* Warna putih saat di-hover */
+  background-color: #fff; /* Warna putih saat di-hover */
   transform: translateY(-5px); /* Angkat card ke atas sedikit */
 }
 
@@ -290,22 +286,24 @@ button:hover {
   color: red; /* Warna teks menjadi merah saat di-hover */
 }
 
-.brand img {
+.brand .brand-card .frame img {
   max-width: 100%;
   height: auto;
-  background-color: #ffffff; /* Latar belakang putih */
+  background-color: #fff; /* Latar belakang putih */
   border-radius: 8px; /* Border rounded */
   padding: 5px; /* Padding untuk memberikan ruang antara gambar dan border */
   border: #ccc 1px solid;
 }
 
-@keyframes liftCard {
+@keyframes lift-card {
   0% {
     transform: translateY(0);
   }
+
   50% {
     transform: translateY(-5px);
   }
+
   100% {
     transform: translateY(0);
   }
@@ -321,16 +319,18 @@ button:hover {
   color: red;
   padding: 10px 20px;
 }
+
 /* CSS untuk daftar huruf abjad di bagian atas */
 .alphabet-list {
   width: 100%;
-  padding: 5px 0px;
+  padding: 5px 0;
   display: flex;
   justify-content: space-between;
   margin: 20px 0;
   border-top: 1px solid #d0d0d0;
   border-bottom: 1px solid #d0d0d0;
 }
+
 .alphabet-list a {
   margin: 0 10px;
   font-size: 1.2rem;
@@ -339,6 +339,7 @@ button:hover {
   color: red;
   transition: color 0.3s;
 }
+
 .alphabet-list a:hover {
   color: darkblue;
 }
@@ -365,7 +366,7 @@ button:hover {
   align-items: center;
   background-color: white;
   height: 70px;
-  padding: 0px 40px;
+  padding: 0 40px;
 }
 
 .nav-links {
@@ -380,13 +381,10 @@ button:hover {
   font-weight: bolder;
   text-decoration: none;
   transition: color 0.3s;
+  font-size: 1rem;
 }
 
 .nav-links .nav-link:hover {
-  color: red;
-}
-
-.nav-links .nav-link.active {
   color: red;
 }
 
@@ -401,15 +399,15 @@ button:hover {
   border-radius: 8px;
   width: 200px; /* Adjust width as needed */
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  background-color: #ffff;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 10%);
+  background-color: #fff;
   transition: background-color 0.3s;
   overflow: hidden; /* Hide overflow to contain the frame */
   display: inline-block; /* Ensure inline-block for correct layout */
 }
 
 .model-card:hover {
-  background-color: #ffffff;
+  background-color: #fff;
   cursor: pointer;
 }
 
@@ -426,16 +424,16 @@ button:hover {
   position: relative; /* Relative positioning for child elements */
 }
 
-.model-card .model img {
+.model-card .model .frame img {
   max-width: 100%;
   width: 100%;
   height: auto;
-  background-color: #ffffff; /* White background */
+  background-color: #fff; /* White background */
   border-radius: 5px; /* Rounded corners */
   transition: transform 0.3s; /* Smooth transition for zoom effect */
 }
 
-.model-card:hover .model img {
+.model-card:hover .model .frame img {
   transform: scale(1.1); /* Zoom in effect */
   transform-origin: center center; /* Transform origin at the center */
 }
@@ -452,15 +450,15 @@ button:hover {
   display: flex;
   flex-direction: column;
   width: 300px;
-  background-color: #ffff;
-  padding: 10px 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgb(0 0 0 / 10%), 0 6px 20px rgb(0 0 0 / 10%);
   margin-bottom: 10px;
   border-radius: 5px;
   overflow: hidden; /* Hide overflow to contain the frame */
 }
 
-.generation-card .frame {
+.generations .generation-card .frame {
   height: auto; /* Fixed height for the frame */
   overflow: hidden; /* Hide overflow to contain the image */
   border-radius: 8px; /* Rounded corners */
@@ -468,7 +466,7 @@ button:hover {
   position: relative; /* Relative positioning for child elements */
 }
 
-.generation-card span {
+.generations .generation-card span {
   color: red;
   font-weight: bold;
 }
@@ -477,17 +475,17 @@ button:hover {
   font-size: 12px;
 }
 
-.generations img {
+.generations .generation-card .frame img {
   max-width: 100%;
   width: 100%;
   height: auto;
-  background-color: #ffffff; /* White background */
+  background-color: #fff; /* White background */
   border-radius: 5px; /* Rounded corners */
   transition: transform 0.3s;
 }
 
 .generation-card .detail {
-  padding: 0px 5px;
+  padding: 0 5px;
 }
 
 .generation-card .detail h3 {
@@ -511,14 +509,14 @@ button:hover {
   cursor: pointer;
 }
 
-.generation-card:hover img {
+.generations .generation-card:hover .frame img {
   transform: scale(1.1); /* Zoom in effect */
   transform-origin: center center;
 }
 
 .generation-list .list {
   padding: 20px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1), 0 6px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 8px rgb(0 0 0 / 10%), 0 6px 20px rgb(0 0 0 / 10%);
   margin-bottom: 20px;
 }
 
@@ -560,6 +558,7 @@ button:hover {
 }
 
 .nav-tabs .nav-item .nav-link.active {
+  font-weight: bold;
   background-color: transparent;
   color: red;
 }
@@ -638,10 +637,6 @@ button:hover {
   color: #777;
 }
 
-.spec .cardetailsout .no2 .adin.top {
-  height: 0;
-}
-
 .spec .e th,
 .spec .e td {
   padding: 5px;
@@ -657,7 +652,7 @@ button:hover {
   border-top: 1px solid #ddd;
 }
 
-.spec .no2 .adin.top {
+.spec .cardetailsout .no2 .adin.top {
   height: 10px;
 }
 
@@ -680,6 +675,7 @@ button:hover {
   font-size: 1.5em;
   margin-bottom: 15px;
 }
+
 /* 
 .header {
   display: flex;
@@ -687,11 +683,6 @@ button:hover {
   align-items: center;
   padding: 10px 40px;
 } */
-
-.navbar {
-  display: flex;
-  align-items: center;
-}
 
 .logo {
   margin-right: auto; /* Menempatkan logo di sebelah kiri */
@@ -710,23 +701,8 @@ button:hover {
   transition: transform 0.3s, opacity 0.3s; /* Animasi untuk ikon bar */
 }
 
-.nav-links {
-  display: flex;
-  gap: 20px;
-}
-
-.nav-links .nav-link {
-  text-decoration: none;
-  color: black;
-  font-size: 1rem;
-}
-
-.nav-links .nav-link.active {
-  font-weight: bold;
-}
-
 /* Media query untuk layar kurang dari 768px */
-@media (max-width: 768px) {
+@media (width <= 768px) {
   .header {
     flex-direction: column;
   }
@@ -786,12 +762,13 @@ button:hover {
   }
 }
 
-@media (max-width: 420px) {
+@media (width <= 420px) {
   .main-content {
     overflow: hidden;
   }
+
   .home {
-    padding: 0px 10px;
+    padding: 0 10px;
     overflow: hidden;
   }
 
@@ -814,10 +791,6 @@ button:hover {
   .nav-links {
     flex-direction: column;
     gap: 10px;
-  }
-
-  .nav-links .nav-link {
-    font-size: 1.2rem; /* Adjust font size for smaller screens */
   }
 
   .spec .cardetailsout {
