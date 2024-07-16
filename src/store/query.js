@@ -1,4 +1,4 @@
-let query = {
+let queryStore = {
   home: {
     recentCars:
       'select c.id, b.name as brand_name, m.name as model_name, g.title as generation_name, g.image_path, gi.*, ps.fuel_consumption_combined , dbss.drive_wheel from cars c join brands b on b.id = c.b_id join models m on m.id = c.m_id join generations g on g.id = c.g_id left join general_information gi on gi.id = c.gi_id left join performance_specs ps on ps.id = c.ps_id left join drivetrain_brakes_suspension_specs dbss on dbss.id = c.dbss_id order by rand() limit ?;',
@@ -43,10 +43,10 @@ let query = {
       'insert into engine_specs ( generation_link_id, power, power_per_litre, torque, engine_layout, engine_model, engine_displacement, number_cylinders, engine_configuration, cylinder_bore, piston_stroke, compression_ratio, number_valves_per_cylinder, fuel_injection_system, engine_aspiration, engine_oil_capacity, engine_oil_specification, coolant ) values (10000,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
   },
   users: {
-    addUser: `INSERT INTO users (username, email, password, name, location) VALUES (?,?,?,?,?);`,
+    addUser: `INSERT INTO users (username, email, password, role, name, location) VALUES (?,?,?,?,?,?);`,
     getLoginData: `SELECT * FROM users WHERE (username = ? OR email = ?);`,
     cekUsername: `SELECT username FROM users WHERE username = ?;`,
     cekEmail: `SELECT email FROM users WHERE email = ?;`,
   },
 };
-module.exports = query;
+module.exports = queryStore;

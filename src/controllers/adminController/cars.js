@@ -12,6 +12,7 @@ exports.getCarsList = async (req, res) => {
 
     if (cachedData) {
       return res.render('admin/car/index', {
+        session: req.session,
         datas: cachedData,
         title: 'Cars List',
         currentPage: 'admin-car-list',
@@ -24,6 +25,7 @@ exports.getCarsList = async (req, res) => {
     cache.set(key, datas, 3600);
 
     res.render('admin/car/index', {
+      session: req.session,
       datas,
       title: 'Cars List',
       currentPage: 'admin-car-list',
@@ -83,7 +85,6 @@ exports.getGenerationName = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
-exports.g;
 
 exports.addCar = async (req, res) => {
   let connection;
@@ -125,7 +126,7 @@ exports.addCar = async (req, res) => {
       engine_aspiration,
       engine_oil_capacity,
       engine_oil_specification,
-      coolant
+      coolant,
     } = req.body;
 
     connection = await db.getConnection();
@@ -152,8 +153,8 @@ exports.addCar = async (req, res) => {
       maximum_speed ?? '',
       emission_standard ?? '',
       weight_to_power_ratio ?? '',
-      weight_to_torque_ratio ?? ''
-    ]
+      weight_to_torque_ratio ?? '',
+    ];
 
     const engine_specs = [
       power ?? '',
@@ -172,8 +173,8 @@ exports.addCar = async (req, res) => {
       engine_aspiration ?? '',
       engine_oil_capacity ?? '',
       engine_oil_specification ?? '',
-      coolant ?? ''
-    ]
+      coolant ?? '',
+    ];
 
     const gi = await connection.query(
       query.specs.addGeneralInformation,
@@ -181,23 +182,25 @@ exports.addCar = async (req, res) => {
     );
 
     const ps = await connection.query(
-      query.specs.addPerformanceSpecs, 
+      query.specs.addPerformanceSpecs,
       performance_specs
-    )
+    );
 
-    const es = await connection.query(
-      query.specs.addEngineSpecs,
-      engine_specs
-    )
+    const es = await connection.query(query.specs.addEngineSpecs, engine_specs);
 
-    const inserCars = [generation_id, brand_id, model_id, gi[0].insertId, ps[0].insertId, es[0].insertId];
+    const inserCars = [
+      generation_id,
+      brand_id,
+      model_id,
+      gi[0].insertId,
+      ps[0].insertId,
+      es[0].insertId,
+    ];
 
     await connection.query(
       'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id, es_id) VALUES(?,?,?,?,?, ?)',
       inserCars
     );
-
-
 
     await connection.commit();
 

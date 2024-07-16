@@ -7,7 +7,7 @@ const {
   getGenerationLists,
   getHomePage,
 } = require('../src/controllers/indexController');
-const { addUser } = require('../src/controllers/authController');
+const { addUser, loginUser } = require('../src/controllers/authController');
 const router = express.Router();
 
 router.get('/', getHomePage);
@@ -44,6 +44,14 @@ router.get('/others', (req, res) => {
   res.render('other', { title: 'Halaman Lain', currentPage: 'others' });
 });
 
+router.get('/login', (req, res) => {
+  res.render('auth/login', {
+    errorMessage: req.query.errorMessage || '',
+    title: 'Login',
+    currentPage: 'login',
+  });
+});
 router.post('/users/register', addUser);
+router.post('/login', loginUser);
 
 module.exports = router;

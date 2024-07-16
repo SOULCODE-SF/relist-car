@@ -1,16 +1,17 @@
 const db = require('../../db');
-const query = require('../store/query');
 const bcrypt = require('bcrypt');
+const queryStore = require('../store/query');
 
 exports.addUser = async (req, res) => {
   let connection;
   try {
-    const { username, email, password, rePassword, name, location } = req.body;
+    const { username, email, password, role, rePassword, name, location } =
+      req.body;
 
     connection = await db.getConnection();
     await connection.beginTransaction();
 
-    const usernameExist = await connection.query(query.users.cekUsername, [
+    const usernameExist = await connection.query(queryStore.users.cekUsername, [
       username,
     ]);
 
@@ -20,7 +21,9 @@ exports.addUser = async (req, res) => {
       });
     }
 
-    const emailExist = await connection.query(query.users.cekEmail, [email]);
+    const emailExist = await connection.query(queryStore.users.cekEmail, [
+      email,
+    ]);
 
     if (emailExist[0].length > 0) {
       return res.json({
@@ -36,10 +39,11 @@ exports.addUser = async (req, res) => {
 
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await connection.query(query.users.addUser, [
+    await connection.query(queryStore.users.addUser, [
       username,
       email,
       hashedPassword,
+      role,
       name,
       location,
     ]);
@@ -54,7 +58,49 @@ exports.addUser = async (req, res) => {
     if (connection) {
       await connection.rollback();
     }
-    console.error(error.messsage);
+    console.error(error);
     res.json(error.messsage);
+  }
+};
+
+exports.loginUser = async (req, res) => {
+  try {
+    const { inputUsr, password } = req.body;
+
+    const [user] = await db.query(queryStore.users.getLoginData, [
+      inputUsr,
+      inputUsr,
+    ]);
+
+    if (user.length == 0) {
+      return res.render('auth/login', {
+        title: 'Login',
+        currentPage: 'login',
+        errorMessage: 'User not found',
+      });
+    }
+
+    const passwordMatch = await bcrypt.compare(password, user[0].password);
+
+    if (passwordMatch) {
+      req.session.userId = user[0].id;
+      req.session.username = user[0].username;
+      req.session.email = user[0].email;
+      req.session.role = user[0].role;
+      req.session.name = user[0].name;
+      req.session.location = user[0].location;
+
+      if (user[0].role == 'admin') {
+        res.redirect('/admin');
+      } else {
+        res.redirect('/');
+      }
+    } else {
+      res.render('auth/login', {
+        errorMessage: 'Invalid Credentials',
+      });
+    }
+  } catch (error) {
+    res.status(400).send(error.message);
   }
 };
