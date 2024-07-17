@@ -1,34 +1,50 @@
 <header class="header">
-  <div class="header-nav">INI HEADER</div>
-  <nav class="navbar">
-    <div class="logo">INI LOGO</div>
-    <!-- Tambahkan elemen untuk hamburger icon -->
-    <!-- <div class="menu-icon">
-      <div class="bar"></div>
-      <div class="bar"></div>
-      <div class="bar"></div>
-    </div> -->
-    <div class="nav-links">
-      <a
-        href="/"
-        class="nav-link <%= currentPage === 'homes' ? 'active' : '' %>"
-        >Home</a
+  <div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light">
+      <a class="navbar-brand logo" href="#">INI LOGO</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
       >
-      <a
-        href="/brands"
-        class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>"
-        >Cars</a
-      >
-      <a
-        href="/brands"
-        class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>"
-        >Privacy Policy</a
-      >
-      <a
-        href="/brands"
-        class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>"
-        >Contact Us</a
-      >
-    </div>
-  </nav>
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a
+              class="nav-link <%= currentPage === 'homes' ? 'active' : '' %>"
+              href="/"
+              >Home</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>"
+              href="/brands"
+              >Cars</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>"
+              href="/privacy-policy"
+              >Privacy Policy</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link <%= ['brands', 'models', 'generations'].includes(currentPage) ? 'active' : '' %>"
+              href="/contact-us"
+              >Contact Us</a
+            >
+          </li>
+        </ul>
+      </div>
+    </nav>
+  </div>
 </header>
