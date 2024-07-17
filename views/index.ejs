@@ -1,58 +1,29 @@
 <div class="home">
-  <section class="slider owl-carousel" aria-label="Slider">
-    <div class="item">
-      <figure class="slide-content">
-        <img src="/assets/images/hero-1.png" alt="Slider Image 1" />
-        <figcaption>
-          <h2>Slider Image 1</h2>
-          <p>This is the description for Slider Image 1.</p>
-        </figcaption>
-      </figure>
-    </div>
-    <div class="item">
-      <figure class="slide-content">
-        <img src="/assets/images/hero-2.png" alt="Slider Image 2" />
-        <figcaption>
-          <h2>Slider Image 2</h2>
-          <p>This is the description for Slider Image 2.</p>
-        </figcaption>
-      </figure>
-    </div>
-    <div class="item">
-      <figure class="slide-content">
-        <img src="/assets/images/hero-3.png" alt="Slider Image 3" />
-        <figcaption>
-          <h2>Slider Image 3</h2>
-          <p>This is the description for Slider Image 3.</p>
-        </figcaption>
-      </figure>
-    </div>
-  </section>  
   <section class="recent-cars">
     <h3>NEW ARRIVALS</h3>
     <h1>Let's Check Latest <span>Cars</span></h1>
-    <div class="recently-added">
-      <% recentCars.forEach(item => { %>
-      <a href="/specs/<%= item.id %>">
-        <div class="car-card">
-          <div class="frame">
-            <img
-              src="/assets/<%= item.image_path %>"
-              alt="Relist"
-              onerror="this.onerror=null; this.src='/nomodels.webp';"
-            />
-          </div>
-          <div class="detail">
-            <h5><%= item.name %></h5>
-            <h6><%= item.engine %></h6>
-            <h5>
-              <span><%= item.body_type %></span>
-              <span><%= item.wheel_drive %></span>
-            </h5>
-          </div>
+
+    <div class="container p-4">
+      <div class="row d-flex justify-content-center">
+        <% recentCars.forEach(rc => { %>
+        <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+          <a href="/specs/<%= rc.id %>" class="model-link">
+            <div class="recent-card">
+              <div class="frame">
+                <img
+                  src="/assets/<%= rc.image_path %>"
+                  alt="Relist"
+                  onerror="this.onerror=null; this.src='/nomodels.webp';"
+                />
+              </div>
+              <p><%= rc.generation_name %></p>
+              <p><%= rc.engine %></p>
+              <h6 class="text-start"><%= rc.body_type %></h6>
+            </div>
+          </a>
         </div>
-      </a>
-      <% }) %>
+        <% }) %>
+      </div>
     </div>
   </section>
 </div>

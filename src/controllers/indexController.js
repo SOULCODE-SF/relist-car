@@ -1,4 +1,5 @@
 const db = require('../../db');
+const queryStore = require('../store/query');
 const query = require('../store/query');
 const nodecache = require('node-cache');
 
@@ -17,13 +18,11 @@ exports.getHomePage = async (req, res) => {
       });
     }
 
-    const [recentCars] = await db.query(query.home.recentCars, [20]);
+    const [recentCars] = await db.query(query.home.recentCars, [12]);
 
     let datas = {
       recentCars,
     };
-
-    console.log(datas);
 
     cache.set(key, datas, 3600);
 
@@ -46,7 +45,6 @@ exports.getAllBrands = async (req, res) => {
     let searchTerm = req.query.q || '';
 
     if (cachedData) {
-      console.log('kene');
       return res.render('brands', {
         brands: cachedData,
         title: 'Brands Lists',
@@ -61,7 +59,6 @@ exports.getAllBrands = async (req, res) => {
 
     cache.set(key, datas, 3600);
 
-    console.log('sini');
     res.render('brands', {
       brands: datas,
       title: 'Brands Lists',
@@ -114,14 +111,14 @@ exports.getGenerationByModel = async (req, res) => {
 exports.getGenerationLists = async (req, res) => {
   try {
     let generation_id = req.params.id;
-    const [datas] = await db.query('CALL sp_get_generation_list(?)', [
+    const [datas] = await db.query(queryStore.generations.list, [
       generation_id,
     ]);
 
-    console.log(datas);
+    console.log(datas[0]);
 
     res.render('generations_list', {
-      datas: datas[0],
+      datas: datas,
       title: 'List Generation',
       currentPage: 'list-generation',
     });

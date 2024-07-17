@@ -29,7 +29,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
-  })
+  }),
 );
 
 // Set EJS as the view engine
@@ -51,6 +51,6 @@ const {
 } = require('./routes/middlewares/authMiddleware');
 
 app.use(router);
-app.use('/admin', isAuthenticated, isAdmin, adminRouter);
+app.use('/admin', adminRouter);
 
 module.exports = app;
