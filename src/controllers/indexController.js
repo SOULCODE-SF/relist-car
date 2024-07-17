@@ -104,6 +104,7 @@ exports.getGenerationByModel = async (req, res) => {
       currentPage: 'generations',
     });
   } catch (error) {
+    console.error(error);
     res.status(500).send('Internal Server Error');
   }
 };
@@ -123,6 +124,7 @@ exports.getGenerationLists = async (req, res) => {
       currentPage: 'list-generation',
     });
   } catch (error) {
+    console.error(error);
     res.status(500).send('Internal Server Error');
   }
 };

@@ -105,7 +105,7 @@ exports.getBannerById = async (req, res) => {
     let banner_id = req.params.banner_id;
     const [data] = await db.query(
       `${queryStore.banners.getAllBannerQuery} WHERE b.id = ?`,
-      [banner_id]
+      [banner_id],
     );
     res.render('admin/banner/edit', {
       session: req.session,
@@ -146,7 +146,7 @@ exports.updateBanner = async (req, res) => {
       if (!req.file) {
         const [imageData] = await connection.query(
           'SELECT * FROM banner_image WHERE banner_id = ?',
-          [banner_id]
+          [banner_id],
         );
 
         if (imageData.length > 0) {
@@ -174,7 +174,7 @@ exports.updateBanner = async (req, res) => {
         // Ambil path gambar saat ini untuk penghapusan nanti
         const [currentBanner] = await connection.query(
           queryStore.banners.getBannerByIdQuery,
-          [banner_id]
+          [banner_id],
         );
         const currentImagePath = currentBanner[0]?.image;
 
@@ -182,7 +182,7 @@ exports.updateBanner = async (req, res) => {
           const filePath = path.join(
             __dirname,
             '../../../public',
-            currentImagePath
+            currentImagePath,
           );
 
           fs.unlink(filePath, (err) => {
@@ -234,9 +234,8 @@ exports.updateBanner = async (req, res) => {
 
 exports.deleteBanner = async (req, res) => {
   let connection;
+  const banner_id = parseInt(req.params.banner_id);
   try {
-    const banner_id = parseInt(req.params.banner_id);
-
     connection = await db.getConnection();
     await connection.beginTransaction();
 
@@ -259,8 +258,8 @@ exports.deleteBanner = async (req, res) => {
     res.status(500).json(error.message);
   } finally {
     const [currentBanner] = await connection.query(
-      query.banners.getBannerByIdQuery,
-      [banner_id]
+      queryStore.banners.getBannerByIdQuery,
+      [banner_id],
     );
     const currentImagePath = currentBanner[0]?.image;
 
@@ -268,7 +267,7 @@ exports.deleteBanner = async (req, res) => {
       const filePath = path.join(
         __dirname,
         '../../../public',
-        currentImagePath
+        currentImagePath,
       );
 
       fs.unlink(filePath, (err) => {

@@ -1,5 +1,4 @@
 const db = require('../../db');
-const query = require('../store/query');
 
 exports.getUser = async (req, res) => {
   try {
@@ -22,7 +21,7 @@ exports.addUser = async (req, res) => {
 
     await db.query(
       'INSERT INTO users(username, email, password, name, role, location) VALUES (?,?,?,?,?,?)',
-      [username, email, password, name, role, location]
+      [username, email, password, name, role, location],
     );
 
     res.status(201).json({

@@ -24529,14 +24529,14 @@ var DataTable = $.fn.dataTable;
                     .attr('type', 'button'),
                 inputCont: $$3('<div/>')
                     .addClass(this.classes.inputCont),
-                // eslint-disable-next-line no-useless-escape
+                 
                 left: $$3('<button/>')
                     .html(this.s.dt.i18n('searchBuilder.left', i18n.left))
                     .addClass(this.classes.left)
                     .addClass(this.classes.button)
                     .attr('title', this.s.dt.i18n('searchBuilder.leftTitle', i18n.leftTitle))
                     .attr('type', 'button'),
-                // eslint-disable-next-line no-useless-escape
+                 
                 right: $$3('<button/>')
                     .html(this.s.dt.i18n('searchBuilder.right', i18n.right))
                     .addClass(this.classes.right)
@@ -25912,7 +25912,7 @@ var DataTable = $.fn.dataTable;
                     return value === comparison[0];
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!=': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.date.not', i18n.conditions.date.not);
@@ -25966,7 +25966,7 @@ var DataTable = $.fn.dataTable;
                     }
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!between': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.date.notBetween', i18n.conditions.date.notBetween);
@@ -25999,7 +25999,7 @@ var DataTable = $.fn.dataTable;
                     return value === null || value === undefined || value.length === 0;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!null': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.date.notEmpty', i18n.conditions.date.notEmpty);
@@ -26033,7 +26033,7 @@ var DataTable = $.fn.dataTable;
                         moment()(comparison[0], that.s.dateFormat).valueOf();
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!=': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.date.not', i18n.conditions.date.not);
@@ -26087,7 +26087,7 @@ var DataTable = $.fn.dataTable;
                     }
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!between': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.date.notBetween', i18n.conditions.date.notBetween);
@@ -26122,7 +26122,7 @@ var DataTable = $.fn.dataTable;
                     return value === null || value === undefined || value.length === 0;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!null': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.date.notEmpty', i18n.conditions.date.notEmpty);
@@ -26156,7 +26156,7 @@ var DataTable = $.fn.dataTable;
                         === luxon().DateTime.fromFormat(comparison[0], that.s.dateFormat).ts;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!=': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.date.not', i18n.conditions.date.not);
@@ -26212,7 +26212,7 @@ var DataTable = $.fn.dataTable;
                     }
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!between': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.date.notBetween', i18n.conditions.date.notBetween);
@@ -26247,7 +26247,7 @@ var DataTable = $.fn.dataTable;
                     return value === null || value === undefined || value.length === 0;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!null': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.date.notEmpty', i18n.conditions.date.notEmpty);
@@ -26280,7 +26280,7 @@ var DataTable = $.fn.dataTable;
                     return +value === +comparison[0];
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!=': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.number.not', i18n.conditions.number.not);
@@ -26325,7 +26325,7 @@ var DataTable = $.fn.dataTable;
                     return +value >= +comparison[0];
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '>': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.number.gt', i18n.conditions.number.gt);
@@ -26353,7 +26353,7 @@ var DataTable = $.fn.dataTable;
                     }
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!between': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.number.notBetween', i18n.conditions.number.notBetween);
@@ -26385,7 +26385,7 @@ var DataTable = $.fn.dataTable;
                     return value === null || value === undefined || value.length === 0;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!null': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.number.notEmpty', i18n.conditions.number.notEmpty);
@@ -26418,7 +26418,7 @@ var DataTable = $.fn.dataTable;
                     return Criteria.parseNumFmt(value) === Criteria.parseNumFmt(comparison[0]);
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!=': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.number.not', i18n.conditions.number.not);
@@ -26463,7 +26463,7 @@ var DataTable = $.fn.dataTable;
                     return Criteria.parseNumFmt(value) >= Criteria.parseNumFmt(comparison[0]);
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '>': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.number.gt', i18n.conditions.number.gt);
@@ -26494,7 +26494,7 @@ var DataTable = $.fn.dataTable;
                     }
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!between': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.number.notBetween', i18n.conditions.number.notBetween);
@@ -26529,7 +26529,7 @@ var DataTable = $.fn.dataTable;
                     return value === null || value === undefined || value.length === 0;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!null': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.number.notEmpty', i18n.conditions.number.notEmpty);
@@ -26562,7 +26562,7 @@ var DataTable = $.fn.dataTable;
                     return value === comparison[0];
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!=': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.string.not', i18n.conditions.string.not);
@@ -26585,7 +26585,7 @@ var DataTable = $.fn.dataTable;
                     return value.toLowerCase().indexOf(comparison[0].toLowerCase()) === 0;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!starts': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.string.notStartsWith', i18n.conditions.string.notStartsWith);
@@ -26597,7 +26597,7 @@ var DataTable = $.fn.dataTable;
                     return value.toLowerCase().indexOf(comparison[0].toLowerCase()) !== 0;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             'contains': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.string.contains', i18n.conditions.string.contains);
@@ -26609,7 +26609,7 @@ var DataTable = $.fn.dataTable;
                     return value.toLowerCase().includes(comparison[0].toLowerCase());
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!contains': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.string.notContains', i18n.conditions.string.notContains);
@@ -26632,7 +26632,7 @@ var DataTable = $.fn.dataTable;
                     return value.toLowerCase().endsWith(comparison[0].toLowerCase());
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!ends': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.string.notEndsWith', i18n.conditions.string.notEndsWith);
@@ -26659,7 +26659,7 @@ var DataTable = $.fn.dataTable;
                     return value === null || value === undefined || value.length === 0;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!null': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.string.notEmpty', i18n.conditions.string.notEmpty);
@@ -26702,7 +26702,7 @@ var DataTable = $.fn.dataTable;
                     return value.indexOf(comparison[0]) === -1;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '=': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.array.equals', i18n.conditions.array.equals);
@@ -26722,7 +26722,7 @@ var DataTable = $.fn.dataTable;
                     return false;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!=': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.array.not', i18n.conditions.array.not);
@@ -26757,7 +26757,7 @@ var DataTable = $.fn.dataTable;
                     return value === null || value === undefined || value.length === 0;
                 }
             },
-            // eslint-disable-next-line sort-keys
+             
             '!null': {
                 conditionName: function (dt, i18n) {
                     return dt.i18n('searchBuilder.conditions.array.notEmpty', i18n.conditions.array.notEmpty);
@@ -27725,7 +27725,7 @@ var DataTable = $.fn.dataTable;
                 }, 1);
             });
             // Check that DateTime is included, If not need to check if it could be used
-            // eslint-disable-next-line no-extra-parens
+             
             if (!dataTable$1.DateTime) {
                 var types = this.s.dt.columns().type().toArray();
                 if (types === undefined || types.includes(undefined) || types.includes(null)) {
@@ -28045,7 +28045,7 @@ var DataTable = $.fn.dataTable;
                         notBetween: 'Not Between',
                         notEmpty: 'Not Empty'
                     },
-                    // eslint-disable-next-line id-blacklist
+                     
                     number: {
                         between: 'Between',
                         empty: 'Empty',
@@ -28058,7 +28058,7 @@ var DataTable = $.fn.dataTable;
                         notBetween: 'Not Between',
                         notEmpty: 'Not Empty'
                     },
-                    // eslint-disable-next-line id-blacklist
+                     
                     string: {
                         contains: 'Contains',
                         empty: 'Empty',
@@ -28105,19 +28105,19 @@ var DataTable = $.fn.dataTable;
     setJQuery$1($);
     setJQuery$2($);
     var dataTable = $.fn.dataTable;
-    // eslint-disable-next-line no-extra-parens
+     
     DataTable.SearchBuilder = SearchBuilder;
-    // eslint-disable-next-line no-extra-parens
+     
     dataTable.SearchBuilder = SearchBuilder;
-    // eslint-disable-next-line no-extra-parens
+     
     DataTable.Group = Group;
-    // eslint-disable-next-line no-extra-parens
+     
     dataTable.Group = Group;
-    // eslint-disable-next-line no-extra-parens
+     
     DataTable.Criteria = Criteria;
-    // eslint-disable-next-line no-extra-parens
+     
     dataTable.Criteria = Criteria;
-    // eslint-disable-next-line no-extra-parens
+     
     var apiRegister = DataTable.Api.register;
     // Set up object for plugins
     DataTable.ext.searchBuilder = {
@@ -28358,7 +28358,7 @@ var DataTable = $.fn.dataTable;
                 throw new Error('SearchPane requires DataTables 1.10 or newer');
             }
             // Check that Select is included
-            // eslint-disable-next-line no-extra-parens
+             
             if (!dataTable$2.select) {
                 throw new Error('SearchPane requires Select');
             }
@@ -28471,7 +28471,7 @@ var DataTable = $.fn.dataTable;
                         // get the filter value from the map
                         filter = _this.s.rowData.filterMap.get(dataIndex);
                         if (filter instanceof $$5.fn.dataTable.Api) {
-                            // eslint-disable-next-line no-extra-parens
+                             
                             filter = filter.toArray();
                         }
                     }
@@ -29036,7 +29036,7 @@ var DataTable = $.fn.dataTable;
          */
         SearchPane.prototype._getPaneConfig = function () {
             var _this = this;
-            // eslint-disable-next-line no-extra-parens
+             
             var haveScroller = dataTable$2.Scroller;
             var langOpts = this.s.dt.settings()[0].oLanguage;
             langOpts.url = undefined;
@@ -29387,7 +29387,7 @@ var DataTable = $.fn.dataTable;
             // Declare the datatable for the pane
             var errMode = $$5.fn.dataTable.ext.errMode;
             $$5.fn.dataTable.ext.errMode = 'none';
-            // eslint-disable-next-line no-extra-parens
+             
             this.s.dtPane = this.dom.dtP.DataTable($$5.extend(true, this._getPaneConfig(), this.c.dtOpts, this.s.colOpts ? this.s.colOpts.dtOpts : {}, this.s.colOpts.options || !this.s.colExists ?
                 {
                     createdRow: function (row, data) {
@@ -29423,7 +29423,7 @@ var DataTable = $.fn.dataTable;
             headerText = this._escapeHTML(headerText);
             this.dom.searchBox.attr('placeholder', headerText);
             // As the pane table is not in the document yet we must initialise select ourselves
-            // eslint-disable-next-line no-extra-parens
+             
             $$5.fn.dataTable.select.init(this.s.dtPane);
             $$5.fn.dataTable.ext.errMode = errMode;
             // If it is not a custom pane
@@ -29450,7 +29450,7 @@ var DataTable = $.fn.dataTable;
                     }
                 }
             }
-            // eslint-disable-next-line no-extra-parens
+             
             dataTable$2.select.init(this.s.dtPane);
             // If there are custom options set or it is a custom pane then get them
             if (this.s.colOpts.options ||
@@ -29690,7 +29690,7 @@ var DataTable = $.fn.dataTable;
                 // otherwise if the two filter values are equal then return true
                 else if (filter === colSelect ||
                     // Loose type checking incase number type in column comparing to a string
-                    // eslint-disable-next-line eqeqeq
+                     
                     !(typeof filter === 'string' && filter.length === 0) && filter == colSelect ||
                     colSelect === null && typeof filter === 'string' && filter === '') {
                     return true;
@@ -30392,7 +30392,7 @@ var DataTable = $.fn.dataTable;
                 throw new Error('SearchPane requires DataTables 1.10 or newer');
             }
             // Check that Select is included
-            // eslint-disable-next-line no-extra-parens
+             
             if (!dataTable$1.select) {
                 throw new Error('SearchPane requires Select');
             }
@@ -31579,31 +31579,31 @@ var DataTable = $.fn.dataTable;
     setJQuery$2($);
     setJQuery$1($);
     var dataTable = $.fn.dataTable;
-    // eslint-disable-next-line no-extra-parens
+     
     dataTable.SearchPanes = SearchPanes;
-    // eslint-disable-next-line no-extra-parens
+     
     DataTable.SearchPanes = SearchPanes;
-    // eslint-disable-next-line no-extra-parens
+     
     dataTable.SearchPanesST = SearchPanesST;
-    // eslint-disable-next-line no-extra-parens
+     
     DataTable.SearchPanesST = SearchPanesST;
-    // eslint-disable-next-line no-extra-parens
+     
     dataTable.SearchPane = SearchPane;
-    // eslint-disable-next-line no-extra-parens
+     
     DataTable.SearchPane = SearchPane;
-    // eslint-disable-next-line no-extra-parens
+     
     dataTable.SearchPaneViewTotal = SearchPaneViewTotal;
-    // eslint-disable-next-line no-extra-parens
+     
     DataTable.SearchPaneViewTotal = SearchPaneViewTotal;
-    // eslint-disable-next-line no-extra-parens
+     
     dataTable.SearchPaneCascade = SearchPaneCascade;
-    // eslint-disable-next-line no-extra-parens
+     
     DataTable.SearchPaneCascade = SearchPaneCascade;
-    // eslint-disable-next-line no-extra-parens
+     
     dataTable.SearchPaneCascadeViewTotal = SearchPaneCascadeViewTotal;
-    // eslint-disable-next-line no-extra-parens
+     
     DataTable.SearchPaneCascadeViewTotal = SearchPaneCascadeViewTotal;
-    // eslint-disable-next-line no-extra-parens
+     
     var apiRegister = $.fn.dataTable.Api.register;
     apiRegister('searchPanes()', function () {
         return this;
