@@ -39,18 +39,6 @@
     <li class="nav-item">
       <a
         class="nav-link"
-        id="electric-tab"
-        data-toggle="tab"
-        href="#electric"
-        role="tab"
-        aria-controls="electric"
-        aria-selected="false"
-        >Electric and Hybrid</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
         id="dimensions-tab"
         data-toggle="tab"
         href="#dimensions"
@@ -58,6 +46,30 @@
         aria-controls="dimensions"
         aria-selected="false"
         >Dimensions</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="spaces-tab"
+        data-toggle="tab"
+        href="#spaces"
+        role="tab"
+        aria-controls="spaces"
+        aria-selected="false"
+        >Spaces</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="electric-tab"
+        data-toggle="tab"
+        href="#electric"
+        role="tab"
+        aria-controls="electric"
+        aria-selected="false"
+        >Electric and Hybrid</a
       >
     </li>
     <li class="nav-item">
@@ -73,6 +85,15 @@
       >
     </li>
   </ul>
+
+  <% if (error) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= error %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% } %>
 
   <form id="carForm" action="/admin/cars/add" method="post">
     <div class="tab-content" id="myTabContent">
@@ -104,6 +125,24 @@
 
       <div
         class="tab-pane fade"
+        id="dimensions"
+        role="tabpanel"
+        aria-labelledby="dimensions-tab"
+      >
+        <%- include('./partials/form/dimensions.ejs') %>
+      </div>
+
+      <div
+        class="tab-pane fade"
+        id="spaces"
+        role="tabpanel"
+        aria-labelledby="spaces-tab"
+      >
+        <%- include('./partials/form/spaces.ejs') %>
+      </div>
+
+      <div
+        class="tab-pane fade"
         id="electric"
         role="tabpanel"
         aria-labelledby="electric-tab"
@@ -113,24 +152,6 @@
         <input type="text" id="battery" name="battery" /><br /><br />
         <label for="range">Range:</label>
         <input type="text" id="range" name="range" /><br /><br />
-        <!-- More fields here -->
-      </div>
-      <div
-        class="tab-pane fade"
-        id="engine"
-        role="tabpanel"
-        aria-labelledby="engine-tab"
-      >
-        <%- include('./partials/form/engine_specs.ejs') %>
-      </div>
-
-      <div
-        class="tab-pane fade"
-        id="dimensions"
-        role="tabpanel"
-        aria-labelledby="dimensions-tab"
-      >
-        <%- include('./partials/form/engine_specs.ejs') %>
       </div>
 
       <div
@@ -151,7 +172,6 @@
         <!-- More fields here -->
       </div>
     </div>
-
 
     <button type="submit" class="btn btn-primary mt-3">Submit</button>
   </form>

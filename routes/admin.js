@@ -18,6 +18,7 @@ const {
   addCar,
   getCarsList,
   getGenerationName,
+  getAddCar,
 } = require('../src/controllers/adminController/cars');
 const {
   getDashboardPage,
@@ -85,14 +86,7 @@ router.post('/users/add', addUser);
 
 router.get('/cars', getCarsList);
 
-router.get('/cars/add', (req, res) => {
-  res.render('admin/car/add', {
-    session: req.session,
-    title: 'Car Add',
-    currentPage: 'admin-car-add',
-    layout: './admin/layouts/layout',
-  });
-});
+router.get('/cars/add', getAddCar);
 
 router.post('/cars/add', addCar);
 
