@@ -1,4 +1,5 @@
 const db = require('../../../db');
+const queryStore = require('../../store/query');
 const query = require('../../store/query');
 const nodecache = require('node-cache');
 
@@ -86,6 +87,27 @@ exports.getGenerationName = async (req, res) => {
   }
 };
 
+exports.getAddCar = async (req, res) => {
+  try {
+    const { error } = req.query;
+
+    let iserror = false;
+
+    if (error != undefined) {
+      iserror = decodeURIComponent(error);
+    }
+    res.render('admin/car/add', {
+      error: iserror,
+      session: req.session,
+      title: 'Car Add',
+      currentPage: 'admin-car-add',
+      layout: './admin/layouts/layout',
+    });
+  } catch (error) {
+    console.error(error);
+    res.send('Internal Server Error');
+  }
+};
 exports.addCar = async (req, res) => {
   let connection;
   try {
@@ -102,6 +124,8 @@ exports.addCar = async (req, res) => {
       door,
       fuel_consumption_urban,
       fuel_consumption_extraurban,
+      fuel_consumption_combined,
+      carbondioksida_emission,
       fuel_type,
       acceleration_100kmh,
       acceleration_62mph,
@@ -126,11 +150,47 @@ exports.addCar = async (req, res) => {
       engine_aspiration,
       engine_oil_capacity,
       engine_oil_specification,
+      engine_system,
       coolant,
+      length,
+      width,
+      height,
+      wheelbase,
+      front_track,
+      rear_back_track,
+      front_overhang,
+      rear_overhang,
+      minimum_turning_circle,
+      kerb_weight,
+      trunk_space_minimum,
+      trunk_space_maximum,
+      max_load,
+      fuel_tank_capacity,
+      permitted_trailer_load_with_brakes,
+      permitted_trailer_load_without_brakes,
+      permitted_towbardownload,
     } = req.body;
 
     connection = await db.getConnection();
     await connection.beginTransaction();
+
+    if (!brand_id) {
+      return res.redirect(
+        '/admin/cars/add?error=The%20car%20brand%20is%20required'
+      );
+    }
+
+    if (!model_id) {
+      return res.redirect(
+        '/admin/cars/add?error=The%20car%20model%20is%20required'
+      );
+    }
+
+    if (!generation_id) {
+      return res.redirect(
+        '/admin/cars/add?error=The%20car%20generation%20is%20required'
+      );
+    }
 
     const generalInformation = [
       null,
@@ -146,6 +206,8 @@ exports.addCar = async (req, res) => {
     const performance_specs = [
       fuel_consumption_urban ?? '',
       fuel_consumption_extraurban ?? '',
+      fuel_consumption_combined ?? '',
+      carbondioksida_emission ?? '',
       fuel_type ?? '',
       acceleration_100kmh ?? '',
       acceleration_62mph ?? '',
@@ -173,34 +235,71 @@ exports.addCar = async (req, res) => {
       engine_aspiration ?? '',
       engine_oil_capacity ?? '',
       engine_oil_specification ?? '',
+      engine_system ?? '',
       coolant ?? '',
     ];
 
+    const dimensions = [
+      length ?? '',
+      width ?? '',
+      height ?? '',
+      wheelbase ?? '',
+      front_track ?? '',
+      rear_back_track ?? '',
+      front_overhang ?? '',
+      rear_overhang ?? '',
+      minimum_turning_circle ?? '',
+    ];
+
+    const spaces = [
+      kerb_weight ?? '',
+      trunk_space_minimum ?? '',
+      trunk_space_maximum ?? '',
+      max_load ?? '',
+      fuel_tank_capacity ?? '',
+      permitted_trailer_load_with_brakes ?? '',
+      permitted_trailer_load_without_brakes ?? '',
+      permitted_towbardownload ?? '',
+    ];
+
+    console.log(spaces);
+
     const gi = await connection.query(
-      query.specs.addGeneralInformation,
+      queryStore.specs.addGeneralInformation,
       generalInformation
     );
 
     const ps = await connection.query(
-      query.specs.addPerformanceSpecs,
+      queryStore.specs.addPerformanceSpecs,
       performance_specs
     );
 
-    const es = await connection.query(query.specs.addEngineSpecs, engine_specs);
+    const es = await connection.query(
+      queryStore.specs.addEngineSpecs,
+      engine_specs
+    );
 
-    const inserCars = [
+    const d = await connection.query(queryStore.specs.addDimension, dimensions);
+
+    const s = await connection.query(queryStore.specs.addSpace, spaces);
+
+    const insertCars = [
       generation_id,
       brand_id,
       model_id,
       gi[0].insertId,
       ps[0].insertId,
       es[0].insertId,
+      d[0].insertId,
+      s[0].insertId,
     ];
 
     await connection.query(
-      'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id, es_id) VALUES(?,?,?,?,?, ?)',
-      inserCars
+      'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id, es_id, d_id, s_id) VALUES(?,?,?,?,?,?,?,?)',
+      insertCars
     );
+
+    console.log(req.body);
 
     await connection.commit();
 
