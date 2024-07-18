@@ -131,12 +131,14 @@ exports.getGenerationLists = async (req, res) => {
 
 exports.getSpec = async (req, res) => {
   try {
-    let generation_link_id = req.params.id;
+    let carId = req.params.id;
 
-    const [datas] = await db.query('CALL get_spec(?)', [generation_link_id]);
+    const [datas] = await db.query(queryStore.specs.getspec, [carId]);
+
+    console.log(datas[0]);
 
     res.render('specs', {
-      data: datas[0][0],
+      data: datas[0],
       title: 'Spec',
       currentPage: 'specs',
     });

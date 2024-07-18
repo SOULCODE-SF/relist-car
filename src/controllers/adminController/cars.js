@@ -42,7 +42,7 @@ exports.getBrandsName = async (req, res) => {
 
     const [datas] = await db.query(
       'SELECT id, name FROM brands WHERE name LIKE ?',
-      [`%${brand_name}%`]
+      [`%${brand_name}%`],
     );
 
     return res.json({
@@ -59,7 +59,7 @@ exports.getModelName = async (req, res) => {
     const model_name = req.query.q || '';
     const [datas] = await db.query(
       'SELECT id, name FROM models WHERE brand_id = ? AND  name LIKE ?',
-      [brand_id, `%${model_name}%`]
+      [brand_id, `%${model_name}%`],
     );
 
     return res.json({
@@ -76,7 +76,7 @@ exports.getGenerationName = async (req, res) => {
     console.log(model_id);
     const [datas] = await db.query(
       'SELECT id, title as name FROM generations WHERE model_id = ?',
-      [model_id]
+      [model_id],
     );
 
     return res.json({
@@ -176,24 +176,23 @@ exports.addCar = async (req, res) => {
 
     if (!brand_id) {
       return res.redirect(
-        '/admin/cars/add?error=The%20car%20brand%20is%20required'
+        '/admin/cars/add?error=The%20car%20brand%20is%20required',
       );
     }
 
     if (!model_id) {
       return res.redirect(
-        '/admin/cars/add?error=The%20car%20model%20is%20required'
+        '/admin/cars/add?error=The%20car%20model%20is%20required',
       );
     }
 
     if (!generation_id) {
       return res.redirect(
-        '/admin/cars/add?error=The%20car%20generation%20is%20required'
+        '/admin/cars/add?error=The%20car%20generation%20is%20required',
       );
     }
 
     const generalInformation = [
-      null,
       engine,
       start_production,
       end_production,
@@ -266,17 +265,17 @@ exports.addCar = async (req, res) => {
 
     const gi = await connection.query(
       queryStore.specs.addGeneralInformation,
-      generalInformation
+      generalInformation,
     );
 
     const ps = await connection.query(
       queryStore.specs.addPerformanceSpecs,
-      performance_specs
+      performance_specs,
     );
 
     const es = await connection.query(
       queryStore.specs.addEngineSpecs,
-      engine_specs
+      engine_specs,
     );
 
     const d = await connection.query(queryStore.specs.addDimension, dimensions);
@@ -296,7 +295,7 @@ exports.addCar = async (req, res) => {
 
     await connection.query(
       'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id, es_id, d_id, s_id) VALUES(?,?,?,?,?,?,?,?)',
-      insertCars
+      insertCars,
     );
 
     console.log(req.body);
