@@ -1,5 +1,3 @@
-// assets/scripts.js
-
 document.addEventListener('DOMContentLoaded', function () {
   initializeScrollAnimation();
 });
@@ -20,26 +18,7 @@ function initializeScrollAnimation() {
   });
 }
 
-function loadDeferredStyles() {
-  var addStylesNode = document.getElementById('deferred-styles');
-  var replacement = document.createElement('div');
-  replacement.innerHTML = addStylesNode.textContent;
-  document.body.appendChild(replacement);
-  addStylesNode.parentElement.removeChild(addStylesNode);
-}
-var raf =
-  requestAnimationFrame ||
-  mozRequestAnimationFrame ||
-  webkitRequestAnimationFrame ||
-  msRequestAnimationFrame;
-if (raf)
-  raf(function () {
-    window.setTimeout(loadDeferredStyles, 0);
-  });
-else window.addEventListener('load', loadDeferredStyles);
-
 $(document).ready(function () {
-  // Initialize Select2 for brand dropdown
   $('#filter-brand').select2({
     placeholder: 'Search for a brand',
     minimumInputLength: 1,
@@ -66,7 +45,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  // Initialize Select2 for brand dropdown
   $('#input-brand').select2({
     placeholder: 'Search for a brand',
     minimumInputLength: 1,
@@ -85,20 +63,16 @@ $(document).ready(function () {
       cache: true,
     },
   });
-
-  // Initialize Select2 for model dropdown
   $('#input-model').select2({
     placeholder: 'Select a model',
     width: '100%',
   });
 
-  // Initialize Select2 for generation dropdown
   $('#input-generation').select2({
     placeholder: 'Select a generation',
     width: '100%',
   });
 
-  // Event listener for selecting a brand
   $('#input-brand').on('change', function () {
     const selectedBrandId = $(this).val();
 
