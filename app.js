@@ -10,6 +10,13 @@ const MySQLStore = require('express-mysql-session')(session);
 
 const app = express();
 
+const adsTxtPath = path.join(__dirname, 'public', 'ads.txt');
+
+// Route untuk ads.txt
+app.get('/ads.txt', (req, res) => {
+  res.sendFile(adsTxtPath);
+});
+
 app.use(expressLayouts);
 // app.use(logger('dev'));
 app.use(express.json());
@@ -29,7 +36,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
-  })
+  }),
 );
 
 // Set EJS as the view engine
