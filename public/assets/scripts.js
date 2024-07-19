@@ -39,33 +39,6 @@ if (raf)
 else window.addEventListener('load', loadDeferredStyles);
 
 $(document).ready(function () {
-  $('.owl-carousel').owlCarousel({
-    items: 1,
-    loop: true,
-    nav: true,
-    dots: true,
-    autoplay: true,
-    autoplayTimeout: 5000, // Durasi autoplay dalam milidetik (opsional)
-    autoplayHoverPause: true, // Jeda autoplay saat kursor berada di atas slider (opsional)
-    navText: [
-      '<span class="prev-btn">Previous</span>',
-      '<span class="next-btn">Next</span>',
-    ], // Custom teks untuk tombol navigasi (opsional)
-    responsive: {
-      0: {
-        items: 1,
-      },
-      768: {
-        items: 1,
-      },
-      1024: {
-        items: 1,
-      },
-    },
-  });
-});
-
-$(document).ready(function () {
   // Initialize Select2 for brand dropdown
   $('#filter-brand').select2({
     placeholder: 'Search for a brand',
@@ -148,7 +121,7 @@ $(document).ready(function () {
         // Add new model options to model dropdown
         models.forEach((model) => {
           $('#input-model').append(
-            $('<option></option>').attr('value', model.id).text(model.name),
+            $('<option></option>').attr('value', model.id).text(model.name)
           );
         });
 
@@ -191,7 +164,7 @@ $(document).ready(function () {
           $('#input-generation').append(
             $('<option></option>')
               .attr('value', generation.id)
-              .text(generation.name),
+              .text(generation.name)
           );
         });
 
