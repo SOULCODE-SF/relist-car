@@ -3,6 +3,7 @@ CREATE TABLE users (
     username VARCHAR(50) NOT NULL,
     email VARCHAR(100) NOT NULL,
     password VARCHAR(250) NOT NULL,
+    role ENUM('admin', 'user') DEFAULT 'user';
     name VARCHAR(250),
     location VARCHAR(250),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
