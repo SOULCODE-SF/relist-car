@@ -1,7 +1,6 @@
-let query = {
+let queryStore = {
   home: {
-    recentCars:
-      'select c.id, b.name as brand_name, m.name as model_name, g.title as generation_name, g.image_path, gi.*, ps.fuel_consumption_combined , dbss.drive_wheel from cars c join brands b on b.id = c.b_id join models m on m.id = c.m_id join generations g on g.id = c.g_id left join general_information gi on gi.id = c.gi_id left join performance_specs ps on ps.id = c.ps_id left join drivetrain_brakes_suspension_specs dbss on dbss.id = c.dbss_id order by rand() limit ?;',
+    recentCars: `select c.id, concat(g.title , ' ', gi.engine) as name, b.name as brand_name, m.name as model_name, g.title as generation_name, g.image_path, gi.*, ps.fuel_consumption_combined , dbss.drive_wheel from cars c join brands b on b.id = c.b_id join models m on m.id = c.m_id join generations g on g.id = c.g_id left join general_information gi on gi.id = c.gi_id left join performance_specs ps on ps.id = c.ps_id left join drivetrain_brakes_suspension_specs dbss on dbss.id = c.dbss_id order by rand() limit ?;`,
   },
   brands: {
     getAllBrands:
@@ -12,7 +11,9 @@ let query = {
   },
   generations: {
     getGenerationByModelQuery: `SELECT g.id, g.title, g.image_path, SUBSTRING(MAX(gi.start_production), LOCATE(',', MAX(gi.start_production)) + 1, 5) as start_production, SUBSTRING(MAX(gi.end_production), LOCATE(',', MAX(gi.end_production)) + 1, 5) as end_production, MAX(gi.body_type) as body_type , MAX(gi.engine) as engine, MAX(CONCAT_WS(' x ', d.length, d.width, d.height)) AS dimension, MAX(es.power) as power, b.name as brand_name, m.name as model_name, b.id as brand_id FROM generations g LEFT JOIN generation_links_2 gl on g.id = gl.generation_id LEFT JOIN general_information gi on gl.id = gi.generation_link_id LEFT JOIN dimensions d on d.generation_link_id = gl.id LEFT JOIN engine_specs es on es.generation_link_id = gl.id JOIN models m on g.model_id = m.id JOIN brands b on b.id = m.brand_id WHERE m.id = ? GROUP BY g.id;`,
+    list: `SELECT c.id, gi.engine, c.b_id, c.m_id, c.g_id, b.name as brand_name, m.name as model_name, g.title as generation_name, SUBSTRING(gi.start_production, LOCATE(',', gi.start_production) + 1, 5) as start_production, SUBSTRING(gi.end_production, LOCATE(',', gi.end_production) + 1, 5) as end_production, ps.acceleration_100kmh, ps.acceleration_62mph , ps.acceleration_60mph FROM cars c JOIN brands b on c.b_id = b.id JOIN models m on c.m_id = m.id JOIN generations g on c.g_id = g.id LEFT JOIN general_information gi on c.gi_id = gi.id LEFT JOIN performance_specs ps on c.ps_id = ps.id WHERE c.g_id = ?`,
   },
+
   banners: {
     getAllBannerQuery: `select b.id, b.adsname, b.type, b.position, date_format(b.date_start, '%Y-%m-%d') as start_date, date_format(b.date_end, '%Y-%m-%d') as end_date, b.status, b.created_at, bc.code, bi.image, bi.url from banners b left join banner_code bc on b.id = bc.banner_id left join banner_image bi on b.id = bi.banner_id`,
     addBannerQuery: `INSERT INTO banners(adsname, position, type, date_start, date_end, status) VALUES(?,?,?,?,?,?)`,
@@ -32,12 +33,58 @@ let query = {
     cars: 'SELECT (SELECT COUNT(*) FROM cars) AS count_cars, (SELECT COUNT(DISTINCT b_id) FROM cars) AS count_brands, (select COUNT(distinct m_id) from cars) as count_models, (select count(distinct g_id) from cars) as count_generations',
   },
   cars: {
-    getAllCars:
-      'SELECT gl.id as gl_id, g.id, b.id as brand_id, b.name as brand_name, m.id as model_id, m.name as model_name, g.title as name, g.image_path, gl.title as engine, gi.body_type, dbss.drive_wheel, ps.fuel_consumption_combined FROM generation_links_2 gl JOIN generations g ON g.id = gl.generation_id join models m on m.id = g.model_id join brands b on b.id = m.brand_id LEFT JOIN general_information gi ON gl.id = gi.generation_link_id LEFT join dimensions d ON gl.id = d.generation_link_id LEFT JOIN drivetrain_brakes_suspension_specs dbss on gl.id = dbss.generation_link_id LEFT JOIN performance_specs ps ON gl.id = ps.generation_link_id WHERE b.id = ?',
+    getAllCars: `select c.*, concat(g.title, ' ', gi.engine) as car_title, b.name as brand_name, m.name as model_name from cars c join brands b on c.b_id = b.id join models m on c.m_id = m.id join generations g on c.g_id = g.id left join general_information gi on c.gi_id = gi.id WHERE c.b_id = ?`,
+    getEngine: `SELECT gi.engine FROM general_information gi GROUP BY gi.engine`,
   },
   specs: {
     addGeneralInformation:
-      'insert into general_information( generation_link_id, engine, start_production, end_production, powertrain_architecture, body_type, seat, door ) values (?, ?, ?, ?, ?, ?, ?, ?);',
+      'insert into general_information( generation_link_id, engine, start_production, end_production, powertrain_architecture, body_type, seat, door ) values (0, ?, ?, ?, ?, ?, ?, ?);',
+    addPerformanceSpecs:
+      'INSERT INTO performance_specs ( generation_link_id, fuel_consumption_urban, fuel_consumption_extra_urban, fuel_consumption_combined, co2_emission, fuel_type, acceleration_100kmh, acceleration_62mph, acceleration_60mph, maximum_speed, emission_standard, weight_power_ratio, weight_power_torque ) VALUES (10000, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    addEngineSpecs:
+      'insert into engine_specs( generation_link_id, power, power_per_litre, torque, engine_layout, engine_model, engine_displacement, number_cylinders, engine_configuration, cylinder_bore, piston_stroke, compression_ratio, number_valves_per_cylinder, fuel_injection_system, engine_aspiration, engine_oil_capacity, engine_oil_specification, engine_system, coolant ) values (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+    addDimension: `insert into dimensions ( generation_link_id, length, width, height, wheelbase, front_track, rear_back_track, front_overhang, rear_overhang, minimum_turning_circle ) values (0,?,?,?,?,?,?,?,?,?);`,
+    addSpace: `insert into spaces ( generation_link_id, kerb_weight, trunk_space_minimum , trunk_space_maximum , max_load , fuel_tank_capacity , permitted_trailer_load_with_brakes , permitted_trailer_load_without_brakes , permitted_towbardownload ) VALUES (0,?,?,?,?,?,?,?,?)`,
+    getspec: `SELECT 
+                c.id,
+                c.b_id,
+                c.m_id,
+                c.g_id,
+                b.name as brand_name,
+                m.name as model_name,
+                g.title as generation_name,
+                gi.*,
+                ps.*,
+                es.*,
+                d.*,
+                s.*
+              FROM 
+                cars c 
+              JOIN
+                brands b on c.b_id = b.id 
+              JOIN
+                models m on c.m_id = m.id 
+              JOIN 
+                generations g on c.g_id = g.id
+              LEFT JOIN
+                general_information gi on c.gi_id = gi.id
+              LEFT JOIN 
+                performance_specs ps on c.ps_id = ps.id
+              LEFT JOIN 
+                engine_specs es on c.es_id = es.id 
+              LEFT JOIN 
+                dimensions d on c.d_id = d.id 
+              LEFT JOIN 
+                spaces s on c.s_id = s.id
+              WHERE
+                c.id = ?
+              limit 1;`,
+  },
+  users: {
+    addUser: `INSERT INTO users (username, email, password, role, name, location) VALUES (?,?,?,?,?,?);`,
+    getLoginData: `SELECT * FROM users WHERE (username = ? OR email = ?);`,
+    cekUsername: `SELECT username FROM users WHERE username = ?;`,
+    cekEmail: `SELECT email FROM users WHERE email = ?;`,
   },
 };
-module.exports = query;
+module.exports = queryStore;

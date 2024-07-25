@@ -7,7 +7,7 @@
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/brands/<%= datas[0].brand_id %>/models" class="nav-link"
+      <a href="/brands/<%= datas[0].b_id %>/models" class="nav-link"
         ><%= datas[0].brand_name %></a
       >
     </li>
@@ -16,7 +16,7 @@
     </li>
     <li class="nav-item">
       <a
-        href="/brands/models/<%= datas[0].model_id %>/generations"
+        href="/brands/models/<%= datas[0].m_id %>/generations"
         class="nav-link"
         ><%= datas[0].model_name %></a
       >
@@ -30,15 +30,16 @@
   </ul>
 </div>
 
-<div class="generation-list">
-  Ini generation List <% datas.forEach(item => { %>
-  <a href="/specs/<%= item.id%>">
-    <div class="list <%= item.flag === 'red' ? 'fred' : 'fgreen' %>">
-      <h3><%= item.title %></h3>
-      <span><%= item.start_production %> - <%= item.end_production %></span>
-      <div>
-        <p>List</p>
+<div class="container genlist p-2">
+  <% datas.forEach(item => { %>
+  <a href="/specs/<%= item.id%>" class="standar-link">
+    <div class="card col-6 p-4 ps-lg-5 mb-2">
+      <div class="label <%= item.flag === 'red' ? 'label-red' : 'label-green' %> ">
+       
       </div>
+      <h5><%= item.engine %></h5>
+      <span><%= item.start_production %> - <%= item.end_production %></span>
+      <span><%= item.acceleration_100kmh %></span>
     </div>
   </a>
   <% }) %>

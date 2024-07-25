@@ -7,30 +7,18 @@ const {
   getGenerationLists,
   getHomePage,
 } = require('../src/controllers/indexController');
+const { addUser, loginUser } = require('../src/controllers/authController');
+const {
+  getBrandsName,
+  getModelName,
+  getGenerationName,
+  getEngineName,
+} = require('../src/controllers/adminController/cars');
 const router = express.Router();
 
 router.get('/', getHomePage);
 
-// Tambahkan rute untuk brands.ejs
 router.get('/brands', getAllBrands);
-
-router.get('/models', (req, res) => {
-  const modelsQuery =
-    'SELECT m.id, m.title, m.image, b.name FROM models m JOIN brands b on b.id = m.brand_id';
-  connection.query(modelsQuery, (err, modelResults) => {
-    if (err) {
-      console.error('Error querying database:', err);
-      res.status(500).send('Internal Server Error');
-      return;
-    }
-
-    res.render('models', {
-      models: modelResults,
-      title: `Models`,
-      currentPage: 'models',
-    });
-  });
-});
 
 router.get('/brands/:brand_id/models', getModelByBrand);
 
@@ -42,5 +30,20 @@ router.get('/specs/:id', getSpec);
 router.get('/others', (req, res) => {
   res.render('other', { title: 'Halaman Lain', currentPage: 'others' });
 });
+
+router.get('/login', (req, res) => {
+  res.render('auth/login', {
+    errorMessage: req.query.errorMessage || '',
+    title: 'Login',
+    currentPage: 'login',
+  });
+});
+router.post('/users/register', addUser);
+router.post('/login', loginUser);
+
+router.get('/brands-name', getBrandsName);
+router.get('/models-name/:brand_id', getModelName);
+router.get('/generations-name/:model_id', getGenerationName);
+router.get('/get-engine', getEngineName);
 
 module.exports = router;

@@ -1,12 +1,13 @@
 const db = require('../../../db');
-const query = require('../../store/query');
 const path = require('path');
 const fs = require('fs');
+const queryStore = require('../../store/query');
 exports.getAllBanners = async (req, res) => {
   try {
-    const [datas] = await db.query(query.banners.getAllBannerQuery);
+    const [datas] = await db.query(queryStore.banners.getAllBannerQuery);
 
     res.render('admin/banner', {
+      session: req.session,
       title: 'Manage Banner',
       currentPage: 'admin-banner',
       layout: './admin/layouts/layout',
@@ -23,6 +24,7 @@ exports.getAddBanner = async (req, res) => {
     const [positions] = await db.query('SELECT * FROM banner_positions');
 
     res.render('admin/banner/add', {
+      session: req.session,
       title: 'Add Banner',
       currentPage: 'admin-add-banner',
       layout: './admin/layouts/layout',
@@ -62,7 +64,7 @@ exports.addBanner = async (req, res) => {
       }
     }
 
-    const banner = await connection.query(query.banners.addBannerQuery, [
+    const banner = await connection.query(queryStore.banners.addBannerQuery, [
       ads_name,
       ads_position,
       ads_type,
@@ -72,12 +74,12 @@ exports.addBanner = async (req, res) => {
     ]);
 
     if (ads_type == 'code') {
-      await connection.query(query.banners.addBannerCodeQuery, [
+      await connection.query(queryStore.banners.addBannerCodeQuery, [
         ads_code,
         banner[0].insertId,
       ]);
     } else if (ads_type == 'image') {
-      await connection.query(query.banners.addBannerImageQuery, [
+      await connection.query(queryStore.banners.addBannerImageQuery, [
         ads_image,
         ads_url,
         banner[0].insertId,
@@ -102,10 +104,11 @@ exports.getBannerById = async (req, res) => {
   try {
     let banner_id = req.params.banner_id;
     const [data] = await db.query(
-      `${query.banners.getAllBannerQuery} WHERE b.id = ?`,
-      [banner_id]
+      `${queryStore.banners.getAllBannerQuery} WHERE b.id = ?`,
+      [banner_id],
     );
     res.render('admin/banner/edit', {
+      session: req.session,
       title: 'Edit Banner',
       currentPage: 'admin-banner-edit',
       layout: './admin/layouts/layout',
@@ -135,7 +138,7 @@ exports.updateBanner = async (req, res) => {
     await connection.beginTransaction();
 
     if (ads_type === 'code') {
-      await connection.query(query.banners.updateBannerCodeQuery, [
+      await connection.query(queryStore.banners.updateBannerCodeQuery, [
         ads_code,
         banner_id,
       ]);
@@ -143,13 +146,13 @@ exports.updateBanner = async (req, res) => {
       if (!req.file) {
         const [imageData] = await connection.query(
           'SELECT * FROM banner_image WHERE banner_id = ?',
-          [banner_id]
+          [banner_id],
         );
 
         if (imageData.length > 0) {
           const ads_image = imageData[0].image; // Periksa apakah ada data di sini
 
-          await connection.query(query.banners.updateBannerImageQuery, [
+          await connection.query(queryStore.banners.updateBannerImageQuery, [
             ads_image,
             ads_url,
             banner_id,
@@ -170,8 +173,8 @@ exports.updateBanner = async (req, res) => {
 
         // Ambil path gambar saat ini untuk penghapusan nanti
         const [currentBanner] = await connection.query(
-          query.banners.getBannerByIdQuery,
-          [banner_id]
+          queryStore.banners.getBannerByIdQuery,
+          [banner_id],
         );
         const currentImagePath = currentBanner[0]?.image;
 
@@ -179,7 +182,7 @@ exports.updateBanner = async (req, res) => {
           const filePath = path.join(
             __dirname,
             '../../../public',
-            currentImagePath
+            currentImagePath,
           );
 
           fs.unlink(filePath, (err) => {
@@ -190,13 +193,13 @@ exports.updateBanner = async (req, res) => {
             }
           });
 
-          await connection.query(query.banners.updateBannerImageQuery, [
+          await connection.query(queryStore.banners.updateBannerImageQuery, [
             ads_image,
             ads_url,
             banner_id,
           ]);
         } else {
-          await connection.query(query.banners.addBannerImageQuery, [
+          await connection.query(queryStore.banners.addBannerImageQuery, [
             ads_image,
             ads_url,
             banner_id,
@@ -205,7 +208,7 @@ exports.updateBanner = async (req, res) => {
       }
     }
 
-    await connection.query(query.banners.updateBannerQuery, [
+    await connection.query(queryStore.banners.updateBannerQuery, [
       ads_name,
       ads_position,
       ads_type,
@@ -231,9 +234,8 @@ exports.updateBanner = async (req, res) => {
 
 exports.deleteBanner = async (req, res) => {
   let connection;
+  const banner_id = parseInt(req.params.banner_id);
   try {
-    const banner_id = parseInt(req.params.banner_id);
-
     connection = await db.getConnection();
     await connection.beginTransaction();
 
@@ -256,8 +258,8 @@ exports.deleteBanner = async (req, res) => {
     res.status(500).json(error.message);
   } finally {
     const [currentBanner] = await connection.query(
-      query.banners.getBannerByIdQuery,
-      [banner_id]
+      queryStore.banners.getBannerByIdQuery,
+      [banner_id],
     );
     const currentImagePath = currentBanner[0]?.image;
 
@@ -265,7 +267,7 @@ exports.deleteBanner = async (req, res) => {
       const filePath = path.join(
         __dirname,
         '../../../public',
-        currentImagePath
+        currentImagePath,
       );
 
       fs.unlink(filePath, (err) => {

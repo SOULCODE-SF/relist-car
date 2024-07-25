@@ -1,9 +1,9 @@
 <div class="layout-brands">
-  <ul class="nav nav-tabs">
-    <li class="nav-item">
-      <a href="/brands" class="nav-link">Autocatalog</a>
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" href="/brands">Autocatalog</a>
     </li>
-    <li class="nav-item">
+    <li class="nav-item" role="presentation">
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
@@ -20,34 +20,30 @@
   </ul>
 </div>
 
-<div class="generations">
-  <% let currentLetter = ''; %> <% generations.forEach(generation => { %> <% if
-  (generation.title[0].toUpperCase() !== currentLetter) { %> <% currentLetter =
-  generation.title[0].toUpperCase(); %>
-  <div class="letter"><%= currentLetter %></div>
-  <% } %>
-  <div class="generation-card">
-    <a href="/generation-list/<%=generation.id%>">
-      <div class="frame">
-        <img
-          src="<%= generation.image_path %>"
-          alt="Relist"
-          onerror="this.onerror=null; this.src='/nomodels.webp';"
-        />
-      </div>
-      <div class="detail">
-        <h3><%= generation.title %></h3>
-        <h4>
-          <span
-            ><%= generation.start_production %> - <%= generation.end_production
-            %></span
-          >
-          <%= generation.body_type%>
-        </h4>
-        <p>Power : <%= generation.power %></p>
-        <p>Dimension : <%= generation.dimension %> mm</p>
-      </div>
-    </a>
+<div class="container p-4">
+  <div class="row d-flex justify-content-center">
+    <% generations.forEach(generation => { %>
+    <div class="col-8 col-sm-6 col-md-4 col-lg-3">
+      <a href="/generation-list/<%= generation.id %>" class="standar-link">
+        <div class="generation-card">
+          <div class="frame">
+            <img src="/assets/<%= generation.image_path %>" alt="<%= generation.title %>" />
+          </div>
+          <h6><%= generation.title %></h6>
+          <div class="row">
+            <div class="col">
+              <p class="card-text mb-2"><%= generation.start_production %> - <%= generation.end_production %> <%= generation.body_type %></p>
+              <p class="card-text text-start mb-2"><strong>Power:</strong> <%= generation.power %></p>
+              <p class="card-text text-start mb-0"><strong>Dimension:</strong> <%= generation.dimension %> mm</p>
+            </div>
+          </div>
+          
+          
+        </div>
+      </a>
+    </div>
+    <% }) %>
   </div>
-  <% }) %>
 </div>
+
+

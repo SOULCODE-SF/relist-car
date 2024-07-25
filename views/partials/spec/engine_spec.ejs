@@ -1,0 +1,74 @@
+<tr class="no-border">
+  <th colspan="2" class="text-center bg-danger text-white">
+    <strong class="car">Internal Combustion Engine Spec</strong>
+  </th>
+</tr>
+<% if (data.power !== '') { %>
+<tr>
+  <th>Power</th>
+  <td><%= data.power %></td>
+</tr>
+
+<tr>
+  <% } %> <% if (data.power_per_litre !== '') { %>
+</tr>
+
+<tr>
+  <th>Power per litre</th>
+  <td><%= data.power_per_litre %></td>
+</tr>
+
+<tr>
+  <% } %> <% if (data.engine_layout !== '') { %>
+</tr>
+
+<tr>
+  <th>Engine layout</th>
+  <td><%= data.engine_layout %></td>
+</tr>
+<% } %> <% if (data.engine_model !== '') { %>
+<tr>
+  <th>Engine Model/Code</th>
+  <td><%= data.engine_model %></td>
+</tr>
+<% } %> 
+<% if (data.engine_displacement !== '') { %>
+<tr>
+  <th>Engine displacement</th>
+  <td><%= data.engine_displacement %></td>
+</tr>
+<% } %>
+<% if (data.number_cylinders !== '') { %>
+  <tr>
+    <th>Number of cylinders</th>
+    <td><%= data.number_cylinders %></td>
+  </tr>
+<% } %>
+<% if (data.engine_configuration !== '') { %>
+  <tr>
+    <th>Engine configuration</th>
+    <td><%= data.engine_configuration %></td>
+  </tr>
+<% } %>
+<% if (data.engine_configuration !== '') { %>
+  <tr>
+    <th>Number of valves per cylinder</th>
+    <td><%= data.number_of_valves_per_cylinder %></td>
+  </tr>
+<% } %>
+<tr>
+  <th>Fuel injection system</th>
+  <td><%= data.fuel_injection_system %></td>
+</tr>
+<tr>
+  <th>Engine aspiration</th>
+  <td><%= data.engine_aspiration %></td>
+</tr>
+<tr>
+  <th>Engine systems</th>
+  <td>Start &amp; Stop System<br /></td>
+</tr>
+<tr>
+  <th>Coolant</th>
+  <td><%= data.coolant %></td>
+</tr>

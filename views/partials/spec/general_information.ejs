@@ -1,0 +1,53 @@
+<tr class="no-border">
+  <th colspan="2" class="text-center bg-danger text-white">
+    <strong class="car">General Information</strong>
+  </th>
+</tr>
+<tr>
+  <th class="col-md-3">Brand</th>
+  <td class="col-md-9">
+    <a href="/brands/<%= data.b_id %>/models"><%= data.brand_name %></a>
+  </td>
+</tr>
+<tr>
+  <th>Model</th>
+  <td>
+    <a href="/brands/models/<%= data.m_id %>/generations"><%= data.model_name %></a>
+  </td>
+</tr>
+<tr>
+  <th>Generation</th>
+  <td>
+    <a href="/generation-list/<%= data.g_id %>"><%= data.generation_name %></a>
+  </td>
+</tr>
+<tr>
+  <th>Modification (Engine)</th>
+  <td><%= data.engine %></td>
+</tr>
+<tr>
+  <th>Start of Production</th>
+  <td><%= data.start_production %></td>
+</tr>
+<% if (data.end_production !== '') { %>
+<tr>
+  <th>End of Production</th>
+  <td><%= data.end_production %></td>
+</tr>
+<% } %>
+<tr>
+  <th>Powertrain Architecture</th>
+  <td><%= data.powertrain_architecture %></td>
+</tr>
+<tr>
+  <th>Body Type</th>
+  <td><%= data.body_type %></td>
+</tr>
+<tr>
+  <th>Seats</th>
+  <td><%= data.seat %></td>
+</tr>
+<tr>
+  <th>Doors</th>
+  <td><%= data.door %></td>
+</tr>

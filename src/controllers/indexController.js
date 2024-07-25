@@ -1,4 +1,5 @@
 const db = require('../../db');
+const queryStore = require('../store/query');
 const query = require('../store/query');
 const nodecache = require('node-cache');
 
@@ -17,7 +18,7 @@ exports.getHomePage = async (req, res) => {
       });
     }
 
-    const [recentCars] = await db.query(query.home.recentCars, [20]);
+    const [recentCars] = await db.query(query.home.recentCars, [15]);
 
     let datas = {
       recentCars,
@@ -44,7 +45,6 @@ exports.getAllBrands = async (req, res) => {
     let searchTerm = req.query.q || '';
 
     if (cachedData) {
-      console.log('kene');
       return res.render('brands', {
         brands: cachedData,
         title: 'Brands Lists',
@@ -59,7 +59,6 @@ exports.getAllBrands = async (req, res) => {
 
     cache.set(key, datas, 3600);
 
-    console.log('sini');
     res.render('brands', {
       brands: datas,
       title: 'Brands Lists',
@@ -96,7 +95,7 @@ exports.getGenerationByModel = async (req, res) => {
 
     const [datas] = await db.query(
       query.generations.getGenerationByModelQuery,
-      [model_id]
+      [model_id],
     );
 
     res.render('generations', {
@@ -105,6 +104,7 @@ exports.getGenerationByModel = async (req, res) => {
       currentPage: 'generations',
     });
   } catch (error) {
+    console.error(error);
     res.status(500).send('Internal Server Error');
   }
 };
@@ -112,30 +112,33 @@ exports.getGenerationByModel = async (req, res) => {
 exports.getGenerationLists = async (req, res) => {
   try {
     let generation_id = req.params.id;
-    const [datas] = await db.query('CALL sp_get_generation_list(?)', [
+    const [datas] = await db.query(queryStore.generations.list, [
       generation_id,
     ]);
 
-    console.log(datas);
+    console.log(datas[0]);
 
     res.render('generations_list', {
-      datas: datas[0],
+      datas: datas,
       title: 'List Generation',
       currentPage: 'list-generation',
     });
   } catch (error) {
+    console.error(error);
     res.status(500).send('Internal Server Error');
   }
 };
 
 exports.getSpec = async (req, res) => {
   try {
-    let generation_link_id = req.params.id;
+    let carId = req.params.id;
 
-    const [datas] = await db.query('CALL get_spec(?)', [generation_link_id]);
+    const [datas] = await db.query(queryStore.specs.getspec, [carId]);
+
+    console.log(datas[0]);
 
     res.render('specs', {
-      data: datas[0][0],
+      data: datas[0],
       title: 'Spec',
       currentPage: 'specs',
     });

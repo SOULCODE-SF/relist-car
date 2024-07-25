@@ -4,19 +4,22 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title><%= title %></title>
-    <!-- Meta Description -->
     <meta name="description" content="Relist" />
+
+    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css" />
     <link rel="stylesheet" href="/assets/styles.css" />
+    <link href="/assets/select2.min.css" rel="stylesheet" />
+
   </head>
   <body>
-    <!-- Header -->
     <%- include('../partials/header.ejs') %>
-    <!-- Main Content -->
-    <div class="main-content"><%- body %></div>
-
-    <!-- Scripts -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script> -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/js/select2.min.js"></script>
-    <script src="/assets/scripts.js"></script>
+    <div class="main-content">
+      <%- body %>
+    </div>
+    <script src="/assets/nice-iconly/assets/vendor/jquery/jquery-3.6.1.min.js"></script>
+    <script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/assets/scripts.js"></script>
+    <script src="/assets/jquery.min.js"></script>
+    <script src="/assets/select2.min.js"></script>
   </body>
 </html>

@@ -27,25 +27,13 @@
     <li class="nav-item">
       <a
         class="nav-link"
-        id="electric-tab"
+        id="engine-specs-tab"
         data-toggle="tab"
-        href="#electric"
+        href="#engine-specs"
         role="tab"
-        aria-controls="electric"
+        aria-controls="engine-specs"
         aria-selected="false"
-        >Electric and Hybrid</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="engine-tab"
-        data-toggle="tab"
-        href="#engine"
-        role="tab"
-        aria-controls="engine"
-        aria-selected="false"
-        >Engine Specs</a
+        >Engines</a
       >
     </li>
     <li class="nav-item">
@@ -63,6 +51,30 @@
     <li class="nav-item">
       <a
         class="nav-link"
+        id="spaces-tab"
+        data-toggle="tab"
+        href="#spaces"
+        role="tab"
+        aria-controls="spaces"
+        aria-selected="false"
+        >Spaces</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="electric-tab"
+        data-toggle="tab"
+        href="#electric"
+        role="tab"
+        aria-controls="electric"
+        aria-selected="false"
+        >Electric and Hybrid</a
+      >
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
         id="drivetrain-tab"
         data-toggle="tab"
         href="#drivetrain"
@@ -73,6 +85,15 @@
       >
     </li>
   </ul>
+
+  <% if (error) { %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= error %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% } %>
 
   <form id="carForm" action="/admin/cars/add" method="post">
     <div class="tab-content" id="myTabContent">
@@ -93,6 +114,32 @@
       >
         <%- include('./partials/form/performance_specs.ejs') %>
       </div>
+      <div
+        class="tab-pane fade"
+        id="engine-specs"
+        role="tabpanel"
+        aria-labelledby="engine-specs-tab"
+      >
+        <%- include('./partials/form/engine_specs.ejs') %>
+      </div>
+
+      <div
+        class="tab-pane fade"
+        id="dimensions"
+        role="tabpanel"
+        aria-labelledby="dimensions-tab"
+      >
+        <%- include('./partials/form/dimensions.ejs') %>
+      </div>
+
+      <div
+        class="tab-pane fade"
+        id="spaces"
+        role="tabpanel"
+        aria-labelledby="spaces-tab"
+      >
+        <%- include('./partials/form/spaces.ejs') %>
+      </div>
 
       <div
         class="tab-pane fade"
@@ -105,35 +152,6 @@
         <input type="text" id="battery" name="battery" /><br /><br />
         <label for="range">Range:</label>
         <input type="text" id="range" name="range" /><br /><br />
-        <!-- More fields here -->
-      </div>
-
-      <div
-        class="tab-pane fade"
-        id="engine"
-        role="tabpanel"
-        aria-labelledby="engine-tab"
-      >
-        <h3>Engine Specs</h3>
-        <label for="engineType">Engine Type:</label>
-        <input type="text" id="engineType" name="engineType" /><br /><br />
-        <label for="displacement">Displacement:</label>
-        <input type="text" id="displacement" name="displacement" /><br /><br />
-        <!-- More fields here -->
-      </div>
-
-      <div
-        class="tab-pane fade"
-        id="dimensions"
-        role="tabpanel"
-        aria-labelledby="dimensions-tab"
-      >
-        <h3>Dimensions</h3>
-        <label for="length">Length:</label>
-        <input type="text" id="length" name="length" /><br /><br />
-        <label for="width">Width:</label>
-        <input type="text" id="width" name="width" /><br /><br />
-        <!-- More fields here -->
       </div>
 
       <div

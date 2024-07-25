@@ -18,10 +18,12 @@ const {
   addCar,
   getCarsList,
   getGenerationName,
+  getAddCar,
 } = require('../src/controllers/adminController/cars');
 const {
   getDashboardPage,
 } = require('../src/controllers/adminController/dashboard');
+const { isAuthenticated, isAdmin } = require('./middlewares/authMiddleware');
 
 // Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
 const dynamicStorage = (type) => {
@@ -50,6 +52,7 @@ router.get('/', getDashboardPage);
 
 router.get('/page', (req, res) => {
   res.render('admin/page/index', {
+    session: req.session,
     title: 'Page',
     currentPage: 'admin-page',
     layout: './admin/layouts/layout',
@@ -58,6 +61,7 @@ router.get('/page', (req, res) => {
 
 router.get('/page/add', (req, res) => {
   res.render('admin/page/add-page', {
+    session: req.session,
     title: 'Add Page',
     currentPage: 'admin-add-page',
     layout: './admin/layouts/layout',
@@ -82,13 +86,7 @@ router.post('/users/add', addUser);
 
 router.get('/cars', getCarsList);
 
-router.get('/cars/add', (req, res) => {
-  res.render('admin/car/add', {
-    title: 'Car Add',
-    currentPage: 'admin-car-add',
-    layout: './admin/layouts/layout',
-  });
-});
+router.get('/cars/add', getAddCar);
 
 router.post('/cars/add', addCar);
 

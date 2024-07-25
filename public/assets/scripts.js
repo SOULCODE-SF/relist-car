@@ -1,5 +1,3 @@
-// assets/scripts.js
-
 document.addEventListener('DOMContentLoaded', function () {
   initializeScrollAnimation();
 });
@@ -20,31 +18,12 @@ function initializeScrollAnimation() {
   });
 }
 
-function loadDeferredStyles() {
-  var addStylesNode = document.getElementById('deferred-styles');
-  var replacement = document.createElement('div');
-  replacement.innerHTML = addStylesNode.textContent;
-  document.body.appendChild(replacement);
-  addStylesNode.parentElement.removeChild(addStylesNode);
-}
-var raf =
-  requestAnimationFrame ||
-  mozRequestAnimationFrame ||
-  webkitRequestAnimationFrame ||
-  msRequestAnimationFrame;
-if (raf)
-  raf(function () {
-    window.setTimeout(loadDeferredStyles, 0);
-  });
-else window.addEventListener('load', loadDeferredStyles);
-
 $(document).ready(function () {
-  // Initialize Select2 for brand dropdown
   $('#filter-brand').select2({
     placeholder: 'Search for a brand',
     minimumInputLength: 1,
     ajax: {
-      url: '/admin/brands-name',
+      url: '/brands-name',
       dataType: 'json',
       delay: 250,
       processResults: function (data) {
@@ -66,12 +45,11 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  // Initialize Select2 for brand dropdown
   $('#input-brand').select2({
     placeholder: 'Search for a brand',
     minimumInputLength: 1,
     ajax: {
-      url: '/admin/brands-name',
+      url: '/brands-name',
       dataType: 'json',
       delay: 250,
       processResults: function (data) {
@@ -85,20 +63,16 @@ $(document).ready(function () {
       cache: true,
     },
   });
-
-  // Initialize Select2 for model dropdown
   $('#input-model').select2({
     placeholder: 'Select a model',
     width: '100%',
   });
 
-  // Initialize Select2 for generation dropdown
   $('#input-generation').select2({
     placeholder: 'Select a generation',
     width: '100%',
   });
 
-  // Event listener for selecting a brand
   $('#input-brand').on('change', function () {
     const selectedBrandId = $(this).val();
 
@@ -112,7 +86,7 @@ $(document).ready(function () {
 
     // AJAX request to fetch models based on selected brand
     $.ajax({
-      url: `/admin/models-name/${selectedBrandId}`,
+      url: `/models-name/${selectedBrandId}`,
       method: 'GET',
       dataType: 'json',
       success: function (response) {
@@ -121,7 +95,7 @@ $(document).ready(function () {
         // Add new model options to model dropdown
         models.forEach((model) => {
           $('#input-model').append(
-            $('<option></option>').attr('value', model.id).text(model.name)
+            $('<option></option>').attr('value', model.id).text(model.name),
           );
         });
 
@@ -153,7 +127,7 @@ $(document).ready(function () {
 
     // AJAX request to fetch generations based on selected model
     $.ajax({
-      url: `/admin/generations-name/${selectedModelId}`,
+      url: `/generations-name/${selectedModelId}`,
       method: 'GET',
       dataType: 'json',
       success: function (response) {
@@ -164,7 +138,7 @@ $(document).ready(function () {
           $('#input-generation').append(
             $('<option></option>')
               .attr('value', generation.id)
-              .text(generation.name)
+              .text(generation.name),
           );
         });
 
@@ -175,5 +149,32 @@ $(document).ready(function () {
         console.error('Error fetching generations:', error);
       },
     });
+  });
+});
+
+$(document).ready(function () {
+  // Inisialisasi Select2 dengan placeholder dan konfigurasi
+  $('#input-engine').select2({
+    placeholder: 'Search for an engine',
+    width: '100%',
+    ajax: {
+      url: '/get-engine',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term,
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data.datas.map((item) => ({
+            id: item.name,
+            text: item.name,
+          })),
+        };
+      },
+      cache: true,
+    },
   });
 });
