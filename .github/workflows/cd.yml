@@ -18,7 +18,7 @@ jobs:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         port: ${{ secrets.PORT }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }} 
+        password: ${{ secrects.PASSWORD}}
         script: |
           bash /var/www/html/relist-car/deploy.sh
  
