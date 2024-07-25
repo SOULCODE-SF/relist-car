@@ -18,7 +18,7 @@ exports.getHomePage = async (req, res) => {
       });
     }
 
-    const [recentCars] = await db.query(query.home.recentCars, [12]);
+    const [recentCars] = await db.query(query.home.recentCars, [15]);
 
     let datas = {
       recentCars,

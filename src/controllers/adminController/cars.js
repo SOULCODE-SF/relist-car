@@ -69,6 +69,7 @@ exports.getModelName = async (req, res) => {
     res.status(500).send(error.message);
   }
 };
+
 exports.getGenerationName = async (req, res) => {
   try {
     const model_id = req.params.model_id;
@@ -78,6 +79,28 @@ exports.getGenerationName = async (req, res) => {
       'SELECT id, title as name FROM generations WHERE model_id = ?',
       [model_id],
     );
+
+    return res.json({
+      datas,
+    });
+  } catch (error) {
+    res.status(500).send(error.message);
+  }
+};
+
+exports.getEngineName = async (req, res) => {
+  try {
+    const search = req.query.search;
+
+    console.log(search);
+
+    let querystr = `SELECT gi.engine as name FROM general_information gi `;
+    if (search) {
+      querystr += ` WHERE gi.engine LIKE ? `;
+    }
+    querystr += `GROUP BY gi.engine LIMIT 100`;
+
+    const [datas] = await db.query(querystr, [`%${search}%`]);
 
     return res.json({
       datas,

@@ -23,7 +23,7 @@ $(document).ready(function () {
     placeholder: 'Search for a brand',
     minimumInputLength: 1,
     ajax: {
-      url: '/admin/brands-name',
+      url: '/brands-name',
       dataType: 'json',
       delay: 250,
       processResults: function (data) {
@@ -49,7 +49,7 @@ $(document).ready(function () {
     placeholder: 'Search for a brand',
     minimumInputLength: 1,
     ajax: {
-      url: '/admin/brands-name',
+      url: '/brands-name',
       dataType: 'json',
       delay: 250,
       processResults: function (data) {
@@ -86,7 +86,7 @@ $(document).ready(function () {
 
     // AJAX request to fetch models based on selected brand
     $.ajax({
-      url: `/admin/models-name/${selectedBrandId}`,
+      url: `/models-name/${selectedBrandId}`,
       method: 'GET',
       dataType: 'json',
       success: function (response) {
@@ -95,7 +95,7 @@ $(document).ready(function () {
         // Add new model options to model dropdown
         models.forEach((model) => {
           $('#input-model').append(
-            $('<option></option>').attr('value', model.id).text(model.name)
+            $('<option></option>').attr('value', model.id).text(model.name),
           );
         });
 
@@ -127,7 +127,7 @@ $(document).ready(function () {
 
     // AJAX request to fetch generations based on selected model
     $.ajax({
-      url: `/admin/generations-name/${selectedModelId}`,
+      url: `/generations-name/${selectedModelId}`,
       method: 'GET',
       dataType: 'json',
       success: function (response) {
@@ -138,7 +138,7 @@ $(document).ready(function () {
           $('#input-generation').append(
             $('<option></option>')
               .attr('value', generation.id)
-              .text(generation.name)
+              .text(generation.name),
           );
         });
 
@@ -149,5 +149,32 @@ $(document).ready(function () {
         console.error('Error fetching generations:', error);
       },
     });
+  });
+});
+
+$(document).ready(function () {
+  // Inisialisasi Select2 dengan placeholder dan konfigurasi
+  $('#input-engine').select2({
+    placeholder: 'Search for an engine',
+    width: '100%',
+    ajax: {
+      url: '/get-engine',
+      dataType: 'json',
+      delay: 250,
+      data: function (params) {
+        return {
+          search: params.term,
+        };
+      },
+      processResults: function (data) {
+        return {
+          results: data.datas.map((item) => ({
+            id: item.name,
+            text: item.name,
+          })),
+        };
+      },
+      cache: true,
+    },
   });
 });

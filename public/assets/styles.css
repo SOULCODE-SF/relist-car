@@ -1,3 +1,12 @@
+:root {
+  --theme-color: #EF1D26;
+  --white: #ffffff;
+  --dark: #333333;
+  --font: "Mulish", sans-serif;
+  --box-shadow: 0 0 40px 5px rgba(0, 0, 0, 0.05);
+  --transition: all 0.3s ease-in-out;
+}
+
 @font-face {
   font-family: Mulish;
   src: url('/assets/fonts/Mulish/static/Mulish-Regular.ttf') format('truetype'),
@@ -49,7 +58,7 @@
 /* Menggunakan font Mulish untuk seluruh body */
 body {
   font-family: Mulish, sans-serif;
-  background-color: #fdfdfd;
+  background-color: #f2f2f2
 }
 
 /* Hapus deklarasi yang duplikat dan perbaiki penulisan sisa CSS */
@@ -61,10 +70,10 @@ a {
 .main-content {
   z-index: 1;
   margin-top: 110px;
-  background-color: #fdfdfd;
 }
 
 .recent-cars {
+  padding-top: 300px;
   text-align: center; /* Memastikan konten di dalam .recent-cars terpusat secara horizontal */
 }
 
@@ -557,6 +566,63 @@ button:hover {
   margin: 4px 0;
   transition: transform 0.3s, opacity 0.3s; /* Animasi untuk ikon bar */
 }
+
+.theme-btn,
+    .btn-white {
+      font-size: 16px;
+      padding: 10px 20px;
+      transition: all 0.5s;
+      text-transform: capitalize;
+      position: relative;
+      border-radius: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      text-align: center;
+      overflow: hidden;
+      border: none;
+      box-shadow: var(--box-shadow);
+      z-index: 1;
+      display: inline-block; /* Make it inline-block to allow margin/padding adjustments */
+      text-decoration: none; /* Remove underline for links */
+      color: var(--theme-color);
+      background: var(--white);
+    }
+
+    /* Primary Theme Button */
+    .theme-btn {
+      background: var(--theme-color);
+      color: var(--white); /* Text color for theme-btn */
+    }
+
+    /* Pseudo-element for Hover Effect */
+    .theme-btn::before,
+    .btn-white::before {
+      content: "";
+      position: absolute;
+      width: 300px;
+      height: 300px;
+      background-color: var(--dark); /* Adjust background color */
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      z-index: -1;
+    }
+
+    /* Hover Effect */
+    .theme-btn:hover::before {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .btn-white:hover::before {
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .btn-white:hover{
+      color: var(--white);
+    }
+
 
 @media (max-width: 991.98px) {
   .navbar-collapse {

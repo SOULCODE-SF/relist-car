@@ -8,6 +8,12 @@ const {
   getHomePage,
 } = require('../src/controllers/indexController');
 const { addUser, loginUser } = require('../src/controllers/authController');
+const {
+  getBrandsName,
+  getModelName,
+  getGenerationName,
+  getEngineName,
+} = require('../src/controllers/adminController/cars');
 const router = express.Router();
 
 router.get('/', getHomePage);
@@ -34,5 +40,10 @@ router.get('/login', (req, res) => {
 });
 router.post('/users/register', addUser);
 router.post('/login', loginUser);
+
+router.get('/brands-name', getBrandsName);
+router.get('/models-name/:brand_id', getModelName);
+router.get('/generations-name/:model_id', getGenerationName);
+router.get('/get-engine', getEngineName);
 
 module.exports = router;
