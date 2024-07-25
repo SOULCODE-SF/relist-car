@@ -21,9 +21,9 @@ jobs:
         key: ${{ secrets.SSH_PRIVATE_KEY }} 
         script: |
           export TERM=xterm
-          cd /var/www/html/relist-car
-          git pull origin main
-          git status
-          npm install --only=production
-          pm2 restart relist
-
+          cd /var/www/html/relist-car &&
+          git pull origin main &&
+          git status &&
+          npm install --only=production &&
+          pm2 restart relist &&
+ 
