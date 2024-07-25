@@ -9,11 +9,11 @@ jobs:
     - name: Deploy to Server
       uses: easingthemes/ssh-deploy@v2
       with:
-        server_ip: ${{ secrets.HOST }}
+        host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT}}
-        script: |
+        port: ${{ secrets.PORT }}
+        script:
           cd /var/www/html/relist-car
           git pull origin main
           git status
