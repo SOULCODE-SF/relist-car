@@ -6,16 +6,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: executing remote ssh commands using ssh key
-      uses: appleboy/ssh-action@v1.0.3
+    - name: Deploy to Server
+      uses: easingthemes/ssh-deploy@v2
       with:
-        host: ${{ secrets.HOST }}
+        server_ip: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
         password: ${{ secrets.PASSWORD }}
-        port: ${{ secrets.PORT }}
-        script: 
-          cd ~/var/www/html/relist-car
-          git pull origin master
+        port: ${{ secrets.PORT}}
+        script: |
+          cd /var/www/html/relist-car
+          git pull origin main
           git status
           npm install --only=prod
           pm2 restart relist
