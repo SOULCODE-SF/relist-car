@@ -5,6 +5,10 @@ const nodecache = require('node-cache');
 
 const cache = new nodecache();
 
+function isValid(value) {
+  return value !== null && value !== undefined && value.trim() !== '';
+}
+
 exports.getHomePage = async (req, res) => {
   try {
     const key = req.originalUrl;
@@ -133,12 +137,48 @@ exports.getSpec = async (req, res) => {
   try {
     let carId = req.params.id;
 
-    const [datas] = await db.query(queryStore.specs.getspec, [carId]);
+    const [datas] = await db.query('CALL get_spec(?)', [carId]);
 
-    console.log(datas[0]);
+    console.log(datas[0][0]);
+    const data = datas[0][0];
 
+    const jsonData = {
+      engine_spec: {
+        power: data.power,
+        power_per_litre: data.power_per_litre,
+        engine_layout: data.engine_layout,
+        engine_model: data.engine_model,
+        engine_displacement: data.engine_displacement,
+        number_cylinders: data.number_cylinders,
+        engine_configuration: data.engine_configuration,
+        number_valves_per_cylinder: data.number_valves_per_cylinder,
+        fuel_injection_system: data.fuel_injection_system,
+        engine_aspiration: data.engine_aspiration,
+        engine_system: data.engine_system,
+        coolant: data.coolant,
+      },
+    };
+
+    const hasData = {
+      engine_spec:
+        isValid(data.power) ||
+        isValid(data.power_per_litre) ||
+        isValid(data.engine_layout) ||
+        isValid(data.engine_model) ||
+        isValid(data.engine_displacement) ||
+        isValid(data.number_cylinders) ||
+        isValid(data.engine_configuration) ||
+        isValid(data.number_valves_per_cylinder) ||
+        isValid(data.fuel_injection_system) ||
+        isValid(data.engine_aspiration) ||
+        isValid(data.engine_system) ||
+        isValid(data.coolant),
+      performance_specs: isValid(data.some_performance_spec_column),
+    };
     res.render('specs', {
-      data: datas[0],
+      data: datas[0][0],
+      jsonData,
+      hasData,
       title: 'Spec',
       currentPage: 'specs',
     });
