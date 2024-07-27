@@ -7,12 +7,12 @@ const logger = require('morgan');
 const compression = require('compression');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
+const helmet = require('helmet');
 
 const app = express();
 
 const adsTxtPath = path.join(__dirname, 'public', 'ads.txt');
 
-// Route untuk ads.txt
 app.get('/ads.txt', (req, res) => {
   res.sendFile(adsTxtPath);
 });
