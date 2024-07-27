@@ -1,59 +1,68 @@
-<tr class="no">
-  <th colspan="2" class="no">
-    <strong class="car" id="_drivetrain"
-      >Drivetrain, brakes and suspension specs</strong
-    >
+<tr class="no-border">
+  <th colspan="2" class="text-center bg-danger text-white">
+    <strong class="car">Drivetrain, brakes and suspension specs</strong>
   </th>
 </tr>
-<tr>
-  <th>Drivetrain Architecture</th>
-  <td>
-    The Internal combustion engine (ICE) drives the generator only, with
-    no mechanical connection to the drive. An electric motor drives the
-    rear wheels.
-  </td>
-</tr>
-<tr>
-  <th>Drive wheel</th>
-  <td>Rear wheel drive</td>
-</tr>
-<tr>
-  <th>Number of gears and type of gearbox</th>
-  <td>1 gears, automatic transmission</td>
-</tr>
-<tr>
-  <th>Front suspension</th>
-  <td>Double wishbone</td>
-</tr>
-<tr>
-  <th>Rear suspension</th>
-  <td>Independent multi-link suspension</td>
-</tr>
-<tr>
-  <th>Front brakes</th>
-  <td>Ventilated discs</td>
-</tr>
-<tr>
-  <th>Rear brakes</th>
-  <td>Ventilated discs</td>
-</tr>
-<tr>
-  <th>Assisting systems</th>
-  <td>ABS (Anti-lock braking system)<br /></td>
-</tr>
-<tr>
-  <th>Steering type</th>
-  <td>Steering rack and pinion</td>
-</tr>
-<tr>
-  <th>Power steering</th>
-  <td>Electric Steering</td>
-</tr>
-<tr>
-  <th>Tires size</th>
-  <td>255/50 R19; 255/45 R20</td>
-</tr>
-<tr>
-  <th>Wheel rims size</th>
-  <td>19; 20</td>
-</tr>
+
+<% var data = data.drivetrain %>
+
+<% if(data.drivetrain_architecture !== ''){%>
+  <tr>
+    <th>Drivetrain Architecture</th>
+    <td><%= data.drivetrain_architecture%></td>
+  </tr>
+<%};%>
+<% if(data.drive_wheel !== ''){%>
+  <tr>
+    <th>Drive Wheel</th>
+    <td><%= data.drive_wheel %></td>
+  </tr>
+<%};%>
+<% if(data.number_of_gears_and_type_of_gearbox !== ''){%>
+  <tr>
+    <th>Number of gears and type of gearbox </th>
+    <td><%= data.number_of_gears_and_type_of_gearbox %></td>
+  </tr>
+<%};%>
+<% if(data.front_suspension !== ''){%>
+  <tr>
+    <th>Front Suspension</th>
+    <td><%= data.front_suspension %></td>
+  </tr>
+<%};%>
+<% if(data.rear_suspension !== ''){%>
+  <tr>
+    <th>Rear Suspension</th>
+    <td><%= data.rear_suspension %></td>
+  </tr>
+<%};%>
+<% if(data.front_brakes !== ''){%>
+  <tr>
+    <th>Front Brakes</th>
+    <td><%= data.front_brakes %></td>
+  </tr>
+<%};%>
+<% if(data.rear_brakes !== ''){%>
+  <tr>
+    <th>Rear Brakes</th>
+    <td><%= data.rear_brakes %></td>
+  </tr>
+<%};%>
+<% if(data.assisting_systems !== ''){%>
+  <tr>
+    <th>Assisting Systems</th>
+    <td><%= data.assisting_systems %></td>
+  </tr>
+<%};%>
+<% if(data.tires_size !== ''){%>
+  <tr>
+    <th>Tires Size</th>
+    <td><%= data.tires_size %></td>
+  </tr>
+<%};%>
+<% if(data.wheel_rims_size !== ''){%>
+  <tr>
+    <th>Wheel Rims Size</th>
+    <td><%= data.wheel_rims_size %></td>
+  </tr>
+<%};%>

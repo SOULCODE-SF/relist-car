@@ -1,38 +1,56 @@
-<tr class="no">
-  <th colspan="2" class="no2">
-    <div class="adin top" style="height: 0px"></div>
+<tr class="no-border">
+  <th colspan="2" class="text-center bg-danger text-white">
+    <strong class="car">Space, Volume and weights</strong>
   </th>
 </tr>
-<tr class="no">
-  <th colspan="2" class="no">
-    <strong class="car" id="_volume">Space, Volume and weights</strong>
-  </th>
-</tr>
-<tr>
-  <th>Kerb Weight</th>
-  <td>
-    2220 kg
-    <span class="val2">4894.26 lbs.</span>
-  </td>
-</tr>
-<tr>
-  <th>Trunk (boot) space - minimum</th>
-  <td>
-    369 l
-    <span class="val2">13.03 cu. ft.</span>
-  </td>
-</tr>
-<tr>
-  <th>Trunk (boot) space - maximum</th>
-  <td>
-    776 l
-    <span class="val2">27.4 cu. ft.</span>
-  </td>
-</tr>
-<tr>
-  <th>Fuel tank capacity</th>
-  <td>
-    56 l
-    <span class="val2">14.79 US gal | 12.32 UK gal</span>
-  </td>
-</tr>
+
+<% var data = data.space %>
+
+<% if(data.kerb_weight !== ''){%>
+  <tr>
+    <th>Kerb Weight</th>
+    <td><%= data.kerb_weight%></td>
+  </tr>
+<%};%>
+<% if(data.trunk_space_minimum !== ''){%>
+  <tr>
+    <th>Trunk Space Minimum</th>
+    <td><%= data.trunk_space_minimum %> mm</td>
+  </tr>
+<%};%>
+<% if(data.trunk_space_maximum !== ''){%>
+  <tr>
+    <th>Trunk Space Maximum</th>
+    <td><%= data.trunk_space_maximum %> mm</td>
+  </tr>
+<%};%>
+<% if(data.max_load !== ''){%>
+  <tr>
+    <th>Max Load</th>
+    <td><%= data.max_load %> mm</td>
+  </tr>
+<%};%>
+<% if(data.fuel_tank_capacity !== ''){%>
+  <tr>
+    <th>Fuel Tank Capacity</th>
+    <td><%= data.fuel_tank_capacity %> mm</td>
+  </tr>
+<%};%>
+<% if(data.permitted_trailer_load_with_brakes !== ''){%>
+  <tr>
+    <th>Permitted Trailer Load With Brakes </th>
+    <td><%= data.permitted_trailer_load_with_brakes %> mm</td>
+  </tr>
+<%};%>
+<% if(data.permitted_trailer_load_without_brakes !== ''){%>
+  <tr>
+    <th>Permitted Trailer Load Without Brakes</th>
+    <td><%= data.permitted_trailer_load_without_brakes %> mm</td>
+  </tr>
+<%};%>
+<% if(data.permitted_towbardownload !== ''){%>
+  <tr>
+    <th>Permitted Towbardownload</th>
+    <td><%= data.permitted_towbardownload %> mm</td>
+  </tr>
+<%};%>

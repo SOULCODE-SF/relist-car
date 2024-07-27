@@ -3,16 +3,17 @@
     <strong class="car">General Information</strong>
   </th>
 </tr>
+<% var data = data.general_information; %>
 <tr>
   <th class="col-md-3">Brand</th>
   <td class="col-md-9">
-    <a href="/brands/<%= data.b_id %>/models"><%= data.brand_name %></a>
+    <a href="/brands/<%= data.brand_id %>/models"><%= data.brand_name %></a>
   </td>
 </tr>
 <tr>
   <th>Model</th>
   <td>
-    <a href="/brands/models/<%= data.m_id %>/generations"><%= data.model_name %></a>
+    <a href="/brands/models/<%= data.model_id %>/generations"><%= data.model_name %></a>
   </td>
 </tr>
 <tr>

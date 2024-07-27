@@ -3,38 +3,60 @@
     <strong class="car">Dimensions</strong>
   </th>
 </tr>
-<tr>
-  <th>Length</th>
-  <td>
-    <%= data.length%>
-    <span class="val2">187.8 in.</span>
-  </td>
-</tr>
-<tr>
-  <th>Width</th>
-  <td>
-    <%= data.width%>
-    <span class="val2">75.98 in.</span>
-  </td>
-</tr>
-<tr>
-  <th>Height</th>
-  <td>
-    <%= data.height %>
-    <span class="val2">63.98 in.</span>
-  </td>
-</tr>
-<tr>
-  <th>Wheelbase</th>
-  <td>
-    <%= data.wheelbase %>
-    <span class="val2">113.39 in.</span>
-  </td>
-</tr>
-<tr>
-  <th>Ride height (ground clearance)</th>
-  <td>
-    150 mm
-    <span class="val2">5.91 in.</span>
-  </td>
-</tr>
+
+<% var data = data.dimension %>
+
+<% if(data.length !== ''){%>
+  <tr>
+    <th>Length</th>
+    <td><%= data.length%> mm</td>
+  </tr>
+<%};%>
+<% if(data.witdh !== ''){%>
+  <tr>
+    <th>Width</th>
+    <td><%= data.width%> mm</td>
+  </tr>
+<%};%>
+<% if(data.height !== ''){%>
+  <tr>
+    <th>Height</th>
+    <td><%= data.height %> mm</td>
+  </tr>
+<%};%>
+<% if(data.wheelbase !== ''){%>
+  <tr>
+    <th>Wheelbase</th>
+    <td><%= data.wheelbase %> mm</td>
+  </tr>
+<%};%>
+<% if(data.front_track !== ''){%>
+  <tr>
+    <th>Front Track</th>
+    <td><%= data.front_track %> mm</td>
+  </tr>
+<%};%>
+<% if(data.rear_back_track !== ''){%>
+  <tr>
+    <th>Rear Back Track</th>
+    <td><%= data.rear_back_track %> mm</td>
+  </tr>
+<%};%>
+<% if(data.front_overhang !== ''){%>
+  <tr>
+    <th>Front Overhang</th>
+    <td><%= data.front_overhang %> mm</td>
+  </tr>
+<%};%>
+<% if(data.rear_overhang !== ''){%>
+  <tr>
+    <th>Rear Overhang</th>
+    <td><%= data.rear_overhang %> mm</td>
+  </tr>
+<%};%>
+<% if(data.minimum_turning_circle !== ''){%>
+  <tr>
+    <th>Minimum Turning Circle</th>
+    <td><%= data.minimum_turning_circle %> m</td>
+  </tr>
+<%};%>

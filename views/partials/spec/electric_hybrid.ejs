@@ -1,67 +1,77 @@
-<tr class="no">
-  <th colspan="2" class="no">
-    <strong class="car" id="_electric"
-      >Electric cars and hybrids specs</strong
-    >
-  </th>
-</tr>
-<tr>
-  <th>Gross battery capacity</th>
-  <td>40 kWh</td>
-</tr>
-<tr>
-  <th>Battery technology</th>
-  <td>Lithium-ion (Li-Ion)</td>
-</tr>
-<tr>
-  <th>Battery location</th>
-  <td>Below the floor</td>
-</tr>
-<tr>
-  <th>All-electric range (WLTC)</th>
-  <td>
-    160-200 km
-    <span class="val2">99.42 - 124.27 mi</span>
-  </td>
-</tr>
-<tr class="e">
-  <th class="e">Charging ports</th>
-  <th>Location</th>
-</tr>
-<tr class="e">
-  <th>GB/T 20234.2 AC</th>
-  <td>Rear left</td>
-</tr>
-<tr class="e">
-  <th>GB/T 20234.3 DC</th>
-  <td>Rear left</td>
-</tr>
-<tr class="e">
-  <th colspan="2" class="e">Electric motor 1</th>
-</tr>
-<tr class="e">
-  <th>Electric motor power</th>
-  <td>272 Hp</td>
-</tr>
-<tr class="e">
-  <th>Electric motor Torque</th>
-  <td>
-    360 Nm
-    <span class="val2">265.52 lb.-ft.</span>
-  </td>
-</tr>
-<tr class="e">
-  <th>Electric motor location</th>
-  <td>Rear axle, Transverse</td>
-</tr>
-<tr>
-  <th>System power</th>
-  <td>272 Hp</td>
-</tr>
-<tr>
-  <th>System torque</th>
-  <td>
-    360 Nm
-    <span class="val2">265.52 lb.-ft.</span>
-  </td>
-</tr>
+<% if(data.general_information.powertrain_architecture.includes('BEV', 'FHEV', 'PHEV', 'MHEV', 'FCEV', 'PFCEV')){ %>
+  <tr class="no-border">
+    <th colspan="2" class="text-center bg-danger text-white">
+      <strong class="car">Electric cars and hybrids specs</strong>
+    </th>
+  </tr>
+
+  <% var data = data.electric; %>
+
+  <% if(data.battery_capacity !== ''){%>
+    <tr>
+      <th>Gross Battery Capacity</th>
+      <td><%= data.battery_capacity %> mm</td>
+    </tr>
+  <%};%>
+  <% if(data.battery_technology !== ''){%>
+    <tr>
+      <th>Battery Technology</th>
+      <td><%= data.battery_technology %> mm</td>
+    </tr>
+  <%};%>
+  <% if(data.battery_location !== ''){%>
+    <tr>
+      <th>Battery Location</th>
+      <td><%= data.battery_location %> mm</td>
+    </tr>
+  <%};%>
+  <% if(data.all_electric_spec !== ''){%>
+    <tr>
+      <th>All Electric Spec</th>
+      <td><%= data.all_electric_spec %> mm</td>
+    </tr>
+  <%};%>
+  <% if(data.charging_ports !== ''){%>
+    <tr>
+      <th>Charging Ports</th>
+      <td><%= data.charging_ports %> mm</td>
+    </tr>
+  <%};%>
+  <% if(data.haveElectricMotor) {%>
+    <% data.electric_motor.forEach((e, i) => { %>
+      <tr class="no-border">
+        <th colspan="2" class="text-left bg-light text-danger">
+          <strong class="car">Electric Motor <%= i+1 %></strong>
+        </th>
+      </tr>
+      <tr class="bg-light">
+        <th>Power</th>
+        <td><%= e.power %></td>
+      </tr>
+      <tr class="bg-light">
+        <th>Torque</th>
+        <td><%= e.torque %></td>
+      </tr>
+      <tr class="bg-light">
+        <th>Location</th>
+        <td><%= e.location %></td>
+      </tr>
+      <tr class="bg-light">
+        <th>Type</th>
+        <td><%= e.type %></td>
+      </tr>
+    <% }); %>  
+  <%} %> 
+  <% if(data.system_power !== ''){%>
+    <tr>
+      <th>System Power</th>
+      <td><%= data.system_power %> mm</td>
+    </tr>
+  <%};%>
+  <% if(data.system_torque !== ''){%>
+    <tr>
+      <th>System Torque</th>
+      <td><%= data.system_torque %> m</td>
+    </tr>
+  <%};%>
+<% } %>

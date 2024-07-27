@@ -7,31 +7,31 @@
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/brands/<%= data.brand_id %>/models" class="nav-link"
-        ><%= data.brand_name %></a
+      <a href="/brands/<%= data.general_information.brand_id %>/models" class="nav-link"
+        ><%= data.general_information.brand_name %></a
       >
     </li>
     <li class="nav-item">
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/brands/models/<%= data.model_id %>/generations" class="nav-link"
-        ><%= data.model_name %></a
+      <a href="/brands/models/<%= data.general_information.model_id %>/generations" class="nav-link"
+        ><%= data.general_information.model_name %></a
       >
     </li>
     <li class="nav-item">
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/generation-list/<%= data.generation_id %>" class="nav-link"
-        ><%= data.generation_name %></a
+      <a href="/generation-list/<%= data.general_information.generation_id %>" class="nav-link"
+        ><%= data.general_information.generation_name %></a
       >
     </li>
     <li class="nav-item">
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link active"><%= data.engine%></a>
+      <a href="#" class="nav-link active"><%= data.general_information.engine%></a>
     </li>
   </ul>
 </div>
@@ -46,7 +46,10 @@
         <%- include('./partials/spec/general_information.ejs') %>
         <%- include('./partials/spec/performance_spec.ejs') %>
         <%- include('./partials/spec/engine_spec.ejs') %>
+        <%- include('./partials/spec/electric_hybrid.ejs')%>
+        <%- include('./partials/spec/space_weight_volume.ejs') %>
         <%- include('./partials/spec/dimension.ejs') %>
+        <%- include('./partials/spec/drivetrain.ejs') %>
       </tbody>
     </table>
   </div>

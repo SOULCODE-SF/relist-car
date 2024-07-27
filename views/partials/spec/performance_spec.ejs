@@ -3,38 +3,47 @@
     <strong class="car">Performance Specs</strong>
   </th>
 </tr>
-<tr>
-  <th>Fuel Type</th>
-  <td><%= data.fuel_type %></td>
-</tr>
+<% var data = data.performance_spec %>
+
+<% if (data.fuel_type !== '') { %>
+  <tr>
+    <th>Fuel Type</th>
+    <td><%= data.fuel_type %></td>
+  </tr>
+<% } %> 
 <% if (data.acceleration_100kmh !== '') { %>
-<tr>
-  <th>Acceleration 0 - 100 km/h</th>
-  <td><%= data.acceleration_100kmh %></td>
-</tr>
-<% } %> <% if (data.acceleration_62mph !== '') { %>
-<tr>
-  <th>Acceleration 0 - 62 mph</th>
-  <td><%= data.acceleration_62mph %></td>
-</tr>
-<% } %> <% if (data.acceleration_60mph !== '') { %>
-<tr>
-  <th>Acceleration 0 - 60 mph</th>
-  <td><%= data.acceleration_60mph %></td>
-</tr>
-<% } %> <% if (data.emission_standard !== '') { %>
-<tr>
-  <th>Emission standard</th>
-  <td><%= data.emission_standard %></td>
-</tr>
-<% } %> <% if (data.weight_power_ratio !== '') { %>
-<tr>
-  <th>Weight-to-power ratio</th>
-  <td><%= data.weight_power_ratio %></td>
-</tr>
-<% } %> <% if (data.weight_power_torque !== '') { %>
-<tr>
-  <th>Weight-to-torque ratio</th>
-  <td><%= data.weight_power_torque %></td>
-</tr>
+  <tr>
+    <th>Acceleration 0 - 100 km/h</th>
+    <td><%= data.acceleration_100kmh %></td>
+  </tr>
+<% } %> 
+<% if (data.acceleration_62mph !== '') { %>
+  <tr>
+    <th>Acceleration 0 - 62 mph</th>
+    <td><%= data.acceleration_62mph %></td>
+  </tr>
+<% } %> 
+<% if (data.acceleration_60mph !== '') { %>
+  <tr>
+    <th>Acceleration 0 - 60 mph</th>
+    <td><%= data.acceleration_60mph %></td>
+  </tr>
+<% } %> 
+<% if (data.emission_standard !== '') { %>
+  <tr>
+    <th>Emission standard</th>
+    <td><%= data.emission_standard %></td>
+  </tr>
+<% } %> 
+<% if (data.weight_power_ratio !== '') { %>
+  <tr>
+    <th>Weight-to-power ratio</th>
+    <td><%= data.weight_power_ratio %></td>
+  </tr>
+<% } %> 
+<% if (data.weight_power_torque !== '') { %>
+  <tr>
+    <th>Weight-to-torque ratio</th>
+    <td><%= data.weight_power_torque %></td>
+  </tr>
 <% } %>

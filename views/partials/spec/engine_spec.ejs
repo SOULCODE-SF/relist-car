@@ -1,9 +1,12 @@
-<% if(hasData.engine_spec){ %>
+<% if(!data.general_information.powertrain_architecture.includes('BEV')){ %>
   <tr class="no-border">
     <th colspan="2" class="text-center bg-danger text-white">
-      <strong class="car">Internal Combustion Engine Spec</strong>
+      <strong class="car">Engine Specs</strong>
     </th>
   </tr>
+
+  <% var data = data.engine_spec; %>
+
   <% if (data.power !== '') { %>
   <tr>
     <th>Power</th>
