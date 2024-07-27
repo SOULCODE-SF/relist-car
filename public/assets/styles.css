@@ -81,6 +81,14 @@ a {
   max-width: 100%; /* Pastikan iklan sesuai dengan wadahnya */
 }
 
+.alternative-banner {
+  display: none;
+  text-align: center;
+  padding: 10px;
+  border: 1px solid #ccc;
+  background-color: #f9f9f9;
+}
+
 .recent-cars {
   padding-top: 300px;
   text-align: center; /* Memastikan konten di dalam .recent-cars terpusat secara horizontal */
