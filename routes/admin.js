@@ -24,6 +24,10 @@ const {
   getDashboardPage,
 } = require('../src/controllers/adminController/dashboard');
 const { isAuthenticated, isAdmin } = require('./middlewares/authMiddleware');
+const {
+  getSettingPage,
+  updateSetting,
+} = require('../src/controllers/adminController/setting');
 
 // Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
 const dynamicStorage = (type) => {
@@ -39,7 +43,7 @@ const dynamicStorage = (type) => {
           '-' +
           Date.now() +
           path.extname(file.originalname) +
-          '.webp'
+          '.webp',
       );
     },
   });
@@ -77,7 +81,7 @@ router.get('/banner/edit/:banner_id', getBannerById);
 router.post(
   '/banner/update/:banner_id',
   upload('banners').single('ads_image'),
-  updateBanner
+  updateBanner,
 );
 router.get('/banner/delete/:banner_id', deleteBanner);
 
@@ -93,5 +97,8 @@ router.post('/cars/add', addCar);
 router.get('/brands-name', getBrandsName);
 router.get('/models-name/:brand_id', getModelName);
 router.get('/generations-name/:model_id', getGenerationName);
+
+router.get('/setting', getSettingPage);
+router.post('/setting-update', updateSetting);
 
 module.exports = router;

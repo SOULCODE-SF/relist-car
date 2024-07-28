@@ -61,7 +61,7 @@ exports.getAllBrands = async (req, res) => {
       `%${searchTerm}%`,
     ]);
 
-    cache.set(key, datas, 3600);
+    cache.set(key, datas, 86000);
 
     res.render('brands', {
       brands: datas,
@@ -265,6 +265,19 @@ exports.getSpec = async (req, res) => {
       title: 'Spec',
       currentPage: 'specs',
     });
+  } catch (error) {
+    console.log(error.message);
+    res.status(500).send('Internal Server Error');
+  }
+};
+
+exports.getPrivacyPolicy = async (req, res) => {
+  res.render('privacy_policy', {
+    title: 'Privacy Policy',
+    currentPage: 'privacy-policy',
+  });
+
+  try {
   } catch (error) {
     console.log(error.message);
     res.status(500).send('Internal Server Error');

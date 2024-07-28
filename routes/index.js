@@ -6,6 +6,7 @@ const {
   getSpec,
   getGenerationLists,
   getHomePage,
+  getPrivacyPolicy,
 } = require('../src/controllers/indexController');
 const { addUser, loginUser } = require('../src/controllers/authController');
 const {
@@ -45,5 +46,7 @@ router.get('/brands-name', getBrandsName);
 router.get('/models-name/:brand_id', getModelName);
 router.get('/generations-name/:model_id', getGenerationName);
 router.get('/get-engine', getEngineName);
+
+router.get('/privacy-policy', getPrivacyPolicy);
 
 module.exports = router;

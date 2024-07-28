@@ -8,6 +8,11 @@ const compression = require('compression');
 const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const helmet = require('helmet');
+const siteInfoMiddleware = require('./src/middlewares/siteMiddleware');
+const {
+  isAuthenticated,
+  isAdmin,
+} = require('./routes/middlewares/authMiddleware');
 
 const app = express();
 
@@ -17,6 +22,7 @@ app.get('/ads.txt', (req, res) => {
   res.sendFile(adsTxtPath);
 });
 
+app.use(siteInfoMiddleware);
 app.use(expressLayouts);
 // app.use(logger('dev'));
 app.use(express.json());
@@ -52,10 +58,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Helmet middleware with CSP configuration
 var router = require('./routes');
 var adminRouter = require('./routes/admin');
-const {
-  isAuthenticated,
-  isAdmin,
-} = require('./routes/middlewares/authMiddleware');
 
 app.use(router);
 app.use('/admin', isAuthenticated, isAdmin, adminRouter);
