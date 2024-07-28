@@ -23,13 +23,12 @@ async function siteInfoMiddleware(req, res, next) {
       console.log('Cache miss'); // Log cache misses for debugging
       data = await getSiteInfo();
       cache.set(key, data, 86000); // Cache for 86000 seconds (approximately 1 day)
-    } else {
-      console.log('Cache hit'); // Log cache hits for debugging
     }
 
     res.locals.meta_title = data.meta_title;
     res.locals.meta_description = data.meta_description;
     res.locals.site_name = data.site_name;
+    res.locals.site_url = data.site_url;
     next();
   } catch (err) {
     next(err);
