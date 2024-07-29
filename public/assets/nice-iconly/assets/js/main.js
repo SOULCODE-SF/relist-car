@@ -216,4 +216,27 @@
       $(this).tab('show');
     });
   });
+
+  document
+    .getElementById('input-powertrain-architecture')
+    .addEventListener('change', function () {
+      var newArchDiv = document.getElementById('new-powertrain-architecture');
+      if (this.value === 'add-new') {
+        newArchDiv.style.display = 'block';
+      } else {
+        newArchDiv.style.display = 'none';
+      }
+    });
+
+  let motorCount = 0;
+
+  document.getElementById('add-motor').addEventListener('click', function () {
+    if (motorCount < 2) {
+      motorCount++;
+      const motorId = `electric_motor_${motorCount}`;
+      document.getElementById(motorId).style.display = 'grid';
+    } else {
+      alert('You can only add up to 2 electric motors.');
+    }
+  });
 })();

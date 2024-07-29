@@ -7,7 +7,6 @@ exports.getAllBanners = async (req, res) => {
     const [datas] = await db.query(queryStore.banners.getAllBannerQuery);
 
     res.render('admin/banner', {
-      session: req.session,
       title: 'Manage Banner',
       currentPage: 'admin-banner',
       layout: './admin/layouts/layout',
@@ -24,7 +23,6 @@ exports.getAddBanner = async (req, res) => {
     const [positions] = await db.query('SELECT * FROM banner_positions');
 
     res.render('admin/banner/add', {
-      session: req.session,
       title: 'Add Banner',
       currentPage: 'admin-add-banner',
       layout: './admin/layouts/layout',
@@ -105,10 +103,9 @@ exports.getBannerById = async (req, res) => {
     let banner_id = req.params.banner_id;
     const [data] = await db.query(
       `${queryStore.banners.getAllBannerQuery} WHERE b.id = ?`,
-      [banner_id],
+      [banner_id]
     );
     res.render('admin/banner/edit', {
-      session: req.session,
       title: 'Edit Banner',
       currentPage: 'admin-banner-edit',
       layout: './admin/layouts/layout',
@@ -146,7 +143,7 @@ exports.updateBanner = async (req, res) => {
       if (!req.file) {
         const [imageData] = await connection.query(
           'SELECT * FROM banner_image WHERE banner_id = ?',
-          [banner_id],
+          [banner_id]
         );
 
         if (imageData.length > 0) {
@@ -174,7 +171,7 @@ exports.updateBanner = async (req, res) => {
         // Ambil path gambar saat ini untuk penghapusan nanti
         const [currentBanner] = await connection.query(
           queryStore.banners.getBannerByIdQuery,
-          [banner_id],
+          [banner_id]
         );
         const currentImagePath = currentBanner[0]?.image;
 
@@ -182,7 +179,7 @@ exports.updateBanner = async (req, res) => {
           const filePath = path.join(
             __dirname,
             '../../../public',
-            currentImagePath,
+            currentImagePath
           );
 
           fs.unlink(filePath, (err) => {
@@ -259,7 +256,7 @@ exports.deleteBanner = async (req, res) => {
   } finally {
     const [currentBanner] = await connection.query(
       queryStore.banners.getBannerByIdQuery,
-      [banner_id],
+      [banner_id]
     );
     const currentImagePath = currentBanner[0]?.image;
 
@@ -267,7 +264,7 @@ exports.deleteBanner = async (req, res) => {
       const filePath = path.join(
         __dirname,
         '../../../public',
-        currentImagePath,
+        currentImagePath
       );
 
       fs.unlink(filePath, (err) => {

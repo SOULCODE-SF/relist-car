@@ -8,6 +8,9 @@
             >Brand</label
           >
           <div id="area-input" class="col-md-6 col-lg-4">
+            <% if(data.car){%>
+            <span class="text-primary w-25"><%= data.car.brand_name %></span>
+            <%}%>
             <select
               id="input-brand"
               name="brand_id"
@@ -28,6 +31,9 @@
             >Model</label
           >
           <div id="area-input" class="col-md-6 col-lg-4">
+            <% if(data.car){%>
+            <span class="text-primary w-25"><%= data.car.model_name %></span>
+            <%}%>
             <select
               id="input-model"
               name="model_id"
@@ -48,6 +54,11 @@
             >Generation</label
           >
           <div id="area-input" class="col-md-6 col-lg-4">
+            <% if(data.car){%>
+            <span class="text-primary w-25"
+              ><%= data.car.generation_name %></span
+            >
+            <%}%>
             <select
               id="input-generation"
               name="generation_id"
@@ -73,32 +84,39 @@
               type="text"
               class="form-control"
               id="input-engine"
+              value="<%= data.car?.engine %>"
             />
           </div>
         </div>
-        <div class="row">
-          <label for="start-production" class="col-md-2 col-lg-2 col-form-label"
+        <div class="row" id="start_production">
+          <label
+            for="input-start_production"
+            class="col-md-2 col-lg-2 col-form-label"
             >Start Production</label
           >
           <div class="col-md-6 col-lg-4">
             <input
               name="start_production"
-              type="date"
+              type="text"
               class="form-control"
-              id="input-start-production"
+              id="input-start_production"
+              value="<%= data.car?.start_production %>"
             />
           </div>
         </div>
-        <div class="row">
-          <label for="end-production" class="col-md-2 col-lg-2 col-form-label"
+        <div class="row" id="end_production">
+          <label
+            for="input-end_production"
+            class="col-md-2 col-lg-2 col-form-label"
             >End Production</label
           >
           <div class="col-md-6 col-lg-4">
             <input
               name="end_production"
-              type="date"
+              type="text"
               class="form-control"
-              id="input-end-production"
+              id="input-end_production"
+              value="<%= data.car?.end_production %>"
             />
           </div>
         </div>
@@ -109,11 +127,31 @@
             >Powertrain Architecture</label
           >
           <div class="col-md-6 col-lg-4">
+            <div class="d-flex gap-2">
+              <select
+                name="powertrain_architecture"
+                id="input-powertrain-architecture"
+                class="form-control"
+                onchange="toggleCustomInput()"
+              >
+                <option value="">-- Select an Option --</option>
+                <% data.powertrain_architecture.forEach(arch => { %>
+                  <option
+                    value="<%= arch.powertrain_architecture %>"
+                    <%= data.car?.powertrain_architecture === arch.powertrain_architecture ? 'selected' : '' %>
+                  >
+                    <%= arch.powertrain_architecture %>
+                  </option>
+                <% }); %>
+                <option value="custom">Other (please specify)</option>
+              </select>
+            </div>
             <input
-              name="powertrain_architecture"
+              name="new_powertrain_architecture"
               type="text"
-              class="form-control"
-              id="input-powertrain-architecture"
+              class="form-control mt-2 custom"
+              id="input-new-powertrain-architecture"
+              placeholder="Please specify"
             />
           </div>
         </div>
@@ -127,6 +165,7 @@
               type="text"
               class="form-control"
               id="input-body-type"
+              value="<%= data.car?.body_type %>"
             />
           </div>
         </div>
@@ -140,6 +179,7 @@
               type="text"
               class="form-control"
               id="input-seat"
+              value="<%= data.car?.seat %>"
             />
           </div>
         </div>
@@ -153,6 +193,7 @@
               type="text"
               class="form-control"
               id="input-door"
+              value="<%= data.car?.door %>"
             />
           </div>
         </div>

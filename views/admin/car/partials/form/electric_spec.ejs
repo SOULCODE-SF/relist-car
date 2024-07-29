@@ -1,0 +1,277 @@
+<div class="col-lg-12 col-md-12">
+  <div class="card">
+    <div class="card-body">
+      <div class="form-group d-grid gap-3">
+        <h5 class="card-title">Electric And Hybrid</h5>
+        <div class="row" id="battery_capacity">
+          <label
+            for="input_battery_capacity"
+            class="col-md-2 col-lg-4 col-form-label"
+            >Battery capacity</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <input
+              name="battery_capacity"
+              type="text"
+              class="form-control"
+              id="input_battery_capacity"
+              value="<%= data.car?.battery_capacity %>"
+            />
+          </div>
+        </div>
+        <div class="row" id="battery_technology">
+          <label
+            for="input_battery_technology"
+            class="col-md-2 col-lg-4 col-form-label"
+            >Battery technology</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <input
+              name="battery_technology"
+              type="text"
+              class="form-control"
+              id="input_battery_technology"
+              value="<%= data.car?.battery_technology %>"
+            />
+          </div>
+        </div>
+        <div class="row" id="battery_location">
+          <label
+            for="input_battery_location"
+            class="col-md-2 col-lg-4 col-form-label"
+            >Battery location</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <input
+              name="battery_location"
+              type="text"
+              class="form-control"
+              id="input_battery_location"
+              value="<%= data.car?.battery_location %>"
+            />
+          </div>
+        </div>
+        <div class="row" id="all_electric_range">
+          <label
+            for="input_all_electric_range"
+            class="col-md-2 col-lg-4 col-form-label"
+            >All electric range</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <input
+              name="all_electric_range"
+              type="text"
+              class="form-control"
+              id="input_all_electric_range"
+              value="<%= data.car?.all_electric_range %>"
+            />
+          </div>
+        </div>
+        <div class="row" id="charging_ports">
+          <label
+            for="input_charging_ports"
+            class="col-md-2 col-lg-4 col-form-label"
+            >charging_ports</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <input
+              name="charging_ports"
+              type="text"
+              class="form-control"
+              id="input_charging_ports"
+              value="<%= data.car?.charging_ports %>"
+            />
+          </div>
+        </div>
+        <div class="row" id="system_power">
+          <label
+            for="input_system_power"
+            class="col-md-2 col-lg-4 col-form-label"
+            >System Power</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <input
+              name="system_power"
+              type="text"
+              class="form-control"
+              id="input_system_power"
+              value="<%= data.car?.system_power %>"
+            />
+          </div>
+        </div>
+        <div class="row" id="system_torque">
+          <label
+            for="input_system_torque"
+            class="col-md-2 col-lg-4 col-form-label"
+            >System Torque</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <input
+              name="system_torque"
+              type="text"
+              class="form-control"
+              id="input_system_torque"
+              value="<%= data.car?.system_torque %>"
+            />
+          </div>
+        </div>
+        <div class="row">
+          <label for="input_add_motor" class="col-md-2 col-lg-4 col-form-label"
+            >Electric Motor</label
+          >
+          <div class="col-md-6 col-lg-4">
+            <button type="button" id="add-motor" class="btn btn-primary">
+              Add Electric Motor
+            </button>
+          </div>
+        </div>
+
+        <div id="motors-container">
+          <div
+            class="motor-fields form-group gap-3"
+            id="electric_motor_1"
+            style="display: none"
+          >
+            <h5>Electric Motor 1</h5>
+            <div class="row">
+              <label
+                for="input_electric_motor_1_power"
+                class="col-md-2 col-lg-4 col-form-label"
+                >Power</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="electric_motor_1_power"
+                  type="text"
+                  class="form-control"
+                  id="input_electric_motor_1_power"
+                  value="<%= data.car?.electric_motor_1_power %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label
+                for="input_electric_motor_1_torque"
+                class="col-md-2 col-lg-4 col-form-label"
+                >Torque</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="electric_motor_1_torque"
+                  type="text"
+                  class="form-control"
+                  id="input_electric_motor_1_torque"
+                  value="<%= data.car?.electric_motor_1_torque %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label
+                for="input_electric_motor_1_location"
+                class="col-md-2 col-lg-4 col-form-label"
+                >Location</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="electric_motor_1_location"
+                  type="text"
+                  class="form-control"
+                  id="input_electric_motor_1_location"
+                  value="<%= data.car?.electric_motor_1_location %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label
+                for="input_electric_motor_1_type"
+                class="col-md-2 col-lg-4 col-form-label"
+                >Type</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="electric_motor_1_type"
+                  type="text"
+                  class="form-control"
+                  id="input_electric_motor_1_type"
+                  value="<%= data.car?.electric_motor_1_type %>"
+                />
+              </div>
+            </div>
+          </div>
+
+          <div
+            class="motor-fields form-group gap-3"
+            id="electric_motor_2"
+            style="display: none"
+          >
+            <h5>Electric Motor 2</h5>
+            <div class="row">
+              <label
+                for="input_electric_motor_2_power"
+                class="col-md-2 col-lg-4 col-form-label"
+                >Power</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="electric_motor_2_power"
+                  type="text"
+                  class="form-control"
+                  id="input_electric_motor_2_power"
+                  value="<%= data.car?.electric_motor_2_power %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label
+                for="input_electric_motor_2_torque"
+                class="col-md-2 col-lg-4 col-form-label"
+                >Torque</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="electric_motor_2_torque"
+                  type="text"
+                  class="form-control"
+                  id="input_electric_motor_2_torque"
+                  value="<%= data.car?.electric_motor_2_torque %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label
+                for="input_electric_motor_2_location"
+                class="col-md-2 col-lg-4 col-form-label"
+                >Location</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="electric_motor_2_location"
+                  type="text"
+                  class="form-control"
+                  id="input_electric_motor_2_location"
+                  value="<%= data.car?.electric_motor_2_location %>"
+                />
+              </div>
+            </div>
+            <div class="row">
+              <label
+                for="input_electric_motor_2_type"
+                class="col-md-2 col-lg-4 col-form-label"
+                >Type</label
+              >
+              <div class="col-md-6 col-lg-4">
+                <input
+                  name="electric_motor_2_type"
+                  type="text"
+                  class="form-control"
+                  id="input_electric_motor_2_type"
+                  value="<%= data.car?.electric_motor_2_type %>"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

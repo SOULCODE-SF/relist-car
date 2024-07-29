@@ -95,7 +95,11 @@
   </div>
   <% } %>
 
-  <form id="carForm" action="/admin/cars/add" method="post">
+  <form
+    id="carForm"
+    action="/admin/cars/update/<%= data.car.car_id %>"
+    method="post"
+  >
     <div class="tab-content" id="myTabContent">
       <div
         class="tab-pane fade show active"

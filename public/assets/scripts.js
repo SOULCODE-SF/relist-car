@@ -95,7 +95,7 @@ $(document).ready(function () {
         // Add new model options to model dropdown
         models.forEach((model) => {
           $('#input-model').append(
-            $('<option></option>').attr('value', model.id).text(model.name),
+            $('<option></option>').attr('value', model.id).text(model.name)
           );
         });
 
@@ -138,7 +138,7 @@ $(document).ready(function () {
           $('#input-generation').append(
             $('<option></option>')
               .attr('value', generation.id)
-              .text(generation.name),
+              .text(generation.name)
           );
         });
 

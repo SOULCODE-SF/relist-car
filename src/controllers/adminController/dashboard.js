@@ -11,7 +11,6 @@ exports.getDashboardPage = async (req, res) => {
 
     res.render('admin/index', {
       data,
-      session: req.session,
       title: 'Dashboard Admin',
       currentPage: 'admin-index',
       layout: './admin/layouts/layout',

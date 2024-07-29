@@ -22,13 +22,6 @@ app.get('/ads.txt', (req, res) => {
   res.sendFile(adsTxtPath);
 });
 
-app.use(siteInfoMiddleware);
-app.use(expressLayouts);
-// app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.use(compression());
-
 const sessionStore = new MySQLStore({
   host: process.env.DB_HOST,
   user: process.env.DB_USER,
@@ -42,8 +35,15 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
-  }),
+  })
 );
+
+app.use(siteInfoMiddleware);
+app.use(expressLayouts);
+// app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(compression());
 
 // Set EJS as the view engine
 app.set('view engine', 'ejs');

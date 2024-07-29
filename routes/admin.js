@@ -19,6 +19,8 @@ const {
   getCarsList,
   getGenerationName,
   getAddCar,
+  getEditCar,
+  updateCar,
 } = require('../src/controllers/adminController/cars');
 const {
   getDashboardPage,
@@ -43,7 +45,7 @@ const dynamicStorage = (type) => {
           '-' +
           Date.now() +
           path.extname(file.originalname) +
-          '.webp',
+          '.webp'
       );
     },
   });
@@ -56,7 +58,6 @@ router.get('/', getDashboardPage);
 
 router.get('/page', (req, res) => {
   res.render('admin/page/index', {
-    session: req.session,
     title: 'Page',
     currentPage: 'admin-page',
     layout: './admin/layouts/layout',
@@ -65,7 +66,6 @@ router.get('/page', (req, res) => {
 
 router.get('/page/add', (req, res) => {
   res.render('admin/page/add-page', {
-    session: req.session,
     title: 'Add Page',
     currentPage: 'admin-add-page',
     layout: './admin/layouts/layout',
@@ -81,18 +81,17 @@ router.get('/banner/edit/:banner_id', getBannerById);
 router.post(
   '/banner/update/:banner_id',
   upload('banners').single('ads_image'),
-  updateBanner,
+  updateBanner
 );
 router.get('/banner/delete/:banner_id', deleteBanner);
 
 router.get('/users', getUser);
 router.post('/users/add', addUser);
-
 router.get('/cars', getCarsList);
-
 router.get('/cars/add', getAddCar);
-
 router.post('/cars/add', addCar);
+router.get('/cars/update/:id', getEditCar);
+router.post('/cars/update/:id', updateCar);
 
 router.get('/brands-name', getBrandsName);
 router.get('/models-name/:brand_id', getModelName);

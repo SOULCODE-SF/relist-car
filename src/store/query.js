@@ -42,43 +42,18 @@ let queryStore = {
     addPerformanceSpecs:
       'INSERT INTO performance_specs ( generation_link_id, fuel_consumption_urban, fuel_consumption_extra_urban, fuel_consumption_combined, co2_emission, fuel_type, acceleration_100kmh, acceleration_62mph, acceleration_60mph, maximum_speed, emission_standard, weight_power_ratio, weight_power_torque ) VALUES (10000, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     addEngineSpecs:
-      'insert into engine_specs( generation_link_id, power, power_per_litre, torque, engine_layout, engine_model, engine_displacement, number_cylinders, engine_configuration, cylinder_bore, piston_stroke, compression_ratio, number_valves_per_cylinder, fuel_injection_system, engine_aspiration, engine_oil_capacity, engine_oil_specification, engine_system, coolant ) values (0, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
+      'INSERT INTO engine_specs ( generation_link_id, power, power_per_litre, torque, engine_layout, engine_model, engine_displacement, number_cylinders, engine_configuration, cylinder_bore, piston_stroke, compression_ratio, number_valves_per_cylinder, fuel_injection_system, engine_aspiration, engine_oil_capacity, engine_oil_specification, engine_system, coolant ) VALUES (0,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)',
     addDimension: `insert into dimensions ( generation_link_id, length, width, height, wheelbase, front_track, rear_back_track, front_overhang, rear_overhang, minimum_turning_circle ) values (0,?,?,?,?,?,?,?,?,?);`,
     addSpace: `insert into spaces ( generation_link_id, kerb_weight, trunk_space_minimum , trunk_space_maximum , max_load , fuel_tank_capacity , permitted_trailer_load_with_brakes , permitted_trailer_load_without_brakes , permitted_towbardownload ) VALUES (0,?,?,?,?,?,?,?,?)`,
-    getspec: `SELECT 
-                c.id,
-                c.b_id,
-                c.m_id,
-                c.g_id,
-                b.name as brand_name,
-                m.name as model_name,
-                g.title as generation_name,
-                gi.*,
-                ps.*,
-                es.*,
-                d.*,
-                s.*
-              FROM 
-                cars c 
-              JOIN
-                brands b on c.b_id = b.id 
-              JOIN
-                models m on c.m_id = m.id 
-              JOIN 
-                generations g on c.g_id = g.id
-              LEFT JOIN
-                general_information gi on c.gi_id = gi.id
-              LEFT JOIN 
-                performance_specs ps on c.ps_id = ps.id
-              LEFT JOIN 
-                engine_specs es on c.es_id = es.id 
-              LEFT JOIN 
-                dimensions d on c.d_id = d.id 
-              LEFT JOIN 
-                spaces s on c.s_id = s.id
-              WHERE
-                c.id = ?
-              limit 1;`,
+    addElectricSpec: `INSERT INTO electric_specs ( generation_link_id, battery_capacity, battery_technology, battery_location, all_electric_range, charging_ports, electric_motor_1_power, electric_motor_1_torque, electric_motor_1_location, electric_motor_1_type, electric_motor_2_power, electric_motor_2_torque, electric_motor_2_location, electric_motor_2_type, system_power, system_torque ) VALUES(0, ?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)`,
+    addDrivetrain: `INSERT INTO drivetrain_brakes_suspension_specs ( generation_link_id, drivetrain_architecture, drive_wheel, number_of_gears_and_type_of_gearbox, front_suspension, rear_suspension, front_brakes, rear_brakes, assisting_systems, tires_size, wheel_rims_size ) VALUES (0, ?,?,?,?,?,?,?,?,?,?);`,
+    updateGeneralInformation: `UPDATE general_information SET engine = ?, start_production = ?, end_production = ?, powertrain_architecture = ?, body_type = ?, seat = ?, door = ? WHERE id = ?;`,
+    updatePerformanceSpec: `UPDATE performance_specs SET fuel_consumption_urban = ?, fuel_consumption_extra_urban = ?, fuel_consumption_combined = ?, co2_emission = ?, fuel_type = ?, acceleration_100kmh = ?, acceleration_62mph = ?, acceleration_60mph = ?, maximum_speed = ?, emission_standard = ?, weight_power_ratio = ?, weight_power_torque = ? WHERE id = ?;`,
+    updateEngineSpec: `UPDATE engine_specs SET power = ?, power_per_litre = ?, torque = ?, engine_layout = ?, engine_model = ?, engine_displacement = ?, number_cylinders = ?, engine_configuration = ?, cylinder_bore = ?, piston_stroke = ?, compression_ratio = ?, number_valves_per_cylinder = ?, fuel_injection_system = ?, engine_aspiration = ?, engine_oil_capacity = ?, engine_oil_specification = ?, engine_system = ?, coolant = ? WHERE id = ?;`,
+    updateDimension: `UPDATE dimensions SET length = ?, width = ?, height = ?, wheelbase = ?, front_track = ?, rear_back_track = ?, front_overhang = ?, rear_overhang = ?, minimum_turning_circle = ? WHERE id = ?;`,
+    updateDrivetrain: `UPDATE drivetrain_brakes_suspension_specs SET drivetrain_architecture = ?, drive_wheel = ?, number_of_gears_and_type_of_gearbox = ?, front_suspension = ?, rear_suspension = ?, front_brakes = ?, rear_brakes = ?, assisting_systems = ?, tires_size = ?, wheel_rims_size = ? WHERE id = ?;`,
+    updateSpaces: `UPDATE spaces SET kerb_weight = ?, trunk_space_minimum = ?, trunk_space_maximum = ?, max_load = ?, fuel_tank_capacity = ?, permitted_trailer_load_with_brakes = ?, permitted_trailer_load_without_brakes = ?, permitted_towbardownload = ? WHERE id = ?;`,
+    updateElectric: `UPDATE electric_specs SET battery_capacity = ?, battery_technology = ?, battery_location = ?, all_electric_range = ?, charging_ports = ?, electric_motor_1_power = ?, electric_motor_1_torque = ?, electric_motor_1_location = ?, electric_motor_1_type = ?, electric_motor_2_power = ?, electric_motor_2_torque = ?, electric_motor_2_location = ?, electric_motor_2_type = ?, system_power = ?, system_torque = ? WHERE id = ?;`,
   },
   users: {
     addUser: `INSERT INTO users (username, email, password, role, name, location) VALUES (?,?,?,?,?,?);`,
