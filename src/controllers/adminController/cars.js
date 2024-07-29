@@ -422,6 +422,9 @@ exports.addCar = async (req, res) => {
 
     res.redirect('/admin/cars');
   } catch (error) {
+    if (connection) {
+      connection.rollback();
+    }
     console.log(error);
     res.status(500).send(error.message);
   } finally {
@@ -778,6 +781,68 @@ exports.updateCar = async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send(error.message);
+  } finally {
+    if (connection) {
+      connection.release();
+    }
+  }
+};
+
+exports.deleteCar = async (req, res) => {
+  let connection;
+  try {
+    const car_id = req.params.id;
+
+    connection = await db.getConnection();
+    await connection.beginTransaction();
+
+    let querystr = 'SELECT * FROM cars WHERE id = ? LIMIT 1';
+    let queryvalue = [car_id];
+
+    await connection.query(querystr, queryvalue).then(async (onres) => {
+      if (onres[0].length == 0) {
+        res.status(404).send('Data Not Found!');
+      }
+      const car = onres[0][0];
+
+      querystr = `
+        DELETE FROM general_information WHERE id = ? AND EXISTS (SELECT 1 FROM general_information WHERE id = ?);
+        DELETE FROM performance_specs WHERE id = ? AND EXISTS (SELECT 1 FROM performance_specs WHERE id = ?);
+        DELETE FROM engine_specs WHERE id = ? AND EXISTS (SELECT 1 FROM engine_specs WHERE id = ?);
+        DELETE FROM dimensions WHERE id = ? AND EXISTS (SELECT 1 FROM dimensions WHERE id = ?);
+        DELETE FROM drivetrain_brakes_suspension_specs WHERE id = ? AND EXISTS (SELECT 1 FROM drivetrain_brakes_suspension_specs WHERE id = ?);
+        DELETE FROM spaces WHERE id = ? AND EXISTS (SELECT 1 FROM spaces WHERE id = ?);
+        DELETE FROM electric_specs WHERE id = ? AND EXISTS (SELECT 1 FROM electric_specs WHERE id = ?);
+        DELETE FROM cars WHERE id = ? AND EXISTS (SELECT 1 FROM cars WHERE id = ?);`;
+      queryvalue = [
+        car.gi_id,
+        car.gi_id,
+        car.ps_id,
+        car.ps_id,
+        car.es_id,
+        car.es_id,
+        car.d_id,
+        car.d_id,
+        car.dbss_id,
+        car.dbss_id,
+        car.s_id,
+        car.s_id,
+        car_id,
+        car_id,
+      ];
+
+      await connection.query(querystr, queryvalue).then((onres) => {
+        return res.json('okeee');
+      });
+    });
+
+    await connection.commit();
+  } catch (error) {
+    if (connection) {
+      connection.rollback();
+      console.error(error);
+      res.status(500).send('Internal Server Error');
+    }
   } finally {
     if (connection) {
       connection.release();

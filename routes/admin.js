@@ -21,6 +21,7 @@ const {
   getAddCar,
   getEditCar,
   updateCar,
+  deleteCar,
 } = require('../src/controllers/adminController/cars');
 const {
   getDashboardPage,
@@ -92,6 +93,7 @@ router.get('/cars/add', getAddCar);
 router.post('/cars/add', addCar);
 router.get('/cars/update/:id', getEditCar);
 router.post('/cars/update/:id', updateCar);
+router.get('/cars/delete/:id', deleteCar);
 
 router.get('/brands-name', getBrandsName);
 router.get('/models-name/:brand_id', getModelName);
