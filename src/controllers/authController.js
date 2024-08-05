@@ -104,3 +104,19 @@ exports.loginUser = async (req, res) => {
     res.status(400).send(error.message);
   }
 };
+
+exports.logoutUser = (req, res) => {
+  try {
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Logout error:', err);
+        return res.status(500).send('Logout failed');
+      }
+
+      res.redirect('/login');
+    });
+  } catch (error) {
+    console.error('Logout error:', error);
+    res.status(500).send('Internal Server Error');
+  }
+};

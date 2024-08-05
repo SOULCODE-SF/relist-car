@@ -2,11 +2,15 @@ const db = require('../../../db');
 
 exports.getSettingPage = async (req, res) => {
   try {
+    let querystr = 'SELECT * FROM setting LIMIT 1';
+    const [setting] = await db.query(querystr);
+
+    console.log(setting[0]);
     res.render('admin/setting/index', {
       title: 'Setting',
+      data: setting[0],
       currentPage: 'setting',
       layout: './admin/layouts/layout',
-      session: req.session,
     });
   } catch (error) {
     console.error(error);
@@ -67,12 +71,7 @@ exports.updateSetting = async (req, res) => {
 
     await connection.commit();
 
-    res.status(200).render('admin/setting/index', {
-      title: 'Setting',
-      currentPage: 'setting',
-      layout: './admin/layouts/layout',
-      session: req.session,
-    });
+    res.redirect('/admin/setting');
   } catch (error) {
     if (connection) await connection.rollback();
 

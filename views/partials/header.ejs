@@ -43,6 +43,25 @@
               >Contact Us</a
             >
           </li>
+          <% if(!session.username) {%>
+          <li class="nav-item">
+            <a
+              class="nav-link <%= currentPage === 'login' ? 'active' : '' %>"
+              href="/login"
+              >Login</a
+            >
+          </li>
+          <%}else{%>
+          <li class="nav-item">
+            <a
+              class="btn btn-outline-danger <%= currentPage === 'login' ? 'active' : '' %>"
+              href="/logout"
+            >
+              Logout
+            </a>
+          </li>
+
+          <%}%>
         </ul>
       </div>
     </nav>

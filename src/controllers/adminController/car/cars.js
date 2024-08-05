@@ -1,7 +1,7 @@
-const db = require('../../../db');
-const queryStore = require('../../store/query');
-const query = require('../../store/query');
+
 const nodecache = require('node-cache');
+const db = require('../../../../db');
+const queryStore = require('../../../store/query');
 
 const cache = new nodecache();
 
@@ -20,7 +20,7 @@ exports.getCarsList = async (req, res) => {
       });
     }
 
-    const [cars] = await db.query(query.cars.getAllCars, [brand_id]);
+    const [cars] = await db.query(queryStore.cars.getAllCars, [brand_id]);
     const datas = cars;
 
     cache.set(key, datas, 3600);
@@ -849,3 +849,4 @@ exports.deleteCar = async (req, res) => {
     }
   }
 };
+

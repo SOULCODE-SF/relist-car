@@ -22,7 +22,7 @@ const {
   getEditCar,
   updateCar,
   deleteCar,
-} = require('../src/controllers/adminController/cars');
+} = require('../src/controllers/adminController/car/cars');
 const {
   getDashboardPage,
 } = require('../src/controllers/adminController/dashboard');
@@ -31,6 +31,8 @@ const {
   getSettingPage,
   updateSetting,
 } = require('../src/controllers/adminController/setting');
+const { getAllBrands } = require('../src/controllers/indexController');
+const { getAllListBrands, getAddBrands, addBrands } = require('../src/controllers/adminController/car/brand');
 
 // Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
 const dynamicStorage = (type) => {
@@ -52,8 +54,25 @@ const dynamicStorage = (type) => {
   });
 };
 
-// Inisialisasi Multer dengan konfigurasi storage dinamis
-const upload = (type) => multer({ storage: dynamicStorage(type) });
+const upload = (type, fieldname) => {
+  return (req, res, next) => {
+    const uploadMiddleware = multer({
+      storage: dynamicStorage(type),
+      limits: { fileSize: 600 * 1024 } 
+    }).single(fieldname);
+
+    uploadMiddleware(req, res, function (err) {
+      if (err) {
+        if (err.code === 'LIMIT_FILE_SIZE') {
+          return res.status(400).send('File size exceeds the limit of 600KB');
+        }
+        return res.status(500).send('An error occurred during file upload');
+      }
+      next();
+    });
+  };
+};
+
 
 router.get('/', getDashboardPage);
 
@@ -77,11 +96,11 @@ router.get('/banner', getAllBanners);
 
 router.get('/banner/add', getAddBanner);
 
-router.post('/banner/add', upload('banners').single('ads_image'), addBanner);
+router.post('/banner/add', upload('banners', 'ads_image'), addBanner);
 router.get('/banner/edit/:banner_id', getBannerById);
 router.post(
   '/banner/update/:banner_id',
-  upload('banners').single('ads_image'),
+  upload('banners', 'ads_image'),
   updateBanner
 );
 router.get('/banner/delete/:banner_id', deleteBanner);
@@ -94,12 +113,15 @@ router.post('/cars/add', addCar);
 router.get('/cars/update/:id', getEditCar);
 router.post('/cars/update/:id', updateCar);
 router.get('/cars/delete/:id', deleteCar);
+router.get('/cars-brands', getAllListBrands);
+router.get('/add-brands', getAddBrands);
+router.post('/add-brands', upload('brands','brand_image'), addBrands)
 
 router.get('/brands-name', getBrandsName);
 router.get('/models-name/:brand_id', getModelName);
 router.get('/generations-name/:model_id', getGenerationName);
 
 router.get('/setting', getSettingPage);
-router.post('/setting-update', updateSetting);
+router.post('/setting', updateSetting);
 
 module.exports = router;

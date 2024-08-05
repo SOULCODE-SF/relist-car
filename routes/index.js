@@ -8,13 +8,17 @@ const {
   getHomePage,
   getPrivacyPolicy,
 } = require('../src/controllers/indexController');
-const { addUser, loginUser } = require('../src/controllers/authController');
+const {
+  addUser,
+  loginUser,
+  logoutUser,
+} = require('../src/controllers/authController');
 const {
   getBrandsName,
   getModelName,
   getGenerationName,
   getEngineName,
-} = require('../src/controllers/adminController/cars');
+} = require('../src/controllers/adminController/car/cars');
 const router = express.Router();
 
 router.get('/', getHomePage);
@@ -39,6 +43,8 @@ router.get('/login', (req, res) => {
     currentPage: 'login',
   });
 });
+router.get('/logout', logoutUser);
+
 router.post('/users/register', addUser);
 router.post('/login', loginUser);
 

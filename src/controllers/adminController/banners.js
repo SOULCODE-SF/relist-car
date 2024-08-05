@@ -71,6 +71,8 @@ exports.addBanner = async (req, res) => {
       ads_status,
     ]);
 
+    console.log(banner)
+
     if (ads_type == 'code') {
       await connection.query(queryStore.banners.addBannerCodeQuery, [
         ads_code,
