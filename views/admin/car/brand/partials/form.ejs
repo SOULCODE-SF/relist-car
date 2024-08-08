@@ -1,0 +1,71 @@
+<div class="col-lg-12 col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Brand Form</h5>
+        
+        <div class="row g-3 mb-3">
+          <label for="name" class="col-md-2 col-form-label">Name</label>
+          <div class="col-md-6">
+            <input
+              name="name"
+              type="text"
+              class="form-control"
+              id="name"
+              placeholder="Enter brand name"
+              value="<%= data?.name %>"
+            />
+          </div>
+        </div>
+        
+        <div class="row g-3 mb-3" id="brand-image">
+          <label for="brand_image" class="col-md-2 col-form-label">Brand Image</label>
+          <div class="col-md-6">
+            <div id="image-preview-container">
+              <img
+                id="image-preview"
+                src="<%= data?.image_path || '/assets/nice-iconly/assets/img/preview.png' %>"
+                class="img-thumbnail"
+                alt="Image Preview"
+              />
+            </div>
+            <div class="pt-2">
+              <label for="input-image" class="btn btn-primary btn-sm" title="Upload image">
+                <i class="icon-upload"></i>
+                <input
+                  name="brand_image"
+                  type="file"
+                  id="input-image"
+                  accept="image/*"
+                  style="display: none;"
+                />
+              </label>
+              <a
+                href="#"
+                class="btn btn-danger btn-sm"
+                title="Remove image"
+                id="remove-image"
+              >
+                <i class="icon-trash-alt"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="row g-3 mb-3">
+            <label for="is_featured" class="col-md-2 col-form-label">Featured</label>
+            <div class="col-md-6">
+            <select
+                name="is_featured"
+                id="is_featured"
+                class="form-select"
+            >
+                <option value="1" <%= data?.is_featured == 1 ? 'selected' : '' %>>Enabled</option>
+                <option value="0" <%= data?.is_featured == 0 ? 'selected' : '' %>>Disabled</option>
+            </select>
+            </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+  

@@ -1,45 +1,54 @@
-const db = require('../../db');
 const bcrypt = require('bcrypt');
 const queryStore = require('../store/query');
+const {
+  DBquery,
+  getConnection,
+  rollbackTransaction,
+  commitTransaction,
+} = require('../utils/database');
 
-exports.addUser = async (req, res) => {
+exports.addUser = async (req, res, next) => {
   let connection;
   try {
     const { username, email, password, role, rePassword, name, location } =
       req.body;
 
-    connection = await db.getConnection();
+    connection = await getConnection();
     await connection.beginTransaction();
 
-    const usernameExist = await connection.query(queryStore.users.cekUsername, [
+    // Check if username exists
+    const usernameExist = await DBquery(queryStore.users.cekUsername, [
       username,
     ]);
-
-    if (usernameExist[0].length > 0) {
-      return res.json({
-        messsage: 'Username Already Exist',
+    if (usernameExist.length > 0) {
+      await rollbackTransaction(connection);
+      return res.status(400).json({
+        message: 'Username Already Exists',
       });
     }
 
-    const emailExist = await connection.query(queryStore.users.cekEmail, [
-      email,
-    ]);
-
-    if (emailExist[0].length > 0) {
-      return res.json({
-        messsage: 'Email Already Exist',
+    // Check if email exists
+    const emailExist = await db.DBquery(queryStore.users.cekEmail, [email]);
+    if (emailExist.length > 0) {
+      await rollbackTransaction(connection);
+      return res.status(400).json({
+        message: 'Email Already Exists',
       });
     }
 
-    if (password != rePassword) {
-      return res.json({
-        messsage: 'Password not match',
+    // Check if passwords match
+    if (password !== rePassword) {
+      await rollbackTransaction(connection);
+      return res.status(400).json({
+        message: 'Passwords do not match',
       });
     }
 
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    await connection.query(queryStore.users.addUser, [
+    // Add user to the database
+    await DBquery(queryStore.users.addUser, [
       username,
       email,
       hashedPassword,
@@ -48,18 +57,21 @@ exports.addUser = async (req, res) => {
       location,
     ]);
 
-    await connection.commit();
+    await commitTransaction(connection);
 
-    return res.json({
-      messsage: 'Success',
+    return res.status(201).json({
+      message: 'User created successfully',
       data: req.body,
     });
   } catch (error) {
     if (connection) {
-      await connection.rollback();
+      await rollbackTransaction(connection);
     }
-    console.error(error);
-    res.json(error.messsage);
+    next(error);
+  } finally {
+    if (connection) {
+      releaseConnection(connection);
+    }
   }
 };
 
@@ -67,17 +79,13 @@ exports.loginUser = async (req, res) => {
   try {
     const { inputUsr, password } = req.body;
 
-    const [user] = await db.query(queryStore.users.getLoginData, [
+    const user = await DBquery(queryStore.users.getLoginData, [
       inputUsr,
       inputUsr,
     ]);
 
     if (user.length == 0) {
-      return res.render('auth/login', {
-        title: 'Login',
-        currentPage: 'login',
-        errorMessage: 'User not found',
-      });
+      throw new Error('User not found!');
     }
 
     const passwordMatch = await bcrypt.compare(password, user[0].password);
@@ -96,12 +104,13 @@ exports.loginUser = async (req, res) => {
         res.redirect('/');
       }
     } else {
-      res.render('auth/login', {
-        errorMessage: 'Invalid Credentials',
-      });
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Invalid Credential',
+      };
     }
   } catch (error) {
-    res.status(400).send(error.message);
+    next(error);
   }
 };
 

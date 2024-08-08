@@ -1,11 +1,16 @@
-
 const nodecache = require('node-cache');
-const db = require('../../../../db');
 const queryStore = require('../../../store/query');
+const {
+  DBquery,
+  getConnection,
+  releaseConnection,
+  rollbackTransaction,
+  commitTransaction,
+} = require('../../../utils/database');
 
 const cache = new nodecache();
 
-exports.getCarsList = async (req, res) => {
+exports.getCarsList = async (req, res, next) => {
   try {
     const key = req.originalUrl;
     const cachedData = cache.get(key);
@@ -20,7 +25,7 @@ exports.getCarsList = async (req, res) => {
       });
     }
 
-    const [cars] = await db.query(queryStore.cars.getAllCars, [brand_id]);
+    const cars = await DBquery(queryStore.cars.getAllCars, [brand_id]);
     const datas = cars;
 
     cache.set(key, datas, 3600);
@@ -32,14 +37,14 @@ exports.getCarsList = async (req, res) => {
       layout: './admin/layouts/layout',
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    next(error);
   }
 };
-exports.getBrandsName = async (req, res) => {
+exports.getBrandsName = async (req, res, next) => {
   try {
     const brand_name = req.query.q || '';
 
-    const [datas] = await db.query(
+    const datas = await DBquery(
       'SELECT id, name FROM brands WHERE name LIKE ?',
       [`%${brand_name}%`]
     );
@@ -48,15 +53,15 @@ exports.getBrandsName = async (req, res) => {
       datas,
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    next(error);
   }
 };
 
-exports.getModelName = async (req, res) => {
+exports.getModelName = async (req, res, next) => {
   try {
     const brand_id = req.params.brand_id;
     const model_name = req.query.q || '';
-    const [datas] = await db.query(
+    const datas = await DBquery(
       'SELECT id, name FROM models WHERE brand_id = ? AND  name LIKE ?',
       [brand_id, `%${model_name}%`]
     );
@@ -65,16 +70,16 @@ exports.getModelName = async (req, res) => {
       datas,
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    next(error);
   }
 };
 
-exports.getGenerationName = async (req, res) => {
+exports.getGenerationName = async (req, res, next) => {
   try {
     const model_id = req.params.model_id;
 
     console.log(model_id);
-    const [datas] = await db.query(
+    const datas = await DBquery(
       'SELECT id, title as name FROM generations WHERE model_id = ?',
       [model_id]
     );
@@ -83,11 +88,11 @@ exports.getGenerationName = async (req, res) => {
       datas,
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    next(error);
   }
 };
 
-exports.getEngineName = async (req, res) => {
+exports.getEngineName = async (req, res, next) => {
   try {
     const search = req.query.search;
 
@@ -99,27 +104,19 @@ exports.getEngineName = async (req, res) => {
     }
     querystr += `GROUP BY gi.engine LIMIT 100`;
 
-    const [datas] = await db.query(querystr, [`%${search}%`]);
+    const datas = await DBquery(querystr, [`%${search}%`]);
 
     return res.json({
       datas,
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    next(error);
   }
 };
 
-exports.getAddCar = async (req, res) => {
+exports.getAddCar = async (req, res, next) => {
   try {
-    const { error } = req.query;
-
-    let iserror = false;
-
-    if (error != undefined) {
-      iserror = decodeURIComponent(error);
-    }
-
-    const [powertrain_architecture] = await db.query(`
+    const powertrain_architecture = await DBquery(`
       SELECT DISTINCT powertrain_architecture
       FROM general_information
       WHERE powertrain_architecture IS NOT NULL
@@ -127,7 +124,6 @@ exports.getAddCar = async (req, res) => {
     `);
 
     res.render('admin/car/add', {
-      error: iserror,
       data: {
         powertrain_architecture,
       },
@@ -136,11 +132,10 @@ exports.getAddCar = async (req, res) => {
       layout: './admin/layouts/layout',
     });
   } catch (error) {
-    console.error(error);
-    res.send('Internal Server Error');
+    next(error);
   }
 };
-exports.addCar = async (req, res) => {
+exports.addCar = async (req, res, next) => {
   let connection;
   try {
     let electric_car = false;
@@ -230,30 +225,44 @@ exports.addCar = async (req, res) => {
       system_torque,
     } = req.body;
 
-    connection = await db.getConnection();
-    await connection.beginTransaction();
-
     if (new_powertrain_architecture) {
       powertrain_architecture = new_powertrain_architecture;
     }
 
+    let hasAlert = false;
+
     if (!brand_id) {
-      return res.redirect(
-        '/admin/cars/add?error=The%20car%20brand%20is%20required'
-      );
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Brand is required',
+      };
+      hasAlert = true;
+    } else if (!model_id) {
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Model is required',
+      };
+      hasAlert = true;
+    } else if (!generation_id) {
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Generation is required',
+      };
+      hasAlert = true;
+    } else if (!engine || engine === '') {
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Engine is required',
+      };
+      hasAlert = true;
     }
 
-    if (!model_id) {
-      return res.redirect(
-        '/admin/cars/add?error=The%20car%20model%20is%20required'
-      );
+    if (hasAlert) {
+      return res.redirect('/admin/cars/add');
     }
 
-    if (!generation_id) {
-      return res.redirect(
-        '/admin/cars/add?error=The%20car%20generation%20is%20required'
-      );
-    }
+    connection = await getConnection();
+    await connection.beginTransaction();
 
     const generalInformation = [
       engine,
@@ -337,13 +346,10 @@ exports.addCar = async (req, res) => {
       wheel_rims_size ?? '',
     ];
 
-    if (battery_capacity == '') {
-      battery_capacity = undefined;
-    }
-    if (battery_capacity != undefined) {
+    if (battery_capacity) {
       electric_car = true;
     }
-    console.log(battery_capacity);
+
     let electrics;
     if (electric_car) {
       electrics = [
@@ -365,90 +371,64 @@ exports.addCar = async (req, res) => {
       ];
     }
 
-    console.log(engine_specs);
-
-    const gi = await connection.query(
+    const gi = await DBquery(
       queryStore.specs.addGeneralInformation,
       generalInformation
     );
-
-    const ps = await connection.query(
+    const ps = await DBquery(
       queryStore.specs.addPerformanceSpecs,
       performance_specs
     );
-
-    const es = await connection.query(
-      queryStore.specs.addEngineSpecs,
-      engine_specs
-    );
-
-    const d = await connection.query(queryStore.specs.addDimension, dimensions);
-
-    const s = await connection.query(queryStore.specs.addSpace, spaces);
-
-    const dbss = await connection.query(
-      queryStore.specs.addDrivetrain,
-      drivetrains
-    );
+    const es = await DBquery(queryStore.specs.addEngineSpecs, engine_specs);
+    const d = await DBquery(queryStore.specs.addDimension, dimensions);
+    const s = await DBquery(queryStore.specs.addSpace, spaces);
+    const dbss = await DBquery(queryStore.specs.addDrivetrain, drivetrains);
 
     let el;
     if (electric_car) {
-      el = await connection.query(queryStore.specs.addElectricSpec, electrics);
+      el = await DBquery(queryStore.specs.addElectricSpec, electrics);
     }
-
-    console.log('ELEC', electric_car);
 
     const insertCars = [
       generation_id,
       brand_id,
       model_id,
-      gi[0].insertId,
-      ps[0].insertId,
-      es[0].insertId,
-      d[0].insertId,
-      s[0].insertId,
-      dbss[0].insertId,
-      el?.[0].insertId ?? null,
+      gi.insertId,
+      ps.insertId,
+      es.insertId,
+      d.insertId,
+      s.insertId,
+      dbss.insertId,
+      el?.insertId ?? null,
     ];
 
-    await connection.query(
+    await DBquery(
       'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id, es_id, d_id, s_id, dbss_id, el_id) VALUES(?,?,?,?,?,?,?,?,?,?)',
       insertCars
     );
 
-    console.log(req.body);
-
-    await connection.commit();
+    await commitTransaction(connection);
 
     res.redirect('/admin/cars');
   } catch (error) {
     if (connection) {
-      connection.rollback();
+      await rollbackTransaction(connection);
     }
-    console.log(error);
-    res.status(500).send(error.message);
+    next(error);
   } finally {
     if (connection) {
-      connection.release();
+      releaseConnection(connection);
     }
   }
 };
 
-exports.getEditCar = async (req, res) => {
+exports.getEditCar = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    const { error } = req.query;
+    const carvalue = await DBquery('CALL get_spec(?)', [id]);
 
-    let iserror = false;
-
-    if (error != undefined) {
-      iserror = decodeURIComponent(error);
-    }
-
-    const [carvalue] = await db.query('CALL get_spec(?)', [id]);
-
-    const [powertrain_architecture] = await db.query(`
+    const powertrain_architecture = await DBquery(`
       SELECT DISTINCT powertrain_architecture
       FROM general_information
       WHERE powertrain_architecture IS NOT NULL
@@ -458,7 +438,6 @@ exports.getEditCar = async (req, res) => {
     const car = carvalue[0][0];
 
     res.render('admin/car/edit', {
-      error: iserror,
       data: {
         powertrain_architecture,
         car,
@@ -468,12 +447,11 @@ exports.getEditCar = async (req, res) => {
       layout: './admin/layouts/layout',
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };
 
-exports.updateCar = async (req, res) => {
+exports.updateCar = async (req, res, next) => {
   let connection;
   try {
     const car_id = req.params.id;
@@ -564,53 +542,22 @@ exports.updateCar = async (req, res) => {
       system_torque,
     } = req.body;
 
-    connection = await db.getConnection();
-    await connection.beginTransaction();
-
     if (new_powertrain_architecture) {
       powertrain_architecture = new_powertrain_architecture;
     }
 
-    const [recent] = await connection.query(
-      'SELECT b_id, m_id, g_id, gi_id, ps_id, es_id, d_id, s_id, dbss_id, el_id  FROM cars WHERE id = ? LIMIT 1',
+    connection = await getConnection();
+    await connection.beginTransaction();
+
+    const recent = await DBquery(
+      'SELECT b_id, m_id, g_id, gi_id, ps_id, es_id, d_id, s_id, dbss_id, el_id FROM cars WHERE id = ? LIMIT 1',
       [car_id]
     );
 
-    console.log('gen', generation_id);
-    console.log('genold', recent[0].g_id);
-
     if (brand_id || model_id || generation_id) {
-      await connection.query(
+      await DBquery(
         'UPDATE cars SET b_id = ?, m_id = ?, g_id = ? WHERE id = ?',
         [brand_id, model_id, generation_id, car_id]
-      );
-    }
-
-    if (!brand_id) {
-      brand_id = recent[0].b_id;
-    }
-    if (!model_id) {
-      model_id = recent[0].m_id;
-    }
-    if (!generation_id) {
-      generation_id = recent[0].g_id;
-    }
-
-    if (!brand_id) {
-      return res.redirect(
-        '/admin/cars/update?error=The%20car%20brand%20is%20required'
-      );
-    }
-
-    if (!model_id) {
-      return res.redirect(
-        '/admin/cars/update?error=The%20car%20model%20is%20required'
-      );
-    }
-
-    if (!generation_id) {
-      return res.redirect(
-        '/admin/cars/update?error=The%20car%20generation%20is%20required'
       );
     }
 
@@ -730,123 +677,122 @@ exports.updateCar = async (req, res) => {
       ];
     }
 
-    const gi = await connection.query(
+    await DBquery(
       queryStore.specs.updateGeneralInformation,
       generalInformation
     );
 
-    const ps = await connection.query(
-      queryStore.specs.updatePerformanceSpec,
-      performance_specs
-    );
+    await DBquery(queryStore.specs.updatePerformanceSpec, performance_specs);
 
-    const es = await connection.query(
-      queryStore.specs.updateEngineSpec,
-      engine_specs
-    );
+    await DBquery(queryStore.specs.updateEngineSpec, engine_specs);
 
-    const d = await connection.query(
-      queryStore.specs.updateDimension,
-      dimensions
-    );
+    await DBquery(queryStore.specs.updateDimension, dimensions);
 
-    const s = await connection.query(queryStore.specs.updateSpaces, spaces);
+    await DBquery(queryStore.specs.updateSpaces, spaces);
 
-    const dbss = await connection.query(
-      queryStore.specs.updateDrivetrain,
-      drivetrains
-    );
+    await DBquery(queryStore.specs.updateDrivetrain, drivetrains);
 
     if (electric_car) {
       if (recent[0].el_id == null) {
-        const el = await connection.query(
-          queryStore.specs.addElectricSpec,
-          electrics
-        );
-        await connection.query('UPDATE cars SET el_id = ? WHERE id = ?', [
-          el[0].insertId,
+        const [el] = await DBquery(queryStore.specs.addElectricSpec, electrics);
+        await DBquery('UPDATE cars SET el_id = ? WHERE id = ?', [
+          el.insertId,
           car_id,
         ]);
       } else {
-        await connection.query(queryStore.specs.updateElectric, [
+        await DBquery(queryStore.specs.updateElectric, [
           ...electrics,
           recent[0].el_id,
         ]);
       }
     }
 
-    await connection.commit();
+    await commitTransaction(connection);
 
+    req.session.alert = {
+      type: 'alert-success',
+      message: 'Success updated car',
+    };
     res.redirect(`/admin/cars/update/${car_id}`);
   } catch (error) {
+    if (connection) {
+      await rollbackTransaction(connection);
+    }
     console.log(error);
-    res.status(500).send(error.message);
+    next(error);
   } finally {
     if (connection) {
-      connection.release();
+      releaseConnection(connection);
     }
   }
 };
 
-exports.deleteCar = async (req, res) => {
+exports.deleteCar = async (req, res, next) => {
   let connection;
   try {
     const car_id = req.params.id;
 
-    connection = await db.getConnection();
+    connection = await getConnection();
     await connection.beginTransaction();
 
     let querystr = 'SELECT * FROM cars WHERE id = ? LIMIT 1';
     let queryvalue = [car_id];
 
-    await connection.query(querystr, queryvalue).then(async (onres) => {
+    await DBquery(querystr, queryvalue).then(async (onres) => {
       if (onres[0].length == 0) {
-        res.status(404).send('Data Not Found!');
+        req.session.alert = {
+          type: 'alert-danger',
+          message: 'Cars not found',
+        };
       }
-      const car = onres[0][0];
+      const car = onres[0];
+      console.log(car);
 
-      querystr = `
-        DELETE FROM general_information WHERE id = ? AND EXISTS (SELECT 1 FROM general_information WHERE id = ?);
-        DELETE FROM performance_specs WHERE id = ? AND EXISTS (SELECT 1 FROM performance_specs WHERE id = ?);
-        DELETE FROM engine_specs WHERE id = ? AND EXISTS (SELECT 1 FROM engine_specs WHERE id = ?);
-        DELETE FROM dimensions WHERE id = ? AND EXISTS (SELECT 1 FROM dimensions WHERE id = ?);
-        DELETE FROM drivetrain_brakes_suspension_specs WHERE id = ? AND EXISTS (SELECT 1 FROM drivetrain_brakes_suspension_specs WHERE id = ?);
-        DELETE FROM spaces WHERE id = ? AND EXISTS (SELECT 1 FROM spaces WHERE id = ?);
-        DELETE FROM electric_specs WHERE id = ? AND EXISTS (SELECT 1 FROM electric_specs WHERE id = ?);
-        DELETE FROM cars WHERE id = ? AND EXISTS (SELECT 1 FROM cars WHERE id = ?);`;
-      queryvalue = [
-        car.gi_id,
-        car.gi_id,
-        car.ps_id,
-        car.ps_id,
-        car.es_id,
-        car.es_id,
-        car.d_id,
-        car.d_id,
-        car.dbss_id,
-        car.dbss_id,
-        car.s_id,
-        car.s_id,
-        car_id,
-        car_id,
-      ];
+      await DBquery(
+        'DELETE FROM general_information WHERE id = ? AND EXISTS (SELECT 1 FROM general_information WHERE id = ?)',
+        [car.gi_id, car.gi_id]
+      );
+      await DBquery(
+        'DELETE FROM performance_specs WHERE id = ? AND EXISTS (SELECT 1 FROM performance_specs WHERE id = ?)',
+        [car.ps_id, car.ps_id]
+      );
+      await DBquery(
+        'DELETE FROM engine_specs WHERE id = ? AND EXISTS (SELECT 1 FROM engine_specs WHERE id = ?)',
+        [car.es_id, car.es_id]
+      );
+      await DBquery(
+        'DELETE FROM dimensions WHERE id = ? AND EXISTS (SELECT 1 FROM dimensions WHERE id = ?)',
+        [car.d_id, car.d_id]
+      );
+      await DBquery(
+        'DELETE FROM drivetrain_brakes_suspension_specs WHERE id = ? AND EXISTS (SELECT 1 FROM drivetrain_brakes_suspension_specs WHERE id = ?)',
+        [car.dbss_id, car.dbss_id]
+      );
+      await DBquery(
+        'DELETE FROM spaces WHERE id = ? AND EXISTS (SELECT 1 FROM spaces WHERE id = ?)',
+        [car.s_id, car.s_id]
+      );
+      await DBquery(
+        'DELETE FROM electric_specs WHERE id = ? AND EXISTS (SELECT 1 FROM electric_specs WHERE id = ?)',
+        [car.el_id, car.el_id]
+      );
+      await DBquery(
+        'DELETE FROM cars WHERE id = ? AND EXISTS (SELECT 1 FROM cars WHERE id = ?)',
+        [car_id, car_id]
+      );
 
-      await connection.query(querystr, queryvalue).then((onres) => {
-        return res.json('okeee');
-      });
+      await commitTransaction(connection);
+
+      return res.redirect(`/admin/cars?brand_id=${car.b_id}`);
     });
-
-    await connection.commit();
   } catch (error) {
     if (connection) {
-      connection.rollback();
-      console.error(error);
-      res.status(500).send('Internal Server Error');
+      rollbackTransaction(connection);
+      next(error);
     }
   } finally {
     if (connection) {
-      connection.release();
+      releaseConnection(connection);
     }
   }
 };
-

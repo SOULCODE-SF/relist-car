@@ -32,7 +32,30 @@ const {
   updateSetting,
 } = require('../src/controllers/adminController/setting');
 const { getAllBrands } = require('../src/controllers/indexController');
-const { getAllListBrands, getAddBrands, addBrands } = require('../src/controllers/adminController/car/brand');
+const {
+  getAllListBrands,
+  getAddBrands,
+  addBrands,
+  getEditBrands,
+  editBrands,
+  deleteBrands,
+} = require('../src/controllers/adminController/car/brand');
+const {
+  getAllModelList,
+  getAddModel,
+  addModel,
+  getEditModel,
+  editModels,
+  deleteModel,
+} = require('../src/controllers/adminController/car/model');
+const {
+  getAllGenerationList,
+  addGeneration,
+  getAddGeneration,
+  getEditGenaration,
+  editGenerations,
+  deleteGeneration,
+} = require('../src/controllers/adminController/car/generation');
 
 // Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
 const dynamicStorage = (type) => {
@@ -58,7 +81,7 @@ const upload = (type, fieldname) => {
   return (req, res, next) => {
     const uploadMiddleware = multer({
       storage: dynamicStorage(type),
-      limits: { fileSize: 600 * 1024 } 
+      limits: { fileSize: 600 * 1024 },
     }).single(fieldname);
 
     uploadMiddleware(req, res, function (err) {
@@ -72,7 +95,6 @@ const upload = (type, fieldname) => {
     });
   };
 };
-
 
 router.get('/', getDashboardPage);
 
@@ -113,9 +135,38 @@ router.post('/cars/add', addCar);
 router.get('/cars/update/:id', getEditCar);
 router.post('/cars/update/:id', updateCar);
 router.get('/cars/delete/:id', deleteCar);
+
+//brands router
 router.get('/cars-brands', getAllListBrands);
 router.get('/add-brands', getAddBrands);
-router.post('/add-brands', upload('brands','brand_image'), addBrands)
+router.post('/add-brands', upload('brands', 'brand_image'), addBrands);
+router.get('/edit-brands/:id', getEditBrands);
+router.post('/edit-brands/:id', upload('brands', 'brand_image'), editBrands);
+router.get('/delete-brands/:id', deleteBrands);
+
+//models router
+router.get('/brand-models', getAllModelList);
+router.get('/add-models', getAddModel);
+router.post('/add-models', upload('models', 'model_image'), addModel);
+router.get('/edit-models/:id', getEditModel);
+router.post('/edit-models/:id', upload('models', 'model_image'), editModels);
+router.get('/delete-models/:id', deleteModel);
+
+//generations router
+router.get('/model-generations', getAllGenerationList);
+router.get('/add-generations', getAddGeneration);
+router.post(
+  '/add-generations',
+  upload('generations', 'generation_image'),
+  addGeneration
+);
+router.get('/edit-generations/:id', getEditGenaration);
+router.post(
+  '/edit-generations/:id',
+  upload('generations', 'generation_image'),
+  editGenerations
+);
+router.get('/delete-generations/:id', deleteGeneration);
 
 router.get('/brands-name', getBrandsName);
 router.get('/models-name/:brand_id', getModelName);

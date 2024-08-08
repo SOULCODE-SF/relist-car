@@ -1,9 +1,9 @@
-const db = require('../../../db');
 const query = require('../../store/query');
+const { DBquery } = require('../../utils/database');
 
 exports.getDashboardPage = async (req, res) => {
   try {
-    const [cars] = await db.query(query.dashboard.cars);
+    const cars = await DBquery(query.dashboard.cars);
 
     const data = {
       cars: cars[0],

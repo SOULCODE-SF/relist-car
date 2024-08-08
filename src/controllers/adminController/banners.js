@@ -1,4 +1,3 @@
-const db = require('../../../db');
 const path = require('path');
 const fs = require('fs');
 const queryStore = require('../../store/query');
@@ -71,7 +70,7 @@ exports.addBanner = async (req, res) => {
       ads_status,
     ]);
 
-    console.log(banner)
+    console.log(banner);
 
     if (ads_type == 'code') {
       await connection.query(queryStore.banners.addBannerCodeQuery, [

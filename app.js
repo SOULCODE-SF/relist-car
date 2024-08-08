@@ -9,10 +9,7 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const helmet = require('helmet');
 const siteInfoMiddleware = require('./src/middlewares/siteMiddleware');
-const {
-  isAuthenticated,
-  isAdmin,
-} = require('./routes/middlewares/authMiddleware');
+const { isAuthenticated, isAdmin } = require('./routes/middlewares/authMiddleware');
 
 const app = express();
 
@@ -55,11 +52,17 @@ app.set('views', path.join(__dirname, 'views'));
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Helmet middleware with CSP configuration
-var router = require('./routes');
-var adminRouter = require('./routes/admin');
+// Routes
+const router = require('./routes');
+const adminRouter = require('./routes/admin');
 
 app.use(router);
 app.use('/admin', isAuthenticated, isAdmin, adminRouter);
+
+app.use((err, req, res, next) => {
+  console.log(err)
+  console.error(err.stack); 
+  res.status(500).render('500', { currentPage: 'error' });
+});
 
 module.exports = app;

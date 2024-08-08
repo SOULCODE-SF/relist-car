@@ -1,15 +1,19 @@
-const db = require('../../../../db');
-const queryStore = require('../../../store/query');
 const path = require('path');
 const fs = require('fs');
+const { DBquery } = require('../../../utils/database');
+const {
+  formatFileName,
+  moveFile,
+  unlinkFile,
+} = require('../../../utils/helpers');
 
 var querystr = '',
   queryvalue = [];
-exports.getAllListBrands = async (req, res) => {
+exports.getAllListBrands = async (req, res, next) => {
   try {
     querystr = 'SELECT * FROM brands';
 
-    const [brands] = await db.query(querystr);
+    const brands = await DBquery(querystr);
 
     return res.render('admin/car/brand/index', {
       datas: brands,
@@ -18,41 +22,24 @@ exports.getAllListBrands = async (req, res) => {
       layout: './admin/layouts/layout',
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };
 
-exports.getAddBrands = async (req, res) => {
+exports.getAddBrands = async (req, res, next) => {
   try {
     return res.render('admin/car/brand/add', {
+      data: {},
       title: 'Add Brands',
       currentPage: 'admin-brand-add',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };
 
-const moveFile = (oldPath, newPath, callback) => {
-  // Gunakan fs.rename untuk memindahkan file
-  fs.rename(oldPath, newPath, (err) => {
-    if (err) return callback(err);
-    callback(null);
-  });
-};
-
-const formatFileName = (name, extension) => {
-  const formattedName = name
-    .toLowerCase()
-    .replace(/\s+/g, '-')
-    .concat(extension);
-  return formattedName;
-};
-
-exports.addBrands = async (req, res) => {
+exports.addBrands = async (req, res, next) => {
   try {
     const { name, is_featured } = req.body;
 
@@ -72,25 +59,152 @@ exports.addBrands = async (req, res) => {
     console.log(newFilePath);
 
     fs.mkdir(newDir, { recursive: true }, (err) => {
-      if (err) return res.status(500).send('Error creating directory');
+      if (err) throw new Error('Error creating directory');
 
       moveFile(oldPath, newFilePath, (err) => {
-        if (err) return res.status(500).send('Error moving file');
+        if (err) throw new Error('Error moving file');
 
         const brand_image = `/assets/images/brands/${formattedFileName}`;
-        console.log(brand_image);
 
         const querystr =
           'INSERT INTO brands (name, image_path, is_featured) VALUES (?,?,?)';
         const queryvalue = [name, brand_image, is_featured];
 
-        db.query(querystr, queryvalue);
+        DBquery(querystr, queryvalue);
 
         res.redirect('/admin/cars-brands');
       });
     });
   } catch (error) {
+    next(error);
+  }
+};
+
+exports.getEditBrands = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    console.log('id', id);
+    querystr = 'SELECT * FROM brands WHERE id = ?';
+    queryvalue = [id];
+    await DBquery(querystr, queryvalue).then((onres) => {
+      console.log(onres.length);
+      if (onres.length == 0) {
+        throw new Error('Brands Not Found');
+      }
+
+      return res.render('admin/car/brand/edit', {
+        data: onres[0],
+        title: 'Edit brands',
+        currentPage: 'admin-edit-brand',
+        layout: './admin/layouts/layout',
+      });
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.editBrands = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+    const { name, is_featured } = req.body;
+
+    const rows = await DBquery('SELECT image_path FROM brands WHERE id = ?', [
+      id,
+    ]);
+    const oldImagePath = rows[0]?.image_path;
+
+    const fileExtension = '.webp';
+    const formattedFileName = formatFileName(name, fileExtension);
+    const newDir = path.join(
+      __dirname,
+      '../../../../public/assets/images/brands'
+    );
+    const newFilePath = path.join(newDir, formattedFileName);
+
+    if (req.file) {
+      const oldPath = req.file.path;
+
+      fs.mkdir(newDir, { recursive: true }, async (err) => {
+        if (err) throw new Error('Error creating directory');
+        moveFile(oldPath, newFilePath, async (err) => {
+          if (err) throw new Error('Error moving file');
+
+          const brand_image = `/assets/images/brands/${formattedFileName}`;
+
+          if (oldImagePath && oldImagePath !== brand_image) {
+            const oldImageFullPath = path.join(
+              __dirname,
+              '../../../../public',
+              oldImagePath
+            );
+
+            try {
+              await unlinkFile(oldImageFullPath);
+            } catch (unlinkError) {
+              console.error('Error deleting old image:', unlinkError);
+            }
+          }
+
+          const querystr =
+            'UPDATE brands SET name = ?, image_path = ?, is_featured = ? WHERE id = ?';
+          const queryvalue = [name, brand_image, is_featured, id];
+
+          await DBquery(querystr, queryvalue);
+          res.redirect('/admin/cars-brands');
+        });
+      });
+    } else {
+      const brand_image = oldImagePath;
+
+      const querystr =
+        'UPDATE brands SET name = ?, image_path = ?, is_featured = ? WHERE id = ?';
+      const queryvalue = [name, brand_image, is_featured, id];
+
+      await DBquery(querystr, queryvalue);
+      res.redirect('/admin/cars-brands');
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+exports.deleteBrands = async (req, res, next) => {
+  try {
+    const id = req.params.id;
+
+    const cars = await DBquery('SELECT * FROM cars WHERE b_id = ?', [id]);
+
+    if (cars.length > 0) {
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Cannot delete brand because there are associated cars.',
+      };
+      return res.redirect('/admin/cars-brands');
+    }
+
+    const brand = await DBquery('SELECT image_path FROM brands WHERE id = ?', [
+      id,
+    ]);
+    const oldImagePath = brand[0]?.image_path;
+
+    const querystr = 'DELETE FROM brands WHERE id = ?';
+    const queryvalue = [id];
+    await DBquery(querystr, queryvalue);
+
+    if (oldImagePath) {
+      const oldImageFullPath = path.join(
+        __dirname,
+        '../../../../public',
+        oldImagePath
+      );
+
+      await unlinkFile(oldImageFullPath);
+    }
+
+    res.redirect('/admin/cars-brands');
+  } catch (error) {
     console.error(error);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };

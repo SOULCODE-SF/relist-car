@@ -1,9 +1,9 @@
-const db = require('../../../db');
+const { DBquery } = require('../../utils/database');
 
 exports.getSettingPage = async (req, res) => {
   try {
     let querystr = 'SELECT * FROM setting LIMIT 1';
-    const [setting] = await db.query(querystr);
+    const [setting] = await DBquery(querystr);
 
     console.log(setting[0]);
     res.render('admin/setting/index', {

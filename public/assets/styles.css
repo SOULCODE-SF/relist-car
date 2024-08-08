@@ -639,6 +639,32 @@ button:hover {
       color: var(--white);
     }
 
+    .error-container {
+      text-align: center;
+      margin-top: 100px;
+  }
+  .error-container h1 {
+      font-size: 150px;
+      color: #dc3545;
+  }
+  .error-container h2 {
+      font-size: 36px;
+      color: #6c757d;
+  }
+  .error-container p {
+      font-size: 18px;
+      color: #6c757d;
+  }
+  .error-container a {
+      font-size: 18px;
+      color: #007bff;
+      text-decoration: none;
+      color: white;
+  }
+  .error-container a:hover {
+      text-decoration: underline;
+  }
+
 
 @media (max-width: 991.98px) {
   .navbar-collapse {

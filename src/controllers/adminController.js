@@ -1,8 +1,8 @@
-const db = require('../../db');
+const { DBquery } = require('../utils/database');
 
 exports.getUser = async (req, res) => {
   try {
-    const [data] = await db.query('SELECT * FROM users');
+    const { res: data } = await DBquery('SELECT * FROM users');
 
     res.render('admin/user/index', {
       title: 'Manage User',
@@ -11,7 +11,7 @@ exports.getUser = async (req, res) => {
       data,
     });
   } catch (error) {
-    res.status(500).send(error.message);
+    next(error);
   }
 };
 
@@ -19,9 +19,9 @@ exports.addUser = async (req, res) => {
   try {
     const { username, email, password, name, role, location } = req.body;
 
-    await db.query(
+    await DBquery(
       'INSERT INTO users(username, email, password, name, role, location) VALUES (?,?,?,?,?,?)',
-      [username, email, password, name, role, location],
+      [username, email, password, name, role, location]
     );
 
     res.status(201).json({
@@ -29,7 +29,6 @@ exports.addUser = async (req, res) => {
       data: req.body,
     });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };

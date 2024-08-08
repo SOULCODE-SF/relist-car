@@ -1,7 +1,7 @@
-const db = require('../../db');
 const queryStore = require('../store/query');
 const query = require('../store/query');
 const nodecache = require('node-cache');
+const { DBquery } = require('../utils/database');
 
 const cache = new nodecache();
 
@@ -22,7 +22,7 @@ exports.getHomePage = async (req, res) => {
       });
     }
 
-    const [recentCars] = await db.query(query.home.recentCars, [15]);
+    const recentCars = await DBquery(query.home.recentCars, [15]);
 
     let datas = {
       recentCars,
@@ -57,9 +57,7 @@ exports.getAllBrands = async (req, res) => {
       });
     }
 
-    const [datas] = await db.query(query.brands.getAllBrands, [
-      `%${searchTerm}%`,
-    ]);
+    const datas = await DBquery(query.brands.getAllBrands, [`%${searchTerm}%`]);
 
     cache.set(key, datas, 86000);
 
@@ -80,7 +78,7 @@ exports.getModelByBrand = async (req, res) => {
   try {
     let brand_id = req.params.brand_id;
 
-    const [datas] = await db.query(query.models.getModelByBrand, [brand_id]);
+    const datas = await DBquery(query.models.getModelByBrand, [brand_id]);
 
     res.render('models', {
       models: datas,
@@ -97,10 +95,9 @@ exports.getGenerationByModel = async (req, res) => {
   try {
     let model_id = req.params.model_id;
 
-    const [datas] = await db.query(
-      query.generations.getGenerationByModelQuery,
-      [model_id],
-    );
+    const datas = await DBquery(query.generations.getGenerationByModelQuery, [
+      model_id,
+    ]);
 
     res.render('generations', {
       generations: datas,
@@ -116,9 +113,7 @@ exports.getGenerationByModel = async (req, res) => {
 exports.getGenerationLists = async (req, res) => {
   try {
     let generation_id = req.params.id;
-    const [datas] = await db.query(queryStore.generations.list, [
-      generation_id,
-    ]);
+    const datas = await DBquery(queryStore.generations.list, [generation_id]);
 
     console.log(datas[0]);
 
@@ -137,7 +132,7 @@ exports.getSpec = async (req, res) => {
   try {
     let carId = req.params.id;
 
-    const [datas] = await db.query('CALL get_spec(?)', [carId]);
+    const datas = await DBquery('CALL get_spec(?)', [carId]);
 
     const data = datas[0][0];
     let haveElectricMotor = false;
