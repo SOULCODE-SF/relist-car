@@ -71,7 +71,7 @@ const dynamicStorage = (type) => {
           '-' +
           Date.now() +
           path.extname(file.originalname) +
-          '.webp'
+          '.webp',
       );
     },
   });
@@ -118,13 +118,9 @@ router.get('/banner', getAllBanners);
 
 router.get('/banner/add', getAddBanner);
 
-router.post('/banner/add', upload('banners', 'ads_image'), addBanner);
-router.get('/banner/edit/:banner_id', getBannerById);
-router.post(
-  '/banner/update/:banner_id',
-  upload('banners', 'ads_image'),
-  updateBanner
-);
+router.post('/banner/add', upload('temp', 'ads_image'), addBanner);
+router.get('/banner/edit/:id', getBannerById);
+router.post('/banner/update/:id', upload('temp', 'ads_image'), updateBanner);
 router.get('/banner/delete/:banner_id', deleteBanner);
 
 router.get('/users', getUser);
@@ -158,13 +154,13 @@ router.get('/add-generations', getAddGeneration);
 router.post(
   '/add-generations',
   upload('generations', 'generation_image'),
-  addGeneration
+  addGeneration,
 );
 router.get('/edit-generations/:id', getEditGenaration);
 router.post(
   '/edit-generations/:id',
   upload('generations', 'generation_image'),
-  editGenerations
+  editGenerations,
 );
 router.get('/delete-generations/:id', deleteGeneration);
 
