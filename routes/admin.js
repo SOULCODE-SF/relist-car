@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const path = require('path');
+const uploadCarImages = require('../src/utils/carImage');
 
 const { getUser, addUser } = require('../src/controllers/adminController');
 const {
@@ -56,9 +57,7 @@ const {
   editGenerations,
   deleteGeneration,
 } = require('../src/controllers/adminController/car/generation');
-const uploadCarImages = require('../src/utils/carimage');
 
-// Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
 const dynamicStorage = (type) => {
   return multer.diskStorage({
     destination: function (req, file, cb) {
