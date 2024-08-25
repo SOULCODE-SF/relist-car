@@ -1,14 +1,19 @@
-const { DBquery } = require('../../utils/database');
+const {
+  DBquery,
+  getConnection,
+  commitTransaction,
+  rollbackTransaction,
+  releaseConnection,
+} = require('../../utils/database');
 
 exports.getSettingPage = async (req, res) => {
   try {
     let querystr = 'SELECT * FROM setting LIMIT 1';
     const [setting] = await DBquery(querystr);
 
-    console.log(setting[0]);
     res.render('admin/setting/index', {
       title: 'Setting',
-      data: setting[0],
+      data: setting,
       currentPage: 'setting',
       layout: './admin/layouts/layout',
     });
@@ -35,7 +40,7 @@ exports.updateSetting = async (req, res) => {
       sosmed_youtube,
     } = req.body;
 
-    connection = await db.getConnection();
+    connection = await getConnection();
     await connection.beginTransaction();
 
     let querystr = `UPDATE setting
@@ -67,17 +72,17 @@ exports.updateSetting = async (req, res) => {
       sosmed_youtube,
       1,
     ];
-    await connection.query(querystr, queryvalue);
+    await DBquery(querystr, queryvalue);
 
-    await connection.commit();
+    await commitTransaction(connection);
 
     res.redirect('/admin/setting');
   } catch (error) {
-    if (connection) await connection.rollback();
+    if (connection) await rollbackTransaction(connection);
 
     console.error(error);
     res.status(500).json('Internal Server Error');
   } finally {
-    if (connection) await connection.release();
+    if (connection) await releaseConnection(connection);
   }
 };
