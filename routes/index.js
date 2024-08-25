@@ -24,11 +24,8 @@ const router = express.Router();
 router.get('/', getHomePage);
 
 router.get('/brands', getAllBrands);
-
 router.get('/brands/:brand_id/models', getModelByBrand);
-
 router.get('/brands/models/:model_id/generations', getGenerationByModel);
-
 router.get('/generation-list/:id', getGenerationLists);
 router.get('/specs/:id', getSpec);
 
