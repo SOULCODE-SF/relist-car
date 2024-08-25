@@ -9,7 +9,10 @@ const session = require('express-session');
 const MySQLStore = require('express-mysql-session')(session);
 const helmet = require('helmet');
 const siteInfoMiddleware = require('./src/middlewares/siteMiddleware');
-const { isAuthenticated, isAdmin } = require('./routes/middlewares/authMiddleware');
+const {
+  isAuthenticated,
+  isAdmin,
+} = require('./routes/middlewares/authMiddleware');
 
 const app = express();
 
@@ -32,7 +35,7 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: sessionStore,
-  })
+  }),
 );
 
 app.use(siteInfoMiddleware);
@@ -60,8 +63,8 @@ app.use(router);
 app.use('/admin', isAuthenticated, isAdmin, adminRouter);
 
 app.use((err, req, res, next) => {
-  console.log(err)
-  console.error(err.stack); 
+  console.log(err);
+  console.error(err.stack);
   res.status(500).render('500', { currentPage: 'error' });
 });
 

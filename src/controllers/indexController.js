@@ -135,6 +135,10 @@ exports.getSpec = async (req, res) => {
     const datas = await DBquery('CALL get_spec(?)', [carId]);
 
     const data = datas[0][0];
+    const imagescar = await DBquery(
+      'SELECT image_path FROM car_images WHERE car_id = ?',
+      [data.car_id],
+    );
     let haveElectricMotor = false;
     if (data.electric_motor_1_power != '') {
       haveElectricMotor = true;
@@ -251,6 +255,7 @@ exports.getSpec = async (req, res) => {
         tires_size: data.tires_size,
         wheel_rims_size: data.wheel_rims_size,
       },
+      images: imagescar,
     };
 
     console.log(jsonData);

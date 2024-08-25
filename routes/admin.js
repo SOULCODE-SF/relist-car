@@ -56,6 +56,7 @@ const {
   editGenerations,
   deleteGeneration,
 } = require('../src/controllers/adminController/car/generation');
+const uploadCarImages = require('../src/utils/carimage');
 
 // Fungsi untuk menentukan direktori penyimpanan dinamis berdasarkan jenis upload
 const dynamicStorage = (type) => {
@@ -127,7 +128,7 @@ router.get('/users', getUser);
 router.post('/users/add', addUser);
 router.get('/cars', getCarsList);
 router.get('/cars/add', getAddCar);
-router.post('/cars/add', addCar);
+router.post('/cars/add', uploadCarImages.array('images', 10), addCar);
 router.get('/cars/update/:id', getEditCar);
 router.post('/cars/update/:id', updateCar);
 router.get('/cars/delete/:id', deleteCar);

@@ -665,6 +665,34 @@ button:hover {
       text-decoration: underline;
   }
 
+  .gallery-container {
+    padding: 0;
+  }
+  
+  .gallery-item {
+    position: relative;
+    overflow: hidden;
+    border: 1px solid #ddd; /* Optional: adds a border around images */
+  }
+  .gallery-item:hover {
+    cursor: pointer;
+  }
+  .gallery-item img {
+    display: block;
+    width: 100%;
+    height: auto; /* Maintain aspect ratio of the image */
+    object-fit: cover; /* Ensures images cover the area */
+  }
+  
+  .row.no-gutters {
+    margin-right: 0;
+    margin-left: 0;
+  }
+  
+  .row.no-gutters .col-md-4 {
+    padding-right: 0;
+    padding-left: 0;
+  }
 
 @media (max-width: 991.98px) {
   .navbar-collapse {

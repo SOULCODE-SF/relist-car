@@ -247,8 +247,12 @@ exports.updateBanner = async (req, res, next) => {
         ];
 
         await DBquery(updateBannerQuery, updateBannerValues);
+        req.session.alert = {
+          type: 'alert-success',
+          message: 'Updated Banner Succesfully',
+        };
 
-        res.redirect('/admin/banner');
+        res.redirect(`/admin/banner/edit/${bannerId}`);
       } catch (updateError) {
         next(updateError);
       }

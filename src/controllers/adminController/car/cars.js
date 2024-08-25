@@ -7,6 +7,11 @@ const {
   rollbackTransaction,
   commitTransaction,
 } = require('../../../utils/database');
+const {
+  getBrandNameById,
+  getModelNameById,
+  getGenerationNameById,
+} = require('../../../utils/carHelpers');
 
 const cache = new nodecache();
 
@@ -231,6 +236,8 @@ exports.addCar = async (req, res, next) => {
       powertrain_architecture = new_powertrain_architecture;
     }
 
+    console.log('reqfiles', req.files);
+
     let hasAlert = false;
 
     if (!brand_id) {
@@ -255,6 +262,12 @@ exports.addCar = async (req, res, next) => {
       req.session.alert = {
         type: 'alert-danger',
         message: 'Engine is required',
+      };
+      hasAlert = true;
+    } else if (!req.file || !req.files || req.files.length === 0) {
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Images is required',
       };
       hasAlert = true;
     }
@@ -404,10 +417,40 @@ exports.addCar = async (req, res, next) => {
       el?.insertId ?? null,
     ];
 
-    await DBquery(
+    const carResult = await DBquery(
       'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id, es_id, d_id, s_id, dbss_id, el_id) VALUES(?,?,?,?,?,?,?,?,?,?)',
       insertCars,
     );
+
+    const carId = carResult.insertId;
+
+    console.log('reqfiles', req.files);
+    console.log('reqfile', req.file);
+
+    if (req.files && req.files.length > 0) {
+      const brand_name = await getBrandNameById(brand_id);
+      const model_name = await getModelNameById(model_id);
+      const generation_name = await getGenerationNameById(generation_id);
+
+      let pathimage = `${brand_name}/${model_name}/${generation_name}/${
+        generation_name + engine
+      }`;
+      pathimage = pathimage.toLowerCase().replace(/ /g, '-');
+
+      const images = req.files.map((file) => [
+        carId,
+        `/assets/images/brands/${pathimage}/${file.filename}`,
+      ]);
+
+      await Promise.all(
+        images.map(([carId, imagePath]) =>
+          DBquery('INSERT INTO car_images(car_id, image_path) VALUES (?, ?)', [
+            carId,
+            imagePath,
+          ]),
+        ),
+      );
+    }
 
     await commitTransaction(connection);
 

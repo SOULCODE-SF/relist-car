@@ -84,6 +84,18 @@
         >Drivetrain & Suspension</a
       >
     </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        id="images-tab"
+        data-toggle="tab"
+        href="#images"
+        role="tab"
+        aria-controls="images"
+        aria-selected="false"
+        >Images</a
+      >
+    </li>
   </ul>
 
   <% if (alert) { %>
@@ -98,7 +110,7 @@
   </div>
   <% } %>
 
-  <form id="carForm" action="/admin/cars/add" method="post">
+  <form id="carForm" action="/admin/cars/add" method="post" enctype="multipart/form-data">
     <div class="tab-content" id="myTabContent">
       <div
         class="tab-pane fade show active"
@@ -160,6 +172,15 @@
         aria-labelledby="drivetrain-tab"
       >
         <%- include('./partials/form/drivetrain.ejs') %>
+      </div>
+
+      <div
+        class="tab-pane fade"
+        id="images"
+        role="tabpanel"
+        aria-labelledby="images-tab"
+      >
+        <%- include('./partials/form/images.ejs') %>
       </div>
     </div>
 
