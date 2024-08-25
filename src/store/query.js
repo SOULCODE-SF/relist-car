@@ -35,7 +35,7 @@ let queryStore = {
   cars: {
     getAllCars: `select c.*, concat(g.title, ' ', gi.engine) as car_title, b.name as brand_name, m.name as model_name from cars c join brands b on c.b_id = b.id join models m on c.m_id = m.id join generations g on c.g_id = g.id left join general_information gi on c.gi_id = gi.id WHERE c.b_id = ?`,
     getEngine: `SELECT gi.engine FROM general_information gi GROUP BY gi.engine`,
-    getAllBrands: 'SELECT * FROM brands'
+    getAllBrands: 'SELECT * FROM brands',
   },
   specs: {
     addGeneralInformation:
@@ -63,4 +63,5 @@ let queryStore = {
     cekEmail: `SELECT email FROM users WHERE email = ?;`,
   },
 };
+
 module.exports = queryStore;
