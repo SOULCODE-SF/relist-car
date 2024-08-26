@@ -169,6 +169,6 @@ router.get('/models-name/:brand_id', getModelName);
 router.get('/generations-name/:model_id', getGenerationName);
 
 router.get('/setting', getSettingPage);
-router.post('/setting', updateSetting);
+router.post('/setting', upload('temp', 'site_logo'), updateSetting);
 
 module.exports = router;
