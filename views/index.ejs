@@ -84,30 +84,37 @@
       </div> -->
       
     </div>
-    <h3>NEW ARRIVALS</h3>
-    <h1>Let's Check Latest <span>Cars</span></h1>
-
-    <div class="container p-4">
-      <div class="row d-flex justify-content-center">
-        <% recentCars.forEach(rc => { %>
-        <div class="col-11 col-sm-12 col-md-4 col-lg-2">
-          <a href="/specs/<%= rc.id %>" class="model-link">
-            <div class="recent-card">
-              <div class="frame">
-                <img
-                  src="/assets/<%= rc.image_path %>"
-                  alt="<%= meta_title %>"
-                  onerror="this.onerror=null; this.src='/nomodels.webp';"
-                />
-              </div>
-              <p><%= rc.generation_name %></p>
-              <p><%= rc.engine %></p>
-              <h6 class="text-start"><%= rc.body_type %></h6>
-            </div>
-          </a>
-        </div>
-        <% }) %>
+    <div class="recent-cars">
+      <div class="title">
+        <h3>NEW ARRIVALS</h3>
+        <h1>Let's Check Latest <span>Cars</span></h1>
       </div>
-    </div>
+
+      <div class="container p-4">
+        <div class="row d-flex justify-content-center">
+          <% recentCars.forEach(rc => { %>
+          <div class="col-11 col-sm-12 col-md-4 col-lg-2 d-flex">
+            <a href="/specs/<%= rc.id %>" class="model-link flex-fill">
+              <div class="recent-card d-flex flex-column">
+                <div class="frame flex-grow-1">
+                  <img
+                    src="/assets/<%= rc.image_path %>"
+                    alt="<%= meta_title %>"
+                    onerror="this.onerror=null; this.src='/nomodels.webp';"
+                    class="img-fluid"
+                  />
+                </div>
+                <div class="card-content">
+                  <p><%= rc.generation_name %></p>
+                  <p><%= rc.engine %></p>
+                  <h6><%= rc.body_type %></h6>
+                </div>
+              </div>
+            </a>
+          </div>
+          <% }) %>
+        </div>
+      </div>   
+    </div> 
   </section>
 </div>
