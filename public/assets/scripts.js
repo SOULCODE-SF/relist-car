@@ -162,6 +162,7 @@ $(document).ready(function () {
       dataType: 'json',
       delay: 250,
       data: function (params) {
+        console.log("params")
         return {
           search: params.term,
         };

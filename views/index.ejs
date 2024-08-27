@@ -11,79 +11,52 @@
     </div>
   </section>
   <section class="recent-cars bg-light position-relative">
-    <div class="w-75 bg-white shadow-sm p-3" style="height: 250px; position: absolute; top: -60px; left: 12%; border-radius: 8px;">
-      <h3 class="fw-bold">Let's Find Your Car</h3>
-      <div class="row">
-        <label for="input-brand" class="col-2 col-form-label"
-          >Brand</label
-        >
-        <div id="area-input" class="col-9 col-lg-3">
-          <select
-            id="input-brand"
-            name="brand_id"
-            class="form-select"
-            style="width: 100%"
-            aria-label="Brand"
-          ></select>
-          </a>
+    <form id="car-form" action="/api/search-car" method="POST">
+      <div class="w-75 bg-white shadow-sm p-3" style="height: 280px; position: absolute; top: -60px; left: 12%; border-radius: 8px;">
+        <h3 class="fw-bold">Let's Find Your Car</h3>
+        <div class="d-flex bg-light">
+          <div class="row w-50 align-items-center">
+            <label for="input-brand" class="col-3 col-form-label">Brand</label>
+            <div id="area-input" class="col-8">
+              <select id="input-brand" name="brand_id" class="form-select" style="width: 100%" aria-label="Brand"></select>
+            </div>
+          </div>
+          <div class="row w-50 align-items-center">
+            <label for="input-model" class="col-3 col-form-label">Model</label>
+            <div id="area-input" class="col-8">
+              <select id="input-model" name="model_id" class="form-select" style="width: 100%" aria-label="Model"></select>
+            </div>
+          </div>
         </div>
+        <div class="d-flex">
+          <div class="row w-50 align-items-center">
+            <label for="input-generation" class="col-3 col-form-label">Generation</label>
+            <div id="area-input" class="col-8">
+              <select id="input-generation" name="generation_id" class="form-select" style="width: 100%" aria-label="Generation"></select>
+            </div>
+          </div>
+          <div class="row w-50 align-items-center">
+            <label for="input-engine" class="col-3 col-form-label">Engine</label>
+            <div id="area-input" class="col-8">
+              <select id="input-engine" name="engine" class="form-select" style="width: 100%" aria-label="Engine"></select>
+            </div>
+          </div>
+        </div>
+        <button type="submit" class="btn w-auto btn-danger mt-3" style="height: 40px;">Submit</button>
+        <% if (alert) { %>
+          <div class="alert <%= alert.type %> alert-dismissible fade show mt-3" role="alert">
+            <%= alert.message %>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Close"
+            ></button>
+          </div>
+        <% } %>
       </div>
-      <div class="row">
-        <label for="input-model" class="col-2 col-form-label"
-          >Model</label
-        >
-        <div id="area-input" class="col-9 col-lg-3">
-          <select
-            id="input-model"
-            name="model_id"
-            class="form-select"
-            style="width: 100%"
-            aria-label="Model"
-          ></select>
-        </div>
-      </div>
-      <div class="row">
-        <label for="input-generation" class="col-2 col-form-label"
-          >Generation</label
-        >
-        <div id="area-input" class="col-9 col-lg-3">
-          <select
-            id="input-generation"
-            name="generation_id"
-            class="form-select"
-            style="width: 100%"
-            aria-label="Generation"
-          ></select>
-        </div>
-      </div>
-      <div class="row">
-        <label for="input-engine" class="col-2 col-form-label">Engine</label>
-        <div id="area-input" class="col-9 col-lg-3">
-          <select
-            id="input-engine"
-            name="engine"
-            class="form-select"
-            style="width: 100%"
-            aria-label="Engine"
-          ></select>
-        </div>
-      </div>
-      <!-- <div class="row">
-        <label for="input-year-make" class="col-md-2 col-lg-2 col-form-label">Year</label>
-        <div class="col-md-6 col-lg-4">
-          <input
-            type="date"
-            id="input-year-make"
-            name="year_make"
-            class="form-control"
-            placeholder="YYYY"
-            min="1900-01-01"
-            max="2099-12-31"
-          />
-        </div>
-      </div> -->
-      
-    </div>
+    </form>
+    
     <div class="recent-cars">
       <div class="title">
         <h3>NEW ARRIVALS</h3>

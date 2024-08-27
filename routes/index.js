@@ -19,6 +19,8 @@ const {
   getGenerationName,
   getEngineName,
 } = require('../src/controllers/adminController/car/cars');
+
+const apiservice = require("./api")
 const router = express.Router();
 
 router.get('/', getHomePage);
@@ -51,5 +53,8 @@ router.get('/generations-name/:model_id', getGenerationName);
 router.get('/get-engine', getEngineName);
 
 router.get('/privacy-policy', getPrivacyPolicy);
+
+//api service
+router.use('/api', apiservice);
 
 module.exports = router;

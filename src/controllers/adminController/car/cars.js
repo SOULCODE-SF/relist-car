@@ -102,7 +102,7 @@ exports.getEngineName = async (req, res, next) => {
   try {
     const search = req.query.search;
 
-    console.log(search);
+    console.log('search',search);
 
     let querystr = `SELECT gi.engine as name FROM general_information gi `;
     if (search) {
@@ -112,6 +112,7 @@ exports.getEngineName = async (req, res, next) => {
 
     const datas = await DBquery(querystr, [`%${search}%`]);
 
+    datas.unshift({ name: 'None' },)
     return res.json({
       datas,
     });
