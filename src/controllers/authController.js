@@ -85,7 +85,11 @@ exports.loginUser = async (req, res, next) => {
     ]);
 
     if (user.length == 0) {
-      throw new Error('User not found!');
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'User nout found',
+      };
+      res.redirect('/login');
     }
 
     const passwordMatch = await bcrypt.compare(password, user[0].password);
