@@ -12,7 +12,7 @@ function isValid(value) {
 var querystr = '',
   queryvalue = [];
 
-const getHomePage = async (req, res) => {
+const getHomePage = async (req, res, next) => {
   try {
     const key = req.originalUrl;
     const cachedData = cache.get(key);
@@ -63,8 +63,7 @@ const getHomePage = async (req, res) => {
       currentPage: 'homes',
     });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };
 const getAllBrands = async (req, res) => {
@@ -100,7 +99,7 @@ const getAllBrands = async (req, res) => {
 };
 
 //models
-const getModelByBrand = async (req, res) => {
+const getModelByBrand = async (req, res, next) => {
   try {
     let brand_id = req.params.brand_id;
 
@@ -112,12 +111,11 @@ const getModelByBrand = async (req, res) => {
       currentPage: 'models',
     });
   } catch (error) {
-    console.error(error.message);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };
 
-const getGenerationByModel = async (req, res) => {
+const getGenerationByModel = async (req, res, next) => {
   try {
     let model_id = req.params.model_id;
 
@@ -131,12 +129,11 @@ const getGenerationByModel = async (req, res) => {
       currentPage: 'generations',
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };
 
-const getGenerationLists = async (req, res) => {
+const getGenerationLists = async (req, res, next) => {
   try {
     let generation_id = req.params.id;
     const datas = await DBquery(queryStore.generations.list, [generation_id]);
@@ -149,12 +146,11 @@ const getGenerationLists = async (req, res) => {
       currentPage: 'list-generation',
     });
   } catch (error) {
-    console.error(error);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };
 
-const getSpec = async (req, res) => {
+const getSpec = async (req, res, next) => {
   try {
     let carId = req.params.id;
 
@@ -292,28 +288,16 @@ const getSpec = async (req, res) => {
       currentPage: 'specs',
     });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).send('Internal Server Error');
+    next(error);
   }
 };
 
-const getPrivacyPolicy = async (req, res) => {
-  res.render('privacy_policy', {
-    title: 'Privacy Policy',
-    currentPage: 'privacy-policy',
-  });
-
+const getPrivacyPolicy = async (req, res, next) => {
   try {
-  } catch (error) {
-    console.log(error.message);
-    res.status(500).send('Internal Server Error');
-  }
-};
-
-const getRandomBrand = async (req, res, next) => {
-  try {
-    querystr = 'SELECT * FROM brands WHERE is_featured = 1';
-    const brands = await DBquery(querystr);
+    res.render('privacy_policy', {
+      title: 'Privacy Policy',
+      currentPage: 'privacy-policy',
+    });
   } catch (error) {
     next(error);
   }
