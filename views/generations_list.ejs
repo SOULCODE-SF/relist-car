@@ -33,16 +33,16 @@
 <div class="container genlist">
   <div class="row">
     <% datas.forEach(item => { %>
-    <div class="col-12 col-md-6 col-lg-4 mb-4">
+    <div class="col-12 mb-4">
       <a href="/specs/<%= item.id %>" class="standar-link text-decoration-none">
-        <div class="card p-4">
-          <div class="label <%= item.flag === 'red' ? 'label-red' : 'label-green' %>">
+        <div class="card p-4 <%= item.flag === 'red' ? 'label-red' : 'label-green' %>">
+          <div class="card-body">
+            <h5 class="card-title ps-2"><%= item.engine %></h5>
+            <p class="card-text ps-2">
+              <span><%= item.start_production %> - <%= item.end_production %></span><br>
+              <span><%= item.acceleration_100kmh %></span>
+            </p>
           </div>
-          <h5 class="card-title ps-2"><%= item.engine %></h5>
-          <p class="card-text ps-2">
-            <span><%= item.start_production %> - <%= item.end_production %></span><br>
-            <span><%= item.acceleration_100kmh %></span>
-          </p>
         </div>
       </a>
     </div>

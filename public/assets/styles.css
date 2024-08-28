@@ -206,27 +206,17 @@ a {
 }
 
 .container.genlist .card:hover {
-  border: 1px solid red;
+  border: 1px solid black;
 }
 
-.label {
-  position: absolute;
-  top: 8px;
-  left: 8px;
-  border-radius: 4px;
-  color: white;
-  font-size: 12px;
-  font-weight: bold;
-  width: 20px;
-  height: 90%;
+.label-red:hover {
+  border: 1px solid red !important;
+  color: red !important;
 }
 
-.label-red {
-  background-color: red;
-}
-
-.label-green {
-  background-color: green;
+.label-green:hover {
+  border: 1px solid green !important;
+  color: green !important;
 }
 
 /* CSS untuk container merek */

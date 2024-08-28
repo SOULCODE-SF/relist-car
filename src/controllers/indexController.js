@@ -123,6 +123,8 @@ const getGenerationByModel = async (req, res, next) => {
       model_id,
     ]);
 
+    console.log(datas);
+
     res.render('generations', {
       generations: datas,
       title: 'Generations',
