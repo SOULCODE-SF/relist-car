@@ -112,7 +112,20 @@
   <body>
     <%- include('../partials/header.ejs') %>
     <%-include('../partials/sidebar.ejs')%>
-    <main id="main" class="main"><%- body %></main>
+    <main id="main" class="main">
+      <% if (alert) { %>
+        <div class="alert <%= alert.type %> alert-dismissible fade show mt-3 alert-custom" role="alert">
+          <%= alert.message %>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="alert"
+            aria-label="Close"
+          ></button>
+        </div>
+      <% } %>
+      <%- body %>
+    </main>
     <%-include('../partials/footer.ejs') %>
   </body>
   <script src="/assets/nice-iconly/assets/vendor/jquery/jquery-3.6.1.min.js"></script>

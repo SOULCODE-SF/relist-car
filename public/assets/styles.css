@@ -67,6 +67,14 @@ a {
   color: black;
 }
 
+.btn-danger {
+  background-color: red;
+}
+
+.title span {
+  color: red;
+}
+
 .main-content {
   z-index: 1;
   margin-top: 110px;
@@ -89,8 +97,12 @@ a {
   background-color: #f9f9f9;
 }
 
-.recent-cars {
+.hero {
   padding-top: 125px;
+}
+
+.recent-cars {
+  padding-top: 25px;
 }
 
 .recent-cars .title {
@@ -710,6 +722,16 @@ button:hover {
     padding-right: 0;
     padding-left: 0;
   }
+
+  .alert-custom {
+    position: fixed; 
+    top: 90px;       
+    right: 20px;    
+    z-index: 1050;  
+    width: auto;   
+    max-width: 300px;
+  }
+
 
 @media (max-width: 991.98px) {
   .navbar-collapse {

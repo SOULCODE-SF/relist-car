@@ -75,7 +75,7 @@ exports.addUser = async (req, res, next) => {
   }
 };
 
-exports.loginUser = async (req, res) => {
+exports.loginUser = async (req, res, next) => {
   try {
     const { inputUsr, password } = req.body;
 
@@ -89,6 +89,8 @@ exports.loginUser = async (req, res) => {
     }
 
     const passwordMatch = await bcrypt.compare(password, user[0].password);
+
+    console.log('password match', passwordMatch)
 
     if (passwordMatch) {
       req.session.userId = user[0].id;
@@ -108,6 +110,7 @@ exports.loginUser = async (req, res) => {
         type: 'alert-danger',
         message: 'Invalid Credential',
       };
+      res.redirect('/login');
     }
   } catch (error) {
     next(error);

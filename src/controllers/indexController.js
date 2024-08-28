@@ -9,14 +9,16 @@ function isValid(value) {
   return value !== null && value !== undefined && value.trim() !== '';
 }
 
-exports.getHomePage = async (req, res) => {
+var querystr = "", queryvalue = []
+
+const getHomePage = async (req, res) => {
   try {
     const key = req.originalUrl;
     const cachedData = cache.get(key);
 
     if (cachedData) {
       return res.render('index', {
-        recentCars: cachedData.recentCars,
+        datas: cachedData,
         title: 'Home',
         currentPage: 'homes',
       });
@@ -24,14 +26,27 @@ exports.getHomePage = async (req, res) => {
 
     const recentCars = await DBquery(query.home.recentCars, [15]);
 
+    querystr = 'SELECT * FROM brands WHERE is_featured = 1';
+
+    const brands = await DBquery(querystr);
+
+    const allbrand = {
+      id: 'all-brand',
+      name: 'All brands',
+      image_path: '/assets/images/brands/allbrand.webp',
+      is_featured: 1
+    }
+    brands.unshift(allbrand)
+
     let datas = {
+      brands,
       recentCars,
     };
 
     cache.set(key, datas, 3600);
 
     res.render('index', {
-      recentCars: recentCars,
+      datas: datas,
       title: 'Home',
       currentPage: 'homes',
     });
@@ -40,8 +55,7 @@ exports.getHomePage = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
-
-exports.getAllBrands = async (req, res) => {
+const getAllBrands = async (req, res) => {
   try {
     const key = req.originalUrl;
     const cachedData = cache.get(key);
@@ -74,7 +88,7 @@ exports.getAllBrands = async (req, res) => {
 };
 
 //models
-exports.getModelByBrand = async (req, res) => {
+const getModelByBrand = async (req, res) => {
   try {
     let brand_id = req.params.brand_id;
 
@@ -91,7 +105,7 @@ exports.getModelByBrand = async (req, res) => {
   }
 };
 
-exports.getGenerationByModel = async (req, res) => {
+const getGenerationByModel = async (req, res) => {
   try {
     let model_id = req.params.model_id;
 
@@ -110,7 +124,7 @@ exports.getGenerationByModel = async (req, res) => {
   }
 };
 
-exports.getGenerationLists = async (req, res) => {
+const getGenerationLists = async (req, res) => {
   try {
     let generation_id = req.params.id;
     const datas = await DBquery(queryStore.generations.list, [generation_id]);
@@ -128,7 +142,7 @@ exports.getGenerationLists = async (req, res) => {
   }
 };
 
-exports.getSpec = async (req, res) => {
+const getSpec = async (req, res) => {
   try {
     let carId = req.params.id;
 
@@ -271,7 +285,7 @@ exports.getSpec = async (req, res) => {
   }
 };
 
-exports.getPrivacyPolicy = async (req, res) => {
+const getPrivacyPolicy = async (req, res) => {
   res.render('privacy_policy', {
     title: 'Privacy Policy',
     currentPage: 'privacy-policy',
@@ -283,3 +297,25 @@ exports.getPrivacyPolicy = async (req, res) => {
     res.status(500).send('Internal Server Error');
   }
 };
+
+const getRandomBrand = async(req, res, next) => {
+  try {
+    querystr = 'SELECT * FROM brands WHERE is_featured = 1';
+    const brands = await DBquery(querystr);
+
+
+  } catch (error) {
+    next(error)
+  }
+}
+
+
+module.exports = {
+  getHomePage,
+  getAllBrands,
+  getModelByBrand,
+  getGenerationByModel,
+  getGenerationLists,
+  getSpec,
+  getPrivacyPolicy
+}

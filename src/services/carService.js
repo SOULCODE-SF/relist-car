@@ -46,16 +46,19 @@ const apiSearchCar = async(req, res, next) => {
         } = req.body;
 
         console.log(req.body)
-
+        let hasAlert = false;
         if(!brand_id){
+            req.session.alert = {
+                type: 'alert-danger',
+                message: 'No Car Found',
+            };
+            hasAlert = true;
             return res.redirect('/')
         }
 
         if(!engine){
             return res.redirect(`/generation-list/${generation_id}`)
         }else{
-            let hasAlert = false;
-
             querystr = 'SELECT c.id, gi.`engine` FROM cars c JOIN general_information gi ON gi.id = c.gi_id WHERE c.b_id = ? AND c.m_id = ? AND c.g_id = ? AND gi.engine = ?';
             queryvalue = [brand_id, model_id, generation_id, engine];
             const car = await DBquery(querystr, queryvalue);
@@ -63,7 +66,7 @@ const apiSearchCar = async(req, res, next) => {
             if (car.length === 0) {
                 req.session.alert = {
                     type: 'alert-danger',
-                    message: 'Car Not Found!',
+                    message: 'No Car Found',
                 };
                 hasAlert = true;
             }else{

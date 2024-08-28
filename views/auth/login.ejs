@@ -24,7 +24,7 @@
           required
         />
       </div>
-      <button type="submit" class="btn btn-primary w-100">Login</button>
+      <button type="submit" class="btn btn-danger w-100" >Login</button>
       <% if (errorMessage) { %>
       <div class="alert alert-danger mt-3" role="alert">
         <%= errorMessage %>
@@ -32,12 +32,12 @@
       <% } %>
     </form>
     <div class="text-center mt-3">
-      <a href="/forgot-password" class="link-primary">Forgot your password?</a>
+      <a href="/forgot-password" class="link-danger">Forgot your password?</a>
     </div>
     <div class="text-center mt-2">
       <p class="text-muted">
         Don't have an account?
-        <a href="/register" class="link-primary">Sign up</a>
+        <a href="/register" class="link-danger">Sign up</a>
       </p>
     </div>
   </div>
