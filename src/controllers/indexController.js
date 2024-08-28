@@ -9,7 +9,8 @@ function isValid(value) {
   return value !== null && value !== undefined && value.trim() !== '';
 }
 
-var querystr = "", queryvalue = []
+var querystr = '',
+  queryvalue = [];
 
 const getHomePage = async (req, res) => {
   try {
@@ -24,21 +25,32 @@ const getHomePage = async (req, res) => {
       });
     }
 
+    querystr = 'SELECT COUNT(id) as total FROM cars';
+    const carsCount = await DBquery(querystr);
+
+    const totalCar = carsCount[0].total;
+
+    querystr = 'SELECT count(id) as total FROM brands';
+    const brandsCount = await DBquery(querystr);
+
+    const totalBrand = brandsCount[0].total;
+
     const recentCars = await DBquery(query.home.recentCars, [15]);
 
     querystr = 'SELECT * FROM brands WHERE is_featured = 1';
-
     const brands = await DBquery(querystr);
 
     const allbrand = {
       id: 'all-brand',
       name: 'All brands',
       image_path: '/assets/images/brands/allbrand.webp',
-      is_featured: 1
-    }
-    brands.unshift(allbrand)
+      is_featured: 1,
+    };
+    brands.unshift(allbrand);
 
     let datas = {
+      totalCar,
+      totalBrand,
       brands,
       recentCars,
     };
@@ -298,17 +310,14 @@ const getPrivacyPolicy = async (req, res) => {
   }
 };
 
-const getRandomBrand = async(req, res, next) => {
+const getRandomBrand = async (req, res, next) => {
   try {
     querystr = 'SELECT * FROM brands WHERE is_featured = 1';
     const brands = await DBquery(querystr);
-
-
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
-
+};
 
 module.exports = {
   getHomePage,
@@ -317,5 +326,5 @@ module.exports = {
   getGenerationByModel,
   getGenerationLists,
   getSpec,
-  getPrivacyPolicy
-}
+  getPrivacyPolicy,
+};
