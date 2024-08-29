@@ -45,9 +45,8 @@ const apiSearchCar = async(req, res, next) => {
             engine
         } = req.body;
 
-        console.log(req.body)
         let hasAlert = false;
-        if(!brand_id){
+        if(!req.body){
             req.session.alert = {
                 type: 'alert-danger',
                 message: 'No Car Found',
@@ -55,9 +54,24 @@ const apiSearchCar = async(req, res, next) => {
             hasAlert = true;
             return res.redirect('/')
         }
-
         if(!engine || engine === 'None'){
             return res.redirect(`/generation-list/${generation_id}`)
+        }else if(!brand_id && engine || engine != 'None'){
+            querystr =`SELECT c.id
+                        FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.engine = ? GROUP BY g.title , gi.body_type;`
+            queryvalue = [engine]
+
+            const carByEngine = await DBquery(querystr, queryvalue);
+
+            if(carByEngine.length > 0){
+               return  res.redirect(`/car-by-engine/${engine}`)
+            }else{
+                req.session.alert = {
+                    type: 'alert-danger',
+                    message: 'No Car Found',
+                };
+                hasAlert = true;
+            }
         }else{
             querystr = 'SELECT c.id, gi.`engine` FROM cars c JOIN general_information gi ON gi.id = c.gi_id WHERE c.b_id = ? AND c.m_id = ? AND c.g_id = ? AND gi.engine = ?';
             queryvalue = [brand_id, model_id, generation_id, engine];
@@ -72,11 +86,10 @@ const apiSearchCar = async(req, res, next) => {
             }else{
                 return res.redirect(`/specs/${car[0].id}`);
             }
-            if (hasAlert) {
-                return res.redirect('/');
-            }
         }
-
+        if (hasAlert) {
+            return res.redirect('/');
+        }
     } catch (error) {
         next(error)
     }

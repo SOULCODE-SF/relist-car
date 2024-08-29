@@ -287,6 +287,26 @@ const getSpec = async (req, res, next) => {
   }
 };
 
+const getCarByEngine = async(req, res, next) => {
+  try {
+    const engine = req.params.engine
+
+    querystr =`SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
+              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.engine = ? GROUP BY g.title, gi.body_type;`
+    queryvalue = [engine]
+
+    const datas = await DBquery(querystr, queryvalue);
+    
+    return res.render('car_by_engine', {
+      datas,
+      title: 'Car by Engine',
+      currentPage: 'car_by_engine',
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
 const getPrivacyPolicy = async (req, res, next) => {
   try {
     res.render('privacy_policy', {
@@ -306,4 +326,5 @@ module.exports = {
   getGenerationLists,
   getSpec,
   getPrivacyPolicy,
+  getCarByEngine
 };
