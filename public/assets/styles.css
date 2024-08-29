@@ -61,9 +61,8 @@ body {
   background-color: #f2f2f2
 }
 
-/* Hapus deklarasi yang duplikat dan perbaiki penulisan sisa CSS */
 a {
-  text-decoration: none;
+  text-decoration: none !important;
   color: black;
 }
 
@@ -98,7 +97,7 @@ a {
 }
 
 .hero {
-  padding-top: 150px;
+  padding-top: -10px;
 }
 
 .hero .banner {
@@ -121,13 +120,40 @@ a {
   height: 100%;
   background: url('/assets/images/banner-pattern.webp') no-repeat center center;
   background-size: cover;
-  opacity: 0.5;
+  opacity: 0.3;
   z-index: 1;
 }
 
 .hero .banner > * {
   position: relative;
   z-index: 2;
+}
+
+.hero .banner .banner-item {
+  display: flex; 
+  flex-direction: column; 
+  justify-content: center; 
+  align-items: center;
+}
+
+.about-img {
+  background: url('/assets/images/car-about.webp') no-repeat center center;
+  background-size: contain;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.icon-round {
+  border-radius: 100%;
+  background-color: black; 
+  width: 130px; 
+  height: 130px; 
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  border: 4px solid white;
 }
 
 .recent-cars {
@@ -234,6 +260,18 @@ a {
 
 .brands .search-form {
   height: 30px;
+}
+
+.form-container {
+  position: relative;
+  margin: 0 auto; 
+  width: 90%;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  background-color: white;
+  top: -60px; 
+  left: 0; 
 }
 
 input {
@@ -631,6 +669,10 @@ button:hover {
   transition: transform 0.3s, opacity 0.3s; /* Animasi untuk ikon bar */
 }
 
+.text-red {
+  color: red;
+}
+
 .theme-btn,
     .btn-white {
       font-size: 16px;
@@ -646,10 +688,11 @@ button:hover {
       border: none;
       box-shadow: var(--box-shadow);
       z-index: 1;
-      display: inline-block; /* Make it inline-block to allow margin/padding adjustments */
-      text-decoration: none; /* Remove underline for links */
+      display: inline-block;
+      text-decoration: none;
       color: var(--theme-color);
       background: var(--white);
+      width: auto;
     }
 
     /* Primary Theme Button */
@@ -665,7 +708,7 @@ button:hover {
       position: absolute;
       width: 300px;
       height: 300px;
-      background-color: var(--dark); /* Adjust background color */
+      background-color: var(--dark);
       border-radius: 50%;
       top: 50%;
       left: 50%;
@@ -674,9 +717,12 @@ button:hover {
       z-index: -1;
     }
 
-    /* Hover Effect */
     .theme-btn:hover::before {
       transform: translate(-50%, -50%) scale(1);
+    }
+
+    .theme-btn:hover {
+      color: var(--white);
     }
 
     .btn-white:hover::before {

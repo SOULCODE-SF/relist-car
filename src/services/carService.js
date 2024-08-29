@@ -56,7 +56,7 @@ const apiSearchCar = async(req, res, next) => {
             return res.redirect('/')
         }
 
-        if(!engine){
+        if(!engine || engine === 'None'){
             return res.redirect(`/generation-list/${generation_id}`)
         }else{
             querystr = 'SELECT c.id, gi.`engine` FROM cars c JOIN general_information gi ON gi.id = c.gi_id WHERE c.b_id = ? AND c.m_id = ? AND c.g_id = ? AND gi.engine = ?';

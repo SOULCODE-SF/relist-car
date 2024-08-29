@@ -66,7 +66,7 @@ const getHomePage = async (req, res, next) => {
     next(error);
   }
 };
-const getAllBrands = async (req, res) => {
+const getAllBrands = async (req, res, next) => {
   try {
     const key = req.originalUrl;
     const cachedData = cache.get(key);
@@ -93,8 +93,7 @@ const getAllBrands = async (req, res) => {
       searchTerm: searchTerm,
     });
   } catch (error) {
-    console.log(error.message);
-    res.status(500).send('Internal Server Error');
+    next(error)
   }
 };
 
@@ -123,8 +122,6 @@ const getGenerationByModel = async (req, res, next) => {
       model_id,
     ]);
 
-    console.log(datas);
-
     res.render('generations', {
       generations: datas,
       title: 'Generations',
@@ -139,8 +136,6 @@ const getGenerationLists = async (req, res, next) => {
   try {
     let generation_id = req.params.id;
     const datas = await DBquery(queryStore.generations.list, [generation_id]);
-
-    console.log(datas[0]);
 
     res.render('generations_list', {
       datas: datas,
@@ -281,8 +276,6 @@ const getSpec = async (req, res, next) => {
       },
       images: imagescar,
     };
-
-    console.log(jsonData);
 
     res.render('specs', {
       data: jsonData,

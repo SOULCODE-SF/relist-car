@@ -46,6 +46,7 @@ $(document).ready(function () {
 
 $(document).ready(function () {
   $('#input-brand').select2({
+    width: '100%',
     placeholder: 'Search for a brand',
     minimumInputLength: 1,
     ajax: {
@@ -179,3 +180,32 @@ $(document).ready(function () {
     },
   });
 });
+
+document.addEventListener('DOMContentLoaded', function() {
+  function animateCount(element, endValue) {
+    const startValue = 0;
+    const duration = 2000; // duration in milliseconds
+    const stepTime = 10; // time between steps in milliseconds
+    const stepCount = Math.floor(duration / stepTime);
+    const stepValue = endValue / stepCount;
+    let currentValue = startValue;
+
+    function updateCounter() {
+      currentValue += stepValue;
+      if (currentValue >= endValue) {
+        element.textContent = endValue;
+        return;
+      }
+      element.textContent = Math.floor(currentValue);
+      setTimeout(updateCounter, stepTime);
+    }
+
+    updateCounter();
+  }
+
+  document.querySelectorAll('[data-count]').forEach(function(el) {
+    const endValue = parseInt(el.getAttribute('data-count'), 10);
+    animateCount(el, endValue);
+  });
+});
+
