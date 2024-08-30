@@ -1,5 +1,5 @@
 <div class="home">
-  <section class="container text-center p-5 mb-5 wow animate__animated animate__fadeInUp" data-wow-delay=".25s">
+  <section class="container text-center p-5 mb-5">
     <span class="text-danger fw-semibold text-uppercase">WELCOME TO <%= site_name %></span>
     <h1 class="fw-bold mt-3">Best Way to Find Your Dream Car</h1>
     <p style="max-width: 600px; margin: 20px auto; font-size: 20px;" class="text-secondary">
@@ -46,7 +46,7 @@
     <div class="about-us" style="padding: 150px 0;">
       <div class="container" style="max-width: 90%;">
         <div class="row">
-          <div class="col about-left d-none d-md-block wow animate__animated animate__fadeInLeft" data-wow-delay=".25s">
+          <div class="col about-left d-none d-md-block">
             <div class="bg-dark" style="position: absolute; width: 200px; height: 80px; top: 0; left: 0; border-radius: 10px; padding: 8px; display: flex; align-items: center; gap: 5px;">
               <div style="width: 70px; height: 100%; background-color: red; border-radius: 8px; display: flex; justify-content: center; align-items: center; padding: 8px;">
                 <img src="/assets/images/car-icon.webp" alt="<%= meta_title %>" style="width: 100%;">
@@ -54,7 +54,7 @@
               <p class="text-white" style="font-weight: 700;">Real-time specs new arrivals</p>
             </div>
           </div>
-          <div class="col about-right wow animate__animated animate__fadeInRight" data-wow-delay=".25s">
+          <div class="col about-right">
             <div class="d-flex align-items-center">
               <img src="/assets/images/car-96.webp" alt="<%= meta_title %>" style="width: 20px;">
               <div class="ms-2 text-red"><b>ABOUT US</b></div>
@@ -69,21 +69,21 @@
 
     <div class="container banner">
       <div class="row p-4">
-        <div class="col banner-item wow animate__animated animate__fadeInUp" data-wow-delay=".25s">
+        <div class="col banner-item">
           <div class="icon-round">
             <img src="/assets/images/car-icon.webp" alt="<%= meta_title %>" >
           </div>
           <h5 class="text-white text-center mt-2" style="font-weight: 600;">Global Car</h5>
           <h3 class="text-white text-center">Specifications</h3>
         </div>
-        <div class="col banner-item wow animate__animated animate__fadeInUp" data-wow-delay=".5s">
+        <div class="col banner-item">
           <div class="icon-round">
             <img src="/assets/images/gear.webp" alt="<%= meta_title %>">
           </div>
           <h5 class="text-white text-center mt-2" style="font-weight: 600;" data-count="<%= datas.totalBrand %>" id="brandCount">0</h5>
           <h3 class="text-white text-center">Brands</h3>
         </div>
-        <div class="col banner-item wow animate__animated animate__fadeInUp" data-wow-delay=".75s">
+        <div class="col banner-item">
           <div class="icon-round">
             <img src="/assets/images/car-icon.webp" alt="<%= meta_title %>">
           </div>
@@ -110,7 +110,7 @@
         <div class="row d-flex justify-content-center">
           <% datas.recentCars.forEach(rc => { %>
           <div class="col-11 col-sm-12 col-md-4 col-lg-2 d-flex">
-            <a href="/specs/<%= rc.id %>" class="model-link flex-fill wow animate__animated animate__fadeInUp" data-wow-delay=".25s">
+            <a href="/specs/<%= rc.id %>" class="model-link flex-fill">
               <div class="recent-card d-flex flex-column">
                 <div class="frame flex-grow-1">
                   <img
@@ -142,7 +142,7 @@
 
     <div class="brand-list bg-white">
       <% datas.brands.forEach(brand => { %>
-        <a href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.id + '/models' %>" class="brand-card wow animate__animated animate__fadeInUp" data-wow-delay=".25s">
+        <a href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.id + '/models' %>" class="brand-card">
           <div class="brand">
             <img src="/assets<%= brand.image_path %>" alt="<%= meta_title %>" onerror="this.onerror=null; this.src='/notbrands.webp';">
             <h3><%= brand.name %></h3>
@@ -166,7 +166,7 @@
       <div class="row d-flex justify-content-center">
         <% datas.bodyType.forEach(bt => { %>
         <div class="col-11 col-sm-12 col-md-4 col-lg-2 d-flex">
-          <a href="/car-by-body/<%= bt.body %>" class="model-link flex-fill wow animate__animated animate__fadeInUp" data-wow-delay=".25s">
+          <a href="/car-by-body/<%= bt.body %>" class="model-link flex-fill">
             <div class="recent-card d-flex flex-column">
               <div class="frame flex-grow-1">
                 <img

@@ -112,26 +112,29 @@ label {
   opacity: 1;
 }
 .px-80 {
- padding-left: 80px;
- padding-right: 80px
+ padding-left: 80px !important;
+ padding-right: 80px !important
 }
 .pt-50 {
- padding-top: 50px
+ padding-top: 50px !important
 }
 .pt-60 {
- padding-top: 60px
+ padding-top: 60px !important
 }
 .pt-80 {
- padding-top: 80px
+ padding-top: 80px !important
 }
 .pb-60 {
- padding-bottom: 60px
+ padding-bottom: 60px !important
 }
 .pb-80 {
- padding-bottom: 80px
+ padding-bottom: 80px !important
 }
 .pb-100 {
- padding-bottom: 100px
+ padding-bottom: 100px !important
+}
+.pt-100 {
+  padding-top: 100px !important;
 }
 html {
   scroll-behavior: smooth;
@@ -152,7 +155,6 @@ a {
 }
 .main-content {
   z-index: 1;
-  margin-top: 110px;
 }
 .ads-banner {
   text-align: center;
@@ -199,6 +201,48 @@ a {
   justify-content: center;
   align-items: center;
 }
+
+.hero-banner {
+  position: relative;
+  background: url('/assets/images/breadcrumb/01.webp') no-repeat center center;
+  background-size: cover;
+  height: 70vh;
+  width: 100%;
+  overflow: hidden;
+  display: flex; 
+  align-items: center; 
+  justify-content: center; 
+  text-align: center;
+  color: white;
+  padding: 20px;
+  box-sizing: border-box; 
+}
+.hero-banner::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); 
+  z-index: 1; 
+}
+.hero-banner-content {
+  position: relative;
+  z-index: 2; 
+}
+
+.card {
+  border: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.card:hover {
+  cursor: pointer;
+  transform: translateY(-10px); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
 .about-left {
   background: url('/assets/images/car-about.webp') no-repeat center center;
   background-size: contain;
@@ -232,7 +276,6 @@ a {
 .recent-card {
   display: flex;
   flex-direction: column;
-  border: 1px solid #ccc;
   border-radius: 5px;
   overflow: hidden;
   height: 100%;
@@ -308,6 +351,19 @@ a {
 .brands .search-form {
   height: 30px;
 }
+
+.form-control, .form-control-textarea {
+  border: 1px solid #ced4da; 
+  transition: border-color 0.3s ease;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.form-control:focus, .form-control-textarea:focus {
+  border-color: #dc3545; 
+  outline: none; 
+}
+
 .form-container {
   position: relative;
   margin: 0 auto;
@@ -342,7 +398,6 @@ button:hover {
 .brand {
   margin: 10px;
   padding: 5px;
-  border: 1px solid #ccc;
   border-radius: 8px;
   width: 120px;
   text-align: center;
@@ -760,9 +815,11 @@ button:hover {
 }
 /*==================== 58. Footer css ======================*/
 .footer-area {
-  background: bl;
+  background: var(--footer-color);
   position: relative;
   z-index: 1;
+  padding: 20px;
+  color: var(--footer-text-color);
 }
 .footer-widget-box {
   margin-bottom: 20px;
