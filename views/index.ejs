@@ -125,9 +125,9 @@
       </div>   
     </div> 
   </section>
-  <section class="brands">
+  <section class="brands" style="padding: 100px 0;">
     <div class="title text-center mt-4 mb-4">
-      <h3>FEATURED COLLECTION</h3>
+      <h5>FEATURED COLLECTION</h5>
       <h1>Discover Top <span>Brands</span></h1>
     </div>
     <div class="brand-list bg-white">
@@ -140,5 +140,34 @@
         </a>
       <%}) %>
     </div>
+  </section>
+  <section class="body-type bg-light" style="padding: 100px 0;">
+    <div class="title text-center">
+      <h5><span><b>CAR CATEGORY</b></span></h5>
+      <h1>Car By Body Types <span>Types</span></h1>
+    </div>
+    <div class="container p-4">
+      <div class="row d-flex justify-content-center">
+        <% datas.bodyType.forEach(bt => { %>
+        <div class="col-11 col-sm-12 col-md-4 col-lg-2 d-flex">
+          <a href="/car-by-body/<%= bt.body %>" class="model-link flex-fill">
+            <div class="recent-card d-flex flex-column">
+              <div class="frame flex-grow-1">
+                <img
+                  src="/assets/<%= bt.image_path %>"
+                  alt="<%= meta_title %>"
+                  onerror="this.onerror=null; this.src='/nomodels.webp';"
+                  class="img-fluid"
+                />
+              </div>
+              <div class="card-content">
+                <h6><%= bt.body %></h6>
+              </div>
+            </div>
+          </a>
+        </div>
+        <% }) %>
+      </div>
+    </div>   
   </section>
 </div>

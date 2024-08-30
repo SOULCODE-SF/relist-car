@@ -8,6 +8,7 @@ const {
   getHomePage,
   getPrivacyPolicy,
   getCarByEngine,
+  getCarByBody,
 } = require('../src/controllers/indexController');
 const {
   addUser,
@@ -31,6 +32,7 @@ router.get('/brands/:brand_id/models', getModelByBrand);
 router.get('/brands/models/:model_id/generations', getGenerationByModel);
 router.get('/generation-list/:id', getGenerationLists);
 router.get('/car-by-engine/:engine', getCarByEngine);
+router.get('/car-by-body/:body', getCarByBody);
 router.get('/specs/:id', getSpec);
 
 router.get('/others', (req, res) => {

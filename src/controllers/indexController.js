@@ -48,11 +48,23 @@ const getHomePage = async (req, res, next) => {
     };
     brands.unshift(allbrand);
 
+    querystr = `SELECT DISTINCT SUBSTRING_INDEX(gi.body_type, ',', 1) AS body, ci.image_path
+                FROM cars c 
+                JOIN general_information gi ON c.gi_id = gi.id 
+                LEFT JOIN (SELECT car_id, MIN(image_path) AS image_path FROM car_images GROUP BY car_id) ci ON c.id = ci.car_id
+                WHERE TRIM(SUBSTRING_INDEX(gi.body_type, ',', 1)) != '' AND TRIM(SUBSTRING_INDEX(gi.body_type, ',', 1)) IS NOT NULL
+                GROUP BY SUBSTRING_INDEX(gi.body_type, ',', 1);
+                `
+
+    const bodyType = await DBquery(querystr);
+
+
     let datas = {
       totalCar,
       totalBrand,
       brands,
       recentCars,
+      bodyType
     };
 
     cache.set(key, datas, 3600);
@@ -307,6 +319,27 @@ const getCarByEngine = async(req, res, next) => {
   }
 }
 
+const getCarByBody = async(req, res, next) => {
+  try {
+    const body = req.params.body
+
+    querystr =`SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
+              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.body_type LIKE ? GROUP BY g.title, gi.body_type;`
+    queryvalue = [`%${body}%`]
+
+    const datas = await DBquery(querystr, queryvalue);
+    
+    return res.render('cars/car_by_body', {
+      datas,
+      title: 'Car by Body',
+      currentPage: 'car_by_body',
+    })
+  } catch (error) {
+    next(error)
+  }
+}
+
+
 const getPrivacyPolicy = async (req, res, next) => {
   try {
     res.render('privacy_policy', {
@@ -326,5 +359,6 @@ module.exports = {
   getGenerationLists,
   getSpec,
   getPrivacyPolicy,
-  getCarByEngine
+  getCarByEngine,
+  getCarByBody
 };
