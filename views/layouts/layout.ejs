@@ -9,12 +9,19 @@
     <link rel="canonical" href="<%= site_url %>">
     <link rel="icon" href="<%= logo %>" type="image/x-icon">
 
+    <link rel="preload" href="/assets/bootstrap/css/bootstrap.min.css" as="style" />
+    <link rel="preload" href="/assets/css/style.css" as="style" />
+    <link rel="preload" href="/assets/css/select2.min.css" as="style" />
+    <link rel="preload" href="/assets/css/animate.min.css" as="style">
+
+    <link rel="preload" href="/assets/bootstrap/js/bootstrap.min.js" as="script">
+    <link rel="preload" href="/assets/js/wow.min.js" as="script" />
+    <link rel="preload" href="/assets/js/script.js" as="script" crossorigin="anonymous" />
+
     <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="/assets/styles.css" />
-    <link href="/assets/select2.min.css" rel="stylesheet" />
-
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
-
+    <link rel="stylesheet" href="/assets/css/style.css" />
+    <link rel="stylesheet" href="/assets/css/select2.min.css" />
+    <link rel="stylesheet" href="/assets/css/animate.min.css">
 </head>
 <body>
     <%- include('../partials/header.ejs') %>
@@ -32,11 +39,12 @@
       <% } %>
       <%- body %>
     </div>
+    <%- include('../partials/footer.ejs') %>
+    
     <script src="/assets/nice-iconly/assets/vendor/jquery/jquery-3.6.1.min.js"></script>
     <script src="/assets/bootstrap/js/bootstrap.bundle.min.js"></script>
-    <script type="module" src="/assets/scripts.js"></script>
-    <script src="/assets/jquery.min.js"></script>
-    <script src="/assets/select2.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow.js/1.1.2/wow.min.js"></script>
+
+    <script src="/assets/js/select2.min.js"></script>
+    <script type="module" src="/assets/js/script.js"></script>
 </body>
 </html>

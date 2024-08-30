@@ -100,6 +100,11 @@
         <h3>NEW ARRIVALS</h3>
         <h1>Let's Check Latest <span>Cars</span></h1>
       </div>
+      <div class="d-flex justify-content-center">
+        <div class="heading-divider">
+          <div class="bar"></div>
+        </div>
+      </div>
 
       <div class="container p-4">
         <div class="row d-flex justify-content-center">
@@ -109,7 +114,7 @@
               <div class="recent-card d-flex flex-column">
                 <div class="frame flex-grow-1">
                   <img
-                    src="/assets/<%= rc.image_path %>"
+                    src="/assets<%= rc.image_path %>"
                     alt="<%= meta_title %>"
                     onerror="this.onerror=null; this.src='/nomodels.webp';"
                     class="img-fluid"
@@ -131,9 +136,10 @@
 
   <section class="brands" style="padding: 100px 0;">
     <div class="title text-center mt-4 mb-4">
-      <h5>FEATURED COLLECTION</h5>
-      <h1>Discover Top <span>Brands</span></h1>
+      <h5>POPULAR BRANDS</h5>
+      <h1>Our Top Quality <span>Brands</span></h1>
     </div>
+
     <div class="brand-list bg-white">
       <% datas.brands.forEach(brand => { %>
         <a href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.id + '/models' %>" class="brand-card wow animate__animated animate__fadeInUp" data-wow-delay=".25s">
@@ -150,6 +156,11 @@
     <div class="title text-center">
       <h5><span><b>CAR CATEGORY</b></span></h5>
       <h1>Car By Body Types <span>Types</span></h1>
+    </div>
+    <div class="d-flex justify-content-center mb-4">
+      <div class="heading-divider">
+        <div class="bar"></div>
+      </div>
     </div>
     <div class="container p-4">
       <div class="row d-flex justify-content-center">

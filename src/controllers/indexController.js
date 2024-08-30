@@ -98,7 +98,7 @@ const getAllBrands = async (req, res, next) => {
 
     cache.set(key, datas, 86000);
 
-    res.render('brands', {
+    res.render('cars/brands', {
       brands: datas,
       title: 'Brands Lists',
       currentPage: 'brands',

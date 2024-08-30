@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decorative Moving Bar</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f2f2f2;
+}
+
+.heading-divider {
+    width: 150px;
+    height: 6px;
+    background-color: red;
+    overflow: hidden;
+    position: relative;
+}
+
+.heading-divider .bar {
+    height: 100%;
+    width: 16%;
+    background-color: white;
+    position: absolute;
+    top: 0;
+    left: 0;
+    animation: moveDecorativeBar 7s ease-in-out infinite;
+}
+
+@keyframes moveDecorativeBar {
+    0% {
+        transform: translateX(0%);
+    }
+    50% {
+        transform: translateX(calc(150px - 20px));
+    }
+    100% {
+        transform: translateX(0%);
+    }
+}
+
+    </style>
+</head>
+<body>
+    <div class="heading-divider">
+        <div class="bar"></div>
+    </div>
+</body>
+</html>
