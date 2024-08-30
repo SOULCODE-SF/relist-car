@@ -86,7 +86,7 @@ const getAllBrands = async (req, res, next) => {
     let searchTerm = req.query.q || '';
 
     if (cachedData) {
-      return res.render('brands', {
+      return res.render('cars/brands', {
         brands: cachedData,
         title: 'Brands Lists',
         currentPage: 'brands',
@@ -116,7 +116,7 @@ const getModelByBrand = async (req, res, next) => {
 
     const datas = await DBquery(query.models.getModelByBrand, [brand_id]);
 
-    res.render('models', {
+    res.render('cars/models', {
       models: datas,
       title: 'Models',
       currentPage: 'models',
@@ -134,7 +134,7 @@ const getGenerationByModel = async (req, res, next) => {
       model_id,
     ]);
 
-    res.render('generations', {
+    res.render('cars/generations', {
       generations: datas,
       title: 'Generations',
       currentPage: 'generations',
@@ -149,7 +149,7 @@ const getGenerationLists = async (req, res, next) => {
     let generation_id = req.params.id;
     const datas = await DBquery(queryStore.generations.list, [generation_id]);
 
-    res.render('generations_list', {
+    res.render('cars/generations_list', {
       datas: datas,
       title: 'List Generation',
       currentPage: 'list-generation',
@@ -289,7 +289,7 @@ const getSpec = async (req, res, next) => {
       images: imagescar,
     };
 
-    res.render('specs', {
+    res.render('cars/specs', {
       data: jsonData,
       title: 'Spec',
       currentPage: 'specs',
@@ -309,7 +309,7 @@ const getCarByEngine = async(req, res, next) => {
 
     const datas = await DBquery(querystr, queryvalue);
     
-    return res.render('car_by_engine', {
+    return res.render('cars/car_by_engine', {
       datas,
       title: 'Car by Engine',
       currentPage: 'car_by_engine',
@@ -344,7 +344,6 @@ const getCarByBody = async(req, res, next) => {
   }
 }
 
-
 const getPrivacyPolicy = async (req, res, next) => {
   try {
     res.render('privacy_policy', {
@@ -356,6 +355,17 @@ const getPrivacyPolicy = async (req, res, next) => {
   }
 };
 
+const getContactUs = async(req, res, next) => {
+  try {
+    res.render('contact_us', {
+      title: 'Contact Us',
+      currentPage: 'contact-us',
+    })
+  } catch (error) {
+    next(error)
+  }
+} 
+
 module.exports = {
   getHomePage,
   getAllBrands,
@@ -365,5 +375,6 @@ module.exports = {
   getSpec,
   getPrivacyPolicy,
   getCarByEngine,
-  getCarByBody
+  getCarByBody,
+  getContactUs
 };

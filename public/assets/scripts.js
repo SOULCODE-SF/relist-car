@@ -2,6 +2,8 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeScrollAnimation();
 });
 
+new WOW().init();
+
 function initializeScrollAnimation() {
   const letterLinks = document.querySelectorAll('.alphabet-list a');
 
@@ -154,7 +156,6 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  // Inisialisasi Select2 dengan placeholder dan konfigurasi
   $('#input-engine').select2({
     placeholder: 'Search for an engine',
     width: '100%',

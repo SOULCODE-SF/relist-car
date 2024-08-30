@@ -9,6 +9,7 @@ const {
   getPrivacyPolicy,
   getCarByEngine,
   getCarByBody,
+  getContactUs,
 } = require('../src/controllers/indexController');
 const {
   addUser,
@@ -57,6 +58,7 @@ router.get('/generations-name/:model_id', getGenerationName);
 router.get('/get-engine', getEngineName);
 
 router.get('/privacy-policy', getPrivacyPolicy);
+router.get('/contact-us', getContactUs)
 
 //api service
 router.use('/api', apiservice);
