@@ -1,9 +1,12 @@
-<div class="car-by-engine">
+<div class="car-by-body">
     <section class="recent-cars bg-light">
+      <div class="title">
+        <h2 class="text-center"><%= data.body %></h2>
+      </div>
       <div class="recent-cars">
         <div class="container p-4">
           <div class="row d-flex justify-content-center">
-            <% datas.forEach(data => { %>
+            <% data.datas.forEach(data => { %>
             <div class="col-11 col-sm-12 col-md-4 col-lg-2 d-flex">
               <a href="/specs/<%= data.id %>" class="model-link flex-fill">
                 <div class="recent-card d-flex flex-column">

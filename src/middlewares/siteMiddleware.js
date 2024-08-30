@@ -31,6 +31,8 @@ async function siteInfoMiddleware(req, res, next) {
     res.locals.site_url = data.site_url;
     res.locals.logo = data.logo
 
+    console.log(data.meta_description)
+
     res.locals.alert = req.session.alert;
     req.session.alert = null;
 

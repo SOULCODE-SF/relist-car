@@ -329,8 +329,13 @@ const getCarByBody = async(req, res, next) => {
 
     const datas = await DBquery(querystr, queryvalue);
     
-    return res.render('cars/car_by_body', {
+    const data = {
       datas,
+      body
+    }
+
+    return res.render('cars/car_by_body', {
+      data,
       title: 'Car by Body',
       currentPage: 'car_by_body',
     })
