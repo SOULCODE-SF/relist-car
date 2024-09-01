@@ -1,55 +1,51 @@
-const pageLink = document.querySelectorAll(".menu-scroll");
+// Smooth Scrolling for menu links
+const pageLink = document.querySelectorAll('.menu-scroll');
 
-      pageLink.forEach((elem) => {
-        elem.addEventListener("click", (e) => {
-          e.preventDefault();
-          document.querySelector(elem.getAttribute("href")).scrollIntoView({
-            behavior: "smooth",
-            offsetTop: 1 - 60,
-          });
-        });
-      });
-
-      // section menu active
-      function onScroll(event) {
-        const sections = document.querySelectorAll(".menu-scroll");
-        const scrollPos =
-          window.pageYOffset ||
-          document.documentElement.scrollTop ||
-          document.body.scrollTop;
-
-        for (let i = 0; i < sections.length; i++) {
-          const currLink = sections[i];
-          const val = currLink.getAttribute("href");
-          const refElement = document.querySelector(val);
-          const scrollTopMinus = scrollPos + 73;
-          if (
-            refElement.offsetTop <= scrollTopMinus &&
-            refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
-          ) {
-            document
-              .querySelector(".menu-scroll")
-              .classList.remove("active");
-            currLink.classList.add("active");
-          } else {
-            currLink.classList.remove("active");
-          }
-        }
-      }
-
-      window.document.addEventListener("scroll", onScroll);
-
-document.addEventListener('DOMContentLoaded', function () {
-  initializeScrollAnimation();
+pageLink.forEach((elem) => {
+  elem.addEventListener('click', (e) => {
+    e.preventDefault();
+    document.querySelector(elem.getAttribute('href')).scrollIntoView({
+      behavior: 'smooth',
+      block: 'start',
+    });
+  });
 });
 
-function initializeScrollAnimation() {
+// Section menu active state
+function onScroll() {
+  const sections = document.querySelectorAll('.menu-scroll');
+  const scrollPos =
+    window.pageYOffset ||
+    document.documentElement.scrollTop ||
+    document.body.scrollTop;
+
+  sections.forEach((currLink) => {
+    const val = currLink.getAttribute('href');
+    const refElement = document.querySelector(val);
+    const scrollTopMinus = scrollPos + 73;
+
+    if (
+      refElement.offsetTop <= scrollTopMinus &&
+      refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
+    ) {
+      document.querySelector('.menu-scroll.active')?.classList.remove('active');
+      currLink.classList.add('active');
+    } else {
+      currLink.classList.remove('active');
+    }
+  });
+}
+
+window.addEventListener('scroll', onScroll);
+
+// Initialize scroll animation for alphabet links
+document.addEventListener('DOMContentLoaded', () => {
   const letterLinks = document.querySelectorAll('.alphabet-list a');
 
   letterLinks.forEach((link) => {
-    link.addEventListener('click', function (event) {
+    link.addEventListener('click', (event) => {
       event.preventDefault();
-      const targetId = this.getAttribute('href').replace('#_', '#'); // Menghapus `_` dari ID target
+      const targetId = link.getAttribute('href').replace('#_', '#'); // Adjust target ID
       const targetElement = document.querySelector(targetId);
 
       if (targetElement) {
@@ -57,35 +53,31 @@ function initializeScrollAnimation() {
       }
     });
   });
-}
+});
 
-$(document).ready(function () {
-  $('#filter-brand').select2({
-    placeholder: 'Search for a brand',
-    minimumInputLength: 1,
-    ajax: {
-      url: '/brands-name',
-      dataType: 'json',
-      delay: 250,
-      processResults: function (data) {
-        return {
+// Initialize Select2 for various dropdowns
+$(document).ready(() => {
+  // Brand filter and form submission
+  $('#filter-brand')
+    .select2({
+      placeholder: 'Search for a brand',
+      minimumInputLength: 1,
+      ajax: {
+        url: '/brands-name',
+        dataType: 'json',
+        delay: 250,
+        processResults: (data) => ({
           results: data.datas.map((item) => ({
             id: item.id,
             text: item.name,
           })),
-        };
+        }),
+        cache: true,
       },
-      cache: true,
-    },
-  });
+    })
+    .on('change', () => $('#carFilterForm').submit());
 
-  // When brand selection changes, submit the form
-  $('#filter-brand').on('change', function () {
-    $('#carFilterForm').submit();
-  });
-});
-
-$(document).ready(function () {
+  // Brand, model, and generation dropdowns
   $('#input-brand').select2({
     width: '100%',
     placeholder: 'Search for a brand',
@@ -94,22 +86,17 @@ $(document).ready(function () {
       url: '/brands-name',
       dataType: 'json',
       delay: 250,
-      processResults: function (data) {
-        return {
-          results: data.datas.map((item) => ({
-            id: item.id,
-            text: item.name,
-          })),
-        };
-      },
+      processResults: (data) => ({
+        results: data.datas.map((item) => ({
+          id: item.id,
+          text: item.name,
+        })),
+      }),
       cache: true,
     },
   });
-  $('#input-model').select2({
-    placeholder: 'Select a model',
-    width: '100%',
-  });
 
+  $('#input-model').select2({ placeholder: 'Select a model', width: '100%' });
   $('#input-generation').select2({
     placeholder: 'Select a generation',
     width: '100%',
@@ -117,65 +104,42 @@ $(document).ready(function () {
 
   $('#input-brand').on('change', function () {
     const selectedBrandId = $(this).val();
-
-    // Clear current options in model dropdown
     $('#input-model').empty().trigger('change.select2');
 
-    // If no brand selected, exit function
-    if (!selectedBrandId) {
-      return;
-    }
+    if (!selectedBrandId) return;
 
-    // AJAX request to fetch models based on selected brand
     $.ajax({
       url: `/models-name/${selectedBrandId}`,
       method: 'GET',
       dataType: 'json',
-      success: function (response) {
+      success: (response) => {
         const models = response.datas;
-
-        // Add new model options to model dropdown
         models.forEach((model) => {
           $('#input-model').append(
             $('<option></option>').attr('value', model.id).text(model.name),
           );
         });
-
-        // Trigger Select2 change after dynamically updating options
         $('#input-model').trigger('change.select2');
-
-        // Automatically trigger the change event on model dropdown
         if (models.length > 0) {
           $('#input-model').val(models[0].id).trigger('change');
         }
       },
-      error: function (error) {
-        console.error('Error fetching models:', error);
-      },
+      error: (error) => console.error('Error fetching models:', error),
     });
   });
 
-  // Event listener for selecting a model
   $('#input-model').on('change', function () {
     const selectedModelId = $(this).val();
-
-    // Clear current options in generation dropdown
     $('#input-generation').empty().trigger('change.select2');
 
-    // If no model selected, exit function
-    if (!selectedModelId) {
-      return;
-    }
+    if (!selectedModelId) return;
 
-    // AJAX request to fetch generations based on selected model
     $.ajax({
       url: `/generations-name/${selectedModelId}`,
       method: 'GET',
       dataType: 'json',
-      success: function (response) {
+      success: (response) => {
         const generations = response.datas;
-
-        // Add new generation options to generation dropdown
         generations.forEach((generation) => {
           $('#input-generation').append(
             $('<option></option>')
@@ -183,18 +147,12 @@ $(document).ready(function () {
               .text(generation.name),
           );
         });
-
-        // Trigger Select2 change after dynamically updating options
         $('#input-generation').trigger('change.select2');
       },
-      error: function (error) {
-        console.error('Error fetching generations:', error);
-      },
+      error: (error) => console.error('Error fetching generations:', error),
     });
   });
-});
 
-$(document).ready(function () {
   $('#input-engine').select2({
     placeholder: 'Search for an engine',
     width: '100%',
@@ -202,26 +160,38 @@ $(document).ready(function () {
       url: '/get-engine',
       dataType: 'json',
       delay: 250,
-      data: function (params) {
-        console.log('params');
-        return {
-          search: params.term,
-        };
-      },
-      processResults: function (data) {
-        return {
-          results: data.datas.map((item) => ({
-            id: item.name,
-            text: item.name,
-          })),
-        };
-      },
+      data: (params) => ({ search: params.term }),
+      processResults: (data) => ({
+        results: data.datas.map((item) => ({
+          id: item.name,
+          text: item.name,
+        })),
+      }),
+      cache: true,
+    },
+  });
+
+  $('#input-country').select2({
+    width: '100%',
+    placeholder: 'Select your country',
+    minimumInputLength: 1,
+    ajax: {
+      url: '/countries',
+      dataType: 'json',
+      delay: 250,
+      processResults: (data) => ({
+        results: data.data.map((item) => ({
+          id: item.code,
+          text: item.name,
+        })),
+      }),
       cache: true,
     },
   });
 });
 
-document.addEventListener('DOMContentLoaded', function() {
+// Counter animation for elements with data-count attribute
+document.addEventListener('DOMContentLoaded', () => {
   function animateCount(element, endValue) {
     const startValue = 0;
     const duration = 2000; // duration in milliseconds
@@ -243,9 +213,8 @@ document.addEventListener('DOMContentLoaded', function() {
     updateCounter();
   }
 
-  document.querySelectorAll('[data-count]').forEach(function(el) {
+  document.querySelectorAll('[data-count]').forEach((el) => {
     const endValue = parseInt(el.getAttribute('data-count'), 10);
     animateCount(el, endValue);
   });
 });
-

@@ -10,6 +10,7 @@ const {
   getCarByEngine,
   getCarByBody,
   getContactUs,
+  getListCountry,
 } = require('../src/controllers/indexController');
 const {
   addUser,
@@ -23,10 +24,12 @@ const {
   getEngineName,
 } = require('../src/controllers/adminController/car/cars');
 
-const apiservice = require("./api")
+const apiservice = require('./api');
 const router = express.Router();
 
 router.get('/', getHomePage);
+
+router.get('/countries', getListCountry);
 
 router.get('/brands', getAllBrands);
 router.get('/brands/:brand_id/models', getModelByBrand);
@@ -42,14 +45,19 @@ router.get('/others', (req, res) => {
 
 router.get('/login', (req, res) => {
   res.render('auth/login', {
-    errorMessage: req.query.errorMessage || '',
     title: 'Login',
     currentPage: 'login',
   });
 });
+router.get('/register', (req, res) => {
+  res.render('auth/register', {
+    title: 'register',
+    currentPage: 'register',
+  });
+});
 router.get('/logout', logoutUser);
 
-router.post('/users/register', addUser);
+router.post('/auth/register', addUser);
 router.post('/login', loginUser);
 
 router.get('/brands-name', getBrandsName);
@@ -58,7 +66,7 @@ router.get('/generations-name/:model_id', getGenerationName);
 router.get('/get-engine', getEngineName);
 
 router.get('/privacy-policy', getPrivacyPolicy);
-router.get('/contact-us', getContactUs)
+router.get('/contact-us', getContactUs);
 
 //api service
 router.use('/api', apiservice);

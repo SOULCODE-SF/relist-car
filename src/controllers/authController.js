@@ -5,64 +5,82 @@ const {
   getConnection,
   rollbackTransaction,
   commitTransaction,
+  releaseConnection,
 } = require('../utils/database');
 
 exports.addUser = async (req, res, next) => {
   let connection;
   try {
-    const { username, email, password, role, rePassword, name, location } =
-      req.body;
+    const {
+      username,
+      email,
+      password,
+      role = 'user',
+      rePassword,
+      name,
+      country,
+    } = req.body;
+
+    console.log(req.body);
 
     connection = await getConnection();
     await connection.beginTransaction();
 
-    // Check if username exists
     const usernameExist = await DBquery(queryStore.users.cekUsername, [
       username,
     ]);
+
+    let hasAlert = false;
+
     if (usernameExist.length > 0) {
-      await rollbackTransaction(connection);
-      return res.status(400).json({
+      req.session.alert = {
+        type: 'alert-danger',
         message: 'Username Already Exists',
-      });
+      };
+      hasAlert = true;
     }
 
-    // Check if email exists
-    const emailExist = await db.DBquery(queryStore.users.cekEmail, [email]);
+    const emailExist = await DBquery(queryStore.users.cekEmail, [email]);
+
     if (emailExist.length > 0) {
-      await rollbackTransaction(connection);
-      return res.status(400).json({
+      req.session.alert = {
+        type: 'alert-danger',
         message: 'Email Already Exists',
-      });
+      };
+      hasAlert = true;
     }
 
-    // Check if passwords match
     if (password !== rePassword) {
-      await rollbackTransaction(connection);
-      return res.status(400).json({
-        message: 'Passwords do not match',
-      });
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Password do not match',
+      };
+      hasAlert = true;
     }
 
-    // Hash password
+    if (hasAlert) {
+      return res.redirect('/register');
+    }
+
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Add user to the database
     await DBquery(queryStore.users.addUser, [
       username,
       email,
       hashedPassword,
       role,
       name,
-      location,
+      country,
     ]);
 
     await commitTransaction(connection);
 
-    return res.status(201).json({
-      message: 'User created successfully',
-      data: req.body,
-    });
+    req.session.alert = {
+      type: 'alert-success',
+      message: 'Register Success',
+    };
+
+    return res.redirect('/login');
   } catch (error) {
     if (connection) {
       await rollbackTransaction(connection);
@@ -94,7 +112,7 @@ exports.loginUser = async (req, res, next) => {
 
     const passwordMatch = await bcrypt.compare(password, user[0].password);
 
-    console.log('password match', passwordMatch)
+    console.log('password match', passwordMatch);
 
     if (passwordMatch) {
       req.session.userId = user[0].id;

@@ -1,4 +1,5 @@
 const queryStore = require('../store/query');
+const axios = require('axios');
 const query = require('../store/query');
 const nodecache = require('node-cache');
 const { DBquery } = require('../utils/database');
@@ -54,17 +55,16 @@ const getHomePage = async (req, res, next) => {
                 LEFT JOIN (SELECT car_id, MIN(image_path) AS image_path FROM car_images GROUP BY car_id) ci ON c.id = ci.car_id
                 WHERE TRIM(SUBSTRING_INDEX(gi.body_type, ',', 1)) != '' AND TRIM(SUBSTRING_INDEX(gi.body_type, ',', 1)) IS NOT NULL
                 GROUP BY SUBSTRING_INDEX(gi.body_type, ',', 1);
-                `
+                `;
 
     const bodyType = await DBquery(querystr);
-
 
     let datas = {
       totalCar,
       totalBrand,
       brands,
       recentCars,
-      bodyType
+      bodyType,
     };
 
     cache.set(key, datas, 3600);
@@ -105,7 +105,7 @@ const getAllBrands = async (req, res, next) => {
       searchTerm: searchTerm,
     });
   } catch (error) {
-    next(error)
+    next(error);
   }
 };
 
@@ -148,6 +148,8 @@ const getGenerationLists = async (req, res, next) => {
   try {
     let generation_id = req.params.id;
     const datas = await DBquery(queryStore.generations.list, [generation_id]);
+
+    console.log(datas);
 
     res.render('cars/generations_list', {
       datas: datas,
@@ -299,50 +301,50 @@ const getSpec = async (req, res, next) => {
   }
 };
 
-const getCarByEngine = async(req, res, next) => {
+const getCarByEngine = async (req, res, next) => {
   try {
-    const engine = req.params.engine
+    const engine = req.params.engine;
 
-    querystr =`SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
-              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.engine = ? GROUP BY g.title, gi.body_type;`
-    queryvalue = [engine]
+    querystr = `SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
+              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.engine = ? GROUP BY g.title, gi.body_type;`;
+    queryvalue = [engine];
 
     const datas = await DBquery(querystr, queryvalue);
-    
+
     return res.render('cars/car_by_engine', {
       datas,
       title: 'Car by Engine',
       currentPage: 'car_by_engine',
-    })
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
-const getCarByBody = async(req, res, next) => {
+const getCarByBody = async (req, res, next) => {
   try {
-    const body = req.params.body
+    const body = req.params.body;
 
-    querystr =`SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
-              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.body_type LIKE ? GROUP BY g.title, gi.body_type;`
-    queryvalue = [`%${body}%`]
+    querystr = `SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
+              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.body_type LIKE ? GROUP BY g.title, gi.body_type;`;
+    queryvalue = [`%${body}%`];
 
     const datas = await DBquery(querystr, queryvalue);
-    
+
     const data = {
       datas,
-      body
-    }
+      body,
+    };
 
     return res.render('cars/car_by_body', {
       data,
       title: 'Car by Body',
       currentPage: 'car_by_body',
-    })
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 const getPrivacyPolicy = async (req, res, next) => {
   try {
@@ -355,16 +357,40 @@ const getPrivacyPolicy = async (req, res, next) => {
   }
 };
 
-const getContactUs = async(req, res, next) => {
+const getContactUs = async (req, res, next) => {
   try {
     res.render('contact_us', {
       title: 'Contact Us',
       currentPage: 'contact-us',
-    })
+    });
   } catch (error) {
-    next(error)
+    next(error);
   }
-} 
+};
+
+const getListCountry = async (req, res, next) => {
+  try {
+    const name = req.query.q || '';
+
+    const response = await axios.get('https://api.first.org/data/v1/countries');
+    let countryData = response.data.data;
+    const countries = Object.keys(countryData).map((key) => ({
+      code: countryData[key].country,
+      name: countryData[key].country,
+    }));
+
+    if (name) {
+      const filteredCountries = countries.filter((country) =>
+        country.name.toLowerCase().includes(name.toLowerCase()),
+      );
+      res.json({ data: filteredCountries });
+    } else {
+      res.json({ data: countries });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
 
 module.exports = {
   getHomePage,
@@ -376,5 +402,6 @@ module.exports = {
   getPrivacyPolicy,
   getCarByEngine,
   getCarByBody,
-  getContactUs
+  getContactUs,
+  getListCountry,
 };
