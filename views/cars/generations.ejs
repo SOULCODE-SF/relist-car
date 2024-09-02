@@ -23,27 +23,33 @@
 <div class="container p-4">
   <div class="row d-flex justify-content-center">
     <% generations.forEach(generation => { %>
-    <div class="col-8 col-sm-6 col-md-4 col-lg-3">
+    <div class="col-8 col-sm-6 col-md-4 col-lg-3 mt-4">
       <a href="/generation-list/<%= generation.id %>" class="standar-link">
-        <div class="generation-card">
+        <div class="car-card">
           <div class="frame">
-            <img src="/assets/<%= generation.image_path %>" alt="<%= meta_title %>" />
+            <img
+              src="/assets/<%= generation.image_path %>"
+              alt="<%= meta_title %>"
+            />
           </div>
           <h6><%= generation.title %></h6>
           <div class="row">
             <div class="col">
-              <p class="card-text mb-2"><%= generation.start_production %> - <%= generation.end_production %> <%= generation.body_type %></p>
-              <p class="card-text text-start mb-2"><strong>Power:</strong> <%= generation.power %></p>
-              <p class="card-text text-start mb-0"><strong>Dimension:</strong> <%= generation.dimension %> mm</p>
+              <p class="card-text mb-2">
+                <%= generation.start_production %> - <%=
+                generation.end_production %> <%= generation.body_type %>
+              </p>
+              <p class="card-text text-start mb-2">
+                <strong>Power:</strong> <%= generation.power %>
+              </p>
+              <p class="card-text text-start mb-0">
+                <strong>Dimension:</strong> <%= generation.dimension %> mm
+              </p>
             </div>
           </div>
-          
-          
         </div>
       </a>
     </div>
     <% }) %>
   </div>
 </div>
-
-

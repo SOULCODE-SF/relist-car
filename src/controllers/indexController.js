@@ -3,6 +3,7 @@ const axios = require('axios');
 const query = require('../store/query');
 const nodecache = require('node-cache');
 const { DBquery } = require('../utils/database');
+const { revertParam } = require('../utils/carHelpers');
 
 const cache = new nodecache();
 
@@ -133,10 +134,12 @@ const getModelByBrand = async (req, res, next) => {
 
 const getGenerationByModel = async (req, res, next) => {
   try {
-    let model_id = req.params.model_id;
+    let model_name = req.params.model_name;
+
+    model_name = revertParam(model_name);
 
     const datas = await DBquery(query.generations.getGenerationByModelQuery, [
-      model_id,
+      model_name,
     ]);
 
     res.render('cars/generations', {

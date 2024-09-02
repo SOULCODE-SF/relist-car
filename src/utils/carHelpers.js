@@ -40,9 +40,16 @@ function formateEngine(input) {
   return formatted;
 }
 
+function revertParam(input) {
+  let reverted = input.replace(/-/g, ' ');
+
+  return reverted;
+}
+
 module.exports = {
   getBrandNameById,
   getModelNameById,
   getGenerationNameById,
   formateEngine,
+  revertParam,
 };

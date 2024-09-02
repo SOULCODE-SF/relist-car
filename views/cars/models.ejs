@@ -25,10 +25,16 @@
   <div class="row d-flex justify-content-center">
     <% models.forEach(model => { %>
     <div class="col-12 col-sm-4 col-md-4 col-lg-2 mt-4">
-      <a href="/brands/models/<%= model.id %>/generations" class="model-link">
-        <div class="model-card">
+      <a
+        href="/brands/<%= model.brand_param %>/<%= model.param %>"
+        class="model-link"
+      >
+        <div class="model-card mt-2">
           <div class="frame">
-            <img src="/assets/<%= model.image_path %>" alt="<%= meta_title %>" />
+            <img
+              src="/assets/<%= model.image_path %>"
+              alt="<%= meta_title %>"
+            />
           </div>
           <h6><%= model.name %></h6>
         </div>
