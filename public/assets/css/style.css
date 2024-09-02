@@ -308,29 +308,6 @@ a {
 .recent-cars .title span {
   color: var(--primary-color);
 }
-.car-card {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  border-radius: 5px;
-  overflow: hidden;
-  height: 100%;
-}
-.frame {
-  flex-grow: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-.car-card .card-content {
-  height: 50%;
-  padding: 10px;
-  text-align: center;
-}
-
-.car-card p {
-  font-size: 14px !important;
-}
 
 .container.genlist .card {
   transition: color 0.3s, border 0.3s;
@@ -603,6 +580,9 @@ button:hover {
 .generation-card:hover .frame img {
   transform: scale(1.1);
 }
+
+
+
 .car-card {
   background-color: #fff;
   padding: 10px;
@@ -616,17 +596,13 @@ button:hover {
   text-align: center;
   animation: fadeInUp 1s ease-out;
 }
-.car-card p {
-  font-size: 10px;
-  margin: 2px 0;
-}
-.car-card h6 {
-  font-size: 12px;
-  margin: 4px 0;
-}
 .car-card:hover {
   cursor: pointer;
-  color: var(--primary-color);
+  color: var(--primary-color) !important;
+  transform: scale(1.05);
+}
+.car-card p {
+  font-size: 14px !important;
 }
 .car-card .frame {
   width: 100%;
