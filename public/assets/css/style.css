@@ -328,6 +328,10 @@ a {
   text-align: center;
 }
 
+.car-card p {
+  font-size: 14px !important;
+}
+
 .container.genlist .card {
   transition: color 0.3s, border 0.3s;
 }
@@ -409,6 +413,7 @@ button:hover {
   background-color: black;
 }
 .brand-card {
+  min-width: 100px;
   margin: 10px;
   padding: 5px;
   border-radius: 8px;

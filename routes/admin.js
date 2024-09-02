@@ -27,12 +27,10 @@ const {
 const {
   getDashboardPage,
 } = require('../src/controllers/adminController/dashboard');
-const { isAuthenticated, isAdmin } = require('./middlewares/authMiddleware');
 const {
   getSettingPage,
   updateSetting,
 } = require('../src/controllers/adminController/setting');
-const { getAllBrands } = require('../src/controllers/indexController');
 const {
   getAllListBrands,
   getAddBrands,

@@ -63,8 +63,6 @@ const getHomePage = async (req, res, next) => {
 
     const bodyType = await DBquery(querystr);
 
-    console.log(bodyType);
-
     let datas = {
       totalCar,
       totalBrand,
