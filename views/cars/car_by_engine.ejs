@@ -1,32 +1,32 @@
 <div class="car-by-engine">
-    <section class="recent-cars bg-light">
-      <div class="recent-cars">
-        <div class="container p-4">
-          <div class="row d-flex justify-content-center">
-            <% datas.forEach(data => { %>
-            <div class="col-12 col-lg-3 d-flex mt-4">
-              <a href="/specs/<%= data.id %>" class="model-link flex-fill">
-                <div class="car-card d-flex flex-column">
-                  <div class="frame flex-grow-1">
-                    <img
-                      src="/assets/<%= data.image %>"
-                      alt="<%= meta_title %>"
-                      onerror="this.onerror=null; this.src='/nomodels.webp';"
-                      class="img-fluid"
-                    />
-                  </div>
-                  <div class="card-content">
-                    <p><%= data.title %></p>
-                    <p><%= data.engine %></p>
-                    <h6><%= data.body_type %></h6>
-                  </div>
-                </div>
-              </a>
+  <section class="bg-light p-4">
+    <div class="title">
+      <h2 class="text-center"><%= datas[0].engine %></h2>
+    </div>
+    <div class="container p-4">
+      <div class="row d-flex justify-content-center">
+        <% datas.forEach(data => { %>
+        <div class="col-12 col-lg-3 d-flex mt-4">
+          <a href="/specs/<%= data.id %>" class="model-link flex-fill">
+            <div class="car-card d-flex flex-column">
+              <div class="frame flex-grow-1">
+                <img
+                  src="/assets/<%= data.image %>"
+                  alt="<%= meta_title %>"
+                  onerror="this.onerror=null; this.src='/nomodels.webp';"
+                  class="img-fluid"
+                />
+              </div>
+              <div class="card-content">
+                <p><%= data.title %></p>
+                <p><%= data.engine %></p>
+                <h6><%= data.body_type %></h6>
+              </div>
             </div>
-            <% }) %>
-          </div>
-        </div>   
-      </div> 
-    </section>
-  </div>
-  
+          </a>
+        </div>
+        <% }) %>
+      </div>
+    </div>
+  </section>
+</div>

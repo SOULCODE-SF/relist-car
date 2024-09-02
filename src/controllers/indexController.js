@@ -38,7 +38,7 @@ const getHomePage = async (req, res, next) => {
 
     const recentCars = await DBquery(query.home.recentCars, [12]);
 
-    querystr = 'SELECT * FROM brands WHERE is_featured = 1 LIMIT 29';
+    querystr = 'SELECT * FROM brands WHERE is_featured = 1 LIMIT 39';
     const brands = await DBquery(querystr);
 
     const allbrand = {
@@ -49,7 +49,10 @@ const getHomePage = async (req, res, next) => {
     };
     brands.unshift(allbrand);
 
-    querystr = `SELECT DISTINCT SUBSTRING_INDEX(gi.body_type, ',', 1) AS body, ci.image_path
+    querystr = `SELECT DISTINCT 
+                SUBSTRING_INDEX(gi.body_type, ',', 1) AS body,
+                LOWER(REPLACE(TRIM(SUBSTRING_INDEX(gi.body_type, ',', 1)), ' ', '-')) AS param,
+                ci.image_path
                 FROM cars c 
                 JOIN general_information gi ON c.gi_id = gi.id 
                 LEFT JOIN (SELECT car_id, MIN(image_path) AS image_path FROM car_images GROUP BY car_id) ci ON c.id = ci.car_id
@@ -58,6 +61,8 @@ const getHomePage = async (req, res, next) => {
                 `;
 
     const bodyType = await DBquery(querystr);
+
+    console.log(bodyType);
 
     let datas = {
       totalCar,
@@ -112,9 +117,9 @@ const getAllBrands = async (req, res, next) => {
 //models
 const getModelByBrand = async (req, res, next) => {
   try {
-    let brand_id = req.params.brand_id;
+    let brand_name = req.params.brand_name;
 
-    const datas = await DBquery(query.models.getModelByBrand, [brand_id]);
+    const datas = await DBquery(query.models.getModelByBrand, [brand_name]);
 
     res.render('cars/models', {
       models: datas,
@@ -170,7 +175,7 @@ const getSpec = async (req, res, next) => {
     const data = datas[0][0];
     const imagescar = await DBquery(
       'SELECT image_path FROM car_images WHERE car_id = ?',
-      [data.car_id],
+      [data.car_id]
     );
     let haveElectricMotor = false;
     if (data.electric_motor_1_power != '') {
@@ -303,7 +308,7 @@ const getSpec = async (req, res, next) => {
 
 const getCarByEngine = async (req, res, next) => {
   try {
-    const engine = req.params.engine;
+    let engine = req.params.engine;
 
     querystr = `SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
               FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.engine = ? GROUP BY g.title, gi.body_type;`;
@@ -321,19 +326,28 @@ const getCarByEngine = async (req, res, next) => {
   }
 };
 
+function formatParam(text) {
+  let result = text.replace(/-/g, ' ');
+  result = result.replace(/\b\w/g, (char) => char.toUpperCase());
+
+  return result;
+}
+
 const getCarByBody = async (req, res, next) => {
   try {
     const body = req.params.body;
 
+    const param = formatParam(body);
+
     querystr = `SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
-              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.body_type LIKE ? GROUP BY g.title, gi.body_type;`;
-    queryvalue = [`%${body}%`];
+              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE (gi.body_type LIKE ? OR gi.body_type LIKE ?) GROUP BY g.title, gi.body_type;`;
+    queryvalue = [`%${param}%`, `%${body}%`];
 
     const datas = await DBquery(querystr, queryvalue);
 
     const data = {
       datas,
-      body,
+      body: param,
     };
 
     return res.render('cars/car_by_body', {
@@ -381,7 +395,7 @@ const getListCountry = async (req, res, next) => {
 
     if (name) {
       const filteredCountries = countries.filter((country) =>
-        country.name.toLowerCase().includes(name.toLowerCase()),
+        country.name.toLowerCase().includes(name.toLowerCase())
       );
       res.json({ data: filteredCountries });
     } else {

@@ -4,10 +4,10 @@ let queryStore = {
   },
   brands: {
     getAllBrands:
-      'SELECT b.id, b.name, b.image_path  FROM brands b WHERE b.name LIKE ?',
+      'SELECT b.id, b.name, LOWER(b.name) AS param, b.image_path  FROM brands b WHERE b.name LIKE ?',
   },
   models: {
-    getModelByBrand: `SELECT m.id, m.name , m.image_path, b.name as brand_name  FROM models m JOIN brands b on b.id = m.brand_id WHERE brand_id = ?`,
+    getModelByBrand: `SELECT m.id, m.name , m.image_path, b.name as brand_name  FROM models m JOIN brands b on b.id = m.brand_id WHERE brand_id = (SELECT id FROM brands WHERE name = ? LIMIT 1);`,
   },
   generations: {
     getGenerationByModelQuery: `SELECT g.id, g.title, g.image_path, SUBSTRING(MAX(gi.start_production), LOCATE(',', MAX(gi.start_production)) + 1, 5) as start_production, SUBSTRING(MAX(gi.end_production), LOCATE(',', MAX(gi.end_production)) + 1, 5) as end_production, MAX(gi.body_type) as body_type , MAX(gi.engine) as engine, MAX(CONCAT_WS(' x ', d.length, d.width, d.height)) AS dimension, MAX(es.power) as power, b.name as brand_name, m.name as model_name, b.id as brand_id FROM generations g LEFT JOIN generation_links_2 gl on g.id = gl.generation_id LEFT JOIN general_information gi on gl.id = gi.generation_link_id LEFT JOIN dimensions d on d.generation_link_id = gl.id LEFT JOIN engine_specs es on es.generation_link_id = gl.id JOIN models m on g.model_id = m.id JOIN brands b on b.id = m.brand_id WHERE m.id = ? GROUP BY g.id;`,

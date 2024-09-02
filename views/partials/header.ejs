@@ -40,20 +40,6 @@
               >Cars</a
             >
           </li>
-          <li class="nav-item">
-            <a
-              class="nav-link <%= currentPage === 'privacy-policy' ? 'active' : '' %>"
-              href="/privacy-policy"
-              >Privacy Policy</a
-            >
-          </li>
-          <li class="nav-item">
-            <a
-              class="nav-link <%= currentPage === 'contact-us' ? 'active' : '' %>"
-              href="/contact-us"
-              >Contact Us</a
-            >
-          </li>
           <% if(!session.username) {%>
           <li class="nav-item">
             <a

@@ -30,8 +30,19 @@ const getGenerationNameById = async (id) => {
   return data[0].title;
 };
 
+function formateEngine(input) {
+  let formatted = input.replace(/[\(\)]/g, '');
+
+  formatted = formatted.replace(/%20/g, '-');
+
+  formatted = formatted.toLowerCase();
+
+  return formatted;
+}
+
 module.exports = {
   getBrandNameById,
   getModelNameById,
   getGenerationNameById,
+  formateEngine,
 };

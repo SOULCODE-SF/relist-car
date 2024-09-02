@@ -337,6 +337,10 @@ a {
   height: 30px;
 }
 
+.brand-list .col-lg-2 {
+  width: 12.5%;
+}
+
 .form-control, .form-control-textarea {
   border: 1px solid #ced4da; 
   transition: border-color 0.3s ease;
@@ -1002,7 +1006,6 @@ button:hover {
  }
 }
 @media (max-width: 768px) {
- /* Gunakan max-width untuk mobile */
   .header {
       flex-direction: column;
  }
@@ -1012,18 +1015,15 @@ button:hover {
  }
   .nav-links {
       display: none;
-     /* Sembunyikan link navigasi pada awalnya */
       flex-direction: column;
       gap: 10px;
       width: 100%;
  }
   .nav-links.show {
       display: flex;
-     /* Tampilkan link navigasi saat tombol menu diklik */
  }
   .menu-icon {
       display: block;
-     /* Tampilkan ikon menu (hamburger icon) */
  }
   .bar {
       transition: transform 0.3s, opacity 0.3s;
@@ -1104,4 +1104,7 @@ button:hover {
   .banner-item .text-white {
       font-size: 12px;
  }
+ .brand-list .col-lg-2 {
+  width: 50%;
+}
 }

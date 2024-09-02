@@ -32,7 +32,7 @@ router.get('/', getHomePage);
 router.get('/countries', getListCountry);
 
 router.get('/brands', getAllBrands);
-router.get('/brands/:brand_id/models', getModelByBrand);
+router.get('/brands/:brand_name', getModelByBrand);
 router.get('/brands/models/:model_id/generations', getGenerationByModel);
 router.get('/generation-list/:id', getGenerationLists);
 router.get('/car-by-engine/:engine', getCarByEngine);
