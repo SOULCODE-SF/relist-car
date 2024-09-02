@@ -11,6 +11,8 @@ const {
   getCarByBody,
   getContactUs,
   getListCountry,
+  getAboutUs,
+  getLearnMore,
 } = require('../src/controllers/indexController');
 const {
   addUser,
@@ -34,7 +36,10 @@ router.get('/countries', getListCountry);
 router.get('/brands', getAllBrands);
 router.get('/brands/:brand_name', getModelByBrand);
 router.get('/brands/:brand_name/:model_name', getGenerationByModel);
-router.get('/generation-list/:id', getGenerationLists);
+router.get(
+  '/brands/:brand_name/:model_name/:generation_name',
+  getGenerationLists
+);
 router.get('/car-by-engine/:engine', getCarByEngine);
 router.get('/car-by-body/:body', getCarByBody);
 router.get('/specs/:id', getSpec);
@@ -67,6 +72,8 @@ router.get('/get-engine', getEngineName);
 
 router.get('/privacy-policy', getPrivacyPolicy);
 router.get('/contact-us', getContactUs);
+router.get('/about-us', getAboutUs);
+router.get('/learn-more', getLearnMore);
 
 //api service
 router.use('/api', apiservice);

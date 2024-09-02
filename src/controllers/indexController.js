@@ -154,10 +154,11 @@ const getGenerationByModel = async (req, res, next) => {
 
 const getGenerationLists = async (req, res, next) => {
   try {
-    let generation_id = req.params.id;
-    const datas = await DBquery(queryStore.generations.list, [generation_id]);
+    let generation_name = req.params.generation_name;
 
-    console.log(datas);
+    generation_name = revertParam(generation_name);
+
+    const datas = await DBquery(queryStore.generations.list, [generation_name]);
 
     res.render('cars/generations_list', {
       datas: datas,
@@ -385,6 +386,28 @@ const getContactUs = async (req, res, next) => {
   }
 };
 
+const getAboutUs = async (req, res, next) => {
+  try {
+    res.render('about_us', {
+      title: 'About Us',
+      currentPage: 'about-us',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getLearnMore = async (req, res, next) => {
+  try {
+    res.render('learn_more', {
+      title: 'Learn More',
+      currentPage: 'learn-more',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const getListCountry = async (req, res, next) => {
   try {
     const name = req.query.q || '';
@@ -420,5 +443,7 @@ module.exports = {
   getCarByEngine,
   getCarByBody,
   getContactUs,
+  getAboutUs,
+  getLearnMore,
   getListCountry,
 };

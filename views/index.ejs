@@ -1,13 +1,19 @@
 <div class="home">
   <section class="container text-center p-5 mb-5">
-    <span class="text-danger fw-semibold text-uppercase">WELCOME TO <%= site_name %></span>
+    <span class="text-danger fw-semibold text-uppercase"
+      >WELCOME TO <%= site_name %></span
+    >
     <h1 class="fw-bold mt-3">Best Way to Find Your Dream Car</h1>
-    <p style="max-width: 600px; margin: 20px auto; font-size: 20px;" class="text-secondary">
-      There are many variations of passages orem psum available but the majority have suffered alteration in some form by injected humour.
+    <p
+      style="max-width: 600px; margin: 20px auto; font-size: 20px"
+      class="text-secondary"
+    >
+      There are many variations of passages orem psum available but the majority
+      have suffered alteration in some form by injected humour.
     </p>
-    <div class="flex-lg-wrap" style="gap: 10px;">
-      <a class="theme-btn w-auto" href="/">About More</a>
-      <a class="btn-white w-auto" href="/">Learn More</a>
+    <div class="flex-lg-wrap" style="gap: 10px">
+      <a class="theme-btn w-auto" href="/about-us">About More</a>
+      <a class="btn-white w-auto" href="/learn-more">Learn More</a>
     </div>
   </section>
 
@@ -19,19 +25,41 @@
           <div class="row">
             <div class="col-12 col-lg-5">
               <label for="input-brand" class="form-label">Brand</label>
-              <select id="input-brand" name="brand_id" class="form-select" aria-label="Brand"></select>
+              <select
+                id="input-brand"
+                name="brand_id"
+                class="form-select"
+                aria-label="Brand"
+              ></select>
             </div>
             <div class="col-12 col-lg-5">
               <label for="input-model" class="form-label">Model</label>
-              <select id="input-model" name="model_id" class="form-select" aria-label="Model"></select>
+              <select
+                id="input-model"
+                name="model_id"
+                class="form-select"
+                aria-label="Model"
+              ></select>
             </div>
             <div class="col-12 col-lg-5">
-              <label for="input-generation" class="form-label">Generation</label>
-              <select id="input-generation" name="generation_id" class="form-select" aria-label="Generation"></select>
+              <label for="input-generation" class="form-label"
+                >Generation</label
+              >
+              <select
+                id="input-generation"
+                name="generation_id"
+                class="form-select"
+                aria-label="Generation"
+              ></select>
             </div>
             <div class="col-12 col-lg-5">
               <label for="input-engine" class="form-label">Engine</label>
-              <select id="input-engine" name="engine" class="form-select" aria-label="Engine"></select>
+              <select
+                id="input-engine"
+                name="engine"
+                class="form-select"
+                aria-label="Engine"
+              ></select>
             </div>
           </div>
         </div>
@@ -43,25 +71,69 @@
       </div>
     </form>
 
-    <div class="about-us" style="padding: 150px 0;">
-      <div class="container" style="max-width: 90%;">
+    <div class="about-us" style="padding: 150px 0">
+      <div class="container" style="max-width: 90%">
         <div class="row">
           <div class="col about-left d-none d-md-block">
-            <div class="bg-dark" style="position: absolute; width: 200px; height: 80px; top: 0; left: 0; border-radius: 10px; padding: 8px; display: flex; align-items: center; gap: 5px;">
-              <div style="width: 70px; height: 100%; background-color: red; border-radius: 8px; display: flex; justify-content: center; align-items: center; padding: 8px;">
-                <img src="/assets/images/car-icon.webp" alt="<%= meta_title %>" style="width: 100%;">
+            <div
+              class="bg-dark"
+              style="
+                position: absolute;
+                width: 200px;
+                height: 80px;
+                top: 0;
+                left: 0;
+                border-radius: 10px;
+                padding: 8px;
+                display: flex;
+                align-items: center;
+                gap: 5px;
+              "
+            >
+              <div
+                style="
+                  width: 70px;
+                  height: 100%;
+                  background-color: red;
+                  border-radius: 8px;
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  padding: 8px;
+                "
+              >
+                <img
+                  src="/assets/images/car-icon.webp"
+                  alt="<%= meta_title %>"
+                  style="width: 100%"
+                />
               </div>
-              <p class="text-white" style="font-weight: 700;">Real-time specs new arrivals</p>
+              <p class="text-white" style="font-weight: 700">
+                Real-time specs new arrivals
+              </p>
             </div>
           </div>
           <div class="col about-right">
             <div class="d-flex align-items-center">
-              <img src="/assets/images/car-96.webp" alt="<%= meta_title %>" style="width: 20px;">
+              <img
+                src="/assets/images/car-96.webp"
+                alt="<%= meta_title %>"
+                style="width: 20px"
+              />
               <div class="ms-2 text-red"><b>ABOUT US</b></div>
             </div>
-            <h1 class="mt-2" style="font-weight: 700;">World Largest <span class="text-red">Car Specifications</span> Marketplace.</h1>
-            <p class="mt-4 mb-4">Your one-stop destination for the most comprehensive car specifications. Explore detailed information on a wide range of vehicles and find the perfect car for your needs.</p>
-            <a href="#discover-more" class="theme-btn">Discover More <b><span class="arrow">&rarr;</span></b></a>
+            <h1 class="mt-2" style="font-weight: 700">
+              World Largest
+              <span class="text-red">Car Specifications</span> Marketplace.
+            </h1>
+            <p class="mt-4 mb-4">
+              Your one-stop destination for the most comprehensive car
+              specifications. Explore detailed information on a wide range of
+              vehicles and find the perfect car for your needs.
+            </p>
+            <a href="/about-us" class="theme-btn"
+              >Discover More <b><span class="arrow">&rarr;</span></b></a
+            >
           </div>
         </div>
       </div>
@@ -71,68 +143,84 @@
       <div class="row p-4">
         <div class="col banner-item">
           <div class="icon-round">
-            <img src="/assets/images/car-icon.webp" alt="<%= meta_title %>" >
+            <img src="/assets/images/car-icon.webp" alt="<%= meta_title %>" />
           </div>
-          <h5 class="text-white text-center mt-2" style="font-weight: 600;">Global Car</h5>
+          <h5 class="text-white text-center mt-2" style="font-weight: 600">
+            Global Car
+          </h5>
           <h3 class="text-white text-center">Specifications</h3>
         </div>
         <div class="col banner-item">
           <div class="icon-round">
-            <img src="/assets/images/gear.webp" alt="<%= meta_title %>">
+            <img src="/assets/images/gear.webp" alt="<%= meta_title %>" />
           </div>
-          <h5 class="text-white text-center mt-2" style="font-weight: 600;" data-count="<%= datas.totalBrand %>" id="brandCount">0</h5>
+          <h5
+            class="text-white text-center mt-2"
+            style="font-weight: 600"
+            data-count="<%= datas.totalBrand %>"
+            id="brandCount"
+          >
+            0
+          </h5>
           <h3 class="text-white text-center">Brands</h3>
         </div>
         <div class="col banner-item">
           <div class="icon-round">
-            <img src="/assets/images/car-icon.webp" alt="<%= meta_title %>">
+            <img src="/assets/images/car-icon.webp" alt="<%= meta_title %>" />
           </div>
-          <h5 class="text-white text-center mt-2" style="font-weight: 600;" data-count="<%= datas.totalCar %>" id="carCount">0</h5>
+          <h5
+            class="text-white text-center mt-2"
+            style="font-weight: 600"
+            data-count="<%= datas.totalCar %>"
+            id="carCount"
+          >
+            0
+          </h5>
           <h3 class="text-white text-center">Cars</h3>
         </div>
       </div>
     </div>
   </section>
 
-  <section class="recent-cars bg-light">
-      <div class="title">
-        <h3>NEW ARRIVALS</h3>
-        <h1>Let's Check Latest <span>Cars</span></h1>
+  <section class="recent-cars bg-light" style="padding: 100px 0">
+    <div class="title">
+      <h3>NEW ARRIVALS</h3>
+      <h1>Let's Check Latest <span>Cars</span></h1>
+    </div>
+    <div class="d-flex justify-content-center">
+      <div class="heading-divider">
+        <div class="bar"></div>
       </div>
-      <div class="d-flex justify-content-center">
-        <div class="heading-divider">
-          <div class="bar"></div>
-        </div>
-      </div>
+    </div>
 
-      <div class="container">
-        <div class="row d-flex justify-content-center w-full">
-          <% datas.recentCars.forEach(rc => { %>
-          <div class="col-12 col-lg-3 d-flex mt-4">
-            <a href="/specs/<%= rc.id %>" class="model-link flex-fill">
-              <div class="car-card d-flex flex-column">
-                <div class="frame flex-grow-1">
-                  <img
-                    src="/assets<%= rc.image_path %>"
-                    alt="<%= meta_title %>"
-                    onerror="this.onerror=null; this.src='/nomodels.webp';"
-                    class="img-fluid"
-                  />
-                </div>
-                <div class="card-content">
-                  <p><%= rc.generation_name %></p>
-                  <p><%= rc.engine %></p>
-                  <h6><%= rc.body_type %></h6>
-                </div>
+    <div class="container">
+      <div class="row d-flex justify-content-center w-full">
+        <% datas.recentCars.forEach(rc => { %>
+        <div class="col-12 col-lg-3 d-flex mt-4">
+          <a href="/specs/<%= rc.id %>" class="model-link flex-fill">
+            <div class="car-card d-flex flex-column">
+              <div class="frame flex-grow-1">
+                <img
+                  src="/assets<%= rc.image_path %>"
+                  alt="<%= meta_title %>"
+                  onerror="this.onerror=null; this.src='/nomodels.webp';"
+                  class="img-fluid"
+                />
               </div>
-            </a>
-          </div>
-          <% }) %>
+              <div class="card-content">
+                <p><%= rc.generation_name %></p>
+                <p><%= rc.engine %></p>
+                <h6><%= rc.body_type %></h6>
+              </div>
+            </div>
+          </a>
         </div>
-      </div>   
+        <% }) %>
+      </div>
+    </div>
   </section>
 
-  <section class="brands" style="padding: 100px 0;">
+  <section class="brands" style="padding: 100px 0">
     <div class="title text-center mt-4 mb-4">
       <h5>POPULAR BRANDS</h5>
       <h1>Our Top Quality <span>Brands</span></h1>
@@ -141,22 +229,29 @@
     <div class="brand-list bg-white p-4">
       <div class="row">
         <% datas.brands.forEach(brand => { %>
-          <div class="col-lg-2 d-flex justify-content-center">
-            <a href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.id + '/models' %>" class="card brand-card">
-              <div class="frame">
-                <img src="/assets<%= brand.image_path %>" alt="<%= meta_title %>" onerror="this.onerror=null; this.src='/notbrands.webp';">
-              </div>
-              <h3 class="mt-2"><%= brand.name %></h3>
-            </a>
-          </div>
+        <div class="col-lg-2 d-flex justify-content-center">
+          <a
+            href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.id + '/models' %>"
+            class="brand-card"
+          >
+            <img
+              src="/assets<%= brand.image_path %>"
+              alt="<%= meta_title %>"
+              onerror="this.onerror=null; this.src='/notbrands.webp';"
+            />
+            <h3 class="mt-2"><%= brand.name %></h3>
+          </a>
+        </div>
         <%}) %>
       </div>
     </div>
   </section>
 
-  <section class="body-type bg-light" style="padding: 100px 0;">
+  <section class="body-type bg-light" style="padding: 100px 0">
     <div class="title text-center">
-      <h5><span><b>CAR CATEGORY</b></span></h5>
+      <h5>
+        <span><b>CAR CATEGORY</b></span>
+      </h5>
       <h1>Car By Body Types <span>Types</span></h1>
     </div>
     <div class="d-flex justify-content-center mb-4">
@@ -186,6 +281,6 @@
         </div>
         <% }) %>
       </div>
-    </div>   
+    </div>
   </section>
 </div>

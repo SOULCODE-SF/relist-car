@@ -33,6 +33,7 @@
           <div class="frame">
             <img
               src="/assets/<%= model.image_path %>"
+              onerror="this.onerror=null; this.src='/nomodels.webp';"
               alt="<%= meta_title %>"
             />
           </div>
