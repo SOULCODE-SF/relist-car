@@ -36,9 +36,9 @@ const getHomePage = async (req, res, next) => {
 
     const totalBrand = brandsCount[0].total;
 
-    const recentCars = await DBquery(query.home.recentCars, [15]);
+    const recentCars = await DBquery(query.home.recentCars, [12]);
 
-    querystr = 'SELECT * FROM brands WHERE is_featured = 1';
+    querystr = 'SELECT * FROM brands WHERE is_featured = 1 LIMIT 29';
     const brands = await DBquery(querystr);
 
     const allbrand = {

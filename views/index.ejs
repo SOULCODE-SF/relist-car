@@ -95,7 +95,6 @@
   </section>
 
   <section class="recent-cars bg-light">
-    <div class="recent-cars">
       <div class="title">
         <h3>NEW ARRIVALS</h3>
         <h1>Let's Check Latest <span>Cars</span></h1>
@@ -106,12 +105,12 @@
         </div>
       </div>
 
-      <div class="container p-4">
-        <div class="row d-flex justify-content-center">
+      <div class="container">
+        <div class="row d-flex justify-content-center w-full">
           <% datas.recentCars.forEach(rc => { %>
-          <div class="col-11 col-sm-12 col-md-4 col-lg-2 d-flex">
+          <div class="col-12 col-lg-3 d-flex mt-4">
             <a href="/specs/<%= rc.id %>" class="model-link flex-fill">
-              <div class="recent-card d-flex flex-column">
+              <div class="car-card d-flex flex-column">
                 <div class="frame flex-grow-1">
                   <img
                     src="/assets<%= rc.image_path %>"
@@ -131,7 +130,6 @@
           <% }) %>
         </div>
       </div>   
-    </div> 
   </section>
 
   <section class="brands" style="padding: 100px 0;">
@@ -140,15 +138,19 @@
       <h1>Our Top Quality <span>Brands</span></h1>
     </div>
 
-    <div class="brand-list bg-white">
-      <% datas.brands.forEach(brand => { %>
-        <a href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.id + '/models' %>" class="brand-card">
-          <div class="brand">
-            <img src="/assets<%= brand.image_path %>" alt="<%= meta_title %>" onerror="this.onerror=null; this.src='/notbrands.webp';">
-            <h3><%= brand.name %></h3>
+    <div class="brand-list bg-white p-4">
+      <div class="row">
+        <% datas.brands.forEach(brand => { %>
+          <div class="col-lg-2 d-flex justify-content-center">
+            <a href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.id + '/models' %>" class="card brand-card">
+              <div class="frame">
+                <img src="/assets<%= brand.image_path %>" alt="<%= meta_title %>" onerror="this.onerror=null; this.src='/notbrands.webp';">
+              </div>
+              <h3 class="mt-2"><%= brand.name %></h3>
+            </a>
           </div>
-        </a>
-      <%}) %>
+        <%}) %>
+      </div>
     </div>
   </section>
 
@@ -165,9 +167,9 @@
     <div class="container p-4">
       <div class="row d-flex justify-content-center">
         <% datas.bodyType.forEach(bt => { %>
-        <div class="col-11 col-sm-12 col-md-4 col-lg-2 d-flex">
+        <div class="col-12 col-lg-3 d-flex mt-4">
           <a href="/car-by-body/<%= bt.body %>" class="model-link flex-fill">
-            <div class="recent-card d-flex flex-column">
+            <div class="car-card d-flex flex-column">
               <div class="frame flex-grow-1">
                 <img
                   src="/assets/<%= bt.image_path %>"
