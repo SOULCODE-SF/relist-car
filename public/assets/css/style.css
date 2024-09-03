@@ -581,8 +581,6 @@ button:hover {
   transform: scale(1.1);
 }
 
-
-
 .car-card {
   background-color: #fff;
   padding: 10px;
@@ -622,6 +620,14 @@ button:hover {
   transition: transform 0.3s;
   animation: zoomIn 0.5s ease-out;
   display: block;
+}
+.car-card p {
+  font-size: 14px;
+  margin: 8px;
+}
+.car-card .card-content {
+  height: 100px;
+  line-height: 1;
 }
 .nav-tabs {
   display: flex;
@@ -785,15 +791,45 @@ button:hover {
   padding-right: 0;
   padding-left: 0;
 }
+
 .alert-custom {
   position: fixed;
   top: 90px;
   right: 20px;
   z-index: 1050;
   width: auto;
-  max-width: 300px;
+  max-width: 500px;
 }
-/*==================== 58. Footer css ======================*/
+
+.alert-custom.alert-success {
+  background-color: #6beea8;
+  color: #003d1d;
+  font-weight: 600;
+}
+
+.alert-custom.alert-danger {
+  background-color: #eb9da5;
+  color: #72000b;
+  font-weight: 600;
+}
+
+.alert-custom .loading-spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 3px solid white;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .footer-area {
   background: var(--footer-color);
   position: relative;
@@ -1051,11 +1087,6 @@ button:hover {
   .recently-added {
     grid-template-columns: repeat(2, 1fr);
   }
-  .car-card {
-    min-width: 200px;
-    width: 100%;
-    max-width: 100%;
-  }
   .icon-round {
     width: 80px;
     height: 80px;
@@ -1077,11 +1108,6 @@ button:hover {
   }
   .recently-added {
     grid-template-columns: repeat(1, 1fr);
-  }
-  .car-card {
-    min-width: 200px;
-    width: 100%;
-    max-width: 100%;
   }
   .navbar {
     width: 100%;

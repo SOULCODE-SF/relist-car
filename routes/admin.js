@@ -75,18 +75,27 @@ const dynamicStorage = (type) => {
   });
 };
 
-const upload = (type, fieldname) => {
+const upload = (type, fields) => {
+  let uploadMiddleware;
   return (req, res, next) => {
-    const uploadMiddleware = multer({
-      storage: dynamicStorage(type),
-      limits: { fileSize: 600 * 1024 },
-    }).single(fieldname);
+    if (!Array.isArray(fields)) {
+      uploadMiddleware = multer({
+        storage: dynamicStorage(type),
+        limits: { fileSize: 600 * 1024 }
+      }).single(fields);
+    }else{
+      uploadMiddleware = multer({
+        storage: dynamicStorage(type),
+        limits: { fileSize: 600 * 1024 }
+      }).fields(fields);
+    }
 
-    uploadMiddleware(req, res, function (err) {
+    uploadMiddleware(req, res, (err) => {
       if (err) {
         if (err.code === 'LIMIT_FILE_SIZE') {
           return res.status(400).send('File size exceeds the limit of 600KB');
         }
+        console.error(err);
         return res.status(500).send('An error occurred during file upload');
       }
       next();
@@ -167,6 +176,11 @@ router.get('/models-name/:brand_id', getModelName);
 router.get('/generations-name/:model_id', getGenerationName);
 
 router.get('/setting', getSettingPage);
-router.post('/setting', upload('temp', 'site_logo'), updateSetting);
+const fieldsSetting = [
+  { name: 'site_logo', maxCount: 1 },
+  { name: 'favicon', maxCount: 1 }
+];
+
+router.post('/setting', upload('temp', fieldsSetting), updateSetting);
 
 module.exports = router;

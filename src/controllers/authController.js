@@ -139,7 +139,7 @@ exports.loginUser = async (req, res, next) => {
   }
 };
 
-exports.logoutUser = (req, res) => {
+exports.logoutUser = (req, res, next) => {
   try {
     req.session.destroy((err) => {
       if (err) {
@@ -151,6 +151,6 @@ exports.logoutUser = (req, res) => {
     });
   } catch (error) {
     console.error('Logout error:', error);
-    res.status(500).send('Internal Server Error');
+    next(error)
   }
 };

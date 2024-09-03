@@ -36,8 +36,50 @@ const unlinkFile = (filePath) => {
   });
 };
 
+const handleImages = async (props) => {
+  try {
+    const oldImagePath = props.oldpath;
+    const fileExtension = `${props.ext}`;
+    const formattedFileName = formatFileName(
+      `${props.fileName}`,
+      fileExtension
+    );
+    const newDir = path.join(__dirname, `../../public/${props.newDir}`);
+    const newFilePath = path.join(newDir, formattedFileName);
+
+    const temp = `${props.path}/${formattedFileName}`;
+    const oldPath = props.uploadPath;
+
+    fs.mkdir(newDir, { recursive: true }, async (err) => {
+      if (err) throw new Error('Error creating directory');
+      moveFile(oldPath, newFilePath, async (err) => {
+        if (err) throw new Error('Error moving file');
+
+        if (oldImagePath && oldImagePath !== temp) {
+          const oldImageFullPath = path.join(
+            __dirname,
+            '../../public',
+            oldImagePath
+          );
+
+          try {
+            await unlinkFile(oldImageFullPath);
+          } catch (unlinkError) {
+            console.error('Error deleting old image:', unlinkError);
+          }
+        }
+      });
+    });
+
+    return { success: true, path: temp, message: 'sukses' };
+  } catch (error) {
+    return { success: false, message: error.message };
+  }
+};
+
 module.exports = {
   moveFile,
   formatFileName,
   unlinkFile,
+  handleImages,
 };

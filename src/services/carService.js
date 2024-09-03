@@ -49,7 +49,7 @@ const apiSearchCar = async (req, res, next) => {
     const { brand_id, model_id, generation_id, engine } = req.body;
 
     let hasAlert = false;
-    if (!req.body || engine === 'None') {
+    if (!req.body || engine === 'None' || !engine) {
       req.session.alert = {
         type: 'alert-danger',
         message: 'No Car Found',
@@ -57,7 +57,16 @@ const apiSearchCar = async (req, res, next) => {
       hasAlert = true;
       return res.redirect('/');
     }
-    if (!engine || (engine !== 'None' && brand_id)) {
+
+    console.log(req.body);
+
+    if (!req.body) {
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'No Car Found',
+      };
+      hasAlert = true;
+    } else if (!engine || (engine !== 'None' && brand_id)) {
       return res.redirect(`/generation-list/${generation_id}`);
     } else if ((!brand_id && engine) || engine != 'None') {
       querystr = `SELECT c.id

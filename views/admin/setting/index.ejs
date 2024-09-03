@@ -145,7 +145,6 @@
             </div>
           </div>
 
-          <!-- Image Settings -->
           <div class="tab-pane fade" id="setting-image">
             <div class="form-group">
               <div class="row g-3 mb-3" id="site-logo">
@@ -175,6 +174,39 @@
                       class="btn btn-danger btn-sm"
                       title="Remove image"
                       id="remove-image"
+                    >
+                      <i class="icon-trash-alt"></i>
+                    </a>
+                  </div>
+                </div>
+              </div>
+              <div class="row g-3 mb-3" id="favicon">
+                <label for="favicon" class="col-md-2 col-form-label">Favicon</label>
+                <div class="col-md-6">
+                  <div id="image-preview-container">
+                    <img
+                      id="favicon-preview"
+                      src="<%= data?.favicon || '/assets/nice-iconly/assets/img/preview.png' %>"
+                      class="img-thumbnail"
+                      alt="Image Preview"
+                    />
+                  </div>
+                  <div class="pt-2">
+                    <label for="input-favicon" class="btn btn-primary btn-sm" title="Upload image">
+                      <i class="icon-upload"></i>
+                      <input
+                        name="favicon"
+                        type="file"
+                        id="input-favicon"
+                        accept="image/*"
+                        style="display: none;"
+                      />
+                    </label>
+                    <a
+                      href="#"
+                      class="btn btn-danger btn-sm"
+                      title="Remove image"
+                      id="remove-favicon"
                     >
                       <i class="icon-trash-alt"></i>
                     </a>
