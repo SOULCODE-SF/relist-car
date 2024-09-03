@@ -4,7 +4,6 @@ const multer = require('multer');
 const path = require('path');
 const uploadCarImages = require('../src/utils/carImage');
 
-const { getUser, addUser } = require('../src/controllers/adminController');
 const {
   addBanner,
   getAllBanners,
@@ -55,6 +54,14 @@ const {
   editGenerations,
   deleteGeneration,
 } = require('../src/controllers/adminController/car/generation');
+const {
+  getUserPage,
+  getAddUsersPage,
+  addUsers,
+  editUsers,
+  getEditUsersPage,
+  deleteUsers,
+} = require('../src/controllers/adminController/users');
 
 const dynamicStorage = (type) => {
   return multer.diskStorage({
@@ -69,7 +76,7 @@ const dynamicStorage = (type) => {
           '-' +
           Date.now() +
           path.extname(file.originalname) +
-          '.webp',
+          '.webp'
       );
     },
   });
@@ -81,12 +88,12 @@ const upload = (type, fields) => {
     if (!Array.isArray(fields)) {
       uploadMiddleware = multer({
         storage: dynamicStorage(type),
-        limits: { fileSize: 600 * 1024 }
+        limits: { fileSize: 600 * 1024 },
       }).single(fields);
-    }else{
+    } else {
       uploadMiddleware = multer({
         storage: dynamicStorage(type),
-        limits: { fileSize: 600 * 1024 }
+        limits: { fileSize: 600 * 1024 },
       }).fields(fields);
     }
 
@@ -130,8 +137,6 @@ router.get('/banner/edit/:id', getBannerById);
 router.post('/banner/update/:id', upload('temp', 'ads_image'), updateBanner);
 router.get('/banner/delete/:banner_id', deleteBanner);
 
-router.get('/users', getUser);
-router.post('/users/add', addUser);
 router.get('/cars', getCarsList);
 router.get('/cars/add', getAddCar);
 router.post('/cars/add', uploadCarImages.array('images', 10), addCar);
@@ -161,13 +166,13 @@ router.get('/add-generations', getAddGeneration);
 router.post(
   '/add-generations',
   upload('generations', 'generation_image'),
-  addGeneration,
+  addGeneration
 );
 router.get('/edit-generations/:id', getEditGenaration);
 router.post(
   '/edit-generations/:id',
   upload('generations', 'generation_image'),
-  editGenerations,
+  editGenerations
 );
 router.get('/delete-generations/:id', deleteGeneration);
 
@@ -178,9 +183,17 @@ router.get('/generations-name/:model_id', getGenerationName);
 router.get('/setting', getSettingPage);
 const fieldsSetting = [
   { name: 'site_logo', maxCount: 1 },
-  { name: 'favicon', maxCount: 1 }
+  { name: 'favicon', maxCount: 1 },
 ];
 
 router.post('/setting', upload('temp', fieldsSetting), updateSetting);
+
+//users
+router.get('/users', getUserPage);
+router.get('/add-users', getAddUsersPage);
+router.post('/add-users', addUsers);
+router.get('/update-users/:id', getEditUsersPage);
+router.post('/update-users/:id', editUsers);
+router.get('/delete-users/:id', deleteUsers);
 
 module.exports = router;

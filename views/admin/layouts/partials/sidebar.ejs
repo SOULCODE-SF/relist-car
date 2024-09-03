@@ -103,10 +103,9 @@
       </ul>
     </li>
 
-    <!-- Cars -->
     <li class="nav-item">
       <a
-        class="nav-link collapsed"
+        class="nav-link <%= currentPage === 'users' ? 'active' : 'collapsed' %>"
         data-bs-target="#users-nav"
         data-bs-toggle="collapse"
         href="#"
@@ -120,7 +119,7 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="users-list.html">
+          <a href="/admin/users">
             <span>Users List</span>
           </a>
         </li>

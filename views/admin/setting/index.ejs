@@ -22,22 +22,35 @@
       <div class="card-body pt-3">
         <ul class="nav nav-tabs nav-tabs-bordered">
           <li class="nav-item">
-            <a class="nav-link active" data-bs-toggle="tab" href="#setting-general">General</a>
+            <a
+              class="nav-link active"
+              data-bs-toggle="tab"
+              href="#setting-general"
+              >General</a
+            >
           </li>
           <li class="nav-item">
             <a class="nav-link" data-bs-toggle="tab" href="#setting-seo">SEO</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#setting-image">Image</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#setting-image"
+              >Image</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#setting-sosmed">Sosmed</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#setting-sosmed"
+              >Sosmed</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#setting-smtp">SMTP</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#setting-smtp"
+              >SMTP</a
+            >
           </li>
           <li class="nav-item">
-            <a class="nav-link" data-bs-toggle="tab" href="#setting-other">Other</a>
+            <a class="nav-link" data-bs-toggle="tab" href="#setting-other"
+              >Other</a
+            >
           </li>
         </ul>
 
@@ -46,33 +59,76 @@
           <div class="tab-pane fade show active" id="setting-general">
             <div class="form-group">
               <div class="mb-3 row">
-                <label for="site_name" class="col-md-4 col-form-label">Site Name</label>
+                <label for="site_name" class="col-md-4 col-form-label"
+                  >Site Name</label
+                >
                 <div class="col-md-8">
-                  <input name="site_name" type="text" class="form-control" id="site_name" value="<%= data.site_name %>" />
+                  <input
+                    name="site_name"
+                    type="text"
+                    class="form-control"
+                    id="site_name"
+                    value="<%= data.site_name %>"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="site_url" class="col-md-4 col-form-label">Site URL</label>
+                <label for="site_url" class="col-md-4 col-form-label"
+                  >Site URL</label
+                >
                 <div class="col-md-8">
-                  <input name="site_url" type="text" class="form-control" id="site_url" value="<%= data.site_url %>" />
+                  <input
+                    name="site_url"
+                    type="text"
+                    class="form-control"
+                    id="site_url"
+                    value="<%= data.site_url %>"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="about_site" class="col-md-4 col-form-label">About Site</label>
+                <label for="about_site" class="col-md-4 col-form-label"
+                  >About Site</label
+                >
                 <div class="col-md-8">
-                  <textarea name="about_site" id="input-about-site" rows="4" class="form-control"><%= data.about_site %></textarea>
+                  <textarea
+                    name="about_site"
+                    id="input-about-site"
+                    rows="4"
+                    class="form-control"
+                  >
+<%= data.about_site %></textarea
+                  >
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="disclaimer_text" class="col-md-4 col-form-label">Disclaimer Text</label>
+                <label for="disclaimer_text" class="col-md-4 col-form-label"
+                  >Disclaimer Text</label
+                >
                 <div class="col-md-8">
-                  <textarea name="disclaimer_text" id="input-disclaimer-text" rows="4" class="form-control"><%= data.disclaimer %></textarea>
+                  <textarea
+                    name="disclaimer_text"
+                    id="input-disclaimer-text"
+                    rows="4"
+                    class="form-control"
+                  >
+<%= data.disclaimer %></textarea
+                  >
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="copyright_text" class="col-md-4 col-form-label">Copyright Text</label>
+                <label for="copyright_text" class="col-md-4 col-form-label"
+                  >Copyright Text</label
+                >
                 <div class="col-md-8">
-                  <textarea name="copyright_text" id="input-copyright-text" rows="4" class="form-control"><%= data.copyright %></textarea>
+                  <textarea
+                    name="copyright_text"
+                    id="input-copyright-text"
+                    rows="4"
+                    class="form-control"
+                  >
+<%= data.copyright %></textarea
+                  >
                 </div>
               </div>
             </div>
@@ -82,44 +138,106 @@
           <div class="tab-pane fade" id="setting-seo">
             <div class="form-group">
               <div class="mb-3 row">
-                <label for="meta_title" class="col-md-4 col-form-label">Meta Title</label>
+                <label for="meta_title" class="col-md-4 col-form-label"
+                  >Meta Title</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="meta_title" value="<%= data.meta_title %>" placeholder="Meta Title" id="input-meta-title" class="form-control" />
+                  <input
+                    type="text"
+                    name="meta_title"
+                    value="<%= data.meta_title %>"
+                    placeholder="Meta Title"
+                    id="input-meta-title"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="meta_description" class="col-md-4 col-form-label">Meta Description</label>
+                <label for="meta_description" class="col-md-4 col-form-label"
+                  >Meta Description</label
+                >
                 <div class="col-md-8">
-                  <textarea name="meta_description" placeholder="Meta Description" id="input-meta-description" rows="4" class="form-control"><%= data.meta_description %></textarea>
+                  <textarea
+                    name="meta_description"
+                    placeholder="Meta Description"
+                    id="input-meta-description"
+                    rows="4"
+                    class="form-control"
+                  >
+<%= data.meta_description %></textarea
+                  >
                 </div>
               </div>
               <h5 class="my-3">Opengraph</h5>
               <div class="mb-3 row">
-                <label for="opengraph_type" class="col-md-4 col-form-label">Opengraph Type</label>
+                <label for="opengraph_type" class="col-md-4 col-form-label"
+                  >Opengraph Type</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="opengraph_type" value="website" placeholder="Opengraph Type" id="input-opengraph-type" class="form-control" />
+                  <input
+                    type="text"
+                    name="opengraph_type"
+                    value="website"
+                    placeholder="Opengraph Type"
+                    id="input-opengraph-type"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="opengraph_locale" class="col-md-4 col-form-label">Opengraph Locale</label>
+                <label for="opengraph_locale" class="col-md-4 col-form-label"
+                  >Opengraph Locale</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="opengraph_locale" value="id_ID" placeholder="Opengraph Locale" id="input-opengraph-locale" class="form-control" />
+                  <input
+                    type="text"
+                    name="opengraph_locale"
+                    value="id_ID"
+                    placeholder="Opengraph Locale"
+                    id="input-opengraph-locale"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
                 <label class="col-md-4 col-form-label">Opengraph Image</label>
                 <div class="col-md-8">
-                  <img src="assets/img/preview.png" class="img-thumbnail" alt="Opengraph Image" />
+                  <img
+                    src="assets/img/preview.png"
+                    class="img-thumbnail"
+                    alt="Opengraph Image"
+                  />
                   <div class="pt-2">
-                    <a href="#" class="btn btn-primary btn-sm" title="Upload image"><i class="icon-upload"></i></a>
-                    <a href="#" class="btn btn-danger btn-sm" title="Remove image"><i class="icon-trash-alt"></i></a>
+                    <a
+                      href="#"
+                      class="btn btn-primary btn-sm"
+                      title="Upload image"
+                      ><i class="icon-upload"></i
+                    ></a>
+                    <a
+                      href="#"
+                      class="btn btn-danger btn-sm"
+                      title="Remove image"
+                      ><i class="icon-trash-alt"></i
+                    ></a>
                   </div>
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="opengraph_image_type" class="col-md-4 col-form-label">Opengraph Image Type</label>
+                <label
+                  for="opengraph_image_type"
+                  class="col-md-4 col-form-label"
+                  >Opengraph Image Type</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="opengraph_image_type" value="image/jpg" placeholder="Opengraph Image Type" id="input-image-type" class="form-control" />
+                  <input
+                    type="text"
+                    name="opengraph_image_type"
+                    value="image/jpg"
+                    placeholder="Opengraph Image Type"
+                    id="input-image-type"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
@@ -127,19 +245,26 @@
                 <div class="col-md-8">
                   <div class="row">
                     <div class="col-sm-6 mb-3">
-                      <input type="text" name="opengraph_image_width" value="1200" placeholder="Opengraph Image Width" id="input-opengraph-image-width" class="form-control" />
+                      <input
+                        type="text"
+                        name="opengraph_image_width"
+                        value="1200"
+                        placeholder="Opengraph Image Width"
+                        id="input-opengraph-image-width"
+                        class="form-control"
+                      />
                     </div>
                     <div class="col-sm-6 mb-3">
-                      <input type="text" name="opengraph_image_height" value="630" placeholder="Opengraph Image Height" id="input-opengraph-image-height" class="form-control" />
+                      <input
+                        type="text"
+                        name="opengraph_image_height"
+                        value="630"
+                        placeholder="Opengraph Image Height"
+                        id="input-opengraph-image-height"
+                        class="form-control"
+                      />
                     </div>
                   </div>
-                </div>
-              </div>
-              <h5 class="my-3">Twitter Card</h5>
-              <div class="mb-3 row">
-                <label for="twitter_card" class="col-md-4 col-form-label">Twitter Card</label>
-                <div class="col-md-8">
-                  <input type="text" name="twitter_card" value="summary_large_image" placeholder="Twitter Card" id="input-twitter-card" class="form-control" />
                 </div>
               </div>
             </div>
@@ -148,7 +273,9 @@
           <div class="tab-pane fade" id="setting-image">
             <div class="form-group">
               <div class="row g-3 mb-3" id="site-logo">
-                <label for="site_logo" class="col-md-2 col-form-label">Site Logo</label>
+                <label for="site_logo" class="col-md-2 col-form-label"
+                  >Site Logo</label
+                >
                 <div class="col-md-6">
                   <div id="image-preview-container">
                     <img
@@ -159,14 +286,18 @@
                     />
                   </div>
                   <div class="pt-2">
-                    <label for="input-image" class="btn btn-primary btn-sm" title="Upload image">
+                    <label
+                      for="input-image"
+                      class="btn btn-primary btn-sm"
+                      title="Upload image"
+                    >
                       <i class="icon-upload"></i>
                       <input
                         name="site_logo"
                         type="file"
                         id="input-image"
                         accept="image/*"
-                        style="display: none;"
+                        style="display: none"
                       />
                     </label>
                     <a
@@ -181,7 +312,9 @@
                 </div>
               </div>
               <div class="row g-3 mb-3" id="favicon">
-                <label for="favicon" class="col-md-2 col-form-label">Favicon</label>
+                <label for="favicon" class="col-md-2 col-form-label"
+                  >Favicon</label
+                >
                 <div class="col-md-6">
                   <div id="image-preview-container">
                     <img
@@ -192,14 +325,18 @@
                     />
                   </div>
                   <div class="pt-2">
-                    <label for="input-favicon" class="btn btn-primary btn-sm" title="Upload image">
+                    <label
+                      for="input-favicon"
+                      class="btn btn-primary btn-sm"
+                      title="Upload image"
+                    >
                       <i class="icon-upload"></i>
                       <input
                         name="favicon"
                         type="file"
                         id="input-favicon"
                         accept="image/*"
-                        style="display: none;"
+                        style="display: none"
                       />
                     </label>
                     <a
@@ -220,27 +357,63 @@
           <div class="tab-pane fade" id="setting-sosmed">
             <div class="form-group">
               <div class="mb-3 row">
-                <label for="facebook" class="col-md-4 col-form-label">Facebook</label>
+                <label for="facebook" class="col-md-4 col-form-label"
+                  >Facebook</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="facebook" value="<%= data.facebook %>" placeholder="Facebook URL" id="input-facebook" class="form-control" />
+                  <input
+                    type="text"
+                    name="facebook"
+                    value="<%= data.facebook %>"
+                    placeholder="Facebook URL"
+                    id="input-facebook"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="twitter" class="col-md-4 col-form-label">Twitter</label>
+                <label for="twitter" class="col-md-4 col-form-label"
+                  >Twitter</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="twitter" value="<%= data.twitter %>" placeholder="Twitter URL" id="input-twitter" class="form-control" />
+                  <input
+                    type="text"
+                    name="twitter"
+                    value="<%= data.twitter %>"
+                    placeholder="Twitter URL"
+                    id="input-twitter"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="instagram" class="col-md-4 col-form-label">Instagram</label>
+                <label for="instagram" class="col-md-4 col-form-label"
+                  >Instagram</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="instagram" value="<%= data.instagram %>" placeholder="Instagram URL" id="input-instagram" class="form-control" />
+                  <input
+                    type="text"
+                    name="instagram"
+                    value="<%= data.instagram %>"
+                    placeholder="Instagram URL"
+                    id="input-instagram"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="youtube" class="col-md-4 col-form-label">YouTube</label>
+                <label for="youtube" class="col-md-4 col-form-label"
+                  >YouTube</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="youtube" value="<%= data.youtube %>" placeholder="YouTube URL" id="input-youtube" class="form-control" />
+                  <input
+                    type="text"
+                    name="youtube"
+                    value="<%= data.youtube %>"
+                    placeholder="YouTube URL"
+                    id="input-youtube"
+                    class="form-control"
+                  />
                 </div>
               </div>
             </div>
@@ -250,33 +423,78 @@
           <div class="tab-pane fade" id="setting-smtp">
             <div class="form-group">
               <div class="mb-3 row">
-                <label for="smtp_host" class="col-md-4 col-form-label">SMTP Host</label>
+                <label for="smtp_host" class="col-md-4 col-form-label"
+                  >SMTP Host</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="smtp_host" value="<%= data.smtp_host %>" placeholder="SMTP Host" id="input-smtp-host" class="form-control" />
+                  <input
+                    type="text"
+                    name="smtp_host"
+                    value="<%= data.smtp_host %>"
+                    placeholder="SMTP Host"
+                    id="input-smtp-host"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="smtp_port" class="col-md-4 col-form-label">SMTP Port</label>
+                <label for="smtp_port" class="col-md-4 col-form-label"
+                  >SMTP Port</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="smtp_port" value="<%= data.smtp_port %>" placeholder="SMTP Port" id="input-smtp-port" class="form-control" />
+                  <input
+                    type="text"
+                    name="smtp_port"
+                    value="<%= data.smtp_port %>"
+                    placeholder="SMTP Port"
+                    id="input-smtp-port"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="smtp_user" class="col-md-4 col-form-label">SMTP User</label>
+                <label for="smtp_user" class="col-md-4 col-form-label"
+                  >SMTP User</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="smtp_user" value="<%= data.smtp_user %>" placeholder="SMTP User" id="input-smtp-user" class="form-control" />
+                  <input
+                    type="text"
+                    name="smtp_user"
+                    value="<%= data.smtp_user %>"
+                    placeholder="SMTP User"
+                    id="input-smtp-user"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="smtp_pass" class="col-md-4 col-form-label">SMTP Password</label>
+                <label for="smtp_pass" class="col-md-4 col-form-label"
+                  >SMTP Password</label
+                >
                 <div class="col-md-8">
-                  <input type="password" name="smtp_pass" value="<%= data.smtp_pass %>" placeholder="SMTP Password" id="input-smtp-pass" class="form-control" />
+                  <input
+                    type="password"
+                    name="smtp_pass"
+                    value="<%= data.smtp_pass %>"
+                    placeholder="SMTP Password"
+                    id="input-smtp-pass"
+                    class="form-control"
+                  />
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="smtp_secure" class="col-md-4 col-form-label">SMTP Secure</label>
+                <label for="smtp_secure" class="col-md-4 col-form-label"
+                  >SMTP Secure</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="smtp_secure" value="<%= data.smtp_secure %>" placeholder="SMTP Secure" id="input-smtp-secure" class="form-control" />
+                  <input
+                    type="text"
+                    name="smtp_secure"
+                    value="<%= data.smtp_secure %>"
+                    placeholder="SMTP Secure"
+                    id="input-smtp-secure"
+                    class="form-control"
+                  />
                 </div>
               </div>
             </div>
@@ -285,10 +503,52 @@
           <!-- Other Settings -->
           <div class="tab-pane fade" id="setting-other">
             <div class="form-group">
-              <div class="mb-3 row">
-                <label for="other_setting_1" class="col-md-4 col-form-label">Other Setting 1</label>
+              <div class="mb-3">
+                <label for="adsense_gtm" class="col-md-4 col-form-label"
+                  >Adsense & Google Tag Manager</label
+                >
                 <div class="col-md-8">
-                  <input type="text" name="other_setting_1" value="<%= data.other_setting_1 %>" placeholder="Other Setting 1" id="input-other-setting-1" class="form-control" />
+                  <textarea
+                    name="adsense_gtm"
+                    placeholder="Adsense & Google Tag Manager"
+                    id="input-adsense-gtm"
+                    rows="4"
+                    class="form-control"
+                  >
+<%= data.adsense_gtm %></textarea
+                  >
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="hitstat_code" class="col-md-4 col-form-label"
+                  >Hitstat Code</label
+                >
+                <div class="col-md-8">
+                  <textarea
+                    name="hitstat_code"
+                    placeholder="Hitstat code"
+                    id="input-hitstat-code"
+                    rows="4"
+                    class="form-control"
+                  >
+<%= data.hitstat_code %></textarea
+                  >
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="richsnippet_code" class="col-md-4 col-form-label"
+                  >Richsnippet Code</label
+                >
+                <div class="col-md-8">
+                  <textarea
+                    name="richsnippet_code"
+                    placeholder="Richsnippet code"
+                    id="input-richsnippet-code"
+                    rows="4"
+                    class="form-control"
+                  >
+<%= data.richsnippet_code %></textarea
+                  >
                 </div>
               </div>
             </div>

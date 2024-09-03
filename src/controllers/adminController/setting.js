@@ -45,6 +45,9 @@ exports.updateSetting = async (req, res, next) => {
       sosmed_twitter,
       sosmed_instagram,
       sosmed_youtube,
+      adsense_gtm,
+      hitstat_code,
+      richsnippet_code,
     } = req.body;
 
     req.body.site_name = req.body.site_name.trim();
@@ -113,7 +116,10 @@ exports.updateSetting = async (req, res, next) => {
                         facebook_url = ?,
                         twitter_url = ?,
                         instagram_url = ?,
-                        youtube_url = ?
+                        youtube_url = ?,
+                        adsense_gtm = ?,
+                        hitstat_code = ?,
+                        richsnippet_code = ?
                       WHERE id = ?; 
                     `;
     let queryvalue = [
@@ -130,6 +136,9 @@ exports.updateSetting = async (req, res, next) => {
       sosmed_twitter,
       sosmed_instagram,
       sosmed_youtube,
+      adsense_gtm,
+      hitstat_code,
+      richsnippet_code,
       1,
     ];
     await DBquery(querystr, queryvalue);

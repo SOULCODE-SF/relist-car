@@ -36,9 +36,9 @@ app.use(
     saveUninitialized: false,
     store: sessionStore,
     cookie: {
-      maxAge: 24 * 60 * 60 * 1000
-    }
-  }),
+      maxAge: 24 * 60 * 60 * 1000,
+    },
+  })
 );
 
 app.use(siteInfoMiddleware);

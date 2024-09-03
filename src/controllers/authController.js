@@ -144,13 +144,13 @@ exports.logoutUser = (req, res, next) => {
     req.session.destroy((err) => {
       if (err) {
         console.error('Logout error:', err);
-        return res.status(500).send('Logout failed');
+        next(err);
       }
 
       res.redirect('/login');
     });
   } catch (error) {
     console.error('Logout error:', error);
-    next(error)
+    next(error);
   }
 };
