@@ -7,7 +7,7 @@
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/brands/<%= generations[0].brand_id %>/models" class="nav-link"
+      <a href="/brands/<%= generations[0].brand_param %>" class="nav-link"
         ><%= generations[0].brand_name %></a
       >
     </li>
@@ -22,28 +22,38 @@
 
 <div class="container p-4">
   <div class="row d-flex justify-content-center">
-    <% generations.forEach(generation => { %>
-    <div class="col-8 col-sm-6 col-md-4 col-lg-3">
-      <a href="/generation-list/<%= generation.id %>" class="standar-link">
-        <div class="generation-card">
+    <% generations.forEach(g=> { %>
+    <div class="col-8 col-sm-6 col-md-4 col-lg-3 mt-4">
+      <a
+        href="/brands/<%= g.brand_param %>/<%= g.model_param %>/<%= g.gen_param %>"
+        class="standar-link"
+      >
+        <div class="car-card">
           <div class="frame">
-            <img src="/assets/<%= generation.image_path %>" alt="<%= meta_title %>" />
+            <img
+              src="/assets/<%= g.image_path %>"
+              onerror="this.onerror=null; this.src='/nomodels.webp';"
+              alt="<%= memories.meta_title %>"
+            />
           </div>
-          <h6><%= generation.title %></h6>
+          <h6><%= g.title %></h6>
           <div class="row">
             <div class="col">
-              <p class="card-text mb-2"><%= generation.start_production %> - <%= generation.end_production %> <%= generation.body_type %></p>
-              <p class="card-text text-start mb-2"><strong>Power:</strong> <%= generation.power %></p>
-              <p class="card-text text-start mb-0"><strong>Dimension:</strong> <%= generation.dimension %> mm</p>
+              <p class="card-text mb-2">
+                <%= g.start_production %> - <%= g.end_production %> <%=
+                g.body_type %>
+              </p>
+              <p class="card-text text-start mb-2">
+                <strong>Power:</strong> <%= g.power %>
+              </p>
+              <p class="card-text text-start mb-0">
+                <strong>Dimension:</strong> <%= g.dimension %> mm
+              </p>
             </div>
           </div>
-          
-          
         </div>
       </a>
     </div>
     <% }) %>
   </div>
 </div>
-
-

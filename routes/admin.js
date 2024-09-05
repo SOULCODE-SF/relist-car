@@ -4,7 +4,6 @@ const multer = require('multer');
 const path = require('path');
 const uploadCarImages = require('../src/utils/carImage');
 
-const { getUser, addUser } = require('../src/controllers/adminController');
 const {
   addBanner,
   getAllBanners,
@@ -27,12 +26,10 @@ const {
 const {
   getDashboardPage,
 } = require('../src/controllers/adminController/dashboard');
-const { isAuthenticated, isAdmin } = require('./middlewares/authMiddleware');
 const {
   getSettingPage,
   updateSetting,
 } = require('../src/controllers/adminController/setting');
-const { getAllBrands } = require('../src/controllers/indexController');
 const {
   getAllListBrands,
   getAddBrands,
@@ -57,6 +54,14 @@ const {
   editGenerations,
   deleteGeneration,
 } = require('../src/controllers/adminController/car/generation');
+const {
+  getUserPage,
+  getAddUsersPage,
+  addUsers,
+  editUsers,
+  getEditUsersPage,
+  deleteUsers,
+} = require('../src/controllers/adminController/users');
 
 const dynamicStorage = (type) => {
   return multer.diskStorage({
@@ -71,24 +76,34 @@ const dynamicStorage = (type) => {
           '-' +
           Date.now() +
           path.extname(file.originalname) +
-          '.webp',
+          '.webp'
       );
     },
   });
 };
 
-const upload = (type, fieldname) => {
+const upload = (type, fields) => {
+  let uploadMiddleware;
   return (req, res, next) => {
-    const uploadMiddleware = multer({
-      storage: dynamicStorage(type),
-      limits: { fileSize: 600 * 1024 },
-    }).single(fieldname);
+    if (!Array.isArray(fields)) {
+      uploadMiddleware = multer({
+        storage: dynamicStorage(type),
+        limits: { fileSize: 600 * 1024 },
+      }).single(fields);
+    } else {
+      uploadMiddleware = multer({
+        storage: dynamicStorage(type),
+        limits: { fileSize: 600 * 1024 },
+      }).fields(fields);
+    }
 
-    uploadMiddleware(req, res, function (err) {
+    uploadMiddleware(req, res, (err) => {
       if (err) {
+        console.log(err)
         if (err.code === 'LIMIT_FILE_SIZE') {
           return res.status(400).send('File size exceeds the limit of 600KB');
         }
+        console.error(err);
         return res.status(500).send('An error occurred during file upload');
       }
       next();
@@ -123,11 +138,12 @@ router.get('/banner/edit/:id', getBannerById);
 router.post('/banner/update/:id', upload('temp', 'ads_image'), updateBanner);
 router.get('/banner/delete/:banner_id', deleteBanner);
 
-router.get('/users', getUser);
-router.post('/users/add', addUser);
 router.get('/cars', getCarsList);
 router.get('/cars/add', getAddCar);
-router.post('/cars/add', uploadCarImages.array('images', 10), addCar);
+const carImages = [
+  { name: 'car_images', maxCount: 5 }
+];
+router.post('/cars/add', upload('temp', carImages), addCar);
 router.get('/cars/update/:id', getEditCar);
 router.post('/cars/update/:id', updateCar);
 router.get('/cars/delete/:id', deleteCar);
@@ -154,13 +170,13 @@ router.get('/add-generations', getAddGeneration);
 router.post(
   '/add-generations',
   upload('generations', 'generation_image'),
-  addGeneration,
+  addGeneration
 );
 router.get('/edit-generations/:id', getEditGenaration);
 router.post(
   '/edit-generations/:id',
   upload('generations', 'generation_image'),
-  editGenerations,
+  editGenerations
 );
 router.get('/delete-generations/:id', deleteGeneration);
 
@@ -169,6 +185,19 @@ router.get('/models-name/:brand_id', getModelName);
 router.get('/generations-name/:model_id', getGenerationName);
 
 router.get('/setting', getSettingPage);
-router.post('/setting', upload('temp', 'site_logo'), updateSetting);
+const fieldsSetting = [
+  { name: 'site_logo', maxCount: 1 },
+  { name: 'favicon', maxCount: 1 },
+];
+
+router.post('/setting', upload('temp', fieldsSetting), updateSetting);
+
+//users
+router.get('/users', getUserPage);
+router.get('/add-users', getAddUsersPage);
+router.post('/add-users', addUsers);
+router.get('/update-users/:id', getEditUsersPage);
+router.post('/update-users/:id', editUsers);
+router.get('/delete-users/:id', deleteUsers);
 
 module.exports = router;

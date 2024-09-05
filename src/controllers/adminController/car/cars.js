@@ -12,29 +12,17 @@ const {
   getModelNameById,
   getGenerationNameById,
 } = require('../../../utils/carHelpers');
+const { handleImages } = require('../../../utils/helpers');
 
 const cache = new nodecache();
 
 exports.getCarsList = async (req, res, next) => {
   try {
-    const key = req.originalUrl;
-    const cachedData = cache.get(key);
     const brand_id = req.query.brand_id || '';
-
-    if (cachedData) {
-      return res.render('admin/car/index', {
-        datas: cachedData,
-        title: 'Cars List',
-        currentPage: 'admin-car-list',
-        layout: './admin/layouts/layout',
-      });
-    }
 
     const cars = await DBquery(queryStore.cars.getAllCars, [brand_id]);
 
     const datas = cars;
-
-    cache.set(key, datas, 3600);
 
     res.render('admin/car/index', {
       datas,
@@ -52,7 +40,7 @@ exports.getBrandsName = async (req, res, next) => {
 
     const datas = await DBquery(
       'SELECT id, name FROM brands WHERE name LIKE ?',
-      [`%${brand_name}%`],
+      [`%${brand_name}%`]
     );
 
     return res.json({
@@ -69,7 +57,7 @@ exports.getModelName = async (req, res, next) => {
     const model_name = req.query.q || '';
     const datas = await DBquery(
       'SELECT id, name FROM models WHERE brand_id = ? AND  name LIKE ?',
-      [brand_id, `%${model_name}%`],
+      [brand_id, `%${model_name}%`]
     );
 
     return res.json({
@@ -84,10 +72,9 @@ exports.getGenerationName = async (req, res, next) => {
   try {
     const model_id = req.params.model_id;
 
-    console.log(model_id);
     const datas = await DBquery(
       'SELECT id, title as name FROM generations WHERE model_id = ?',
-      [model_id],
+      [model_id]
     );
 
     return res.json({
@@ -102,8 +89,6 @@ exports.getEngineName = async (req, res, next) => {
   try {
     const search = req.query.search;
 
-    console.log('search',search);
-
     let querystr = `SELECT gi.engine as name FROM general_information gi `;
     if (search) {
       querystr += ` WHERE gi.engine LIKE ? `;
@@ -112,7 +97,7 @@ exports.getEngineName = async (req, res, next) => {
 
     const datas = await DBquery(querystr, [`%${search}%`]);
 
-    datas.unshift({ name: 'None' },)
+    datas.unshift({ name: 'None' });
     return res.json({
       datas,
     });
@@ -237,8 +222,6 @@ exports.addCar = async (req, res, next) => {
       powertrain_architecture = new_powertrain_architecture;
     }
 
-    console.log('reqfiles', req.files);
-
     let hasAlert = false;
 
     if (!brand_id) {
@@ -265,7 +248,7 @@ exports.addCar = async (req, res, next) => {
         message: 'Engine is required',
       };
       hasAlert = true;
-    } else if (!req.file || !req.files || req.files.length === 0) {
+    } else if (!req.files) {
       req.session.alert = {
         type: 'alert-danger',
         message: 'Images is required',
@@ -389,11 +372,11 @@ exports.addCar = async (req, res, next) => {
 
     const gi = await DBquery(
       queryStore.specs.addGeneralInformation,
-      generalInformation,
+      generalInformation
     );
     const ps = await DBquery(
       queryStore.specs.addPerformanceSpecs,
-      performance_specs,
+      performance_specs
     );
     const es = await DBquery(queryStore.specs.addEngineSpecs, engine_specs);
     const d = await DBquery(queryStore.specs.addDimension, dimensions);
@@ -420,37 +403,40 @@ exports.addCar = async (req, res, next) => {
 
     const carResult = await DBquery(
       'INSERT INTO cars(g_id, b_id, m_id, gi_id, ps_id, es_id, d_id, s_id, dbss_id, el_id) VALUES(?,?,?,?,?,?,?,?,?,?)',
-      insertCars,
+      insertCars
     );
 
     const carId = carResult.insertId;
 
-    console.log('reqfiles', req.files);
-    console.log('reqfile', req.file);
-
-    if (req.files && req.files.length > 0) {
+    if (req.files) {
       const brand_name = await getBrandNameById(brand_id);
       const model_name = await getModelNameById(model_id);
       const generation_name = await getGenerationNameById(generation_id);
 
-      let pathimage = `${brand_name}/${model_name}/${generation_name}/${
+      let pathimage = `images/brands/${brand_name}/${model_name}/${generation_name}/${
         generation_name + engine
       }`;
       pathimage = pathimage.toLowerCase().replace(/ /g, '-');
 
-      const images = req.files.map((file) => [
-        carId,
-        `/assets/images/brands/${pathimage}/${file.filename}`,
-      ]);
+      for(let i=0; i<req.files.car_images.length; i++){
+        const props = {
+          oldpath: null,
+          fileName: i+1,
+          newDir: '/assets/'+pathimage,
+          path: pathimage,
+          uploadPath: req.files.car_images[i].path,
+          ext: '.webp',
+        };
+    
+        const image = await handleImages(props);
+        if (image.success) {
+          const querystr =
+            'INSERT INTO car_images (image_path, car_id) VALUES (?,?)';
+          const queryvalue = [image.path, carId];
 
-      await Promise.all(
-        images.map(([carId, imagePath]) =>
-          DBquery('INSERT INTO car_images(car_id, image_path) VALUES (?, ?)', [
-            carId,
-            imagePath,
-          ]),
-        ),
-      );
+          await DBquery(querystr, queryvalue)
+        }
+      }
     }
 
     await commitTransaction(connection);
@@ -472,7 +458,7 @@ exports.getEditCar = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    const carvalue = await DBquery('CALL get_spec(?)', [id]);
+    const carvalue = await DBquery('CALL get_spec_by_id(?)', [id]);
 
     const powertrain_architecture = await DBquery(`
       SELECT DISTINCT powertrain_architecture
@@ -597,13 +583,13 @@ exports.updateCar = async (req, res, next) => {
 
     const recent = await DBquery(
       'SELECT b_id, m_id, g_id, gi_id, ps_id, es_id, d_id, s_id, dbss_id, el_id FROM cars WHERE id = ? LIMIT 1',
-      [car_id],
+      [car_id]
     );
 
     if (brand_id || model_id || generation_id) {
       await DBquery(
         'UPDATE cars SET b_id = ?, m_id = ?, g_id = ? WHERE id = ?',
-        [brand_id, model_id, generation_id, car_id],
+        [brand_id, model_id, generation_id, car_id]
       );
     }
 
@@ -725,7 +711,7 @@ exports.updateCar = async (req, res, next) => {
 
     await DBquery(
       queryStore.specs.updateGeneralInformation,
-      generalInformation,
+      generalInformation
     );
 
     await DBquery(queryStore.specs.updatePerformanceSpec, performance_specs);
@@ -792,40 +778,41 @@ exports.deleteCar = async (req, res, next) => {
         };
       }
       const car = onres[0];
-      console.log(car);
 
       await DBquery(
         'DELETE FROM general_information WHERE id = ? AND EXISTS (SELECT 1 FROM general_information WHERE id = ?)',
-        [car.gi_id, car.gi_id],
+        [car.gi_id, car.gi_id]
       );
       await DBquery(
         'DELETE FROM performance_specs WHERE id = ? AND EXISTS (SELECT 1 FROM performance_specs WHERE id = ?)',
-        [car.ps_id, car.ps_id],
+        [car.ps_id, car.ps_id]
       );
       await DBquery(
         'DELETE FROM engine_specs WHERE id = ? AND EXISTS (SELECT 1 FROM engine_specs WHERE id = ?)',
-        [car.es_id, car.es_id],
+        [car.es_id, car.es_id]
       );
       await DBquery(
         'DELETE FROM dimensions WHERE id = ? AND EXISTS (SELECT 1 FROM dimensions WHERE id = ?)',
-        [car.d_id, car.d_id],
+        [car.d_id, car.d_id]
       );
       await DBquery(
         'DELETE FROM drivetrain_brakes_suspension_specs WHERE id = ? AND EXISTS (SELECT 1 FROM drivetrain_brakes_suspension_specs WHERE id = ?)',
-        [car.dbss_id, car.dbss_id],
+        [car.dbss_id, car.dbss_id]
       );
       await DBquery(
         'DELETE FROM spaces WHERE id = ? AND EXISTS (SELECT 1 FROM spaces WHERE id = ?)',
-        [car.s_id, car.s_id],
+        [car.s_id, car.s_id]
       );
       await DBquery(
         'DELETE FROM electric_specs WHERE id = ? AND EXISTS (SELECT 1 FROM electric_specs WHERE id = ?)',
-        [car.el_id, car.el_id],
+        [car.el_id, car.el_id]
       );
       await DBquery(
         'DELETE FROM cars WHERE id = ? AND EXISTS (SELECT 1 FROM cars WHERE id = ?)',
-        [car_id, car_id],
+        [car_id, car_id]
       );
+
+      await DBquery('DELETE FROM car_images WHERE car_id = ?', [car_id])
 
       await commitTransaction(connection);
 

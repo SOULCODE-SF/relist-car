@@ -1176,6 +1176,46 @@ h6 {
 .alert-dark hr {
   border-top-color: #11161e;
 }
+
+.alert-custom {
+  position: fixed;
+  top: 90px;
+  right: 20px;
+  z-index: 1050;
+  width: auto;
+  max-width: 500px;
+}
+
+.alert-custom.alert-success {
+  background-color: #6beea8;
+  color: #003d1d;
+  font-weight: 600;
+}
+
+.alert-custom.alert-danger {
+  background-color: #eb9da5;
+  color: #72000b;
+  font-weight: 600;
+}
+
+.alert-custom .loading-spinner {
+  border: 3px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+  border-top: 3px solid white;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 /* Button */
 .btn {
   border-radius: 3px;
@@ -2184,4 +2224,3 @@ h6 {
 #area-input a i:hover {
   color: #009ef7;
 }
-

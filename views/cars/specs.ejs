@@ -7,7 +7,9 @@
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/brands/<%= data.general_information.brand_id %>/models" class="nav-link"
+      <a
+        href="/brands/<%= data.general_information.brand_id %>/models"
+        class="nav-link"
         ><%= data.general_information.brand_name %></a
       >
     </li>
@@ -15,7 +17,9 @@
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/brands/models/<%= data.general_information.model_id %>/generations" class="nav-link"
+      <a
+        href="/brands/models/<%= data.general_information.model_id %>/generations"
+        class="nav-link"
         ><%= data.general_information.model_name %></a
       >
     </li>
@@ -23,7 +27,9 @@
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/generation-list/<%= data.general_information.generation_id %>" class="nav-link"
+      <a
+        href="/generation-list/<%= data.general_information.generation_id %>"
+        class="nav-link"
         ><%= data.general_information.generation_name %></a
       >
     </li>
@@ -31,7 +37,9 @@
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="#" class="nav-link active"><%= data.general_information.engine%></a>
+      <a href="#" class="nav-link active"
+        ><%= data.general_information.engine%></a
+      >
     </li>
   </ul>
 </div>
@@ -46,23 +54,46 @@
         <div class="container mt-4 gallery-container mb-4">
           <div class="row no-gutters">
             <% data.images.forEach(function(image) { %>
-              <div class="col-md-2">
-                <div class="gallery-item">
-                  <img src="/assets/<%= image.image_path %>" alt="<%= image.meta_title %>">
-                </div>
+            <div class="col-md-2">
+              <div class="gallery-item">
+                <img
+                  src="/assets/<%= image.image_path %>"
+                  alt="<%= memories.meta_title %>"
+                  style="height: 130px;"
+                />
               </div>
+            </div>
             <% }); %>
           </div>
-        </div>     
-        <%- include('../partials/spec/general_information.ejs') %>
-        <%- include('../partials/spec/performance_spec.ejs') %>
-        <%- include('../partials/spec/engine_spec.ejs') %>
-        <%- include('../partials/spec/electric_hybrid.ejs')%>
-        <%- include('../partials/spec/space_weight_volume.ejs') %>
-        <%- include('../partials/spec/dimension.ejs') %>
-        <%- include('../partials/spec/drivetrain.ejs') %>
+        </div>
+        <% if(value.is_general_information) {%> 
+          <%- include('../partials/spec/general_information.ejs') %> 
+        <%}%>
+
+        <% if(value.is_performance_spec) {%> 
+          <%- include('../partials/spec/performance_spec.ejs') %> 
+        <%}%>
+
+        <% if(value.is_engine_spec) {%> 
+          <%- include('../partials/spec/engine_spec.ejs') %> 
+        <%}%>
+
+        <% if(value.is_electric_spec) {%> 
+          <%- include('../partials/spec/electric_hybrid.ejs') %> 
+        <%}%>
+
+        <% if(value.is_space_spec) {%> 
+          <%- include('../partials/spec/space_weight_volume.ejs') %> 
+        <%}%>
+
+        <% if(value.is_dimension_spec) {%> 
+          <%- include('../partials/spec/dimension.ejs') %> 
+        <%}%>
+
+        <% if(value.is_drivertrain_spec) {%> 
+          <%- include('../partials/spec/drivetrain.ejs') %> 
+        <%}%>
       </tbody>
     </table>
   </div>
 </div>
-

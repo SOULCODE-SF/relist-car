@@ -7,7 +7,11 @@ const {
 } = require('../../utils/database');
 const path = require('path');
 const fs = require('fs');
-const { formatFileName, moveFile } = require('../../utils/helpers');
+const {
+  formatFileName,
+  moveFile,
+  handleImages,
+} = require('../../utils/helpers');
 
 exports.getSettingPage = async (req, res) => {
   try {
@@ -26,7 +30,7 @@ exports.getSettingPage = async (req, res) => {
   }
 };
 
-exports.updateSetting = async (req, res) => {
+exports.updateSetting = async (req, res, next) => {
   let connection;
   try {
     const {
@@ -41,6 +45,9 @@ exports.updateSetting = async (req, res) => {
       sosmed_twitter,
       sosmed_instagram,
       sosmed_youtube,
+      adsense_gtm,
+      hitstat_code,
+      richsnippet_code,
     } = req.body;
 
     req.body.site_name = req.body.site_name.trim();
@@ -54,46 +61,47 @@ exports.updateSetting = async (req, res) => {
     connection = await getConnection();
     await connection.beginTransaction();
 
-    const rows = await DBquery('SELECT logo FROM setting LIMIT 1');
+    const rows = await DBquery('SELECT logo, favicon FROM setting LIMIT 1');
     let site_logo = rows[0]?.logo;
+    let favicon = rows[0]?.favicon;
 
-    if(req.file){
-      const oldImagePath = site_logo
-      const fileExtension = '.webp';
-      const formattedFileName = formatFileName('site_logo', fileExtension);
-      const newDir = path.join(
-        __dirname,
-        '../../../public/assets/images/setting'
-      );
-      const newFilePath = path.join(newDir, formattedFileName);
-      
-      site_logo = `/assets/images/setting/${formattedFileName}`;
-      const oldPath = req.file.path;
-  
-        fs.mkdir(newDir, { recursive: true }, async (err) => {
-          if (err) throw new Error('Error creating directory');
-          moveFile(oldPath, newFilePath, async (err) => {
-            if (err) throw new Error('Error moving file');
-  
-            
-  
-            if (oldImagePath && oldImagePath !== site_logo) {
-              const oldImageFullPath = path.join(
-                __dirname,
-                '../../../../public',
-                oldImagePath
-              );
-  
-              try {
-                await unlinkFile(oldImageFullPath);
-              } catch (unlinkError) {
-                console.error('Error deleting old image:', unlinkError);
-              }
-            }
-          });
-        });
+    console.log(req.files);
+    if (req.files) {
+      if (req.files.site_logo) {
+        const propsLogo = {
+          oldpath: site_logo,
+          fileName: 'site_logo',
+          newDir: 'assets/images/setting',
+          path: '/assets/images/setting',
+          uploadPath: req.files.site_logo[0].path,
+          ext: '.webp',
+        };
+
+        const logo = await handleImages(propsLogo);
+        if (!logo.success) {
+          throw new Error(logo.message);
+        }
+        site_logo = logo.path;
+      }
+      if (req.files.favicon) {
+        const propsFavicon = {
+          oldpath: favicon,
+          fileName: 'favicon',
+          newDir: 'assets/images/setting',
+          path: '/assets/images/setting',
+          uploadPath: req.files.favicon[0].path,
+          ext: '.ico',
+        };
+
+        const upFavicon = await handleImages(propsFavicon);
+        if (!upFavicon.success) {
+          throw new Error(upFavicon.message);
+        }
+        favicon = upFavicon.path;
+        console.log(favicon);
+      }
     }
-    
+
     let querystr = `UPDATE setting
                       SET 
                         site_name = ?,
@@ -103,11 +111,15 @@ exports.updateSetting = async (req, res) => {
                         copyright = ?,
                         meta_title = ?,
                         meta_description = ?,
+                        favicon = ?,
                         logo = ?,
                         facebook_url = ?,
                         twitter_url = ?,
                         instagram_url = ?,
-                        youtube_url = ?
+                        youtube_url = ?,
+                        adsense_gtm = ?,
+                        hitstat_code = ?,
+                        richsnippet_code = ?
                       WHERE id = ?; 
                     `;
     let queryvalue = [
@@ -118,11 +130,15 @@ exports.updateSetting = async (req, res) => {
       copyright_text,
       meta_title,
       meta_description,
+      favicon,
       site_logo,
       sosmed_facebook,
       sosmed_twitter,
       sosmed_instagram,
       sosmed_youtube,
+      adsense_gtm,
+      hitstat_code,
+      richsnippet_code,
       1,
     ];
     await DBquery(querystr, queryvalue);
@@ -134,7 +150,7 @@ exports.updateSetting = async (req, res) => {
     if (connection) await rollbackTransaction(connection);
 
     console.error(error);
-    res.status(500).json('Internal Server Error');
+    next(error);
   } finally {
     if (connection) await releaseConnection(connection);
   }

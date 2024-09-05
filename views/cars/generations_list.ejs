@@ -7,7 +7,7 @@
       <span class="arrow">&rarr;</span>
     </li>
     <li class="nav-item">
-      <a href="/brands/<%= datas[0].b_id %>/models" class="nav-link"
+      <a href="/brands/<%= datas[0].brand_param %>" class="nav-link"
         ><%= datas[0].brand_name %></a
       >
     </li>
@@ -16,7 +16,7 @@
     </li>
     <li class="nav-item">
       <a
-        href="/brands/models/<%= datas[0].m_id %>/generations"
+        href="/brands/<%= datas[0].brand_param %>/<%= datas[0].model_param %>"
         class="nav-link"
         ><%= datas[0].model_name %></a
       >
@@ -34,12 +34,20 @@
   <div class="row">
     <% datas.forEach(item => { %>
     <div class="col-12 mb-4">
-      <a href="/specs/<%= item.id %>" class="standar-link text-decoration-none">
-        <div class="card p-4 <%= item.flag === 'red' ? 'label-red' : 'label-green' %>">
+      <a
+        href="/brands/<%= item.brand_param %>/<%= item.model_param %>/<%= item.gen_param %>/<%= item.engine_slug %>"
+        class="standar-link text-decoration-none car-link"
+        data-url="/brands/<%= item.brand_param %>/<%= item.model_param %>/<%= item.gen_param %>/<%= item.engine_slug %>"
+      >
+        <div
+          class="card p-4 <%= item.flag === 'red' ? 'label-red' : 'label-green' %>"
+        >
           <div class="card-body">
             <h5 class="card-title ps-2"><%= item.engine %></h5>
             <p class="card-text ps-2">
-              <span><%= item.start_production %> - <%= item.end_production %></span><br>
+              <span
+                ><%= item.start_production %> - <%= item.end_production %></span
+              ><br />
               <span><%= item.acceleration_100kmh %></span>
             </p>
           </div>

@@ -1,4 +1,4 @@
-// Smooth Scrolling for menu links
+
 const pageLink = document.querySelectorAll('.menu-scroll');
 
 pageLink.forEach((elem) => {
@@ -11,7 +11,6 @@ pageLink.forEach((elem) => {
   });
 });
 
-// Section menu active state
 function onScroll() {
   const sections = document.querySelectorAll('.menu-scroll');
   const scrollPos =
@@ -38,7 +37,6 @@ function onScroll() {
 
 window.addEventListener('scroll', onScroll);
 
-// Initialize scroll animation for alphabet links
 document.addEventListener('DOMContentLoaded', () => {
   const letterLinks = document.querySelectorAll('.alphabet-list a');
 
@@ -55,9 +53,7 @@ document.addEventListener('DOMContentLoaded', () => {
   });
 });
 
-// Initialize Select2 for various dropdowns
 $(document).ready(() => {
-  // Brand filter and form submission
   $('#filter-brand')
     .select2({
       placeholder: 'Search for a brand',
@@ -77,7 +73,6 @@ $(document).ready(() => {
     })
     .on('change', () => $('#carFilterForm').submit());
 
-  // Brand, model, and generation dropdowns
   $('#input-brand').select2({
     width: '100%',
     placeholder: 'Search for a brand',
@@ -116,7 +111,7 @@ $(document).ready(() => {
         const models = response.datas;
         models.forEach((model) => {
           $('#input-model').append(
-            $('<option></option>').attr('value', model.id).text(model.name),
+            $('<option></option>').attr('value', model.id).text(model.name)
           );
         });
         $('#input-model').trigger('change.select2');
@@ -144,7 +139,7 @@ $(document).ready(() => {
           $('#input-generation').append(
             $('<option></option>')
               .attr('value', generation.id)
-              .text(generation.name),
+              .text(generation.name)
           );
         });
         $('#input-generation').trigger('change.select2');
@@ -160,7 +155,6 @@ $(document).ready(() => {
       url: '/get-engine',
       dataType: 'json',
       delay: 250,
-      data: (params) => ({ search: params.term }),
       processResults: (data) => ({
         results: data.datas.map((item) => ({
           id: item.name,
@@ -190,12 +184,11 @@ $(document).ready(() => {
   });
 });
 
-// Counter animation for elements with data-count attribute
 document.addEventListener('DOMContentLoaded', () => {
   function animateCount(element, endValue) {
     const startValue = 0;
-    const duration = 2000; // duration in milliseconds
-    const stepTime = 10; // time between steps in milliseconds
+    const duration = 2000;
+    const stepTime = 10;
     const stepCount = Math.floor(duration / stepTime);
     const stepValue = endValue / stepCount;
     let currentValue = startValue;
@@ -216,5 +209,27 @@ document.addEventListener('DOMContentLoaded', () => {
   document.querySelectorAll('[data-count]').forEach((el) => {
     const endValue = parseInt(el.getAttribute('data-count'), 10);
     animateCount(el, endValue);
+  });
+
+  const carLinks = document.querySelectorAll('.car-link');
+
+  carLinks.forEach((link) => {
+    link.addEventListener('click', function (event) {
+      event.preventDefault();
+
+      const url = this.dataset.url;
+
+      fetch('/check-car?url=' + encodeURIComponent(url))
+        .then((response) => response.json())
+        .then((data) => {
+          window.location.href = data.url;
+        })
+        .catch((error) => {
+          console.error('Error:', error);
+          alert(
+            'An error occurred while checking the car specifications. Please try again later.'
+          );
+        });
+    });
   });
 });

@@ -5,6 +5,7 @@ const {
   formatFileName,
   moveFile,
   unlinkFile,
+  handleImages,
 } = require('../../../utils/helpers');
 
 var querystr = '',
@@ -44,37 +45,39 @@ exports.addBrands = async (req, res, next) => {
     const { name, is_featured } = req.body;
 
     if (!req.file) {
-      return res.status(400).send('File is required');
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Please upload an image. It is required for this operation.',
+      };
+      return res.redirect('/admin/add-brands');
     }
 
-    const fileExtension = '.webp';
-    const formattedFileName = formatFileName(name, fileExtension);
-    const oldPath = req.file.path;
-    const newDir = path.join(
-      __dirname,
-      '../../../../public/assets/images/brands'
-    );
-    const newFilePath = path.join(newDir, formattedFileName);
+    const props = {
+      oldpath: null,
+      fileName: name,
+      newDir: 'assets/images/brands',
+      path: 'images/brands',
+      uploadPath: req.file.path,
+      ext: '.webp',
+    };
 
-    console.log(newFilePath);
+    const image = await handleImages(props);
 
-    fs.mkdir(newDir, { recursive: true }, (err) => {
-      if (err) throw new Error('Error creating directory');
+    if (image.success) {
+      const querystr =
+        'INSERT INTO brands (name, image_path, is_featured) VALUES (?,?,?)';
+      const queryvalue = [name, image.path, is_featured];
 
-      moveFile(oldPath, newFilePath, (err) => {
-        if (err) throw new Error('Error moving file');
+      await DBquery(querystr, queryvalue);
 
-        const brand_image = `/assets/images/brands/${formattedFileName}`;
-
-        const querystr =
-          'INSERT INTO brands (name, image_path, is_featured) VALUES (?,?,?)';
-        const queryvalue = [name, brand_image, is_featured];
-
-        DBquery(querystr, queryvalue);
-
-        res.redirect('/admin/cars-brands');
-      });
-    });
+      req.session.alert = {
+        type: 'alert-success',
+        message: 'Brands added successfully!',
+      };
+      return res.redirect('/admin/cars-brands');
+    } else {
+      throw new Error(image.message);
+    }
   } catch (error) {
     next(error);
   }
@@ -174,11 +177,32 @@ exports.deleteBrands = async (req, res, next) => {
     const id = req.params.id;
 
     const cars = await DBquery('SELECT * FROM cars WHERE b_id = ?', [id]);
+    const models = await DBquery('SELECT * FROM models WHERE brand_id = ?', [
+      id,
+    ]);
+    const generations = await DBquery(
+      'SELECT * FROM generations WHERE model_id = ?',
+      [models[0]?.id]
+    );
 
     if (cars.length > 0) {
       req.session.alert = {
         type: 'alert-danger',
         message: 'Cannot delete brand because there are associated cars.',
+      };
+      return res.redirect('/admin/cars-brands');
+    }
+    if (generations.length > 0) {
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Cannot delete brand because there are associated generations',
+      };
+      return res.redirect('/admin/cars-brands');
+    }
+    if (models.length > 0) {
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Cannot delete brand because there are associated models',
       };
       return res.redirect('/admin/cars-brands');
     }
@@ -201,6 +225,11 @@ exports.deleteBrands = async (req, res, next) => {
 
       await unlinkFile(oldImageFullPath);
     }
+
+    req.session.alert = {
+      type: 'alert-success',
+      message: 'Brands Deleted Succesfully',
+    };
 
     res.redirect('/admin/cars-brands');
   } catch (error) {

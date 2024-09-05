@@ -5,13 +5,21 @@
       <div class="form-group d-grid gap-3">
         <div class="row g-3 mb-3" id="image-upload-container">
           <label for="image_upload" class="col-md-2 col-form-label">Images</label>
-          <input
-            name="images"
-            type="file"
-            id="input-images"
-            accept="image/*"
-            multiple
-          />
+          <div id="image-upload-fields">
+            <div class="row g-3 mb-3 image-upload-field">
+              <div class="col-md-10">
+                <input
+                  name="car_images"
+                  type="file"
+                  accept="image/*"
+                />
+              </div>
+              <div class="col-md-2">
+                <button type="button" class="btn btn-danger btn-remove-image" style="display: none;">Remove</button>
+              </div>
+            </div>
+          </div>
+          <button type="button" id="add-image-button" class="btn btn-primary">+ Add More</button>
         </div>
       </div>
     </div>

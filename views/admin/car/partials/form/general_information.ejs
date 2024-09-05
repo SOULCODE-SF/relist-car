@@ -75,17 +75,16 @@
           </div>
         </div>
         <div class="row" id="engine">
-          <label for="input-engine" class="col-md-2 col-lg-2 col-form-label"
-            >Engine</label
-          >
+          <label for="input-engine" class="col-md-2 col-lg-2 col-form-label">Engine</label>
           <div class="col-md-6 col-lg-4">
-            <input
-              name="engine"
-              type="text"
-              class="form-control"
-              id="input-engine"
-              value="<%= data.car?.engine %>"
-            />
+            <select
+            id="input-engine"
+            name="engine"
+            class="form-select"
+            style="width: 100%"
+            aria-label="Country"
+            value="<%= data.car?.engine %>"
+          ></select>
           </div>
         </div>
         <div class="row" id="start_production">
