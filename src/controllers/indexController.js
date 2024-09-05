@@ -39,7 +39,7 @@ const getHomePage = async (req, res, next) => {
 
     const recentCars = await DBquery(query.home.recentCars, [12]);
 
-    querystr = 'SELECT * FROM brands WHERE is_featured = 1 LIMIT 39';
+    querystr = `SELECT *, LOWER(name) AS param FROM brands WHERE is_featured = 1 LIMIT 39`;
     const brands = await DBquery(querystr);
 
     const allbrand = {
@@ -170,10 +170,11 @@ const getGenerationLists = async (req, res, next) => {
 
 const getSpec = async (req, res, next) => {
   try {
-    let carId = req.params.id;
+    let generation = req.params.generation_name;
+    generation = revertParam(generation);
+    let engine = req.params.engine;
 
-    const datas = await DBquery('CALL get_spec(?)', [carId]);
-
+    const datas = await DBquery('CALL get_spec(?, ?)', [engine, generation]);
     const data = datas[0][0];
     const imagescar = await DBquery(
       'SELECT image_path FROM car_images WHERE car_id = ?',
@@ -182,6 +183,12 @@ const getSpec = async (req, res, next) => {
     let haveElectricMotor = false;
     if (data.electric_motor_1_power != '') {
       haveElectricMotor = true;
+    }
+
+    function hasNonEmptyValue(obj) {
+      return Object.values(obj).some(
+        (value) => value !== '' && value !== null && value !== undefined
+      );
     }
 
     const jsonData = {
@@ -298,8 +305,19 @@ const getSpec = async (req, res, next) => {
       images: imagescar,
     };
 
+    const value = {
+      is_general_information: hasNonEmptyValue(jsonData.general_information),
+      is_performance_spec: hasNonEmptyValue(jsonData.performance_spec),
+      is_engine_spec: hasNonEmptyValue(jsonData.engine_spec),
+      is_dimension_spec: hasNonEmptyValue(jsonData.dimension),
+      is_space_spec: hasNonEmptyValue(jsonData.space),
+      is_electric_spec: hasNonEmptyValue(jsonData.electric),
+      is_drivetrain_spec: hasNonEmptyValue(jsonData.drivetrain),
+    };
+
     res.render('cars/specs', {
       data: jsonData,
+      value,
       title: 'Spec',
       currentPage: 'specs',
     });
@@ -430,6 +448,32 @@ const getListCountry = async (req, res, next) => {
   }
 };
 
+const checkCar = async (req, res, next) => {
+  try {
+    const url = req.query.url;
+
+    const segments = url.split('/');
+    let engine = segments[segments.length - 1];
+    let generation = segments[segments.length - 2];
+    generation = revertParam(generation);
+
+    const data = await DBquery('CALL get_spec(?, ?)', [engine, generation]);
+
+    if (data[0][0] == undefined) {
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Specifications are not yet available for this car model',
+      };
+
+      return res.json({ url: url });
+    } else {
+      return res.json({ url: '/hola' });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getHomePage,
   getAllBrands,
@@ -444,4 +488,5 @@ module.exports = {
   getAboutUs,
   getLearnMore,
   getListCountry,
+  checkCar,
 };

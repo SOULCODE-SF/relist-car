@@ -13,6 +13,7 @@ const {
   getListCountry,
   getAboutUs,
   getLearnMore,
+  checkCar,
 } = require('../src/controllers/indexController');
 const {
   addUser,
@@ -42,7 +43,7 @@ router.get(
 );
 router.get('/car-by-engine/:engine', getCarByEngine);
 router.get('/car-by-body/:body', getCarByBody);
-router.get('/specs/:id', getSpec);
+router.get('/brands/:brand_name/:model_name/:generation_name/:engine', getSpec);
 
 router.get('/others', (req, res) => {
   res.render('other', { title: 'Halaman Lain', currentPage: 'others' });
@@ -74,6 +75,8 @@ router.get('/privacy-policy', getPrivacyPolicy);
 router.get('/contact-us', getContactUs);
 router.get('/about-us', getAboutUs);
 router.get('/learn-more', getLearnMore);
+
+router.get('/check-car', checkCar);
 
 //api service
 router.use('/api', apiservice);

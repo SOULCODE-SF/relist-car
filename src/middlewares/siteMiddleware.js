@@ -5,7 +5,16 @@ const cache = new nodecache();
 
 const getSiteInfo = async () => {
   try {
-    const res = await DBquery('SELECT * FROM setting LIMIT 1');
+    const querystr = `
+      SELECT
+        s.*,
+        (SELECT COUNT(*) FROM brands) AS total_brand, 
+        (SELECT COUNT(*) FROM models) AS total_model,
+        (SELECT COUNT(*) FROM cars) AS total_car
+      FROM
+        setting s ;
+    `;
+    const res = await DBquery(querystr);
 
     return res[0];
   } catch (error) {
@@ -25,8 +34,8 @@ async function siteInfoMiddleware(req, res, next) {
       cache.set(key, data, 86000);
     }
 
-    const dataCookies = data
-    res.locals.memories = dataCookies
+    const dataCookies = data;
+    res.locals.memories = dataCookies;
 
     if (req.session.alert) {
       res.locals.alert = req.session.alert;

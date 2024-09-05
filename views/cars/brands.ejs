@@ -5,13 +5,11 @@
     </li>
   </ul>
 </div>
-<section class="brands">
-
+<section class="container brands">
   <form action="/brands" method="GET" class="search-form d-flex">
     <input type="text" id="searchTerm" name="q" placeholder="Input brand name..." value="<%= searchTerm %>">
     <button class="ms-2" type="submit">Cari</button>
   </form>
-
   <div class="brand-list">
     <div class="alphabet-list">
       <% 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('').forEach(letter => { %>

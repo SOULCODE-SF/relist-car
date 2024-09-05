@@ -4,53 +4,44 @@
   </th>
 </tr>
 
-<% var data = data.space %>
-
-<% if(data.kerb_weight !== ''){%>
-  <tr>
-    <th>Kerb Weight</th>
-    <td><%= data.kerb_weight%></td>
-  </tr>
-<%};%>
-<% if(data.trunk_space_minimum !== ''){%>
-  <tr>
-    <th>Trunk Space Minimum</th>
-    <td><%= data.trunk_space_minimum %> mm</td>
-  </tr>
-<%};%>
-<% if(data.trunk_space_maximum !== ''){%>
-  <tr>
-    <th>Trunk Space Maximum</th>
-    <td><%= data.trunk_space_maximum %> mm</td>
-  </tr>
-<%};%>
-<% if(data.max_load !== ''){%>
-  <tr>
-    <th>Max Load</th>
-    <td><%= data.max_load %> mm</td>
-  </tr>
-<%};%>
-<% if(data.fuel_tank_capacity !== ''){%>
-  <tr>
-    <th>Fuel Tank Capacity</th>
-    <td><%= data.fuel_tank_capacity %> mm</td>
-  </tr>
-<%};%>
-<% if(data.permitted_trailer_load_with_brakes !== ''){%>
-  <tr>
-    <th>Permitted Trailer Load With Brakes </th>
-    <td><%= data.permitted_trailer_load_with_brakes %> mm</td>
-  </tr>
-<%};%>
-<% if(data.permitted_trailer_load_without_brakes !== ''){%>
-  <tr>
-    <th>Permitted Trailer Load Without Brakes</th>
-    <td><%= data.permitted_trailer_load_without_brakes %> mm</td>
-  </tr>
-<%};%>
-<% if(data.permitted_towbardownload !== ''){%>
-  <tr>
-    <th>Permitted Towbardownload</th>
-    <td><%= data.permitted_towbardownload %> mm</td>
-  </tr>
+<% var data = data.space %> <% if(data.kerb_weight !== ''){%>
+<tr>
+  <th>Kerb Weight</th>
+  <td><%= data.kerb_weight%></td>
+</tr>
+<%};%> <% if(data.trunk_space_minimum !== ''){%>
+<tr>
+  <th>Trunk Space Minimum</th>
+  <td><%= data.trunk_space_minimum %> mm</td>
+</tr>
+<%};%> <% if(data.trunk_space_maximum !== ''){%>
+<tr>
+  <th>Trunk Space Maximum</th>
+  <td><%= data.trunk_space_maximum %> mm</td>
+</tr>
+<%};%> <% if(data.max_load !== ''){%>
+<tr>
+  <th>Max Load</th>
+  <td><%= data.max_load %> mm</td>
+</tr>
+<%};%> <% if(data.fuel_tank_capacity !== ''){%>
+<tr>
+  <th>Fuel Tank Capacity</th>
+  <td><%= data.fuel_tank_capacity %> mm</td>
+</tr>
+<%};%> <% if(data.permitted_trailer_load_with_brakes !== ''){%>
+<tr>
+  <th>Permitted Trailer Load With Brakes</th>
+  <td><%= data.permitted_trailer_load_with_brakes %> mm</td>
+</tr>
+<%};%> <% if(data.permitted_trailer_load_without_brakes !== ''){%>
+<tr>
+  <th>Permitted Trailer Load Without Brakes</th>
+  <td><%= data.permitted_trailer_load_without_brakes %> mm</td>
+</tr>
+<%};%> <% if(data.permitted_towbardownload !== ''){%>
+<tr>
+  <th>Permitted Towbardownload</th>
+  <td><%= data.permitted_towbardownload %> mm</td>
+</tr>
 <%};%>

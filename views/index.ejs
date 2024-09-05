@@ -139,11 +139,14 @@
       </div>
     </div>
 
-    <div class="container banner">
+    <div class="banner">
       <div class="row p-4">
         <div class="col banner-item">
           <div class="icon-round">
-            <img src="/assets/images/car-icon.webp" alt="<%= memories.meta_title %>" />
+            <img
+              src="/assets/images/car-icon.webp"
+              alt="<%= memories.meta_title %>"
+            />
           </div>
           <h5 class="text-white text-center mt-2" style="font-weight: 600">
             Global Car
@@ -152,7 +155,10 @@
         </div>
         <div class="col banner-item">
           <div class="icon-round">
-            <img src="/assets/images/gear.webp" alt="<%= memories.meta_title %>" />
+            <img
+              src="/assets/images/gear.webp"
+              alt="<%= memories.meta_title %>"
+            />
           </div>
           <h5
             class="text-white text-center mt-2"
@@ -166,7 +172,10 @@
         </div>
         <div class="col banner-item">
           <div class="icon-round">
-            <img src="/assets/images/car-icon.webp" alt="<%= memories.meta_title %>" />
+            <img
+              src="/assets/images/car-icon.webp"
+              alt="<%= memories.meta_title %>"
+            />
           </div>
           <h5
             class="text-white text-center mt-2"
@@ -220,18 +229,18 @@
     </div>
   </section>
 
-  <section class="brands" style="padding: 100px 0">
+  <section class="brands bg-white">
     <div class="title text-center mt-4 mb-4">
       <h5>POPULAR BRANDS</h5>
       <h1>Our Top Quality <span>Brands</span></h1>
     </div>
 
-    <div class="brand-list bg-white p-4">
+    <div class="container brand-list p-4">
       <div class="row">
         <% datas.brands.forEach(brand => { %>
         <div class="col-lg-2 d-flex justify-content-center">
           <a
-            href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.id + '/models' %>"
+            href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.param %>"
             class="brand-card"
           >
             <img
