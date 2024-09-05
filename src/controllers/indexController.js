@@ -305,6 +305,8 @@ const getSpec = async (req, res, next) => {
       images: imagescar,
     };
 
+    console.log(jsonData)
+
     const value = {
       is_general_information: hasNonEmptyValue(jsonData.general_information),
       is_performance_spec: hasNonEmptyValue(jsonData.performance_spec),
@@ -467,7 +469,7 @@ const checkCar = async (req, res, next) => {
 
       return res.json({ url: url });
     } else {
-      return res.json({ url: '/hola' });
+      return res.json({ url: url });
     }
   } catch (error) {
     next(error);

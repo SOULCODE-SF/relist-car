@@ -99,6 +99,7 @@ const upload = (type, fields) => {
 
     uploadMiddleware(req, res, (err) => {
       if (err) {
+        console.log(err)
         if (err.code === 'LIMIT_FILE_SIZE') {
           return res.status(400).send('File size exceeds the limit of 600KB');
         }
@@ -139,7 +140,10 @@ router.get('/banner/delete/:banner_id', deleteBanner);
 
 router.get('/cars', getCarsList);
 router.get('/cars/add', getAddCar);
-router.post('/cars/add', uploadCarImages.array('images', 10), addCar);
+const carImages = [
+  { name: 'car_images', maxCount: 5 }
+];
+router.post('/cars/add', upload('temp', carImages), addCar);
 router.get('/cars/update/:id', getEditCar);
 router.post('/cars/update/:id', updateCar);
 router.get('/cars/delete/:id', deleteCar);

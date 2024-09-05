@@ -47,7 +47,7 @@ const handleImages = async (props) => {
     const newDir = path.join(__dirname, `../../public/${props.newDir}`);
     const newFilePath = path.join(newDir, formattedFileName);
 
-    const temp = `${props.path}/${formattedFileName}`;
+    const temp = `/${props.path}/${formattedFileName}`;
     const oldPath = props.uploadPath;
 
     fs.mkdir(newDir, { recursive: true }, async (err) => {

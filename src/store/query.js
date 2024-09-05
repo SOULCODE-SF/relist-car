@@ -1,6 +1,22 @@
 let queryStore = {
   home: {
-    recentCars: `select c.id, concat(g.title , ' ', gi.engine) as name, b.name as brand_name, m.name as model_name, g.title as generation_name, g.image_path, gi.*, ps.fuel_consumption_combined , dbss.drive_wheel from cars c join brands b on b.id = c.b_id join models m on m.id = c.m_id join generations g on g.id = c.g_id left join general_information gi on gi.id = c.gi_id left join performance_specs ps on ps.id = c.ps_id left join drivetrain_brakes_suspension_specs dbss on dbss.id = c.dbss_id order by rand() limit ?;`,
+    recentCars: `select 
+      c.id, concat(g.title , ' ', gi.engine) as name, 
+      b.name as brand_name,
+      m.name as model_name,
+      g.title as generation_name, 
+      LOWER(b.name) as brand_param,
+      LOWER(REPLACE(m.name, ' ', '-')) as model_param,
+      LOWER(REPLACE(g.title, ' ', '-')) as generation_param,
+      g.image_path, 
+      gi.*, ps.fuel_consumption_combined , dbss.drive_wheel 
+    from cars c 
+    join brands b on b.id = c.b_id 
+    join models m on m.id = c.m_id 
+    join generations g on g.id = c.g_id 
+    left join general_information gi on gi.id = c.gi_id 
+    left join performance_specs ps on ps.id = c.ps_id 
+    left join drivetrain_brakes_suspension_specs dbss on dbss.id = c.dbss_id order by rand() limit ?`,
   },
   brands: {
     getAllBrands:

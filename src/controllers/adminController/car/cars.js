@@ -12,6 +12,7 @@ const {
   getModelNameById,
   getGenerationNameById,
 } = require('../../../utils/carHelpers');
+const { handleImages } = require('../../../utils/helpers');
 
 const cache = new nodecache();
 
@@ -134,6 +135,7 @@ exports.addCar = async (req, res, next) => {
   let connection;
   try {
     let electric_car = false;
+    console.log('sini')
     let {
       generation_id,
       brand_id,
@@ -224,8 +226,6 @@ exports.addCar = async (req, res, next) => {
       powertrain_architecture = new_powertrain_architecture;
     }
 
-    console.log('reqfiles', req.files);
-
     let hasAlert = false;
 
     if (!brand_id) {
@@ -252,7 +252,7 @@ exports.addCar = async (req, res, next) => {
         message: 'Engine is required',
       };
       hasAlert = true;
-    } else if (!req.file || !req.files || req.files.length === 0) {
+    } else if (!req.files) {
       req.session.alert = {
         type: 'alert-danger',
         message: 'Images is required',
@@ -413,31 +413,39 @@ exports.addCar = async (req, res, next) => {
     const carId = carResult.insertId;
 
     console.log('reqfiles', req.files);
-    console.log('reqfile', req.file);
+    console.log('carId', carId)
 
-    if (req.files && req.files.length > 0) {
+    if (req.files) {
       const brand_name = await getBrandNameById(brand_id);
       const model_name = await getModelNameById(model_id);
       const generation_name = await getGenerationNameById(generation_id);
 
-      let pathimage = `${brand_name}/${model_name}/${generation_name}/${
+      let pathimage = `images/brands/${brand_name}/${model_name}/${generation_name}/${
         generation_name + engine
       }`;
       pathimage = pathimage.toLowerCase().replace(/ /g, '-');
 
-      const images = req.files.map((file) => [
-        carId,
-        `/assets/images/brands/${pathimage}/${file.filename}`,
-      ]);
+      console.log(pathimage)
 
-      await Promise.all(
-        images.map(([carId, imagePath]) =>
-          DBquery('INSERT INTO car_images(car_id, image_path) VALUES (?, ?)', [
-            carId,
-            imagePath,
-          ])
-        )
-      );
+      for(let i=0; i<req.files.car_images.length; i++){
+        const props = {
+          oldpath: null,
+          fileName: i+1,
+          newDir: '/assets/'+pathimage,
+          path: pathimage,
+          uploadPath: req.files.car_images[i].path,
+          ext: '.webp',
+        };
+    
+        const image = await handleImages(props);
+        if (image.success) {
+          const querystr =
+            'INSERT INTO car_images (image_path, car_id) VALUES (?,?)';
+          const queryvalue = [image.path, carId];
+
+          await DBquery(querystr, queryvalue)
+        }
+      }
     }
 
     await commitTransaction(connection);
@@ -459,7 +467,7 @@ exports.getEditCar = async (req, res, next) => {
   try {
     const id = req.params.id;
 
-    const carvalue = await DBquery('CALL get_spec(?)', [id]);
+    const carvalue = await DBquery('CALL get_spec_by_id(?)', [id]);
 
     const powertrain_architecture = await DBquery(`
       SELECT DISTINCT powertrain_architecture
@@ -813,6 +821,8 @@ exports.deleteCar = async (req, res, next) => {
         'DELETE FROM cars WHERE id = ? AND EXISTS (SELECT 1 FROM cars WHERE id = ?)',
         [car_id, car_id]
       );
+
+      await DBquery('DELETE FROM car_images WHERE car_id = ?', [car_id])
 
       await commitTransaction(connection);
 

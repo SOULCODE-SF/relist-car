@@ -56,7 +56,7 @@ exports.addBrands = async (req, res, next) => {
       oldpath: null,
       fileName: name,
       newDir: 'assets/images/brands',
-      path: '/assets/images/brands',
+      path: 'images/brands',
       uploadPath: req.file.path,
       ext: '.webp',
     };

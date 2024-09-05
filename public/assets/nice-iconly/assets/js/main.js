@@ -226,4 +226,50 @@
       alert('You can only add up to 2 electric motors.');
     }
   });
+
+  const addImageButton = document.getElementById('add-image-button');
+  const imageUploadFieldsContainer = document.getElementById('image-upload-fields');
+
+  const maxFields = 5;
+
+  addImageButton.addEventListener('click', function () {
+  const currentFieldsCount = imageUploadFieldsContainer.querySelectorAll('.image-upload-field').length;
+
+  if (currentFieldsCount >= maxFields) {
+    alert('You can only add up to 5 image upload fields.');
+      return;
+    }
+    const newField = document.createElement('div');
+    newField.className = 'row g-3 mb-3 image-upload-field';
+    newField.innerHTML = `
+        <div class="col-md-10">
+          <input name="car_images" type="file" accept="image/*" />
+        </div>
+        <div class="col-md-2">
+          <button type="button" class="btn btn-danger btn-remove-image">Remove</button>
+        </div>
+      `;
+
+    imageUploadFieldsContainer.appendChild(newField);
+    const removeButtons = document.querySelectorAll('.btn-remove-image');
+    removeButtons.forEach(button => {
+      button.style.display = 'block';
+    });
+  });
+
+    imageUploadFieldsContainer.addEventListener('click', function (event) {
+      if (event.target && event.target.classList.contains('btn-remove-image')) {
+        const fieldToRemove = event.target.closest('.image-upload-field');
+        if (fieldToRemove) {
+          fieldToRemove.remove();
+
+          if (document.querySelectorAll('.image-upload-field').length === 0) {
+            const removeButtons = document.querySelectorAll('.btn-remove-image');
+            removeButtons.forEach(button => {
+              button.style.display = 'none';
+            });
+          }
+        }
+      }
+    });
 })();

@@ -1,6 +1,4 @@
-const { response } = require('express');
 
-// Smooth Scrolling for menu links
 const pageLink = document.querySelectorAll('.menu-scroll');
 
 pageLink.forEach((elem) => {
@@ -157,7 +155,6 @@ $(document).ready(() => {
       url: '/get-engine',
       dataType: 'json',
       delay: 250,
-      data: (params) => ({ search: params.term }),
       processResults: (data) => ({
         results: data.datas.map((item) => ({
           id: item.name,
