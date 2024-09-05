@@ -72,7 +72,6 @@ exports.getGenerationName = async (req, res, next) => {
   try {
     const model_id = req.params.model_id;
 
-    console.log(model_id);
     const datas = await DBquery(
       'SELECT id, title as name FROM generations WHERE model_id = ?',
       [model_id]
@@ -89,8 +88,6 @@ exports.getGenerationName = async (req, res, next) => {
 exports.getEngineName = async (req, res, next) => {
   try {
     const search = req.query.search;
-
-    console.log('search', search);
 
     let querystr = `SELECT gi.engine as name FROM general_information gi `;
     if (search) {
@@ -135,7 +132,6 @@ exports.addCar = async (req, res, next) => {
   let connection;
   try {
     let electric_car = false;
-    console.log('sini')
     let {
       generation_id,
       brand_id,
@@ -412,9 +408,6 @@ exports.addCar = async (req, res, next) => {
 
     const carId = carResult.insertId;
 
-    console.log('reqfiles', req.files);
-    console.log('carId', carId)
-
     if (req.files) {
       const brand_name = await getBrandNameById(brand_id);
       const model_name = await getModelNameById(model_id);
@@ -424,8 +417,6 @@ exports.addCar = async (req, res, next) => {
         generation_name + engine
       }`;
       pathimage = pathimage.toLowerCase().replace(/ /g, '-');
-
-      console.log(pathimage)
 
       for(let i=0; i<req.files.car_images.length; i++){
         const props = {
@@ -787,7 +778,6 @@ exports.deleteCar = async (req, res, next) => {
         };
       }
       const car = onres[0];
-      console.log(car);
 
       await DBquery(
         'DELETE FROM general_information WHERE id = ? AND EXISTS (SELECT 1 FROM general_information WHERE id = ?)',

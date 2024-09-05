@@ -35,9 +35,9 @@
     <% datas.forEach(item => { %>
     <div class="col-12 mb-4">
       <a
-        href="/brands/<%= item.brand_param %>/<%= item.model_param %>/<%= item.gen_param %>/<%= item.engine %>"
+        href="/brands/<%= item.brand_param %>/<%= item.model_param %>/<%= item.gen_param %>/<%= item.engine_slug %>"
         class="standar-link text-decoration-none car-link"
-        data-url="/brands/<%= item.brand_param %>/<%= item.model_param %>/<%= item.gen_param %>/<%= item.engine %>"
+        data-url="/brands/<%= item.brand_param %>/<%= item.model_param %>/<%= item.gen_param %>/<%= item.engine_slug %>"
       >
         <div
           class="card p-4 <%= item.flag === 'red' ? 'label-red' : 'label-green' %>"
