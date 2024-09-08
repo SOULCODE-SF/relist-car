@@ -158,6 +158,8 @@ const getGenerationLists = async (req, res, next) => {
 
     const datas = await DBquery(queryStore.generations.list, [generation_name]);
 
+    console.log(datas);
+
     res.render('cars/generations_list', {
       datas: datas,
       title: 'List Generation',
@@ -178,7 +180,7 @@ const getSpec = async (req, res, next) => {
     const data = datas[0][0];
     const imagescar = await DBquery(
       'SELECT image_path FROM car_images WHERE car_id = ?',
-      [data.car_id]
+      [data.car_id],
     );
     let haveElectricMotor = false;
     if (data.electric_motor_1_power != '') {
@@ -187,7 +189,7 @@ const getSpec = async (req, res, next) => {
 
     function hasNonEmptyValue(obj) {
       return Object.values(obj).some(
-        (value) => value !== '' && value !== null && value !== undefined
+        (value) => value !== '' && value !== null && value !== undefined,
       );
     }
 
@@ -305,7 +307,7 @@ const getSpec = async (req, res, next) => {
       images: imagescar,
     };
 
-    console.log(jsonData)
+    console.log(jsonData);
 
     const value = {
       is_general_information: hasNonEmptyValue(jsonData.general_information),
@@ -439,7 +441,7 @@ const getListCountry = async (req, res, next) => {
 
     if (name) {
       const filteredCountries = countries.filter((country) =>
-        country.name.toLowerCase().includes(name.toLowerCase())
+        country.name.toLowerCase().includes(name.toLowerCase()),
       );
       res.json({ data: filteredCountries });
     } else {

@@ -20,7 +20,7 @@ const apiGetModelByBrand = async (req, res) => {
 
     const models = await DBquery(
       'SELECT id, name FROM models WHERE brand_id = ?',
-      [brandId]
+      [brandId],
     );
 
     return res.json(models);
@@ -35,7 +35,7 @@ const apiGetGenerationByModel = async (req, res, next) => {
 
     const generations = await DBquery(
       'SELECT id, title as name FROM generations WHERE model_id = ?',
-      [modelId]
+      [modelId],
     );
 
     return res.json(generations);
@@ -48,17 +48,23 @@ const apiSearchCar = async (req, res, next) => {
   try {
     const { brand_id, model_id, generation_id, engine } = req.body;
 
-    let hasAlert = false;
-    if (!req.body || engine === 'None' || !engine) {
-      req.session.alert = {
-        type: 'alert-danger',
-        message: 'No Car Found',
-      };
-      hasAlert = true;
-      return res.redirect('/');
-    }
+    querystr = `
+      SELECT
+        brand.brand_name,
+        model.model_name,
+        generation.gen_name
+      FROM
+        (SELECT REPLACE(LOWER(name), ' ', '-') AS brand_name FROM brands WHERE id = ?) AS brand
+      CROSS JOIN
+        (SELECT REPLACE(LOWER(name), ' ', '-') AS model_name FROM models WHERE id = ?) AS model
+      CROSS JOIN 
+        (SELECT REPLACE(LOWER(title), ' ', '-') AS gen_name FROM generations WHERE id = ?) AS generation;
+    `;
+    queryvalue = [brand_id, model_id, generation_id];
+    const getValue = await DBquery(querystr, queryvalue);
+    const data = getValue[0];
 
-    console.log(req.body);
+    let hasAlert = false;
 
     if (!req.body) {
       req.session.alert = {
@@ -67,7 +73,9 @@ const apiSearchCar = async (req, res, next) => {
       };
       hasAlert = true;
     } else if (!engine || (engine !== 'None' && brand_id)) {
-      return res.redirect(`/generation-list/${generation_id}`);
+      return res.redirect(
+        `/brands/${data.brand_name}/${data.model_name}/${data.gen_name}`,
+      );
     } else if ((!brand_id && engine) || engine != 'None') {
       querystr = `SELECT c.id
                         FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.engine = ? GROUP BY g.title , gi.body_type;`;

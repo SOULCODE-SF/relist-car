@@ -55,7 +55,7 @@ let queryStore = {
   },
   specs: {
     addGeneralInformation:
-      'insert into general_information( generation_link_id, engine, start_production, end_production, powertrain_architecture, body_type, seat, door ) values (0, ?, ?, ?, ?, ?, ?, ?);',
+      'insert into general_information( generation_link_id, engine, start_production, end_production, powertrain_architecture, body_type, seat, door, engine_slug ) values (0, ?, ?, ?, ?, ?, ?, ?, ?);',
     addPerformanceSpecs:
       'INSERT INTO performance_specs ( generation_link_id, fuel_consumption_urban, fuel_consumption_extra_urban, fuel_consumption_combined, co2_emission, fuel_type, acceleration_100kmh, acceleration_62mph, acceleration_60mph, maximum_speed, emission_standard, weight_power_ratio, weight_power_torque ) VALUES (10000, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
     addEngineSpecs:
