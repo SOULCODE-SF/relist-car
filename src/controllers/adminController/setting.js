@@ -72,7 +72,7 @@ exports.updateSetting = async (req, res, next) => {
           oldpath: site_logo,
           fileName: 'site_logo',
           newDir: 'assets/images/setting',
-          path: '/assets/images/setting',
+          path: 'assets/images/setting',
           uploadPath: req.files.site_logo[0].path,
           ext: '.webp',
         };
@@ -88,7 +88,7 @@ exports.updateSetting = async (req, res, next) => {
           oldpath: favicon,
           fileName: 'favicon',
           newDir: 'assets/images/setting',
-          path: '/assets/images/setting',
+          path: 'assets/images/setting',
           uploadPath: req.files.favicon[0].path,
           ext: '.ico',
         };

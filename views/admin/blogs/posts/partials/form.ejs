@@ -1,0 +1,108 @@
+<div class="col-lg-12 col-md-12">
+    <div class="card">
+      <div class="card-body">
+        <h5 class="card-title">Posts Form</h5>
+  
+        <!-- Posts Image -->
+        <div class="row g-3 mb-3" id="posts-image">
+          <label for="posts_image" class="col-md-2 col-form-label">Posts Image</label>
+          <div class="col-md-6">
+            <div id="image-preview-container">
+                <img
+                    id="image-preview"
+                    src="<%= data?.image_path ? '/assets/' + data.image_path : '/assets/nice-iconly/assets/img/preview.png' %>"
+                    class="img-thumbnail"
+                    alt="Image Preview"
+                />
+            </div>
+            <div class="pt-2">
+              <label for="input-image" class="btn btn-primary btn-sm" title="Upload image">
+                <i class="icon-upload"></i>
+                <input
+                  name="post_image"
+                  type="file"
+                  id="input-image"
+                  accept="image/*"
+                  style="display: none;"
+                />
+              </label>
+              <a
+                href="#"
+                class="btn btn-danger btn-sm"
+                title="Remove image"
+                id="remove-image"
+              >
+                <i class="icon-trash-alt"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Title -->
+        <div class="row g-3 mb-3">
+          <label for="title" class="col-md-2 col-form-label">Title</label>
+          <div class="col-md-6">
+            <input
+              name="title"
+              type="text"
+              class="form-control"
+              id="title"
+              placeholder="Enter post title"
+              value="<%= data?.title %>"
+            />
+          </div>
+        </div>
+  
+        <!-- Category -->
+        <div class="row g-3 mb-3">
+          <label for="input-category" class="col-md-2 col-lg-2 col-form-label">Category</label>
+          <div class="col-md-6 col-lg-4">
+            <% if(data.category){%>
+                <span class="text-primary w-25"><%= data.category %></span>
+            <%}%>
+            <select
+              id="input-category"
+              name="category_id"
+              class="form-select"
+              style="width: 100%"
+              aria-label="Category"
+            >
+            </select>
+          </div>
+        </div>
+  
+        <!-- Status -->
+        <div class="row mb-3">
+          <label for="post_status" class="col-md-2 col-lg-2 col-form-label">Status</label>
+          <div class="col-md-6 col-lg-4">
+            <select
+              name="post_status"
+              id="input-post-status"
+              aria-label="Posts Status"
+              class="form-select"
+            >
+              <option value="Published" <%= data?.status == 'Published' ? 'selected' : '' %>>Published</option>
+              <option value="Draft" <%= data?.status == 'Draft' ? 'selected' : '' %>>Draft</option>
+            </select>
+          </div>
+        </div>
+  
+        <!-- Content -->
+        <div class="row mb-3">
+          <label for="content" class="col-form-label">Content</label>
+          <div class="col-md-8">
+            <textarea
+              name="content"
+              id="input-content"
+              rows="4"
+              class="form-control"
+            >
+              <%= data?.content %>
+            </textarea>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+  

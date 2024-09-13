@@ -182,6 +182,23 @@ $(document).ready(() => {
       cache: true,
     },
   });
+
+  $('#input-category').select2({
+    placeholder: 'Search for an category',
+    width: '100%',
+    ajax: {
+      url: '/blog/categories',
+      dataType: 'json',
+      delay: 250,
+      processResults: (data) => ({
+        results: data.datas.map((item) => ({
+          id: item.id,
+          text: item.name,
+        })),
+      }),
+      cache: true,
+    },
+  });
 });
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -233,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   tinymce.init({
-    selector: '#input-adsense-gtm, #input-hitstat-code',
+    selector: '#input-adsense-gtm, #input-hitstat-code, #input-content',
     menubar: false,
     plugins: 'advlist autolink lists link image charmap preview anchor textcolor',
     toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',

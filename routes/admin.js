@@ -62,6 +62,20 @@ const {
   getEditUsersPage,
   deleteUsers,
 } = require('../src/controllers/adminController/users');
+const {
+  getAllPosts,
+  getAllCategories,
+  getAddCategories,
+  addCategories,
+  getUpdateCategories,
+  updateCategories,
+  deleteCategories,
+  getAddPosts,
+  addPosts,
+  getEditPosts,
+  editPosts,
+  deletePosts,
+} = require('../src/controllers/adminController/blogs');
 
 const dynamicStorage = (type) => {
   return multer.diskStorage({
@@ -99,7 +113,7 @@ const upload = (type, fields) => {
 
     uploadMiddleware(req, res, (err) => {
       if (err) {
-        console.log(err)
+        console.log(err);
         if (err.code === 'LIMIT_FILE_SIZE') {
           return res.status(400).send('File size exceeds the limit of 600KB');
         }
@@ -140,9 +154,7 @@ router.get('/banner/delete/:banner_id', deleteBanner);
 
 router.get('/cars', getCarsList);
 router.get('/cars/add', getAddCar);
-const carImages = [
-  { name: 'car_images', maxCount: 5 }
-];
+const carImages = [{ name: 'car_images', maxCount: 5 }];
 router.post('/cars/add', upload('temp', carImages), addCar);
 router.get('/cars/update/:id', getEditCar);
 router.post('/cars/update/:id', updateCar);
@@ -199,5 +211,20 @@ router.post('/add-users', addUsers);
 router.get('/update-users/:id', getEditUsersPage);
 router.post('/update-users/:id', editUsers);
 router.get('/delete-users/:id', deleteUsers);
+
+//blogs
+router.get('/blog/posts', getAllPosts);
+router.get('/blog/add-posts', getAddPosts);
+router.post('/blog/add-posts', upload('temp', 'post_image'), addPosts);
+router.get('/blog/edit-posts/:id', getEditPosts);
+router.post('/blog/edit-posts/:id', upload('temp', 'post_image'), editPosts);
+router.get('/blog/delete-posts/:id', deletePosts);
+
+router.get('/blog/categories', getAllCategories);
+router.get('/blog/add-categories', getAddCategories);
+router.post('/blog/add-categories', addCategories);
+router.get('/blog/edit-categories/:id', getUpdateCategories);
+router.post('/blog/edit-categories/:id', updateCategories);
+router.get('/blog/delete-categories/:id', deleteCategories);
 
 module.exports = router;

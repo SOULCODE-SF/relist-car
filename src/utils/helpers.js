@@ -36,6 +36,27 @@ const unlinkFile = (filePath) => {
   });
 };
 
+const unlinkFileV2 = (filePath) => {
+  return new Promise((resolve, reject) => {
+    const fullPath = path.resolve(__dirname, '../../public/assets', filePath);
+
+    fs.unlink(fullPath, (err) => {
+      if (err) {
+        if (err.code === 'ENOENT') {
+          console.warn(
+            `Old image file not found, skipping deletion: ${fullPath}`
+          );
+          resolve();
+        } else {
+          reject(err);
+        }
+      } else {
+        resolve();
+      }
+    });
+  });
+};
+
 const handleImages = async (props) => {
   try {
     const oldImagePath = props.oldpath;
@@ -81,5 +102,6 @@ module.exports = {
   moveFile,
   formatFileName,
   unlinkFile,
+  unlinkFileV2,
   handleImages,
 };

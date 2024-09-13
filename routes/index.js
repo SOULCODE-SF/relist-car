@@ -28,6 +28,7 @@ const {
 } = require('../src/controllers/adminController/car/cars');
 
 const apiservice = require('./api');
+const { getCategoriesBlog } = require('../src/services/blogServices');
 const router = express.Router();
 
 router.get('/', getHomePage);
@@ -80,5 +81,7 @@ router.get('/check-car', checkCar);
 
 //api service
 router.use('/api', apiservice);
+
+router.use('/blog/categories', getCategoriesBlog)
 
 module.exports = router;
