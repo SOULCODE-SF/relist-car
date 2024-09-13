@@ -1,77 +1,85 @@
 <section class="section">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <div class="row align-items-center">
-                <div class="col-md-8 mt-2">
-                  <h1 class="fs-4 mb-1">Posts</h1>
-                  <nav>
-                    <ol class="breadcrumb">
-                      <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-                      <li class="breadcrumb-item active">Posts</li>
-                    </ol>
-                  </nav>
-                </div>
-                <div class="col-md-4">
-                  <div class="text-end">
-                    <a href="/admin/blog/add-posts" type="button" class="btn btn-primary"
-                      >Add Posts</a
-                    >
-                  </div>
-                </div>
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <div class="row align-items-center">
+            <div class="col-md-8 mt-2">
+              <h1 class="fs-4 mb-1">Posts</h1>
+              <nav>
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+                  <li class="breadcrumb-item active">Posts</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-md-4">
+              <div class="text-end">
+                <a
+                  href="/admin/blog/add-posts"
+                  type="button"
+                  class="btn btn-primary"
+                  >Add Posts</a
+                >
               </div>
-            <table id="datatable" class="table table-hover table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th width="70">Image</th>
-                  <th>Title</th>
-                  <th>Category</th>
-                  <th>Views</th>
-                  <th>Status</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <% datas.forEach((data, i) => { %>
-                    <tr>
-                      <td><%= data.id %></td>
-                      <td style="text-align: center">
-                        <img
-                          src="/assets/<%= data.image_path %>"
-                          alt="<%= data.title %>"
-                          style="max-width: 70px; height: auto"
-                        />
-                      </td>
-                      <td><%= data.title %></td>
-                      <td><%= data.category %></td>
-                      <td><%= data.total_view ?? 0 %></td>
-                      <td><%= data.status %></td>
-                      <td class="tw-100">
-                        <a
-                          href="/admin/blog/edit-posts/<%= data.id %>"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Edit"
-                          class="btn btn-warning btn-sm"
-                          ><i class="icon-edit"></i
-                        ></a>
-                        <a
-                          href="/admin/blog/delete-posts/<%= data.id %>"
-                          data-bs-toggle="tooltip"
-                          data-bs-placement="top"
-                          title="Delete"
-                          class="btn btn-danger btn-sm"
-                          ><i class="icon-trash-alt"></i
-                        ></a>
-                      </td>
-                    </tr>
-                <% }) %>
-              </tbody>
-            </table>
+            </div>
           </div>
+          <table
+            id="datatable"
+            class="table table-hover table-bordered dt-responsive nowrap"
+            style="border-collapse: collapse; border-spacing: 0; width: 100%"
+          >
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th width="70">Image</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Views</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% datas.forEach((data, i) => { %>
+              <tr>
+                <td><%= data.id %></td>
+                <td style="text-align: center">
+                  <img
+                    src="/assets/<%= data.image_path %>"
+                    alt="<%= data.title %>"
+                    class="img-thumbnail"
+                    style="max-width: 70px; height: auto"
+                  />
+                </td>
+                <td><%= data.title %></td>
+                <td><%= data.category %></td>
+                <td><%= data.total_view ?? 0 %></td>
+                <td><%= data.status %></td>
+                <td class="tw-100">
+                  <a
+                    href="/admin/blog/edit-posts/<%= data.id %>"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Edit"
+                    class="btn btn-warning btn-sm"
+                    ><i class="icon-edit"></i
+                  ></a>
+                  <a
+                    href="/admin/blog/delete-posts/<%= data.id %>"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Delete"
+                    class="btn btn-danger btn-sm"
+                    ><i class="icon-trash-alt"></i
+                  ></a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>

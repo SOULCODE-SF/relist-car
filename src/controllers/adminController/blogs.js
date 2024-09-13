@@ -15,6 +15,10 @@ const path = require('path');
 var querystr = '',
   queryvalue = [];
 
+const createSlug = (name) => {
+  return name.toLowerCase().replace(/\s+/g, '-').replace(/:/g, '');
+};
+
 const getAllPosts = async (req, res, next) => {
   try {
     querystr =
@@ -57,6 +61,8 @@ const addPosts = async (req, res, next) => {
       return res.redirect('/admin/blog/posts');
     }
 
+    const slug = createSlug(title);
+
     const image_name = title.toLowerCase().replace(/ /g, '-');
     const props = {
       oldpath: null,
@@ -71,8 +77,15 @@ const addPosts = async (req, res, next) => {
 
     if (image.success) {
       const querystr =
-        'INSERT INTO posts (title, image_path, content, category_id, status) VALUES (?,?,?,?,?)';
-      const queryvalue = [title, image.path, content, category_id, post_status];
+        'INSERT INTO posts (title, image_path, content, category_id, status, slug) VALUES (?,?,?,?,?,?)';
+      const queryvalue = [
+        title,
+        image.path,
+        content,
+        category_id,
+        post_status,
+        slug,
+      ];
 
       await DBquery(querystr, queryvalue);
 
@@ -93,9 +106,8 @@ const getEditPosts = async (req, res, next) => {
   const id = req.params.id;
   try {
     querystr =
-      'SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON pc.id = p.id WHERE p.category_id = ?';
+      'SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON pc.id = p.category_id WHERE p.id = ?';
     const data = await DBquery(querystr, [id]);
-
     res.render('admin/blogs/posts/edit', {
       data: data[0],
       title: 'Blogs',
@@ -122,11 +134,10 @@ const editPosts = async (req, res, next) => {
 
     let imagePath = null;
 
-    // Handle image upload if a new image is provided
     if (req.file) {
       const image_name = title.toLowerCase().replace(/ /g, '-');
       const props = {
-        oldpath: null, // You can set this if you want to handle image deletion/overwriting
+        oldpath: null,
         fileName: image_name,
         newDir: 'assets/images/posts',
         path: 'images/posts',

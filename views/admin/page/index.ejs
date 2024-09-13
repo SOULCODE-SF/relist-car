@@ -11,7 +11,7 @@
     </div>
     <div class="col-md-4">
       <div class="text-end">
-        <a href="/admin/page/add" type="button" class="btn btn-primary"
+        <a href="/admin/add-pages" type="button" class="btn btn-primary"
           >Add Page</a
         >
       </div>
@@ -40,14 +40,15 @@
               </tr>
             </thead>
             <tbody>
+              <% datas.forEach((data, i) => { %>
               <tr>
-                <td>1</td>
-                <td>Kebijakan Privasi</td>
-                <td>0</td>
-                <td>Published</td>
+                <td><%= data.id %></td>
+                <td><%= data.title %></td>
+                <td><%= data.sort_order %></td>
+                <td><%= data.status === 1 ? 'Published' : 'Draft' %></td>
                 <td class="tw-100">
                   <a
-                    href="#"
+                    href="/admin/edit-pages/<%= data.id %>"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="Edit"
@@ -56,7 +57,7 @@
                     ><i class="icon-edit"></i
                   ></a>
                   <a
-                    href="#"
+                    href="/admin/delete-pages/<%= data.id %>"
                     data-bs-toggle="tooltip"
                     data-bs-placement="top"
                     title="Delete"
@@ -66,6 +67,7 @@
                   ></a>
                 </td>
               </tr>
+              <% })%>
             </tbody>
           </table>
         </div>

@@ -14,6 +14,9 @@ const {
   getAboutUs,
   getLearnMore,
   checkCar,
+  getBlogs,
+  getBlogDetail,
+  customPages,
 } = require('../src/controllers/indexController');
 const {
   addUser,
@@ -29,6 +32,7 @@ const {
 
 const apiservice = require('./api');
 const { getCategoriesBlog } = require('../src/services/blogServices');
+const { DBquery } = require('../src/utils/database');
 const router = express.Router();
 
 router.get('/', getHomePage);
@@ -82,6 +86,11 @@ router.get('/check-car', checkCar);
 //api service
 router.use('/api', apiservice);
 
-router.use('/blog/categories', getCategoriesBlog)
+router.get('/blog/categories', getCategoriesBlog);
+
+router.get('/blogs', getBlogs);
+router.get('/blogs/:slug', getBlogDetail);
+
+router.get('/pages/:slug', customPages);
 
 module.exports = router;

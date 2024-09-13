@@ -1,0 +1,44 @@
+<div class="container mt-4">
+  <h1><%= title %></h1>
+  <div class="d-flex justify-content-end">
+    <form action="/blogs" method="GET" class="search-form d-flex">
+      <input
+        type="text"
+        id="searchTerm"
+        name="q"
+        placeholder="search.."
+        value="<%= searchTerm %>"
+      />
+      <button class="ms-2" type="submit">find</button>
+    </form>
+  </div>
+  <div class="scrollable-container pt-4">
+    <% data.forEach(post => { %>
+    <div class="row blog-post mb-4">
+      <img
+        src="/assets/<%= post.image_path %>"
+        alt="<%= post.title %>"
+        class="col-3 img-responsive img-thumbnail blog-image mb-2"
+      />
+
+      <div class="col-9">
+        <a href="/blogs/<%= post.slug %>" target="_blank" rel="noopener">
+          <h2><%= post.title %></h2>
+          <p><strong>Category:</strong> <%= post.category %></p>
+          <div class="content-preview">
+            <div class="contetn-wrap">
+              <%- post.content || 'No excerpt available' %>
+            </div>
+          </div>
+          <p>
+            <em
+              >Published on: <%= new Date(post.created_at).toLocaleDateString()
+              %></em
+            >
+          </p>
+        </a>
+      </div>
+    </div>
+    <% }); %>
+  </div>
+</div>

@@ -2,14 +2,24 @@
   <div class="container">
     <nav class="navbar navbar-expand-lg navbar-light">
       <div class="d-flex align-items-center justify-content-between">
-        <a href="/" class="logo d-flex align-items-center" style="color: black; text-decoration: none;" onmouseover="this.style.color='red';" onmouseout="this.style.color='black';">
+        <a
+          href="/"
+          class="logo d-flex align-items-center"
+          style="color: black; text-decoration: none"
+          onmouseover="this.style.color='red';"
+          onmouseout="this.style.color='black';"
+        >
           <img
             src="<%= memories.logo %>"
             width="50"
             height="50"
             alt="<%= memories.meta_title %>"
           />
-          <span class="d-none d-lg-block text-uppercase" style="font-size: 20px;font-weight: 700; margin-left: 20px;"><%= memories.site_name %></span>
+          <span
+            class="d-none d-lg-block text-uppercase"
+            style="font-size: 20px; font-weight: 700; margin-left: 20px"
+            ><%= memories.site_name %></span
+          >
         </a>
         <i class="icon-bars toggle-sidebar-btn"></i>
       </div>
@@ -38,6 +48,13 @@
               class="nav-link <%= ['brands', 'models', 'generations', 'specs', 'list-generation', 'car_by_engine', 'car_by_body'].includes(currentPage) ? 'active' : '' %>"
               href="/brands"
               >Cars</a
+            >
+          </li>
+          <li class="nav-item">
+            <a
+              class="nav-link <%= currentPage === 'blogs' ? 'active' : '' %>"
+              href="/blogs"
+              >Blogs</a
             >
           </li>
           <% if(!session.username) {%>

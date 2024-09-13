@@ -1,4 +1,3 @@
-
 const pageLink = document.querySelectorAll('.menu-scroll');
 
 pageLink.forEach((elem) => {
@@ -250,15 +249,18 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   });
   tinymce.init({
-    selector: '#input-adsense-gtm, #input-hitstat-code, #input-content',
+    selector:
+      '#input-adsense-gtm, #input-hitstat-code, #input-content, #meta-description',
     menubar: false,
-    plugins: 'advlist autolink lists link image charmap preview anchor textcolor',
-    toolbar: 'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
+    plugins:
+      'advlist autolink lists link image charmap preview anchor textcolor',
+    toolbar:
+      'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
     content_css: 'https://www.tiny.cloud/css/codepen.min.css',
     setup: function (editor) {
       editor.on('init', function () {
         // Optional: handle any specific initialization
       });
-    }
+    },
   });
 });

@@ -4,6 +4,7 @@ const query = require('../store/query');
 const nodecache = require('node-cache');
 const { DBquery } = require('../utils/database');
 const { revertParam } = require('../utils/carHelpers');
+const cheerio = require('cheerio');
 
 const cache = new nodecache();
 
@@ -82,6 +83,7 @@ const getHomePage = async (req, res, next) => {
     next(error);
   }
 };
+
 const getAllBrands = async (req, res, next) => {
   try {
     const key = req.originalUrl;
@@ -180,7 +182,7 @@ const getSpec = async (req, res, next) => {
     const data = datas[0][0];
     const imagescar = await DBquery(
       'SELECT image_path FROM car_images WHERE car_id = ?',
-      [data.car_id],
+      [data.car_id]
     );
     let haveElectricMotor = false;
     if (data.electric_motor_1_power != '') {
@@ -189,7 +191,7 @@ const getSpec = async (req, res, next) => {
 
     function hasNonEmptyValue(obj) {
       return Object.values(obj).some(
-        (value) => value !== '' && value !== null && value !== undefined,
+        (value) => value !== '' && value !== null && value !== undefined
       );
     }
 
@@ -444,7 +446,7 @@ const getListCountry = async (req, res, next) => {
 
     if (name) {
       const filteredCountries = countries.filter((country) =>
-        country.name.toLowerCase().includes(name.toLowerCase()),
+        country.name.toLowerCase().includes(name.toLowerCase())
       );
       res.json({ data: filteredCountries });
     } else {
@@ -481,6 +483,122 @@ const checkCar = async (req, res, next) => {
   }
 };
 
+const getBlogs = async (req, res, next) => {
+  try {
+    const key = req.originalUrl;
+    const cachedData = cache.get(key);
+
+    let searchTerm = req.query.q || '';
+
+    querystr = `SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
+    status = 'Published' AND (p.title LIKE ? OR pc.name LIKE ?)
+    `;
+    queryvalue = [`%${searchTerm}%`, `%${searchTerm}%`];
+
+    if (cachedData) {
+      return res.render('blogs/index', {
+        data: cachedData,
+        title: 'Blogs',
+        currentPage: 'blogs',
+        searchTerm: searchTerm,
+      });
+    }
+
+    const data = await DBquery(querystr, queryvalue);
+
+    cache.set(key, data, 86000);
+
+    res.render('blogs/index', {
+      data,
+      title: 'Blogs',
+      currentPage: 'blogs',
+      searchTerm: searchTerm,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getBlogDetail = async (req, res, next) => {
+  const slug = req.params.slug;
+  try {
+    querystr = `SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
+    status = 'Published' AND p.slug = ?`;
+    queryvalue = [slug];
+
+    const data = await DBquery(querystr, queryvalue);
+
+    res.render('blogs/detail', {
+      data: data[0],
+      title: 'Blogs',
+      currentPage: 'blogs',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const customPages = async (req, res, next) => {
+  const { slug } = req.params;
+
+  try {
+    const querystr =
+      'SELECT * FROM pages WHERE slug = ? AND status = 1 AND date_published < CURDATE()';
+    const page = await DBquery(querystr, [slug]);
+
+    if (page.length === 0) {
+      return next({ status: 404, message: 'Page not found' });
+    }
+
+    let content = page[0].content;
+
+    function removeOuterPTags(html) {
+      const $ = cheerio.load(html);
+
+      const pElements = $('p');
+
+      if (pElements.length === 0) return html;
+
+      const firstP = pElements.first();
+      const lastP = pElements.last();
+
+      if (firstP[0] === lastP[0]) {
+        return firstP.html();
+      } else {
+        firstP.replaceWith(firstP.html());
+        lastP.replaceWith(lastP.html());
+        return $.html();
+      }
+    }
+
+    content = removeOuterPTags(content);
+
+    const decodedHtml = content.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+
+    const $ = cheerio.load(decodedHtml, { xmlMode: true });
+
+    const container = $('div.container');
+    if (container.length > 0) {
+      const paragraphs = container.find('p');
+      if (paragraphs.length > 0) {
+        paragraphs.first().remove();
+      }
+    }
+
+    const resultHtml = $.html();
+
+    res.render('custompage', {
+      page: {
+        ...page[0],
+        content_html: resultHtml,
+      },
+      currentPage: slug,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getHomePage,
   getAllBrands,
@@ -496,4 +614,7 @@ module.exports = {
   getLearnMore,
   getListCountry,
   checkCar,
+  getBlogs,
+  getBlogDetail,
+  customPages,
 };

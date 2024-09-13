@@ -23,6 +23,18 @@ const getSiteInfo = async () => {
   }
 };
 
+const getListCustomPage = async () => {
+  try {
+    const querystr =
+      'SELECT title, slug FROM pages WHERE status = 1 AND date_published < CURDATE() ORDER BY sort_order ASC;';
+    const page = await DBquery(querystr);
+
+    return page;
+  } catch (error) {
+    throw new Error(error);
+  }
+};
+
 async function siteInfoMiddleware(req, res, next) {
   try {
     const key = 'site_info';
@@ -31,11 +43,13 @@ async function siteInfoMiddleware(req, res, next) {
     if (!data) {
       console.log('Cache miss');
       data = await getSiteInfo();
+      page = await getListCustomPage();
       cache.set(key, data, 86000);
     }
 
     const dataCookies = data;
     res.locals.memories = dataCookies;
+    res.locals.pages = page;
 
     if (req.session.alert) {
       res.locals.alert = req.session.alert;

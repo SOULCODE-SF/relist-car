@@ -13,6 +13,7 @@ const formatFileName = (name, extension) => {
   const formattedName = name
     .toLowerCase()
     .replace(/\s+/g, '-')
+    .replace(/:/g, '')
     .concat(extension);
   return formattedName;
 };
@@ -39,6 +40,8 @@ const unlinkFile = (filePath) => {
 const unlinkFileV2 = (filePath) => {
   return new Promise((resolve, reject) => {
     const fullPath = path.resolve(__dirname, '../../public/assets', filePath);
+
+    const public = require('../../public/assets/images/posts');
 
     fs.unlink(fullPath, (err) => {
       if (err) {

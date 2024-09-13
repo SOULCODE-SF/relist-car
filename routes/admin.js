@@ -76,6 +76,13 @@ const {
   editPosts,
   deletePosts,
 } = require('../src/controllers/adminController/blogs');
+const {
+  addCustomPage,
+  getAllPages,
+  getEditPage,
+  editCustomPage,
+  deleteCustomPage,
+} = require('../src/controllers/adminController/pages');
 
 const dynamicStorage = (type) => {
   return multer.diskStorage({
@@ -127,21 +134,21 @@ const upload = (type, fields) => {
 
 router.get('/', getDashboardPage);
 
-router.get('/page', (req, res) => {
-  res.render('admin/page/index', {
-    title: 'Page',
-    currentPage: 'admin-page',
-    layout: './admin/layouts/layout',
-  });
-});
+router.get('/pages', getAllPages);
 
-router.get('/page/add', (req, res) => {
+router.get('/add-pages', (req, res) => {
   res.render('admin/page/add-page', {
+    data: {},
     title: 'Add Page',
     currentPage: 'admin-add-page',
     layout: './admin/layouts/layout',
   });
 });
+
+router.post('/add-pages', upload('temp', 'page_image'), addCustomPage);
+router.get('/edit-pages/:id', getEditPage);
+router.post('/edit-pages/:id', upload('temp', 'page_image'), editCustomPage);
+router.get('/delete-pages/:id', deleteCustomPage);
 
 router.get('/banner', getAllBanners);
 
