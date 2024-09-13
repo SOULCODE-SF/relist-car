@@ -334,8 +334,10 @@ const getCarByEngine = async (req, res, next) => {
   try {
     let engine = req.params.engine;
 
-    querystr = `SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
-              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.engine = ? GROUP BY g.title, gi.body_type;`;
+    querystr = `SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image, LOWER(b.name) as brand_param,
+      LOWER(REPLACE(m.name, ' ', '-')) as model_param,
+      LOWER(REPLACE(g.title, ' ', '-')) as generation_param
+              FROM cars c JOIN brands b ON b.id = c.b_id JOIN models m ON m.id = c.m_id JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE gi.engine = ? GROUP BY g.title, gi.body_type;`;
     queryvalue = [engine];
 
     const datas = await DBquery(querystr, queryvalue);
@@ -362,9 +364,10 @@ const getCarByBody = async (req, res, next) => {
     const body = req.params.body;
 
     const param = formatParam(body);
-
-    querystr = `SELECT c.id, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
-              FROM cars c JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE (gi.body_type LIKE ? OR gi.body_type LIKE ?) GROUP BY g.title, gi.body_type;`;
+    querystr = `SELECT c.id, LOWER(b.name) as brand_param,
+      LOWER(REPLACE(m.name, ' ', '-')) as model_param,
+      LOWER(REPLACE(g.title, ' ', '-')) as generation_param, gi.engine_slug, gi.engine,g.title,gi.body_type,(SELECT image_path FROM car_images WHERE car_id = c.id LIMIT 1) as image
+              FROM cars c JOIN brands b ON b.id = c.b_id JOIN models m ON m.id = c.m_id JOIN generations g ON c.g_id = g.id JOIN general_information gi ON c.gi_id = gi.id WHERE (gi.body_type LIKE ? OR gi.body_type LIKE ?) GROUP BY g.title, gi.body_type;`;
     queryvalue = [`%${param}%`, `%${body}%`];
 
     const datas = await DBquery(querystr, queryvalue);
