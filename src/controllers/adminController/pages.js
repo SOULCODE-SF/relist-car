@@ -50,16 +50,6 @@ const addCustomPage = async (req, res, next) => {
       return res.redirect('/admin/add-pages');
     }
 
-    querystr = 'SELECT * FROM pages WHERE sort_order = ?';
-    let cekSortOrder = await DBquery(querystr, [sort_order]);
-    if (cekSortOrder.length > 0) {
-      req.session.alert = {
-        type: 'alert-danger',
-        message: 'Sort order is already in use',
-      };
-      return res.redirect('/admin/add-pages');
-    }
-
     let queryvalue;
     if (req.file) {
       const props = {

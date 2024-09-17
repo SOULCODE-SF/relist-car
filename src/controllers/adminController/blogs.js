@@ -123,7 +123,7 @@ const editPosts = async (req, res, next) => {
   const post_id = req.params.id;
   try {
     const { title, category_id, post_status, content } = req.body;
-
+    console.log(category_id);
     if (!post_id) {
       req.session.alert = {
         type: 'alert-danger',
