@@ -556,7 +556,7 @@ const getBlogDetail = async (req, res, next) => {
       featuredArticles,
       popularArticles,
       categories,
-      title: 'Blogs',
+      title: data[0].title,
       currentPage: 'blogs',
     });
   } catch (error) {
