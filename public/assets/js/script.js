@@ -1,45 +1,52 @@
-const pageLink = document.querySelectorAll('.menu-scroll');
+document.addEventListener('DOMContentLoaded', () => {
+  // Menu Scroll Smooth Behavior
+  const pageLinks = document.querySelectorAll('.menu-scroll');
 
-pageLink.forEach((elem) => {
-  elem.addEventListener('click', (e) => {
-    e.preventDefault();
-    document.querySelector(elem.getAttribute('href')).scrollIntoView({
-      behavior: 'smooth',
-      block: 'start',
+  pageLinks.forEach((elem) => {
+    elem.addEventListener('click', (e) => {
+      e.preventDefault();
+      const target = document.querySelector(elem.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start',
+        });
+      }
     });
   });
-});
 
-function onScroll() {
-  const sections = document.querySelectorAll('.menu-scroll');
-  const scrollPos =
-    window.pageYOffset ||
-    document.documentElement.scrollTop ||
-    document.body.scrollTop;
+  // Scroll Active Menu
+  function onScroll() {
+    const sections = document.querySelectorAll('.menu-scroll');
+    const scrollPos =
+      window.pageYOffset ||
+      document.documentElement.scrollTop ||
+      document.body.scrollTop;
 
-  sections.forEach((currLink) => {
-    const val = currLink.getAttribute('href');
-    const refElement = document.querySelector(val);
-    const scrollTopMinus = scrollPos + 73;
+    sections.forEach((currLink) => {
+      const val = currLink.getAttribute('href');
+      const refElement = document.querySelector(val);
+      const scrollTopMinus = scrollPos + 73;
 
-    if (
-      refElement.offsetTop <= scrollTopMinus &&
-      refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
-    ) {
-      document.querySelector('.menu-scroll.active')?.classList.remove('active');
-      currLink.classList.add('active');
-    } else {
-      currLink.classList.remove('active');
-    }
-  });
-}
+      if (
+        refElement &&
+        refElement.offsetTop <= scrollTopMinus &&
+        refElement.offsetTop + refElement.offsetHeight > scrollTopMinus
+      ) {
+        document
+          .querySelector('.menu-scroll.active')
+          ?.classList.remove('active');
+        currLink.classList.add('active');
+      } else {
+        currLink.classList.remove('active');
+      }
+    });
+  }
 
-window.addEventListener('scroll', onScroll);
+  window.addEventListener('scroll', onScroll);
 
-document.addEventListener('DOMContentLoaded', () => {
-  const letterLinks = document.querySelectorAll('.alphabet-list a');
-
-  letterLinks.forEach((link) => {
+  // Letter Links Smooth Scroll
+  document.querySelectorAll('.alphabet-list a').forEach((link) => {
     link.addEventListener('click', (event) => {
       event.preventDefault();
       const targetId = link.getAttribute('href').replace('#_', '#'); // Adjust target ID
@@ -50,9 +57,8 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     });
   });
-});
 
-$(document).ready(() => {
+  // Select2 Initialization
   $('#filter-brand')
     .select2({
       placeholder: 'Search for a brand',
@@ -90,7 +96,11 @@ $(document).ready(() => {
     },
   });
 
-  $('#input-model').select2({ placeholder: 'Select a model', width: '100%' });
+  $('#input-model').select2({
+    placeholder: 'Select a model',
+    width: '100%',
+  });
+
   $('#input-generation').select2({
     placeholder: 'Select a generation',
     width: '100%',
@@ -110,7 +120,7 @@ $(document).ready(() => {
         const models = response.datas;
         models.forEach((model) => {
           $('#input-model').append(
-            $('<option></option>').attr('value', model.id).text(model.name),
+            $('<option></option>').attr('value', model.id).text(model.name)
           );
         });
         $('#input-model').trigger('change.select2');
@@ -138,7 +148,7 @@ $(document).ready(() => {
           $('#input-generation').append(
             $('<option></option>')
               .attr('value', generation.id)
-              .text(generation.name),
+              .text(generation.name)
           );
         });
         $('#input-generation').trigger('change.select2');
@@ -183,7 +193,7 @@ $(document).ready(() => {
   });
 
   $('#input-category').select2({
-    placeholder: 'Search for an category',
+    placeholder: 'Search for a category',
     width: '100%',
     ajax: {
       url: '/blog/categories',
@@ -198,9 +208,8 @@ $(document).ready(() => {
       cache: true,
     },
   });
-});
 
-document.addEventListener('DOMContentLoaded', () => {
+  // Counter Animation
   function animateCount(element, endValue) {
     const startValue = 0;
     const duration = 2000;
@@ -227,12 +236,10 @@ document.addEventListener('DOMContentLoaded', () => {
     animateCount(el, endValue);
   });
 
-  const carLinks = document.querySelectorAll('.car-link');
-
-  carLinks.forEach((link) => {
+  // Car Link Handling
+  document.querySelectorAll('.car-link').forEach((link) => {
     link.addEventListener('click', function (event) {
       event.preventDefault();
-
       const url = this.dataset.url;
 
       fetch('/check-car?url=' + encodeURIComponent(url))
@@ -243,11 +250,13 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch((error) => {
           console.error('Error:', error);
           alert(
-            'An error occurred while checking the car specifications. Please try again later.',
+            'An error occurred while checking the car specifications. Please try again later.'
           );
         });
     });
   });
+
+  // TinyMCE Initialization
   tinymce.init({
     selector: '#input-content',
     plugins:
@@ -256,58 +265,102 @@ document.addEventListener('DOMContentLoaded', () => {
       'blocks | bold italic underline | alignleft aligncenter alignjustify | numlist bullist | forecolor backcolor removeformat | pagebreak | insertfile image media template link code | code',
     valid_elements: '*[*]',
     extended_valid_elements: 'script[src|type|async]',
-    setup: function (editor) {
-      editor.on('change', function () {
+    setup: (editor) => {
+      editor.on('change', () => {
         editor.save();
       });
     },
   });
-  document.getElementById('slug').addEventListener('input', function (event) {
-    let inputValue = event.target.value;
-    if (/\s/.test(inputValue)) {
-      event.target.value = inputValue.replace(/\s+/g, '');
-      document.getElementById('error-message').textContent =
-        'Spaces are not allowed.';
-    } else {
-      document.getElementById('error-message').textContent = '';
-    }
-  });
 
-  const form = document.getElementById('pages-form');
+  function createSlugValidator(formId, slugInputId, errorMessageId, checkUrl) {
+    const form = document.getElementById(formId);
+    const slugInput = document.getElementById(slugInputId);
+    const errorMessage = document.getElementById(errorMessageId);
+    const submitButton = form?.querySelector('button[type="submit"]');
 
-  form.addEventListener('submit', function (event) {
-    event.preventDefault();
+    // Log for debugging
+    console.log(`Initializing validator for ${formId}`);
+    console.log(`Form Element:`, form);
+    console.log(`Slug Input Element:`, slugInput);
+    console.log(`Error Message Element:`, errorMessage);
+    console.log(`Submit Button Element:`, submitButton);
 
-    document.querySelectorAll('.error').forEach((el) => (el.textContent = ''));
-
-    const formData = new FormData(form);
-
-    let hasError = false;
-    if (!formData.get('title')) {
-      document.getElementById('title-error').textContent = 'Title is required.';
-      hasError = true;
-    }
-    if (!formData.get('slug')) {
-      document.getElementById('slug-error').textContent = 'Slug is required.';
-      hasError = true;
-    }
-
-    if (hasError) {
+    if (!form || !slugInput || !errorMessage || !submitButton) {
+      console.error(
+        `Initialization failed for form ${formId}, input ${slugInputId}, or messages ${errorMessageId}.`
+      );
       return;
     }
 
-    const xhr = new XMLHttpRequest();
-    xhr.open('POST', form.action);
-    xhr.onload = function () {
-      if (xhr.status >= 200 && xhr.status < 400) {
-        console.log('Form submitted successfully.');
-      } else {
-        console.error('Server error:', xhr.responseText);
+    async function validateSlug() {
+      let slug = slugInput.value.trim();
+      console.log(`Validating slug for ${formId}:`, slug);
+
+      if (/\s/.test(slug)) {
+        errorMessage.textContent = 'Slug cannot contain spaces.';
+        submitButton.disabled = true;
+        return false;
       }
-    };
-    xhr.onerror = function () {
-      console.error('Network error.');
-    };
-    xhr.send(formData);
-  });
+
+      if (!slug) {
+        errorMessage.textContent = 'Slug is required.';
+        submitButton.disabled = true;
+        return false;
+      }
+
+      try {
+        const response = await fetch(
+          `${checkUrl}?slug=${encodeURIComponent(slug)}`
+        );
+        const data = await response.json();
+        console.log(`Response for ${formId}:`, data);
+
+        if (data.message === 'Slug Already Use') {
+          errorMessage.textContent = 'Slug is already taken.';
+          submitButton.disabled = true;
+          return false;
+        } else {
+          errorMessage.textContent = '';
+          submitButton.disabled = false;
+          return true;
+        }
+      } catch (error) {
+        console.error('Error checking slug:', error);
+        errorMessage.textContent =
+          'An error occurred while validating the slug.';
+        submitButton.disabled = true;
+        return false;
+      }
+    }
+
+    form.addEventListener('submit', async function (event) {
+      const isSlugValid = await validateSlug();
+      if (!isSlugValid) {
+        event.preventDefault();
+      }
+    });
+
+    slugInput.addEventListener('input', async function () {
+      await validateSlug();
+    });
+
+    // Initial validation on page load to ensure form state is correct
+    validateSlug();
+  }
+
+  // Initialize Slug Validation for Posts Form
+  createSlugValidator(
+    'posts-form',
+    'slug',
+    'posts-error-message',
+    '/blog/check-slug'
+  );
+
+  // Initialize Slug Validation for Pages Form
+  createSlugValidator(
+    'pages-form',
+    'page-slug',
+    'pages-error-message',
+    '/pages/check-slug'
+  );
 });

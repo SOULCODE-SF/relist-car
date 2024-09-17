@@ -489,11 +489,18 @@ const getBlogs = async (req, res, next) => {
     const cachedData = cache.get(key);
 
     let searchTerm = req.query.q || '';
+    const category = req.query.category || '';
 
-    querystr = `SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
-    status = 'Published' AND (p.title LIKE ? OR pc.name LIKE ?)
+    querystr = `SELECT p.*, pc.name as category, DATE_FORMAT(p.date_published, '%M %e, %Y') AS published_date FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
+    status = '1' AND (p.title LIKE ? OR pc.name LIKE ?)
     `;
+
     queryvalue = [`%${searchTerm}%`, `%${searchTerm}%`];
+
+    if (category) {
+      querystr += ' AND pc.name LIKE ?';
+      queryvalue.push(`%${category}%`);
+    }
 
     if (cachedData) {
       return res.render('blogs/index', {
@@ -523,13 +530,32 @@ const getBlogDetail = async (req, res, next) => {
   const slug = req.params.slug;
   try {
     querystr = `SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
-    status = 'Published' AND p.slug = ?`;
+    status = '1' AND p.slug = ?`;
     queryvalue = [slug];
 
     const data = await DBquery(querystr, queryvalue);
 
+    querystr = `SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
+    status = '1' AND p.slug <> ? ORDER BY updated_at DESC LIMIT 4`;
+    queryvalue = [slug];
+
+    const featuredArticles = await DBquery(querystr, queryvalue);
+
+    querystr = `SELECT pc.name  AS category, LOWER(pc.name) AS slug, COUNT(*) AS count FROM posts p JOIN post_categories pc ON p.category_id = pc.id GROUP BY pc.name;`;
+    const categories = await DBquery(querystr);
+
+    querystr = `SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
+    status = '1' AND slug <> ? ORDER BY p.total_views DESC LIMIT 5`;
+    const popularArticles = await DBquery(querystr, queryvalue);
+
+    querystr = `UPDATE posts SET total_views = total_views + 1 WHERE slug = ?`;
+    await DBquery(querystr, [slug]);
+
     res.render('blogs/detail', {
       data: data[0],
+      featuredArticles,
+      popularArticles,
+      categories,
       title: 'Blogs',
       currentPage: 'blogs',
     });

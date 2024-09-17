@@ -31,8 +31,12 @@ const {
 } = require('../src/controllers/adminController/car/cars');
 
 const apiservice = require('./api');
-const { getCategoriesBlog } = require('../src/services/blogServices');
+const {
+  getCategoriesBlog,
+  cekSlugExist,
+} = require('../src/services/blogServices');
 const { DBquery } = require('../src/utils/database');
+const { cekSlugPageExist } = require('../src/services/pageServices');
 const router = express.Router();
 
 router.get('/', getHomePage);
@@ -87,10 +91,12 @@ router.get('/check-car', checkCar);
 router.use('/api', apiservice);
 
 router.get('/blog/categories', getCategoriesBlog);
+router.get('/blog/check-slug', cekSlugExist);
 
 router.get('/blogs', getBlogs);
 router.get('/blogs/:slug', getBlogDetail);
 
+router.get('/pages/check-slug', cekSlugPageExist);
 router.get('/pages/:slug', customPages);
 
 module.exports = router;

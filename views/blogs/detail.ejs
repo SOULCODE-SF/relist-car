@@ -1,31 +1,115 @@
 <div class="container-fluid d-flex flex-column min-vh-100">
+  <div class="layout-brands">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <a class="nav-link" href="/blogs">Blogs</a>
+      </li>
+      <li class="nav-item" role="presentation">
+        <span class="arrow">&rarr;</span>
+      </li>
+      <li class="nav-item" role="presentation">
+        <a
+          class="nav-link active"
+          id="brand-tab"
+          data-bs-toggle="tab"
+          href="#"
+          role="tab"
+          aria-controls="brand"
+          aria-selected="true"
+          ><%= data.title %></a
+        >
+      </li>
+    </ul>
+  </div>
   <div class="row">
-    <div class="col-12">
-      <h1 class="mt-4 text-center"><%= data.title %></h1>
-    </div>
-  </div>
-  <div class="row flex-fill">
-    <div class="col-12">
-      <img
-        src="/assets/<%= data.image_path %>"
-        alt="<%= data.title %>"
-        class="blog-image img-thumbnail"
-      />
-      <div class="meta-info">
-        <p><strong>Category:</strong> <%= data.category %></p>
-        <p>
-          <strong>Published on:</strong> <%= new
-          Date(data.created_at).toLocaleDateString() %>
-        </p>
+    <div class="col-8">
+      <div class="row">
+        <div class="col-12">
+          <h1 class="mt-4 text-center"><%= data.title %></h1>
+        </div>
       </div>
-      <div class="content-wrap">
-        <%- data.content || 'No content available' %>
+      <div class="row flex-fill p-4">
+        <div class="col-12">
+          <img
+            src="<%= data.image_path %>"
+            alt="<%= data.title %>"
+            class="blog-image img-thumbnail"
+          />
+          <div class="meta-info">
+            <p><strong>Category:</strong> <%= data.category %></p>
+            <p>
+              <strong>Published on:</strong> <%= new
+              Date(data.created_at).toLocaleDateString() %>
+            </p>
+          </div>
+          <div class="content-wrap">
+            <%- data.content || 'No content available' %>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row mt-auto">
-    <div class="col-12 text-center">
-      <p>&copy; 2024 Your Blog Name</p>
+    <div class="col-4 mt-4">
+      <h2 style="font-weight: 300">Featured Articles</h2>
+      <div class="scrollable-container pt-4">
+        <% featuredArticles.forEach(fa => { %>
+        <div class="row featured-article mb-4">
+          <img
+            src="<%= fa.image_path %>"
+            alt="<%= fa.title %>"
+            class="col-3 img-responsive"
+            style="
+              width: 100px;
+              height: 100px;
+              border-radius: 100%;
+              filter: blur(5px);
+            "
+          />
+
+          <div class="col-9">
+            <a href="/blogs/<%= fa.slug %>" target="_blank" rel="noopener">
+              <h5 style="font-weight: 500"><%= fa.title %></h5>
+            </a>
+          </div>
+        </div>
+        <% }) %>
+      </div>
+      <h2 style="font-weight: 300; margin-top: 100px">Categories</h2>
+      <div class="scrollable-container pt-4">
+        <% categories.forEach(c => { %>
+        <a class="row" href="/blogs?category=<%= c.slug %>">
+          <div class="col-10">
+            <h5 style="font-weight: 500"><%= c.category %></h5>
+          </div>
+          <div class="col-2">
+            <h5 style="font-weight: 500">(<%= c.count %>)</h5>
+          </div>
+        </a>
+        <% })%>
+      </div>
+      <h2 style="font-weight: 300; margin-top: 100px">Popular Articles</h2>
+      <div class="scrollable-container pt-4">
+        <% popularArticles.forEach(fa => { %>
+        <div class="row featured-article mb-4">
+          <img
+            src="<%= fa.image_path %>"
+            alt="<%= fa.title %>"
+            class="col-3 img-responsive"
+            style="
+              width: 100px;
+              height: 100px;
+              border-radius: 100%;
+              filter: blur(5px);
+            "
+          />
+
+          <div class="col-9">
+            <a href="/blogs/<%= fa.slug %>" target="_blank" rel="noopener">
+              <h5 style="font-weight: 500"><%= fa.title %></h5>
+            </a>
+          </div>
+        </div>
+        <% }) %>
+      </div>
     </div>
   </div>
 </div>

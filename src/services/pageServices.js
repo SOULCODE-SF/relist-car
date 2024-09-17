@@ -1,26 +1,13 @@
 const { DBquery } = require('../utils/database');
 
-var querystr = '',
-  queryvalue = [];
-
-const getCategoriesBlog = async (req, res, next) => {
-  try {
-    querystr = 'SELECT * FROM post_categories';
-    const datas = await DBquery(querystr);
-
-    return res.status(200).json({ datas });
-  } catch (error) {
-    next(error);
-  }
-};
-
-const cekSlugExist = async (req, res, next) => {
+const cekSlugPageExist = async (req, res, next) => {
   const slug = req.query.slug;
   try {
-    querystr = 'SELECT * FROM posts WHERE slug = ?';
+    querystr = 'SELECT * FROM pages WHERE slug = ?';
     queryvalue = [slug];
 
     const cekExist = await DBquery(querystr, queryvalue);
+    console.log(cekExist);
     if (cekExist.length > 0) {
       return res.status(400).json({
         message: 'Slug Already Use',
@@ -36,6 +23,5 @@ const cekSlugExist = async (req, res, next) => {
 };
 
 module.exports = {
-  getCategoriesBlog,
-  cekSlugExist,
+  cekSlugPageExist,
 };

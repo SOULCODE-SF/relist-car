@@ -1,7 +1,7 @@
 <div class="col-lg-8 col-md-8">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">Page Form</h5>
+      <h5 class="card-title">Posts Form</h5>
       <div class="form-group mb-2">
         <label class="col-form-label">Title</label>
         <input
@@ -11,6 +11,7 @@
           id="title"
           class="form-control"
           value="<%= data?.title %>"
+          required
         />
       </div>
       <div class="form-group mb-2">
@@ -22,8 +23,9 @@
           id="slug"
           class="form-control"
           value="<%= data?.slug %>"
+          required
         />
-        <div id="error-message" class="error-message"></div>
+        <div id="posts-error-message" class="error-message"></div>
       </div>
       <div class="form-group mb-2">
         <label for="content" class="col-form-label">Content</label>
@@ -32,6 +34,7 @@
           id="input-content"
           rows="4"
           class="form-control"
+          required
         >
               <%= data?.content %>
           </textarea
@@ -67,6 +70,7 @@
               id="input-image"
               accept="image/*"
               style="display: none"
+              required
             />
           </label>
           <a
@@ -92,13 +96,15 @@
           style="width: 100%"
           aria-label="Category"
           value="<%= data?.category %>"
+          required
         ></select>
       </div>
       <div class="form-group mb-2">
         <label class="form-check-label col-form-label">Status</label>
         <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="statusChecked"
-          name="status" <%= data?.status ? 'checked' : '' %> />
+          <input class="form-check-input" required type="checkbox"
+          id="statusChecked" name="status" <%= data?.status ? 'checked' : '' %>
+          />
           <label class="form-check-label" for="statusChecked">Published</label>
         </div>
       </div>
@@ -112,6 +118,7 @@
           id="date-published"
           name="date_published"
           placeholder="Select date"
+          required
           value="<%= data?.date_published ? new Date(data.date_published).toISOString().split('T')[0] : '' %>"
         />
       </div>

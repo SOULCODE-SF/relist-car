@@ -20,11 +20,12 @@
           type="text"
           name="slug"
           placeholder="Slug"
-          id="slug"
+          id="page-slug"
           class="form-control"
           value="<%= data?.slug %>"
           required
         />
+        <div class="error-message" id="pages-error-message"></div>
       </div>
       <div class="form-grup mb-2">
         <label for="content" class="col-form-label">Content</label>
@@ -144,8 +145,9 @@
       <div class="form-group mb-2">
         <label class="form-check-label col-form-label">Status</label>
         <div class="form-check form-switch">
-          <input class="form-check-input" required type="checkbox" id="statusChecked"
-          name="status" <%= data?.status === 1 ? 'checked' : '' %> />
+          <input class="form-check-input" required type="checkbox"
+          id="statusChecked" name="status" <%= data?.status === 1 ? 'checked' :
+          '' %> />
           <label class="form-check-label" for="statusChecked">Published</label>
         </div>
       </div>
