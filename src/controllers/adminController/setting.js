@@ -201,6 +201,11 @@ exports.updateSetting = async (req, res, next) => {
 
     await commitTransaction(connection);
 
+    req.session.alert = {
+      type: 'alert-success',
+      message: 'Updated Setting Succesfully',
+    };
+
     res.redirect('/admin/setting');
   } catch (error) {
     if (connection) await rollbackTransaction(connection);

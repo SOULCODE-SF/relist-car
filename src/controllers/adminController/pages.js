@@ -43,7 +43,11 @@ const addCustomPage = async (req, res, next) => {
     let querystr = 'SELECT * FROM pages WHERE slug = ?';
     let cekSlug = await DBquery(querystr, [slug]);
     if (cekSlug.length > 0) {
-      return res.status(400).json({ slug: 'Slug already used' });
+      req.session.alert = {
+        type: 'alert-danger',
+        message: 'Slug is already in use',
+      };
+      return res.redirect('/admin/add-pages');
     }
 
     let queryvalue;

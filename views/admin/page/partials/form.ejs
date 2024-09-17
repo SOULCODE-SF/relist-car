@@ -11,6 +11,7 @@
           id="title"
           class="form-control"
           value="<%= data?.title %>"
+          required
         />
       </div>
       <div class="form-group mb-2">
@@ -22,6 +23,7 @@
           id="slug"
           class="form-control"
           value="<%= data?.slug %>"
+          required
         />
       </div>
       <div class="form-grup mb-2">
@@ -32,6 +34,7 @@
           id="input-content"
           rows="4"
           class="form-control"
+          required
         >
             <%= data?.content %>
           </textarea
@@ -52,6 +55,7 @@
           id="meta-title"
           class="form-control"
           value="<%= data?.meta_title %>"
+          required
         />
       </div>
       <div class="form-group mb-2">
@@ -61,6 +65,7 @@
           rows="4"
           id="meta-description"
           class="form-control"
+          required
         >
  <%= data?.meta_description %></textarea
         >
@@ -133,12 +138,13 @@
           name="sort_order"
           id="sort-order"
           value="<%= data?.sort_order %>"
+          required
         />
       </div>
       <div class="form-group mb-2">
         <label class="form-check-label col-form-label">Status</label>
         <div class="form-check form-switch">
-          <input class="form-check-input" type="checkbox" id="statusChecked"
+          <input class="form-check-input" required type="checkbox" id="statusChecked"
           name="status" <%= data?.status === 1 ? 'checked' : '' %> />
           <label class="form-check-label" for="statusChecked">Published</label>
         </div>
@@ -153,6 +159,7 @@
           id="date-published"
           placeholder="Select date"
           name="date_published"
+          required
           value="<%= data?.date_published ? new Date(data.date_published).toISOString().split('T')[0] : '' %>"
         />
       </div>
