@@ -6,6 +6,22 @@
     <title><%= memories.meta_title %></title>
     <meta name="title" content="<%= memories.meta_title %>" />
     <meta name="description" content="<%= memories.meta_description %>" />
+    <meta property="og:title" content="<%= memories.meta_title %>" />
+    <meta
+      property="og:description"
+      content="<%= memories.meta_description %>"
+    />
+    <meta
+      property="og:image"
+      content="https://innerjourney.tech<%= memories.og_image %>"
+    />
+    <meta property="og:image:type" content="<%= memories.og_image_type %>" />
+    <meta property="og:image:width" content="<%= memories.og_image_width %>" />
+    <meta
+      property="og:image:height"
+      content="<%= memories.og_image_height %>"
+    />
+    <meta property="og:type" content="<%= memories.og_type %>" />
     <link rel="canonical" href="<%= memories.site_url %>" />
     <link rel="icon" href="<%= memories.favicon %>" type="image/x-icon" />
 
@@ -26,8 +42,7 @@
     <link rel="stylesheet" href="/assets/css/select2.min.css" />
     <link rel="stylesheet" href="/assets/css/animate.min.css" />
 
-    <%- memories.adsense_gtm %>
-    <%- memories.richsnippet_code %>
+    <%- memories.adsense_gtm %> <%- memories.richsnippet_code %>
   </head>
   <body>
     <%- include('./partials/header.ejs') %>

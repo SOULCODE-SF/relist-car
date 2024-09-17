@@ -97,7 +97,7 @@ const dynamicStorage = (type) => {
           '-' +
           Date.now() +
           path.extname(file.originalname) +
-          '.webp'
+          '.webp',
       );
     },
   });
@@ -189,13 +189,13 @@ router.get('/add-generations', getAddGeneration);
 router.post(
   '/add-generations',
   upload('generations', 'generation_image'),
-  addGeneration
+  addGeneration,
 );
 router.get('/edit-generations/:id', getEditGenaration);
 router.post(
   '/edit-generations/:id',
   upload('generations', 'generation_image'),
-  editGenerations
+  editGenerations,
 );
 router.get('/delete-generations/:id', deleteGeneration);
 
@@ -207,6 +207,7 @@ router.get('/setting', getSettingPage);
 const fieldsSetting = [
   { name: 'site_logo', maxCount: 1 },
   { name: 'favicon', maxCount: 1 },
+  { name: 'og_image', maxCount: 1 },
 ];
 
 router.post('/setting', upload('temp', fieldsSetting), updateSetting);

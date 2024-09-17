@@ -5,8 +5,6 @@ const {
   rollbackTransaction,
   releaseConnection,
 } = require('../../utils/database');
-const path = require('path');
-const fs = require('fs');
 const {
   formatFileName,
   moveFile,
@@ -33,7 +31,7 @@ exports.getSettingPage = async (req, res) => {
 exports.updateSetting = async (req, res, next) => {
   let connection;
   try {
-    const {
+    let {
       site_name,
       site_url,
       about_site,
@@ -41,13 +39,23 @@ exports.updateSetting = async (req, res, next) => {
       copyright_text,
       meta_title,
       meta_description,
-      sosmed_facebook,
-      sosmed_twitter,
-      sosmed_instagram,
-      sosmed_youtube,
+      facebook_url,
+      twitter_url,
+      instagram_url,
+      youtube_url,
       adsense_gtm,
       hitstat_code,
       richsnippet_code,
+      smtp_host,
+      smtp_port,
+      smtp_user,
+      smtp_pass,
+      smtp_secure,
+      og_type,
+      og_locale,
+      og_image_type,
+      og_image_width,
+      og_image_height,
     } = req.body;
 
     req.body.site_name = req.body.site_name.trim();
@@ -57,15 +65,24 @@ exports.updateSetting = async (req, res, next) => {
     req.body.copyright_text = req.body.copyright_text.trim();
     req.body.meta_title = req.body.meta_title.trim();
     req.body.meta_description = req.body.meta_description.trim();
+    req.body.adsense_gtm = req.body.adsense_gtm.trim();
 
     connection = await getConnection();
     await connection.beginTransaction();
 
-    const rows = await DBquery('SELECT logo, favicon FROM setting LIMIT 1');
+    const rows = await DBquery(
+      'SELECT logo, favicon, og_image, og_image_type FROM setting LIMIT 1',
+    );
     let site_logo = rows[0]?.logo;
     let favicon = rows[0]?.favicon;
+    let og_image = rows[0]?.og_image;
+    og_image_type = rows[0]?.og_image_type ?? 'image/jpeg';
 
-    console.log(req.files);
+    let og_image_type_parts = og_image_type.split('/');
+    let image_subtype =
+      og_image_type_parts.length > 1 ? og_image_type_parts.pop() : 'jpeg';
+    console.log(image_subtype);
+
     if (req.files) {
       if (req.files.site_logo) {
         const propsLogo = {
@@ -98,8 +115,23 @@ exports.updateSetting = async (req, res, next) => {
           throw new Error(upFavicon.message);
         }
         favicon = upFavicon.path;
-        console.log(favicon);
       }
+    }
+    if (req.files.og_image) {
+      const propsOgImage = {
+        oldpath: og_image,
+        fileName: 'opengraph-image',
+        newDir: 'assets/images/setting',
+        path: 'assets/images/setting',
+        uploadPath: req.files.og_image[0].path,
+        ext: `.${image_subtype}`,
+      };
+
+      const upOgImage = await handleImages(propsOgImage);
+      if (!upOgImage.success) {
+        throw new Error(upOgImage.message);
+      }
+      og_image = upOgImage.path;
     }
 
     let querystr = `UPDATE setting
@@ -119,9 +151,21 @@ exports.updateSetting = async (req, res, next) => {
                         youtube_url = ?,
                         adsense_gtm = ?,
                         hitstat_code = ?,
-                        richsnippet_code = ?
+                        richsnippet_code = ?,
+                        smtp_host = ?,
+                        smtp_port = ?,
+                        smtp_user = ?,
+                        smtp_pass = ?,
+                        smtp_secure = ?,
+                        og_type = ?,
+                        og_locale = ?,
+                        og_image = ?,
+                        og_image_type = ?,
+                        og_image_width = ?,
+                        og_image_height = ?
                       WHERE id = ?; 
                     `;
+
     let queryvalue = [
       site_name,
       site_url,
@@ -132,15 +176,27 @@ exports.updateSetting = async (req, res, next) => {
       meta_description,
       favicon,
       site_logo,
-      sosmed_facebook,
-      sosmed_twitter,
-      sosmed_instagram,
-      sosmed_youtube,
+      facebook_url,
+      twitter_url,
+      instagram_url,
+      youtube_url,
       adsense_gtm,
       hitstat_code,
       richsnippet_code,
+      smtp_host,
+      smtp_port,
+      smtp_user,
+      smtp_pass,
+      smtp_secure,
+      og_type,
+      og_locale,
+      og_image,
+      og_image_type,
+      og_image_width,
+      og_image_height,
       1,
     ];
+
     await DBquery(querystr, queryvalue);
 
     await commitTransaction(connection);

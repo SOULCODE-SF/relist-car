@@ -43,21 +43,7 @@ const addCustomPage = async (req, res, next) => {
     let querystr = 'SELECT * FROM pages WHERE slug = ?';
     let cekSlug = await DBquery(querystr, [slug]);
     if (cekSlug.length > 0) {
-      req.session.alert = {
-        type: 'alert-danger',
-        message: 'Slug is already in use',
-      };
-      return res.redirect('/admin/add-pages');
-    }
-
-    querystr = 'SELECT * FROM pages WHERE sort_order = ?';
-    let cekSortOrder = await DBquery(querystr, [sort_order]);
-    if (cekSortOrder.length > 0) {
-      req.session.alert = {
-        type: 'alert-danger',
-        message: 'Sort order is already in use',
-      };
-      return res.redirect('/admin/add-pages');
+      return res.status(400).json({ slug: 'Slug already used' });
     }
 
     let queryvalue;
@@ -141,6 +127,7 @@ const getEditPage = async (req, res, next) => {
       data: page[0],
       currentPage: 'edit-pages',
       title: 'Pages',
+      layout: './admin/layouts/layout',
     });
   } catch (error) {
     next(error);
@@ -199,7 +186,6 @@ const editCustomPage = async (req, res, next) => {
       imagePath = image.path;
     }
 
-    // Tentukan query dan nilai untuk pembaruan
     if (imagePath) {
       querystr = `
         UPDATE pages SET
@@ -243,14 +229,15 @@ const editCustomPage = async (req, res, next) => {
       ];
     }
 
-    console.log(queryvalue);
-
+    console.log(queryvalue, querystr);
     await DBquery(querystr, queryvalue);
 
     req.session.alert = {
       type: 'alert-success',
       message: 'Page updated successfully!',
     };
+
+    console.log('sini');
     return res.redirect('/admin/pages');
   } catch (error) {
     next(error);
@@ -278,7 +265,7 @@ const deleteCustomPage = async (req, res, next) => {
       const oldImageFullPath = path.join(
         __dirname,
         '../../../public',
-        oldImagePath
+        oldImagePath,
       );
 
       await unlinkFile(oldImageFullPath);

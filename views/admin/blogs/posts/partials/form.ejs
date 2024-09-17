@@ -23,6 +23,7 @@
           class="form-control"
           value="<%= data?.slug %>"
         />
+        <div id="error-message" class="error-message"></div>
       </div>
       <div class="form-group mb-2">
         <label for="content" class="col-form-label">Content</label>
@@ -38,42 +39,11 @@
       </div>
     </div>
   </div>
-  <div class="card">
-    <div class="card-body">
-      <h5 class="card-title">SEO</h5>
-      <div class="form-group mb-2">
-        <label class="col-form-label">Meta Title</label>
-        <input
-          type="text"
-          name="meta_title"
-          placeholder="Meta Title"
-          id="meta-title"
-          class="form-control"
-          value="<%= data?.meta_title %>"
-        />
-      </div>
-      <div class="form-group mb-2">
-        <label class="col-form-label">Meta Description</label>
-        <textarea
-          name="meta_description"
-          rows="4"
-          id="meta-description"
-          class="form-control"
-        >
-              <%= data?.meta_description %>
-          </textarea
-        >
-      </div>
-    </div>
-  </div>
 </div>
 <div class="col-lg-4 col-md-4">
   <div class="card">
     <div class="card-body">
-      <h5 class="card-title">
-        <%= data?.image_alt_tag && data.image_alt_tag.trim() !== '' ?
-        data.image_alt_tag : 'Featured Image' %>
-      </h5>
+      <h5 class="card-title">Image</h5>
       <div class="form-group mb-2 col-12 text-center">
         <div id="image-preview-container">
           <img
@@ -108,32 +78,21 @@
           </a>
         </div>
       </div>
-      <div class="form-group mb-2">
-        <label for="image-alt" class="col-form-label">Image Alt Tag</label>
-        <input
-          type="text"
-          class="form-control"
-          id="image-alt"
-          name="image_alt_tag"
-          placeholder="Image Alt"
-          value="<%= data?.image_alt_tag || '' %>"
-        />
-      </div>
     </div>
   </div>
   <div class="card">
     <div class="card-body">
       <h5 class="card-title">Option & Publishing</h5>
       <div class="form-group mb-2">
-        <label for="sort-order" class="col-form-label">Sort Order</label>
-        <input
-          type="number"
-          class="form-control"
-          name="sort_order"
-          id="sort-order"
-          placeholder=""
-          value="<%= data?.sort_order %>"
-        />
+        <label for="input-category" class="col-form-label">Category</label>
+        <select
+          id="input-category"
+          name="category_id"
+          class="form-select"
+          style="width: 100%"
+          aria-label="Category"
+          value="<%= data?.category %>"
+        ></select>
       </div>
       <div class="form-group mb-2">
         <label class="form-check-label col-form-label">Status</label>

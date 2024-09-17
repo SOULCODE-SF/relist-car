@@ -51,7 +51,8 @@ const getAddPosts = async (req, res, next) => {
 
 const addPosts = async (req, res, next) => {
   try {
-    const { title, category_id, post_status, content } = req.body;
+    const { title, category_id, status, content, slug, date_published } =
+      req.body;
 
     if (!req.file) {
       req.session.alert = {
@@ -61,14 +62,12 @@ const addPosts = async (req, res, next) => {
       return res.redirect('/admin/blog/posts');
     }
 
-    const slug = createSlug(title);
-
     const image_name = title.toLowerCase().replace(/ /g, '-');
     const props = {
       oldpath: null,
       fileName: image_name,
       newDir: 'assets/images/posts',
-      path: 'images/posts',
+      path: 'assets/images/posts',
       uploadPath: req.file.path,
       ext: '.webp',
     };
@@ -77,14 +76,15 @@ const addPosts = async (req, res, next) => {
 
     if (image.success) {
       const querystr =
-        'INSERT INTO posts (title, image_path, content, category_id, status, slug) VALUES (?,?,?,?,?,?)';
+        'INSERT INTO posts (title, image_path, content, category_id, status, slug, date_published) VALUES (?,?,?,?,?,?,?)';
       const queryvalue = [
         title,
         image.path,
         content,
         category_id,
-        post_status,
+        status ? 1 : 0,
         slug,
+        date_published,
       ];
 
       await DBquery(querystr, queryvalue);
@@ -206,7 +206,7 @@ const deletePosts = async (req, res, next) => {
       const oldImageFullPath = path.join(
         __dirname,
         '../../../public/assets',
-        oldImagePath
+        oldImagePath,
       );
 
       await unlinkFile(oldImageFullPath);

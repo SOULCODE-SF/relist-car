@@ -46,7 +46,7 @@
                 <td><%= data.id %></td>
                 <td style="text-align: center">
                   <img
-                    src="/assets/<%= data.image_path %>"
+                    src="<%= data.image_path %>"
                     alt="<%= data.title %>"
                     class="img-thumbnail"
                     style="max-width: 70px; height: auto"
@@ -55,7 +55,7 @@
                 <td><%= data.title %></td>
                 <td><%= data.category %></td>
                 <td><%= data.total_view ?? 0 %></td>
-                <td><%= data.status %></td>
+                <td><%= data.status === 1 ? 'Published' : 'Draft' %></td>
                 <td class="tw-100">
                   <a
                     href="/admin/blog/edit-posts/<%= data.id %>"

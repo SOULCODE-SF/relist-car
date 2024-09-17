@@ -116,6 +116,7 @@
     <main id="main" class="main">
       <% if (alert) { %>
       <div
+        id="alert-container"
         class="alert <%= alert.type %> alert-dismissible fade show mt-3 alert-custom"
         role="alert"
       >
@@ -151,6 +152,17 @@
   <script>
     $(document).ready(function () {
       $('#datatable').DataTable();
+    });
+  </script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      var alertElement = document.getElementById('alert-container');
+      if (alertElement) {
+        setTimeout(() => {
+          var alert = bootstrap.Alert.getOrCreateInstance(alertElement);
+          alert.close();
+        }, 3000);
+      }
     });
   </script>
 </html>

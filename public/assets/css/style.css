@@ -353,7 +353,8 @@ a {
 
 .form-control:focus,
 .form-control-textarea:focus {
-  border-color: #dc3545;
+  border: 0.5px solid var(--primary-color);
+  box-shadow: 0 0 8px var(--primary-color);
   outline: none;
 }
 
@@ -370,9 +371,9 @@ a {
 }
 input {
   height: 100%;
-  border: 1px solid var(--primary-color);
   border-radius: 5px;
   padding: 0 10px;
+  border-color: var(--primary-color) !important;
 }
 button {
   display: block;
@@ -1022,15 +1023,14 @@ button:hover {
 }
 
 .blog-image {
-  max-width: 100%; /* Ensures the image does not exceed the container's width */
-  height: auto; /* Maintains aspect ratio */
-  max-height: 300px; /* Sets a maximum height for the image */
-  object-fit: cover; /* Ensures the image covers the box without distortion */
+  max-width: 100%;
+  height: auto;
+  max-height: 300px;
+  object-fit: cover;
 }
 
-/* Optional: Adjust margin and padding for spacing */
 .blog-post {
-  margin-bottom: 1.5rem; /* Adjust as needed */
+  margin-bottom: 1.5rem;
 }
 
 .content-preview {

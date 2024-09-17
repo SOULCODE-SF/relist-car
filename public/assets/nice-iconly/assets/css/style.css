@@ -1066,6 +1066,11 @@ h6 {
 .error-404 .btn:hover {
   background: #3e4f6f;
 }
+
+.error-message {
+  color: red;
+  font-size: 0.875em;
+}
 @media (min-width: 992px) {
   .error-404 img {
     max-width: 50%;

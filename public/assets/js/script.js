@@ -110,7 +110,7 @@ $(document).ready(() => {
         const models = response.datas;
         models.forEach((model) => {
           $('#input-model').append(
-            $('<option></option>').attr('value', model.id).text(model.name)
+            $('<option></option>').attr('value', model.id).text(model.name),
           );
         });
         $('#input-model').trigger('change.select2');
@@ -138,7 +138,7 @@ $(document).ready(() => {
           $('#input-generation').append(
             $('<option></option>')
               .attr('value', generation.id)
-              .text(generation.name)
+              .text(generation.name),
           );
         });
         $('#input-generation').trigger('change.select2');
@@ -243,24 +243,71 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch((error) => {
           console.error('Error:', error);
           alert(
-            'An error occurred while checking the car specifications. Please try again later.'
+            'An error occurred while checking the car specifications. Please try again later.',
           );
         });
     });
   });
   tinymce.init({
-    selector:
-      '#input-adsense-gtm, #input-hitstat-code, #input-content, #meta-description',
-    menubar: false,
+    selector: '#input-content',
     plugins:
-      'advlist autolink lists link image charmap preview anchor textcolor',
+      'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount code',
     toolbar:
-      'undo redo | formatselect | bold italic backcolor | alignleft aligncenter alignright alignjustify | bullist numlist outdent indent | removeformat | help',
-    content_css: 'https://www.tiny.cloud/css/codepen.min.css',
+      'blocks | bold italic underline | alignleft aligncenter alignjustify | numlist bullist | forecolor backcolor removeformat | pagebreak | insertfile image media template link code | code',
+    valid_elements: '*[*]',
+    extended_valid_elements: 'script[src|type|async]',
     setup: function (editor) {
-      editor.on('init', function () {
-        // Optional: handle any specific initialization
+      editor.on('change', function () {
+        editor.save();
       });
     },
+  });
+  document.getElementById('slug').addEventListener('input', function (event) {
+    let inputValue = event.target.value;
+    if (/\s/.test(inputValue)) {
+      event.target.value = inputValue.replace(/\s+/g, '');
+      document.getElementById('error-message').textContent =
+        'Spaces are not allowed.';
+    } else {
+      document.getElementById('error-message').textContent = '';
+    }
+  });
+
+  const form = document.getElementById('pages-form');
+
+  form.addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    document.querySelectorAll('.error').forEach((el) => (el.textContent = ''));
+
+    const formData = new FormData(form);
+
+    let hasError = false;
+    if (!formData.get('title')) {
+      document.getElementById('title-error').textContent = 'Title is required.';
+      hasError = true;
+    }
+    if (!formData.get('slug')) {
+      document.getElementById('slug-error').textContent = 'Slug is required.';
+      hasError = true;
+    }
+
+    if (hasError) {
+      return;
+    }
+
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', form.action);
+    xhr.onload = function () {
+      if (xhr.status >= 200 && xhr.status < 400) {
+        console.log('Form submitted successfully.');
+      } else {
+        console.error('Server error:', xhr.responseText);
+      }
+    };
+    xhr.onerror = function () {
+      console.error('Network error.');
+    };
+    xhr.send(formData);
   });
 });

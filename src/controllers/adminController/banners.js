@@ -56,56 +56,53 @@ exports.addBanner = async (req, res, next) => {
       ads_url,
     } = req.body;
 
-    const insertBannerDetails = async () => {
-      querystr =
-        'INSERT INTO banners (adsname, position, type, date_start, date_end, status, code) VALUES (?, ?, ?, ?, ?, ?, ?)';
-      queryvalue = [
-        ads_name,
-        ads_position,
-        ads_type,
-        ads_start_date,
-        ads_end_date,
-        ads_status,
-        ads_code ?? '-',
-      ];
+    querystr =
+      'INSERT INTO banners (adsname, position, type, date_start, date_end, status, code) VALUES (?, ?, ?, ?, ?, ?, ?)';
+    queryvalue = [
+      ads_name,
+      ads_position,
+      ads_type,
+      ads_start_date,
+      ads_end_date,
+      ads_status,
+      ads_code ?? '-',
+    ];
 
-      await DBquery(querystr, queryvalue).then(async (onres) => {
-        if (ads_type == 'image') {
-          querystr =
-            'INSERT INTO banner_image (image_path, url, banner_id) VALUES (?,?,?);';
-          queryvalue = [ads_image, ads_url, onres.insertId];
-        }
-        await DBquery(querystr, queryvalue);
+    await DBquery(querystr, queryvalue).then((onres) => {
+      if (ads_type === 'image') {
+        const fileExtension = '.webp';
+        const formattedFileName = formatFileName(ads_name, fileExtension);
+        const oldPath = req.file.path;
+        const newDir = path.join(
+          __dirname,
+          '../../../public/assets/images/banner',
+        );
+        const newFilePath = path.join(newDir, formattedFileName);
 
-        return res.redirect('/admin/banner');
-      });
-    };
+        fs.mkdir(newDir, { recursive: true }, (err) => {
+          if (err) throw new Error('Error creating directory');
 
-    let ads_image;
-    if (ads_type === 'image') {
-      const fileExtension = '.webp';
-      const formattedFileName = formatFileName(ads_name, fileExtension);
-      const oldPath = req.file.path;
-      const newDir = path.join(
-        __dirname,
-        '../../../public/assets/images/banner',
-      );
-      const newFilePath = path.join(newDir, formattedFileName);
+          moveFile(oldPath, newFilePath, async (err) => {
+            if (err) throw new Error('Error moving file');
 
-      fs.mkdir(newDir, { recursive: true }, (err) => {
-        if (err) throw new Error('Error creating directory');
+            ads_image = `/assets/images/banner/${formattedFileName}`;
 
-        moveFile(oldPath, newFilePath, (err) => {
-          if (err) throw new Error('Error moving file');
+            querystr =
+              'INSERT INTO banner_image (image_path, url, banner_id) VALUES (?,?,?);';
+            queryvalue = [ads_image, ads_url, onres.insertId];
 
-          ads_image = `/assets/images/banner/${formattedFileName}`;
-
-          insertBannerDetails();
+            await DBquery(querystr, queryvalue);
+          });
         });
-      });
-    } else {
-      insertBannerDetails();
-    }
+      }
+
+      req.session.alert = {
+        type: 'alert-success',
+        message: 'Banner Added Succesfully',
+      };
+
+      res.redirect('/admin/banner');
+    });
   } catch (error) {
     next(error);
   }
@@ -252,7 +249,7 @@ exports.updateBanner = async (req, res, next) => {
           message: 'Updated Banner Succesfully',
         };
 
-        res.redirect(`/admin/banner/edit/${bannerId}`);
+        res.redirect(`/admin/banner`);
       } catch (updateError) {
         next(updateError);
       }
@@ -276,6 +273,11 @@ exports.deleteBanner = async (req, res) => {
     await DBquery('DELETE FROM banners WHERE id = ?', [banner_id]);
 
     await commitTransaction(connection);
+
+    req.session.alert = {
+      type: 'alert-success',
+      message: 'Delete Banner Succesfully',
+    };
 
     res.redirect('/admin/banner');
   } catch (error) {

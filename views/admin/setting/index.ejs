@@ -12,7 +12,6 @@
       </div>
       <div class="col-md-4 text-end">
         <button type="submit" title="Save" class="btn btn-primary">Save</button>
-        <a href="index.html" class="btn btn-secondary">Cancel</a>
       </div>
     </div>
   </div>
@@ -170,14 +169,14 @@
               </div>
               <h5 class="my-3">Opengraph</h5>
               <div class="mb-3 row">
-                <label for="opengraph_type" class="col-md-4 col-form-label"
+                <label for="og_type" class="col-md-4 col-form-label"
                   >Opengraph Type</label
                 >
                 <div class="col-md-8">
                   <input
                     type="text"
-                    name="opengraph_type"
-                    value="website"
+                    name="og_type"
+                    value="<%= data.og_type %>"
                     placeholder="Opengraph Type"
                     id="input-opengraph-type"
                     class="form-control"
@@ -185,14 +184,14 @@
                 </div>
               </div>
               <div class="mb-3 row">
-                <label for="opengraph_locale" class="col-md-4 col-form-label"
+                <label for="og_locale" class="col-md-4 col-form-label"
                   >Opengraph Locale</label
                 >
                 <div class="col-md-8">
                   <input
                     type="text"
-                    name="opengraph_locale"
-                    value="id_ID"
+                    name="og_locale"
+                    value="<%= data.og_locale %>"
                     placeholder="Opengraph Locale"
                     id="input-opengraph-locale"
                     class="form-control"
@@ -201,25 +200,42 @@
               </div>
               <div class="mb-3 row">
                 <label class="col-md-4 col-form-label">Opengraph Image</label>
-                <div class="col-md-8">
-                  <img
-                    src="assets/img/preview.png"
-                    class="img-thumbnail"
-                    alt="Opengraph Image"
-                  />
-                  <div class="pt-2">
-                    <a
-                      href="#"
-                      class="btn btn-primary btn-sm"
-                      title="Upload image"
-                      ><i class="icon-upload"></i
-                    ></a>
-                    <a
-                      href="#"
-                      class="btn btn-danger btn-sm"
-                      title="Remove image"
-                      ><i class="icon-trash-alt"></i
-                    ></a>
+                <div class="row g-3 mb-3" id="ads-image">
+                  <label for="ads_image" class="col-md-2 col-form-label"
+                    >Opengraph Image</label
+                  >
+                  <div class="col-md-6">
+                    <div id="image-preview-container">
+                      <img
+                        id="image-preview"
+                        src="<%= data?.og_image || '/assets/nice-iconly/assets/img/preview.png' %>"
+                        alt="Image Preview"
+                      />
+                    </div>
+                    <div class="pt-2">
+                      <label
+                        for="input-image"
+                        class="btn btn-primary btn-sm"
+                        title="Upload image"
+                      >
+                        <i class="icon-upload"></i>
+                        <input
+                          name="og_image"
+                          type="file"
+                          id="input-image"
+                          accept="image/*"
+                          style="display: none"
+                        />
+                      </label>
+                      <a
+                        href="#"
+                        class="btn btn-danger btn-sm"
+                        title="Remove image"
+                        id="remove-image"
+                      >
+                        <i class="icon-trash-alt"></i>
+                      </a>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -232,8 +248,8 @@
                 <div class="col-md-8">
                   <input
                     type="text"
-                    name="opengraph_image_type"
-                    value="image/jpg"
+                    name="og_image_type"
+                    value="<%= data.og_image_type %>"
                     placeholder="Opengraph Image Type"
                     id="input-image-type"
                     class="form-control"
@@ -247,8 +263,8 @@
                     <div class="col-sm-6 mb-3">
                       <input
                         type="text"
-                        name="opengraph_image_width"
-                        value="1200"
+                        name="og_image_width"
+                        value="<%= data.og_image_width %>"
                         placeholder="Opengraph Image Width"
                         id="input-opengraph-image-width"
                         class="form-control"
@@ -257,8 +273,8 @@
                     <div class="col-sm-6 mb-3">
                       <input
                         type="text"
-                        name="opengraph_image_height"
-                        value="630"
+                        name="og_image_height"
+                        value="<%= data.og_image_height %>"
                         placeholder="Opengraph Image Height"
                         id="input-opengraph-image-height"
                         class="form-control"
@@ -363,8 +379,8 @@
                 <div class="col-md-8">
                   <input
                     type="text"
-                    name="facebook"
-                    value="<%= data.facebook %>"
+                    name="facebook_url"
+                    value="<%= data.facebook_url %>"
                     placeholder="Facebook URL"
                     id="input-facebook"
                     class="form-control"
@@ -378,8 +394,8 @@
                 <div class="col-md-8">
                   <input
                     type="text"
-                    name="twitter"
-                    value="<%= data.twitter %>"
+                    name="twitter_url"
+                    value="<%= data.twitter_url %>"
                     placeholder="Twitter URL"
                     id="input-twitter"
                     class="form-control"
@@ -393,8 +409,8 @@
                 <div class="col-md-8">
                   <input
                     type="text"
-                    name="instagram"
-                    value="<%= data.instagram %>"
+                    name="instagram_url"
+                    value="<%= data.instagram_url %>"
                     placeholder="Instagram URL"
                     id="input-instagram"
                     class="form-control"
@@ -408,8 +424,8 @@
                 <div class="col-md-8">
                   <input
                     type="text"
-                    name="youtube"
-                    value="<%= data.youtube %>"
+                    name="youtube_url"
+                    value="<%= data.youtube_url %>"
                     placeholder="YouTube URL"
                     id="input-youtube"
                     class="form-control"
@@ -504,7 +520,9 @@
           <div class="tab-pane fade" id="setting-other">
             <div class="form-group">
               <div class="mb-3">
-                <label for="adsense_gtm" class="col-md-4 col-form-label">Adsense & Google Tag Manager</label>
+                <label for="adsense_gtm" class="col-md-4 col-form-label"
+                  >Adsense & Google Tag Manager</label
+                >
                 <div class="col-md-8">
                   <textarea
                     name="adsense_gtm"
@@ -512,12 +530,14 @@
                     rows="4"
                     class="form-control"
                   >
-                  <%= data.adsense_gtm %>
+<%= data.adsense_gtm %>
                   </textarea>
                 </div>
               </div>
               <div class="mb-3">
-                <label for="hitstat_code" class="col-md-4 col-form-label">Hitstat Code</label>
+                <label for="hitstat_code" class="col-md-4 col-form-label"
+                  >Hitstat Code</label
+                >
                 <div class="col-md-8">
                   <textarea
                     name="hitstat_code"
@@ -525,7 +545,7 @@
                     rows="4"
                     class="form-control"
                   >
-                  <%= data.hitstat_code %>
+<%= data.hitstat_code %>
                   </textarea>
                 </div>
               </div>
