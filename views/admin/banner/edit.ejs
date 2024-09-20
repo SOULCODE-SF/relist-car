@@ -1,16 +1,17 @@
-<div class="pagetitle mb-2">
+<div class="pagetitle mb-3">
   <div class="row align-items-center">
     <div class="col-md-8 mt-2">
-      <h1 class="fs-4 mb-1">Banner Form</h1>
+      <h1 class="fs-4 mb-1">Banner Form Edit</h1>
       <nav>
         <ol class="breadcrumb">
           <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-          <li class="breadcrumb-item">
-            <a href="/admin/banner">Banner List</a>
-          </li>
-          <li class="breadcrumb-item active">Banner Form</li>
+          <li class="breadcrumb-item active">Banner Edit Form</li>
         </ol>
       </nav>
+    </div>
+    <div class="col-md-4 d-flex justify-content-end mb-2">
+      <button type="submit" title="Save" class="btn btn-primary">Save</button>
+      <a href="/admin/banner" class="ms-2 btn btn-secondary">Cancel</a>
     </div>
   </div>
 </div>
@@ -22,11 +23,6 @@
     method="post"
     enctype="multipart/form-data"
   >
-    <div class="d-flex justify-content-end mb-2">
-      <button type="submit" title="Save" class="btn btn-primary">Save</button>
-      <a href="/admin/banner" class="ms-2 btn btn-secondary">Cancel</a>
-    </div>
     <%- include('partials/form') %>
-    </div>
   </form>
 </section>

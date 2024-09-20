@@ -1,5 +1,6 @@
 const nodecache = require('node-cache');
 const { DBquery } = require('../utils/database');
+const { getContentForMetaDescription } = require('../services/blogServices');
 
 const cache = new nodecache();
 
@@ -26,7 +27,7 @@ const getSiteInfo = async () => {
 const getListCustomPage = async () => {
   try {
     const querystr =
-      'SELECT title, slug FROM pages WHERE status = 1 AND date_published < CURDATE() ORDER BY sort_order ASC;';
+      'SELECT title, slug FROM pages WHERE status = 1 AND date_published < CURDATE() ORDER BY sort_order ASC, title ASC';
     const page = await DBquery(querystr);
 
     return page;
@@ -50,7 +51,14 @@ async function siteInfoMiddleware(req, res, next) {
     const dataCookies = data;
     res.locals.memories = dataCookies;
     res.locals.pages = page;
-
+    res.locals.title = 'Default Title'
+    res.locals.meta_title = dataCookies.meta_title 
+    if (req.path.includes('/blogs/')) {
+      const slug = req.path.split('/blogs/')[1];
+      res.locals.meta_description = await getContentForMetaDescription(slug)
+    } else {
+      res.locals.meta_description = dataCookies.meta_description;
+    }
     if (req.session.alert) {
       res.locals.alert = req.session.alert;
       delete req.session.alert;

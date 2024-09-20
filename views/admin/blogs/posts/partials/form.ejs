@@ -125,3 +125,34 @@
     </div>
   </div>
 </div>
+<div class="card fixed-card">
+  <div class="card-body">
+    <h5 class="card-title">SEO</h5>
+    <!-- Multi Columns Form -->
+    <div class="form-group mb-2">
+      <label class="col-form-label">Meta Title</label>
+      <input
+        type="text"
+        name="meta_title"
+        placeholder="Meta Title"
+        id="meta-title"
+        class="form-control"
+        value="<%= data?.meta_title %>"
+        required
+      />
+    </div>
+    <div class="form-group mb-2">
+      <label class="col-form-label">Meta Description</label>
+      <textarea
+        name="meta_description"
+        rows="4"
+        id="meta-description"
+        class="form-control"
+        required
+      >
+<%= data?.meta_description %></textarea
+      >
+    </div>
+  </div>
+</div>
+</div>

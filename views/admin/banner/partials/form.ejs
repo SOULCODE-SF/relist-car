@@ -4,9 +4,7 @@
       <h5 class="card-title">Banner Form</h5>
       <div class="form-group d-grid gap-3">
         <div class="row">
-          <label for="ads_name" class="col-md-2 col-lg-2 col-form-label"
-            >Ads Name</label
-          >
+          <label for="ads_name" class="col-md-2 col-lg-2 col-form-label">Ads Name</label>
           <div class="col-md-6 col-lg-4">
             <input
               name="ads_name"
@@ -17,10 +15,9 @@
             />
           </div>
         </div>
+
         <div class="row">
-          <label for="ads_position" class="col-md-2 col-lg-2 col-form-label"
-            >Ads Position</label
-          >
+          <label for="ads_position" class="col-md-2 col-lg-2 col-form-label">Ads Position</label>
           <div class="col-md-6 col-lg-4">
             <select
               name="ads_position"
@@ -35,11 +32,7 @@
         </div>
         
         <div class="row">
-          <label
-            for="ads_start_date"
-            class="col-md-2 col-lg-2 col-form-label"
-            >Start Date</label
-          >
+          <label for="ads_start_date" class="col-md-2 col-lg-2 col-form-label">Start Date</label>
           <div class="col-md-6 col-lg-4">
             <input
               name="ads_start_date"
@@ -50,10 +43,9 @@
             />
           </div>
         </div>
+
         <div class="row">
-          <label for="ads_end_date" class="col-md-2 col-lg-2 col-form-label"
-            >End Date</label
-          >
+          <label for="ads_end_date" class="col-md-2 col-lg-2 col-form-label">End Date</label>
           <div class="col-md-6 col-lg-4">
             <input
               name="ads_end_date"
@@ -64,10 +56,9 @@
             />
           </div>
         </div>
+
         <div class="row">
-          <label for="ads_type" class="col-md-2 col-lg-2 col-form-label"
-            >Ads Type</label
-          >
+          <label for="ads_type" class="col-md-2 col-lg-2 col-form-label">Ads Type</label>
           <div class="col-md-6 col-lg-4">
             <select
               name="ads_type"
@@ -75,28 +66,24 @@
               aria-label="Ads Type"
               class="form-select"
             >
-            <option value="code" <%= data?.type == 'code' ? 'selected' : '' %>>Code</option>
-            <option value="image" <%= data?.type == 'image' ? 'selected' : '' %>>Image</option>
+              <option value="code" <%= data?.type == 'code' ? 'selected' : '' %>>Code</option>
+              <option value="image" <%= data?.type == 'image' ? 'selected' : '' %>>Image</option>
             </select>
           </div>
         </div>
-        
+
         <div class="row" id="ads-code">
-          <label
-            for="input-ads-code"
-            class="col-md-2 col-lg-2 col-form-label"
-            >Ads Code</label
-          >
+          <label for="input-ads-code" class="col-md-2 col-lg-2 col-form-label">Ads Code</label>
           <div class="col-md-6 col-lg-6">
             <textarea
               name="ads_code"
-              placeholder=""
               id="input-ads-code"
               style="height: 150px"
               class="form-control"
             ><%= data?.code %></textarea>
           </div>
         </div>
+
         <div class="row g-3 mb-3" id="ads-image">
           <label for="ads_image" class="col-md-2 col-form-label">Image</label>
           <div class="col-md-6">
@@ -129,12 +116,9 @@
             </div>
           </div>
         </div>
+
         <div class="row" id="ads-url">
-          <label
-            for="input-ads-url"
-            class="col-md-2 col-lg-2 col-form-label"
-            >Ads Url</label
-          >
+          <label for="input-ads-url" class="col-md-2 col-lg-2 col-form-label">Ads Url</label>
           <div class="col-md-6 col-lg-4">
             <input
               name="ads_url"
@@ -147,9 +131,7 @@
         </div>
 
         <div class="row">
-          <label for="ads_status" class="col-md-2 col-lg-2 col-form-label"
-            >Ads Status</label
-          >
+          <label for="ads_status" class="col-md-2 col-lg-2 col-form-label">Ads Status</label>
           <div class="col-md-6 col-lg-4">
             <select
               name="ads_status"
@@ -165,3 +147,4 @@
       </div>
     </div>
   </div>
+</div>

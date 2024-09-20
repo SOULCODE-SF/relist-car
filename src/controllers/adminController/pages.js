@@ -129,7 +129,7 @@ const getEditPage = async (req, res, next) => {
 
     res.render('admin/page/edit-page', {
       data: page[0],
-      currentPage: 'edit-pages',
+      currentPage: 'pages',
       title: 'Pages',
       layout: './admin/layouts/layout',
     });
@@ -159,16 +159,6 @@ const editCustomPage = async (req, res, next) => {
       req.session.alert = {
         type: 'alert-danger',
         message: 'Slug is already in use',
-      };
-      return res.redirect(`/admin/edit-pages/${id}`);
-    }
-
-    querystr = 'SELECT * FROM pages WHERE sort_order = ? AND id != ?';
-    let cekSortOrder = await DBquery(querystr, [sort_order, id]);
-    if (cekSortOrder.length > 0) {
-      req.session.alert = {
-        type: 'alert-danger',
-        message: 'Sort order is already in use',
       };
       return res.redirect(`/admin/edit-pages/${id}`);
     }

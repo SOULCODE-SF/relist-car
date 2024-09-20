@@ -262,7 +262,7 @@ document.addEventListener('DOMContentLoaded', () => {
     plugins:
       'anchor autolink charmap codesample emoticons image link lists media searchreplace table visualblocks wordcount code',
     toolbar:
-      'blocks | bold italic underline | alignleft aligncenter alignjustify | numlist bullist | forecolor backcolor removeformat | pagebreak | insertfile image media template link code | code',
+      'blocks | bold italic underline | alignleft aligncenter alignjustify | numlist bullist | forecolor backcolor removeformat | pagebreak | insertfile image media template link | code',
     valid_elements: '*[*]',
     extended_valid_elements: 'script[src|type|async]',
     setup: (editor) => {
@@ -344,11 +344,9 @@ document.addEventListener('DOMContentLoaded', () => {
       await validateSlug();
     });
 
-    // Initial validation on page load to ensure form state is correct
     validateSlug();
   }
 
-  // Initialize Slug Validation for Posts Form
   createSlugValidator(
     'posts-form',
     'slug',
@@ -356,11 +354,21 @@ document.addEventListener('DOMContentLoaded', () => {
     '/blog/check-slug'
   );
 
-  // Initialize Slug Validation for Pages Form
   createSlugValidator(
     'pages-form',
     'page-slug',
     'pages-error-message',
     '/pages/check-slug'
   );
+
+  if ($.fn.dataTable.isDataTable('#datatable')) {
+    $('#datatable').DataTable().destroy();
+  }
+
+  // Inisialisasi DataTable
+  $('#datatable').DataTable({
+    columnDefs: [
+      { orderable: false, targets: 'no-sort' }
+    ]
+  });
 });

@@ -7,7 +7,6 @@ const cekSlugPageExist = async (req, res, next) => {
     queryvalue = [slug];
 
     const cekExist = await DBquery(querystr, queryvalue);
-    console.log(cekExist);
     if (cekExist.length > 0) {
       return res.status(400).json({
         message: 'Slug Already Use',

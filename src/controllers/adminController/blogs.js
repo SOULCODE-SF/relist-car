@@ -51,7 +51,7 @@ const getAddPosts = async (req, res, next) => {
 
 const addPosts = async (req, res, next) => {
   try {
-    const { title, category_id, status, content, slug, date_published } =
+    const { title, category_id, status, content, slug, meta_title, meta_description, date_published } =
       req.body;
 
     if (!req.file) {
@@ -76,7 +76,7 @@ const addPosts = async (req, res, next) => {
 
     if (image.success) {
       const querystr =
-        'INSERT INTO posts (title, image_path, content, category_id, status, slug, date_published) VALUES (?,?,?,?,?,?,?)';
+        'INSERT INTO posts (title, image_path, content, category_id, status, slug, date_published, meta_title, meta_description) VALUES (?,?,?,?,?,?,?,?,?)';
       const queryvalue = [
         title,
         image.path,
@@ -85,6 +85,8 @@ const addPosts = async (req, res, next) => {
         status ? 1 : 0,
         slug,
         date_published,
+        meta_title,
+        meta_description
       ];
 
       await DBquery(querystr, queryvalue);
@@ -122,7 +124,7 @@ const getEditPosts = async (req, res, next) => {
 const editPosts = async (req, res, next) => {
   const post_id = req.params.id;
   try {
-    const { title, category_id, post_status, content } = req.body;
+    const { title, category_id, post_status, content, meta_title, meta_description } = req.body;
     console.log(category_id);
     if (!post_id) {
       req.session.alert = {
@@ -159,7 +161,7 @@ const editPosts = async (req, res, next) => {
         UPDATE posts
         SET title = ?, content = ?, category_id = ?, status = ? ${
           imagePath ? ', image_path = ?' : ''
-        }
+        }, meta_title = ? , meta_description = ?
         WHERE id = ?
       `;
     const queryvalue = [
@@ -168,6 +170,8 @@ const editPosts = async (req, res, next) => {
       parseInt(category_id),
       post_status,
       ...(imagePath ? [imagePath] : []),
+      meta_title,
+      meta_description,
       post_id,
     ];
 

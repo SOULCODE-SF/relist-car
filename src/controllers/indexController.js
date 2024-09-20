@@ -557,6 +557,8 @@ const getBlogDetail = async (req, res, next) => {
       popularArticles,
       categories,
       title: data[0].title,
+      meta_title: data[0].meta_title,
+      meta_description: data[0].meta_description,
       currentPage: 'blogs',
     });
   } catch (error) {
@@ -618,6 +620,9 @@ const customPages = async (req, res, next) => {
         ...page[0],
         content_html: resultHtml,
       },
+      title: page[0].title,
+      meta_title: page[0].meta_title,
+      meta_description: page[0].meta_description,
       currentPage: slug,
     });
   } catch (error) {

@@ -65,6 +65,8 @@ const adminRouter = require('./routes/admin');
 app.use(router);
 app.use('/admin', isAuthenticated, isAdmin, adminRouter);
 
+
+
 app.use((req, res, next) => {
   res.status(404).render('404', { currentPage: '404' });
 });

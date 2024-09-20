@@ -140,7 +140,7 @@ router.get('/add-pages', (req, res) => {
   res.render('admin/page/add-page', {
     data: {},
     title: 'Add Page',
-    currentPage: 'admin-add-page',
+    currentPage: 'pages',
     layout: './admin/layouts/layout',
   });
 });

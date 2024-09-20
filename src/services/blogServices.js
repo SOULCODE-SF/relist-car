@@ -35,7 +35,30 @@ const cekSlugExist = async (req, res, next) => {
   }
 };
 
+function getExcerpt(htmlString, maxLength = 156) {
+  const text = htmlString.replace(/<\/?[^>]+(>|$)/g, "");
+
+  const excerpt = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+
+  return excerpt;
+}
+
+const getContentForMetaDescription = async(slug) => {
+  try {
+    querystr = 'SELECT content FROM posts WHERE slug = ?'
+    const blog = await DBquery(querystr, [slug])
+
+    const excerptContent = getExcerpt(blog[0].content)
+    console.log(excerptContent)
+    
+    return excerptContent
+  } catch (error) {
+    throw new Error(error.message)
+  }
+} 
+
 module.exports = {
   getCategoriesBlog,
   cekSlugExist,
+  getContentForMetaDescription
 };
