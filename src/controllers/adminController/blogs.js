@@ -51,9 +51,24 @@ const getAddPosts = async (req, res, next) => {
 
 const addPosts = async (req, res, next) => {
   try {
-    const { title, category_id, status, content, slug, meta_title, meta_description, date_published } =
-      req.body;
+    const {
+      title,
+      category_id,
+      status,
+      content,
+      slug,
+      meta_title,
+      meta_description,
+      date_published,
+    } = req.body;
+    const tags = req.body.tags
+      .split(',')
+      .map((tag) => tag.trim())
+      .filter((tag) => tag);
+    console.log(tags);
+    const tagsString = tags.join(', ');
 
+    console.log(tagsString);
     if (!req.file) {
       req.session.alert = {
         type: 'alert-danger',
@@ -76,7 +91,7 @@ const addPosts = async (req, res, next) => {
 
     if (image.success) {
       const querystr =
-        'INSERT INTO posts (title, image_path, content, category_id, status, slug, date_published, meta_title, meta_description) VALUES (?,?,?,?,?,?,?,?,?)';
+        'INSERT INTO posts (title, image_path, content, category_id, status, slug, date_published, meta_title, meta_description, tags) VALUES (?,?,?,?,?,?,?,?,?,?)';
       const queryvalue = [
         title,
         image.path,
@@ -86,7 +101,8 @@ const addPosts = async (req, res, next) => {
         slug,
         date_published,
         meta_title,
-        meta_description
+        meta_description,
+        tagsString,
       ];
 
       await DBquery(querystr, queryvalue);
@@ -109,9 +125,15 @@ const getEditPosts = async (req, res, next) => {
   try {
     querystr =
       'SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON pc.id = p.category_id WHERE p.id = ?';
-    const data = await DBquery(querystr, [id]);
+    const posts = await DBquery(querystr, [id]);
+    let data = posts[0];
+    const tagsArray = JSON.parse(posts[0].tags);
+
+    data.tags = tagsArray.map((item) => item.value).join(', ');
+
+    console.log(data);
     res.render('admin/blogs/posts/edit', {
-      data: data[0],
+      data,
       title: 'Blogs',
       currentPage: 'admin-blog-posts-edit',
       layout: './admin/layouts/layout',
@@ -124,7 +146,14 @@ const getEditPosts = async (req, res, next) => {
 const editPosts = async (req, res, next) => {
   const post_id = req.params.id;
   try {
-    const { title, category_id, post_status, content, meta_title, meta_description } = req.body;
+    const {
+      title,
+      category_id,
+      post_status,
+      content,
+      meta_title,
+      meta_description,
+    } = req.body;
     console.log(category_id);
     if (!post_id) {
       req.session.alert = {
@@ -133,6 +162,11 @@ const editPosts = async (req, res, next) => {
       };
       return res.redirect('/admin/blog/posts');
     }
+    const tags = req.body.tags
+      .split(',')
+      .map((tag) => tag.trim())
+      .filter((tag) => tag);
+    const tagsString = tags.join(', ');
 
     let imagePath = null;
 
@@ -161,7 +195,7 @@ const editPosts = async (req, res, next) => {
         UPDATE posts
         SET title = ?, content = ?, category_id = ?, status = ? ${
           imagePath ? ', image_path = ?' : ''
-        }, meta_title = ? , meta_description = ?
+        }, meta_title = ? , meta_description = ?, tags = ?
         WHERE id = ?
       `;
     const queryvalue = [
@@ -172,6 +206,7 @@ const editPosts = async (req, res, next) => {
       ...(imagePath ? [imagePath] : []),
       meta_title,
       meta_description,
+      tagsString,
       post_id,
     ];
 

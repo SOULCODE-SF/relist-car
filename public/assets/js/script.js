@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const models = response.datas;
         models.forEach((model) => {
           $('#input-model').append(
-            $('<option></option>').attr('value', model.id).text(model.name)
+            $('<option></option>').attr('value', model.id).text(model.name),
           );
         });
         $('#input-model').trigger('change.select2');
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
           $('#input-generation').append(
             $('<option></option>')
               .attr('value', generation.id)
-              .text(generation.name)
+              .text(generation.name),
           );
         });
         $('#input-generation').trigger('change.select2');
@@ -250,7 +250,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch((error) => {
           console.error('Error:', error);
           alert(
-            'An error occurred while checking the car specifications. Please try again later.'
+            'An error occurred while checking the car specifications. Please try again later.',
           );
         });
     });
@@ -287,7 +287,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!form || !slugInput || !errorMessage || !submitButton) {
       console.error(
-        `Initialization failed for form ${formId}, input ${slugInputId}, or messages ${errorMessageId}.`
+        `Initialization failed for form ${formId}, input ${slugInputId}, or messages ${errorMessageId}.`,
       );
       return;
     }
@@ -310,7 +310,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         const response = await fetch(
-          `${checkUrl}?slug=${encodeURIComponent(slug)}`
+          `${checkUrl}?slug=${encodeURIComponent(slug)}`,
         );
         const data = await response.json();
         console.log(`Response for ${formId}:`, data);
@@ -351,24 +351,24 @@ document.addEventListener('DOMContentLoaded', () => {
     'posts-form',
     'slug',
     'posts-error-message',
-    '/blog/check-slug'
+    '/blog/check-slug',
   );
 
   createSlugValidator(
     'pages-form',
     'page-slug',
     'pages-error-message',
-    '/pages/check-slug'
+    '/pages/check-slug',
   );
 
   if ($.fn.dataTable.isDataTable('#datatable')) {
     $('#datatable').DataTable().destroy();
   }
 
-  // Inisialisasi DataTable
   $('#datatable').DataTable({
-    columnDefs: [
-      { orderable: false, targets: 'no-sort' }
-    ]
+    columnDefs: [{ orderable: false, targets: 'no-sort' }],
   });
+
+  const input = document.querySelector('#tags');
+  new Tagify(input);
 });
