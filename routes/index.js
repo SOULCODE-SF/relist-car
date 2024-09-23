@@ -91,9 +91,8 @@ router.get('/check-car', checkCar);
 router.use('/api', apiservice);
 
 router.get('/blog/categories', getCategoriesBlog);
-router.get('/blog/check-slug', cekSlugExist);
-
 router.get('/blogs', getBlogs);
+router.get('/blog/check-slug', cekSlugExist);
 router.get('/blogs/:slug', getBlogDetail);
 
 router.get('/pages/check-slug', cekSlugPageExist);

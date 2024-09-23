@@ -16,11 +16,14 @@ const getCategoriesBlog = async (req, res, next) => {
 
 const cekSlugExist = async (req, res, next) => {
   const slug = req.query.slug;
+  const id = req.query.id;
+  console.log(req.query);
   try {
-    querystr = 'SELECT * FROM posts WHERE slug = ?';
-    queryvalue = [slug];
+    querystr = 'SELECT * FROM posts WHERE slug = ? AND id <> ?';
+    queryvalue = [slug, id];
 
     const cekExist = await DBquery(querystr, queryvalue);
+    console.log(cekExist);
     if (cekExist.length > 0) {
       return res.status(400).json({
         message: 'Slug Already Use',
@@ -36,29 +39,30 @@ const cekSlugExist = async (req, res, next) => {
 };
 
 function getExcerpt(htmlString, maxLength = 156) {
-  const text = htmlString.replace(/<\/?[^>]+(>|$)/g, "");
+  const text = htmlString.replace(/<\/?[^>]+(>|$)/g, '');
 
-  const excerpt = text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
+  const excerpt =
+    text.length > maxLength ? text.substring(0, maxLength) + '...' : text;
 
   return excerpt;
 }
 
-const getContentForMetaDescription = async(slug) => {
+const getContentForMetaDescription = async (slug) => {
   try {
-    querystr = 'SELECT content FROM posts WHERE slug = ?'
-    const blog = await DBquery(querystr, [slug])
+    querystr = 'SELECT content FROM posts WHERE slug = ?';
+    const blog = await DBquery(querystr, [slug]);
 
-    const excerptContent = getExcerpt(blog[0].content)
-    console.log(excerptContent)
-    
-    return excerptContent
+    const excerptContent = getExcerpt(blog[0].content);
+    console.log(excerptContent);
+
+    return excerptContent;
   } catch (error) {
-    throw new Error(error.message)
+    throw new Error(error.message);
   }
-} 
+};
 
 module.exports = {
   getCategoriesBlog,
   cekSlugExist,
-  getContentForMetaDescription
+  getContentForMetaDescription,
 };

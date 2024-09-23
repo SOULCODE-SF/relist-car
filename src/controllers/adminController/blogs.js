@@ -28,7 +28,7 @@ const getAllPosts = async (req, res, next) => {
     res.render('admin/blogs/posts/index', {
       datas,
       title: 'Blogs',
-      currentPage: 'admin-blog-posts-index',
+      currentPage: 'blog-posts',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -41,7 +41,7 @@ const getAddPosts = async (req, res, next) => {
     res.render('admin/blogs/posts/add', {
       data: {},
       title: 'Blogs',
-      currentPage: 'admin-blog-posts-add',
+      currentPage: 'blog-posts',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -135,7 +135,7 @@ const getEditPosts = async (req, res, next) => {
     res.render('admin/blogs/posts/edit', {
       data,
       title: 'Blogs',
-      currentPage: 'admin-blog-posts-edit',
+      currentPage: 'blog-posts',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -146,7 +146,7 @@ const getEditPosts = async (req, res, next) => {
 const editPosts = async (req, res, next) => {
   const post_id = req.params.id;
   try {
-    const {
+    let {
       title,
       category_id,
       post_status,
@@ -154,7 +154,6 @@ const editPosts = async (req, res, next) => {
       meta_title,
       meta_description,
     } = req.body;
-    console.log(category_id);
     if (!post_id) {
       req.session.alert = {
         type: 'alert-danger',
@@ -169,7 +168,13 @@ const editPosts = async (req, res, next) => {
     const tagsString = tags.join(', ');
 
     let imagePath = null;
-
+    const getPosts = await DBquery(
+      'SELECT image_path, category_id FROM posts WHERE id = ?',
+      [post_id]
+    );
+    if (!category_id) {
+      category_id = getPosts[0].category_id;
+    }
     if (req.file) {
       const image_name = title.toLowerCase().replace(/ /g, '-');
       const props = {
@@ -188,22 +193,22 @@ const editPosts = async (req, res, next) => {
       } else {
         throw new Error(image.message);
       }
+    } else {
+      imagePath = getPosts[0].image_path;
     }
 
     // Update the post in the database
     const querystr = `
         UPDATE posts
-        SET title = ?, content = ?, category_id = ?, status = ? ${
-          imagePath ? ', image_path = ?' : ''
-        }, meta_title = ? , meta_description = ?, tags = ?
+        SET title = ?, content = ?, category_id = ?, status = ? ,image_path = ?, meta_title = ? , meta_description = ?, tags = ?
         WHERE id = ?
       `;
     const queryvalue = [
       title,
       content,
       parseInt(category_id),
-      post_status,
-      ...(imagePath ? [imagePath] : []),
+      post_status ? 1 : 0,
+      imagePath,
       meta_title,
       meta_description,
       tagsString,
@@ -245,7 +250,7 @@ const deletePosts = async (req, res, next) => {
       const oldImageFullPath = path.join(
         __dirname,
         '../../../public/assets',
-        oldImagePath,
+        oldImagePath
       );
 
       await unlinkFile(oldImageFullPath);
@@ -278,7 +283,7 @@ const getAllCategories = async (req, res, next) => {
     res.render('admin/blogs/categories/index', {
       datas,
       title: 'Blogs Categories',
-      currentPage: 'admin-blog-categories-index',
+      currentPage: 'blog-categories',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -291,7 +296,7 @@ const getAddCategories = async (req, res, next) => {
     res.render('admin/blogs/categories/add', {
       data: {},
       title: 'Blogs Categories',
-      currentPage: 'admin-blog-categories-add',
+      currentPage: 'blog-categories',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -333,7 +338,7 @@ const getUpdateCategories = async (req, res, next) => {
     res.render('admin/blogs/categories/edit', {
       data: cekCategories[0],
       title: 'Blogs Categories',
-      currentPage: 'admin-blog-categories-add',
+      currentPage: 'blog-categories',
       layout: './admin/layouts/layout',
     });
   } catch (error) {

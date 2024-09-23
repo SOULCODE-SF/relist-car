@@ -120,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const models = response.datas;
         models.forEach((model) => {
           $('#input-model').append(
-            $('<option></option>').attr('value', model.id).text(model.name),
+            $('<option></option>').attr('value', model.id).text(model.name)
           );
         });
         $('#input-model').trigger('change.select2');
@@ -148,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
           $('#input-generation').append(
             $('<option></option>')
               .attr('value', generation.id)
-              .text(generation.name),
+              .text(generation.name)
           );
         });
         $('#input-generation').trigger('change.select2');
@@ -209,7 +209,6 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   });
 
-  // Counter Animation
   function animateCount(element, endValue) {
     const startValue = 0;
     const duration = 2000;
@@ -250,7 +249,7 @@ document.addEventListener('DOMContentLoaded', () => {
         .catch((error) => {
           console.error('Error:', error);
           alert(
-            'An error occurred while checking the car specifications. Please try again later.',
+            'An error occurred while checking the car specifications. Please try again later.'
           );
         });
     });
@@ -272,29 +271,26 @@ document.addEventListener('DOMContentLoaded', () => {
     },
   });
 
-  function createSlugValidator(formId, slugInputId, errorMessageId, checkUrl) {
+  function createSlugValidator(
+    formId,
+    slugInputId,
+    errorMessageId,
+    checkUrl,
+    id
+  ) {
     const form = document.getElementById(formId);
     const slugInput = document.getElementById(slugInputId);
     const errorMessage = document.getElementById(errorMessageId);
     const submitButton = form?.querySelector('button[type="submit"]');
-
-    // Log for debugging
-    console.log(`Initializing validator for ${formId}`);
-    console.log(`Form Element:`, form);
-    console.log(`Slug Input Element:`, slugInput);
-    console.log(`Error Message Element:`, errorMessage);
-    console.log(`Submit Button Element:`, submitButton);
+    console.log('form', form);
 
     if (!form || !slugInput || !errorMessage || !submitButton) {
-      console.error(
-        `Initialization failed for form ${formId}, input ${slugInputId}, or messages ${errorMessageId}.`,
-      );
+      console.error(`Initialization failed for form ${formId}.`);
       return;
     }
 
     async function validateSlug() {
-      let slug = slugInput.value.trim();
-      console.log(`Validating slug for ${formId}:`, slug);
+      const slug = slugInput.value.trim();
 
       if (/\s/.test(slug)) {
         errorMessage.textContent = 'Slug cannot contain spaces.';
@@ -310,10 +306,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
       try {
         const response = await fetch(
-          `${checkUrl}?slug=${encodeURIComponent(slug)}`,
+          `${checkUrl}?slug=${encodeURIComponent(slug)}&id=${detailId}`
         );
         const data = await response.json();
-        console.log(`Response for ${formId}:`, data);
 
         if (data.message === 'Slug Already Use') {
           errorMessage.textContent = 'Slug is already taken.';
@@ -333,33 +328,45 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
 
-    form.addEventListener('submit', async function (event) {
+    form.addEventListener('submit', async (event) => {
       const isSlugValid = await validateSlug();
       if (!isSlugValid) {
         event.preventDefault();
       }
     });
 
-    slugInput.addEventListener('input', async function () {
+    slugInput.addEventListener('input', async () => {
       await validateSlug();
     });
 
     validateSlug();
   }
 
-  createSlugValidator(
-    'posts-form',
-    'slug',
-    'posts-error-message',
-    '/blog/check-slug',
-  );
+  const fullUrl = window.location.href;
+  const segments = fullUrl.split('/');
+  const detailId = segments[segments.length - 1];
 
-  createSlugValidator(
-    'pages-form',
-    'page-slug',
-    'pages-error-message',
-    '/pages/check-slug',
-  );
+  if (fullUrl.includes('add-posts') || fullUrl.includes('edit-posts')) {
+    createSlugValidator(
+      'posts-form',
+      'slug',
+      'posts-error-message',
+      '/blog/check-slug',
+      detailId
+    );
+  }
+
+  if (
+    fullUrl.includes('/admin/add-pages') ||
+    fullUrl.includes('/admin/edit-pages')
+  ) {
+    createSlugValidator(
+      'pages-form',
+      'page-slug',
+      'pages-error-message',
+      '/pages/check-slug'
+    );
+  }
 
   if ($.fn.dataTable.isDataTable('#datatable')) {
     $('#datatable').DataTable().destroy();

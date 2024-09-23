@@ -39,7 +39,7 @@
     <!-- End Page Nav -->
     <li class="nav-item">
       <a
-        class="nav-link collapsed"
+        class="nav-link <%= currentPage.includes('blog') ? 'active' : 'collapsed' %>"
         data-bs-target="#blog-nav"
         data-bs-toggle="collapse"
         href="#"
@@ -50,6 +50,7 @@
       <ul
         id="blog-nav"
         class="nav-content collapse"
+        class="nav-content <%= currentPage === 'blog-posts' ? 'active' : 'collapsed' %>"
         data-bs-parent="#sidebar-nav"
       >
         <li>
