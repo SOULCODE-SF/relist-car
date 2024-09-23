@@ -364,7 +364,8 @@ document.addEventListener('DOMContentLoaded', () => {
       'pages-form',
       'page-slug',
       'pages-error-message',
-      '/pages/check-slug'
+      '/pages/check-slug',
+      detailId
     );
   }
 

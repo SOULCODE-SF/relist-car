@@ -566,6 +566,25 @@ const getBlogDetail = async (req, res, next) => {
   }
 };
 
+const getBlogByTag = async (req, res, next) => {
+  let tags = req.params.tags;
+  try {
+    tags = tags.replace('-', ' ');
+    querystr = 'SELECT * FROM posts WHERE tags LIKE ?';
+    const getBlogs = await DBquery(querystr, [`%${tags}%`]);
+
+    console.log(getBlogs);
+    res.render('blogs/index', {
+      data: getBlogs,
+      title: 'Blogs By Tags',
+      currentPage: 'blogs',
+      searchTerm: '',
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 const customPages = async (req, res, next) => {
   const { slug } = req.params;
 
@@ -647,5 +666,6 @@ module.exports = {
   checkCar,
   getBlogs,
   getBlogDetail,
+  getBlogByTag,
   customPages,
 };

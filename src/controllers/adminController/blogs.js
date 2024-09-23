@@ -129,7 +129,9 @@ const getEditPosts = async (req, res, next) => {
     let data = posts[0];
     const tagsArray = JSON.parse(posts[0].tags);
 
-    data.tags = tagsArray.map((item) => item.value).join(', ');
+    if (tagsArray) {
+      data.tags = tagsArray.map((item) => item.value).join(', ');
+    }
 
     console.log(data);
     res.render('admin/blogs/posts/edit', {

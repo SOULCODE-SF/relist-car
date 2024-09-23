@@ -17,6 +17,7 @@ const {
   getBlogs,
   getBlogDetail,
   customPages,
+  getBlogByTag,
 } = require('../src/controllers/indexController');
 const {
   addUser,
@@ -93,6 +94,7 @@ router.use('/api', apiservice);
 router.get('/blog/categories', getCategoriesBlog);
 router.get('/blogs', getBlogs);
 router.get('/blog/check-slug', cekSlugExist);
+router.get('/blog/tags/:tags', getBlogByTag);
 router.get('/blogs/:slug', getBlogDetail);
 
 router.get('/pages/check-slug', cekSlugPageExist);
