@@ -321,8 +321,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       } catch (error) {
         console.error('Error checking slug:', error);
-        errorMessage.textContent =
-          'An error occurred while validating the slug.';
         submitButton.disabled = true;
         return false;
       }
