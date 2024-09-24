@@ -1,74 +1,76 @@
 <div class="pagetitle mb-3">
-    <div class="row align-items-center">
-      <div class="col-md-8 mt-2">
-        <h1 class="fs-4 mb-1">Post Categories</h1>
-        <nav>
-          <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-            <li class="breadcrumb-item active">Post Categories</li>
-          </ol>
-        </nav>
+  <div class="row align-items-center">
+    <div class="col-md-8 mt-2">
+      <h1 class="fs-4 mb-1">Post Categories</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+          <li class="breadcrumb-item active">Post Categories</li>
+        </ol>
+      </nav>
+    </div>
+    <div class="col-md-4">
+      <div class="text-end">
+        <!-- Button to add a new car -->
+        <a
+          href="/admin/blog/add-categories"
+          type="button"
+          class="btn btn-primary"
+          >Add Categories</a
+        >
       </div>
-      <div class="col-md-4">
-        <div class="text-end">
-          <!-- Button to add a new car -->
-          <a href="/admin/blog/add-categories" type="button" class="btn btn-primary"
-            >Add Categories</a
+    </div>
+  </div>
+</div>
+
+<section class="section">
+  <div class="row">
+    <div class="col-12">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Category List</h5>
+          <table
+            id="datatable"
+            class="table table-hover table-bordered dt-responsive"
+            style="border-collapse: collapse; border-spacing: 0; width: 100%"
           >
+            <thead>
+              <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th class="no-sort">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Loop through cars data -->
+              <% datas.forEach((data, i) => { %>
+              <tr>
+                <td><%= data.id %></td>
+                <td><%= data.name %></td>
+                <td class="tw-100">
+                  <a
+                    href="/admin/blog/edit-categories/<%= data.id %>"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Edit"
+                    class="btn btn-warning btn-sm"
+                    ><i class="icon-edit"></i
+                  ></a>
+                  <a
+                    href="/admin/blog/delete-categories/<%= data.id %>"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    title="Delete"
+                    class="btn btn-danger btn-sm"
+                    ><i class="icon-trash-alt"></i
+                  ></a>
+                </td>
+              </tr>
+              <% }) %>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
   </div>
-  
-  <section class="section">
-    <div class="row">
-      <div class="col-12">
-        <div class="card">
-          <div class="card-body">
-            <h5 class="card-title">Category List</h5>
-            <table
-              id="datatable"
-              class="table table-hover table-bordered dt-responsive"
-              style="border-collapse: collapse; border-spacing: 0; width: 100%"
-            >
-              <thead>
-                <tr>
-                  <th>Id</th>
-                  <th>Name</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                <!-- Loop through cars data -->
-                <% datas.forEach((data, i) => { %>
-                <tr>
-                  <td><%= data.id %></td>
-                  <td><%= data.name %></td>
-                  <td class="tw-100">
-                    <a
-                      href="/admin/blog/edit-categories/<%= data.id %>"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Edit"
-                      class="btn btn-warning btn-sm"
-                      ><i class="icon-edit"></i
-                    ></a>
-                    <a
-                      href="/admin/blog/delete-categories/<%= data.id %>"
-                      data-bs-toggle="tooltip"
-                      data-bs-placement="top"
-                      title="Delete"
-                      class="btn btn-danger btn-sm"
-                      ><i class="icon-trash-alt"></i
-                    ></a>
-                  </td>
-                </tr>
-                <% }) %>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-  
+</section>

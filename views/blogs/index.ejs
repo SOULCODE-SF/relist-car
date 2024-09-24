@@ -41,8 +41,17 @@
     </div>
   </div>
   <div class="container">
+    <div class="row mt-4 gap-1">
+      <% data.tags.forEach (tag => { %>
+      <a href="/blog/tags/<%= tag %>" class="col badge text-bg-secondary"
+        ><%= tag %></a
+      >
+      <%})%>
+    </div>
     <div class="row mt-4">
-      <% data.forEach(post => { %>
+      <% if(data.tag){ %>
+      <p>`Result of tag <%= data.tag %>`</p>
+      <%}%> <% data.blogs.forEach(post => { %>
       <div class="col-md-4 mb-4 d-flex">
         <div class="card flex-fill d-flex flex-column">
           <div class="card-img-container">
@@ -57,22 +66,30 @@
             <h6 class="card-text">
               <i class="icon-calendar text-red"></i> <%= post.published_date %>
             </h6>
-            <hr>
+            <hr />
             <h4 class="card-text"><%= post.title %></h4>
             <div class="mt-auto">
-              <a href="/blogs/<%= post.slug %>" target="_blank" rel="noopener" class="theme-btn">
+              <a
+                href="/blogs/<%= post.slug %>"
+                target="_blank"
+                rel="noopener"
+                class="theme-btn"
+              >
                 Go somewhere <i class="icon-arrow-right ms-2"></i>
               </a>
             </div>
           </div>
         </div>
       </div>
-      <% }); %>
-      <% for (let i = data.length; i < 3; i++) { %>
+      <% }); %> <% for (let i = data.length; i < 3; i++) { %>
       <div class="col-md-4 mb-4 d-flex">
-        <div class="card flex-fill" style="height: 250px; visibility: hidden;"></div> <!-- Placeholder -->
+        <div
+          class="card flex-fill"
+          style="height: 250px; visibility: hidden"
+        ></div>
+        <!-- Placeholder -->
       </div>
       <% } %>
     </div>
-  </div>  
+  </div>
 </section>

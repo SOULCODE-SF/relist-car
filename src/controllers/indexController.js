@@ -511,7 +511,22 @@ const getBlogs = async (req, res, next) => {
       });
     }
 
-    const data = await DBquery(querystr, queryvalue);
+    const blogs = await DBquery(querystr, queryvalue);
+
+    querystr = 'SELECT tags FROM  posts WHERE tags IS NOT NULL';
+    const tagValue = await DBquery(querystr);
+    let tags = [];
+    for (const tag of tagValue) {
+      const temp = JSON.parse(tag.tags);
+      for (const e of temp) {
+        tags.push(e.value);
+      }
+    }
+
+    const data = {
+      blogs,
+      tags,
+    };
 
     cache.set(key, data, 86000);
 
@@ -567,15 +582,30 @@ const getBlogDetail = async (req, res, next) => {
 };
 
 const getBlogByTag = async (req, res, next) => {
-  let tags = req.params.tags;
+  let tag = req.params.tags;
   try {
-    tags = tags.replace('-', ' ');
+    tag = tag.replace('-', ' ');
     querystr = 'SELECT * FROM posts WHERE tags LIKE ?';
-    const getBlogs = await DBquery(querystr, [`%${tags}%`]);
+    const blogs = await DBquery(querystr, [`%${tag}%`]);
 
-    console.log(getBlogs);
+    querystr = 'SELECT tags FROM  posts WHERE tags IS NOT NULL';
+    const tagValue = await DBquery(querystr);
+    let tags = [];
+    for (const item of tagValue) {
+      const temp = JSON.parse(item.tags);
+      for (const e of temp) {
+        if (e.value != tag) {
+          tags.push(e.value);
+        }
+      }
+    }
+
     res.render('blogs/index', {
-      data: getBlogs,
+      data: {
+        blogs,
+        tags,
+        tag,
+      },
       title: 'Blogs By Tags',
       currentPage: 'blogs',
       searchTerm: '',

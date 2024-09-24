@@ -13,7 +13,9 @@
    */
   const select = (el, all = false) => {
     el = el.trim();
-    return all ? [...document.querySelectorAll(el)] : document.querySelector(el);
+    return all
+      ? [...document.querySelectorAll(el)]
+      : document.querySelector(el);
   };
 
   /**
@@ -63,7 +65,11 @@
       if (!navbarlink.hash) return;
       const section = select(navbarlink.hash);
       if (!section) return;
-      navbarlink.classList.toggle('active', position >= section.offsetTop && position <= section.offsetTop + section.offsetHeight);
+      navbarlink.classList.toggle(
+        'active',
+        position >= section.offsetTop &&
+          position <= section.offsetTop + section.offsetHeight
+      );
     });
   };
   window.addEventListener('load', updateNavbarLinksActiveState);
@@ -96,8 +102,12 @@
   /**
    * Initiate tooltips
    */
-  const tooltipTriggerList = [...document.querySelectorAll('[data-bs-toggle="tooltip"]')];
-  tooltipTriggerList.forEach((tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl));
+  const tooltipTriggerList = [
+    ...document.querySelectorAll('[data-bs-toggle="tooltip"]'),
+  ];
+  tooltipTriggerList.forEach(
+    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+  );
 
   /**
    * Initiate Bootstrap validation check
@@ -141,10 +151,10 @@
     adsUrl.style.display = 'none';
 
     if (adsType === 'code') {
-      adsCode.style.display = 'block';
+      adsCode.style.display = 'inline';
     } else if (adsType === 'image') {
-      adsImage.style.display = 'block';
-      adsUrl.style.display = 'block';
+      adsImage.style.display = 'inline';
+      adsUrl.style.display = 'inline';
     }
   };
 
@@ -169,13 +179,13 @@
         reader.readAsDataURL(input.files[0]);
       }
     });
-  
+
     $('#remove-image').click((e) => {
       e.preventDefault();
       $('#image-preview').attr('src', 'assets/img/preview.png'); // Set default image
       $('#input-image').val(''); // Clear the input value
     });
-  
+
     // Handle favicon preview
     $('#input-favicon').change(function () {
       const input = this;
@@ -187,13 +197,13 @@
         reader.readAsDataURL(input.files[0]);
       }
     });
-  
+
     $('#remove-favicon').click((e) => {
       e.preventDefault();
       $('#favicon-preview').attr('src', 'assets/img/preview.png'); // Set default favicon
       $('#input-favicon').val(''); // Clear the input value
     });
-  });  
+  });
 
   /**
    * Tab navigation
@@ -208,10 +218,12 @@
   /**
    * Powertrain architecture management
    */
-  document.getElementById('input-powertrain-architecture').addEventListener('change', function () {
-    const newArchDiv = document.getElementById('new-powertrain-architecture');
-    newArchDiv.style.display = this.value === 'add-new' ? 'block' : 'none';
-  });
+  document
+    .getElementById('input-powertrain-architecture')
+    .addEventListener('change', function () {
+      const newArchDiv = document.getElementById('new-powertrain-architecture');
+      newArchDiv.style.display = this.value === 'add-new' ? 'block' : 'none';
+    });
 
   /**
    * Electric motors management
@@ -228,15 +240,19 @@
   });
 
   const addImageButton = document.getElementById('add-image-button');
-  const imageUploadFieldsContainer = document.getElementById('image-upload-fields');
+  const imageUploadFieldsContainer = document.getElementById(
+    'image-upload-fields'
+  );
 
   const maxFields = 5;
 
   addImageButton.addEventListener('click', function () {
-  const currentFieldsCount = imageUploadFieldsContainer.querySelectorAll('.image-upload-field').length;
+    const currentFieldsCount = imageUploadFieldsContainer.querySelectorAll(
+      '.image-upload-field'
+    ).length;
 
-  if (currentFieldsCount >= maxFields) {
-    alert('You can only add up to 5 image upload fields.');
+    if (currentFieldsCount >= maxFields) {
+      alert('You can only add up to 5 image upload fields.');
       return;
     }
     const newField = document.createElement('div');
@@ -252,24 +268,24 @@
 
     imageUploadFieldsContainer.appendChild(newField);
     const removeButtons = document.querySelectorAll('.btn-remove-image');
-    removeButtons.forEach(button => {
+    removeButtons.forEach((button) => {
       button.style.display = 'block';
     });
   });
 
-    imageUploadFieldsContainer.addEventListener('click', function (event) {
-      if (event.target && event.target.classList.contains('btn-remove-image')) {
-        const fieldToRemove = event.target.closest('.image-upload-field');
-        if (fieldToRemove) {
-          fieldToRemove.remove();
+  imageUploadFieldsContainer.addEventListener('click', function (event) {
+    if (event.target && event.target.classList.contains('btn-remove-image')) {
+      const fieldToRemove = event.target.closest('.image-upload-field');
+      if (fieldToRemove) {
+        fieldToRemove.remove();
 
-          if (document.querySelectorAll('.image-upload-field').length === 0) {
-            const removeButtons = document.querySelectorAll('.btn-remove-image');
-            removeButtons.forEach(button => {
-              button.style.display = 'none';
-            });
-          }
+        if (document.querySelectorAll('.image-upload-field').length === 0) {
+          const removeButtons = document.querySelectorAll('.btn-remove-image');
+          removeButtons.forEach((button) => {
+            button.style.display = 'none';
+          });
         }
       }
-    });
+    }
+  });
 })();

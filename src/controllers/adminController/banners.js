@@ -21,7 +21,7 @@ exports.getAllBanners = async (req, res, next) => {
 
     res.render('admin/banner', {
       title: 'Manage Banner',
-      currentPage: 'admin-banner',
+      currentPage: 'banner',
       layout: './admin/layouts/layout',
       banners: datas,
     });
@@ -34,7 +34,7 @@ exports.getAddBanner = async (req, res, next) => {
   try {
     res.render('admin/banner/add', {
       title: 'Add Banner',
-      currentPage: 'admin-add-banner',
+      currentPage: 'banner',
       layout: './admin/layouts/layout',
       data: {},
     });
@@ -80,7 +80,7 @@ exports.addBanner = async (req, res, next) => {
         const oldPath = req.file.path;
         const newDir = path.join(
           __dirname,
-          '../../../public/assets/images/banner',
+          '../../../public/assets/images/banner'
         );
         const newFilePath = path.join(newDir, formattedFileName);
 
@@ -116,14 +116,14 @@ exports.getBannerById = async (req, res, next) => {
     let banner_id = req.params.id;
     const data = await DBquery(
       `SELECT b.id, b.adsname, b.type, b.position, date_format(b.date_start, '%Y-%m-%d') as start_date, date_format(b.date_end, '%Y-%m-%d') as end_date, b.status, b.created_at, b.code, bi.image_path, bi.url from banners b left join banner_image bi on b.id = bi.banner_id WHERE b.id = ?`,
-      [banner_id],
+      [banner_id]
     );
 
     const positions = await DBquery('SELECT * FROM banner_positions');
 
     res.render('admin/banner/edit', {
       title: 'Edit Banner',
-      currentPage: 'admin-banner-edit',
+      currentPage: 'banner',
       layout: './admin/layouts/layout',
       data: data[0],
       positions,
@@ -178,7 +178,7 @@ exports.updateBanner = async (req, res, next) => {
       const oldPath = req.file.path;
       const newDir = path.join(
         __dirname,
-        '../../../public/assets/images/banner',
+        '../../../public/assets/images/banner'
       );
       newFilePath = path.join(newDir, formattedFileName);
 
@@ -191,19 +191,19 @@ exports.updateBanner = async (req, res, next) => {
 
       const existingImage = await DBquery(
         'SELECT image_path FROM banner_image WHERE banner_id = ?',
-        [bannerId],
+        [bannerId]
       );
 
       if (existingImage.length > 0) {
         const oldImagePath = path.join(
           __dirname,
           '../../../public',
-          existingImage[0].image_path,
+          existingImage[0].image_path
         );
 
         const banner = await DBquery(
           'SELECT adsname FROM banners WHERE id = ?',
-          [bannerId],
+          [bannerId]
         );
 
         if (!req.file) {
@@ -215,7 +215,7 @@ exports.updateBanner = async (req, res, next) => {
             const newpath = path.join(
               __dirname,
               '../../../public',
-              `/assets/images/banner/${formattedFileName}`,
+              `/assets/images/banner/${formattedFileName}`
             );
             fs.renameSync(oldImagePath, newpath);
             ads_image = `/assets/images/banner/${formattedFileName}`;
@@ -296,7 +296,7 @@ exports.deleteBanner = async (req, res) => {
       const filePath = path.join(
         __dirname,
         '../../../public',
-        currentImagePath,
+        currentImagePath
       );
 
       fs.unlink(filePath, (err) => {

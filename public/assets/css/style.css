@@ -1116,9 +1116,22 @@ button:hover {
   object-fit: cover;
 }
 
-/* Optional: Adjust margin and padding for spacing */
 .blog-post {
-  margin-bottom: 1.5rem; /* Adjust as needed */
+  margin-bottom: 1.5rem;
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.5em 1em;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  transition: all;
+  transition-duration: 0.5s;
+}
+
+.badge:hover {
+  cursor: pointer;
+  background-color: var(--primary-color) !important;
 }
 
 .content-preview {
