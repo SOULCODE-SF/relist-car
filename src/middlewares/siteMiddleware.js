@@ -38,24 +38,17 @@ const getListCustomPage = async () => {
 
 async function siteInfoMiddleware(req, res, next) {
   try {
-    const key = 'site_info';
-    let data = cache.get(key);
-
-    if (!data) {
-      console.log('Cache miss');
-      data = await getSiteInfo();
-      page = await getListCustomPage();
-      cache.set(key, data, 86000);
-    }
+    const data = await getSiteInfo();
+    const page = await getListCustomPage();
 
     const dataCookies = data;
     res.locals.memories = dataCookies;
     res.locals.pages = page;
-    res.locals.title = 'Default Title'
-    res.locals.meta_title = dataCookies.meta_title 
+    res.locals.title = 'Default Title';
+    res.locals.meta_title = dataCookies.meta_title;
     if (req.path.includes('/blogs/')) {
       const slug = req.path.split('/blogs/')[1];
-      res.locals.meta_description = await getContentForMetaDescription(slug)
+      res.locals.meta_description = await getContentForMetaDescription(slug);
     } else {
       res.locals.meta_description = dataCookies.meta_description;
     }

@@ -182,7 +182,7 @@ const getSpec = async (req, res, next) => {
     const data = datas[0][0];
     const imagescar = await DBquery(
       'SELECT image_path FROM car_images WHERE car_id = ?',
-      [data.car_id]
+      [data.car_id],
     );
     let haveElectricMotor = false;
     if (data.electric_motor_1_power != '') {
@@ -191,7 +191,7 @@ const getSpec = async (req, res, next) => {
 
     function hasNonEmptyValue(obj) {
       return Object.values(obj).some(
-        (value) => value !== '' && value !== null && value !== undefined
+        (value) => value !== '' && value !== null && value !== undefined,
       );
     }
 
@@ -446,7 +446,7 @@ const getListCountry = async (req, res, next) => {
 
     if (name) {
       const filteredCountries = countries.filter((country) =>
-        country.name.toLowerCase().includes(name.toLowerCase())
+        country.name.toLowerCase().includes(name.toLowerCase()),
       );
       res.json({ data: filteredCountries });
     } else {
@@ -566,11 +566,22 @@ const getBlogDetail = async (req, res, next) => {
     querystr = `UPDATE posts SET total_views = total_views + 1 WHERE slug = ?`;
     await DBquery(querystr, [slug]);
 
+    querystr = 'SELECT tags FROM  posts WHERE slug = ?';
+    const tagValue = await DBquery(querystr, [slug]);
+    let tags = [];
+    for (const tag of tagValue) {
+      const temp = JSON.parse(tag.tags);
+      for (const e of temp) {
+        tags.push(e.value);
+      }
+    }
+
     res.render('blogs/detail', {
       data: data[0],
       featuredArticles,
       popularArticles,
       categories,
+      tags,
       title: data[0].title,
       meta_title: data[0].meta_title,
       meta_description: data[0].meta_description,

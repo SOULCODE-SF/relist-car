@@ -150,6 +150,7 @@ const editPosts = async (req, res, next) => {
   try {
     let {
       title,
+      slug,
       category_id,
       post_status,
       content,
@@ -172,7 +173,7 @@ const editPosts = async (req, res, next) => {
     let imagePath = null;
     const getPosts = await DBquery(
       'SELECT image_path, category_id FROM posts WHERE id = ?',
-      [post_id]
+      [post_id],
     );
     if (!category_id) {
       category_id = getPosts[0].category_id;
@@ -202,11 +203,12 @@ const editPosts = async (req, res, next) => {
     // Update the post in the database
     const querystr = `
         UPDATE posts
-        SET title = ?, content = ?, category_id = ?, status = ? ,image_path = ?, meta_title = ? , meta_description = ?, tags = ?
+        SET title = ?, slug=?, content = ?, category_id = ?, status = ? ,image_path = ?, meta_title = ? , meta_description = ?, tags = ?
         WHERE id = ?
       `;
     const queryvalue = [
       title,
+      slug,
       content,
       parseInt(category_id),
       post_status ? 1 : 0,
@@ -252,7 +254,7 @@ const deletePosts = async (req, res, next) => {
       const oldImageFullPath = path.join(
         __dirname,
         '../../../public/assets',
-        oldImagePath
+        oldImagePath,
       );
 
       await unlinkFile(oldImageFullPath);

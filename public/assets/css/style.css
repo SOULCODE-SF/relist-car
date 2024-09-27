@@ -34,7 +34,7 @@
   --green: #11b76b;
   --blue: #0049d0;
   --yellow: #fba707;
-  --dark: #333333;
+  --dark: rgba(48, 86, 211, 0.06);
   --black: #000000;
 }
 .bg-light-gray {
@@ -562,9 +562,6 @@ button:hover {
   font-size: 1rem;
   font-weight: 600;
 }
-.nav-link.active {
-  color: var(--primary-color) !important;
-}
 .nav-link:hover {
   color: var(--primary-color) !important;
 }
@@ -739,7 +736,6 @@ button:hover {
   font-weight: bold;
   background-color: transparent;
   color: var(--primary-color);
-  border-bottom: 2px solid var(--primary-color);
 }
 .tab-content {
   padding: 20px;
@@ -1122,16 +1118,20 @@ button:hover {
 
 .badge {
   display: inline-block;
-  padding: 0.5em 1em;
-  border-radius: 0.5rem;
+  background-color: var(--dark);
+  padding: 12px;
+  border-radius: 0.1rem;
   white-space: nowrap;
   transition: all;
   transition-duration: 0.5s;
+  width: auto;
+  color: var(--primary-color);
 }
 
 .badge:hover {
   cursor: pointer;
   background-color: var(--primary-color) !important;
+  color: white;
 }
 
 .content-preview {

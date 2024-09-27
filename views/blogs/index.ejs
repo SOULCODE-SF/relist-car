@@ -41,16 +41,9 @@
     </div>
   </div>
   <div class="container">
-    <div class="row mt-4 gap-1">
-      <% data.tags.forEach (tag => { %>
-      <a href="/blog/tags/<%= tag %>" class="col badge text-bg-secondary"
-        ><%= tag %></a
-      >
-      <%})%>
-    </div>
     <div class="row mt-4">
       <% if(data.tag){ %>
-      <p>`Result of tag <%= data.tag %>`</p>
+      <p>Result of tag <%= data.tag %></p>
       <%}%> <% data.blogs.forEach(post => { %>
       <div class="col-md-4 mb-4 d-flex">
         <div class="card flex-fill d-flex flex-column">
