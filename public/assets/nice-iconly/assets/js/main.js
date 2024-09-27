@@ -182,7 +182,10 @@
 
     $('#remove-image').click((e) => {
       e.preventDefault();
-      $('#image-preview').attr('src', 'assets/img/preview.png'); // Set default image
+      $('#image-preview').attr(
+        'src',
+        '/assets/nice-iconly/assets/img/preview.png'
+      ); // Set default image
       $('#input-image').val(''); // Clear the input value
     });
 
@@ -239,15 +242,13 @@
     }
   });
 
-  const addImageButton = document.getElementById('add-image-button');
-  const imageUploadFieldsContainer = document.getElementById(
-    'image-upload-fields'
-  );
-
+  //adtional image
+  const addImageButton = $('#add-image-button');
+  const imageUploadFieldsContainer = $('#image-upload-fields');
   const maxFields = 5;
 
-  addImageButton.addEventListener('click', function () {
-    const currentFieldsCount = imageUploadFieldsContainer.querySelectorAll(
+  addImageButton.click(() => {
+    const currentFieldsCount = imageUploadFieldsContainer.find(
       '.image-upload-field'
     ).length;
 
@@ -255,37 +256,99 @@
       alert('You can only add up to 5 image upload fields.');
       return;
     }
-    const newField = document.createElement('div');
-    newField.className = 'row g-3 mb-3 image-upload-field';
-    newField.innerHTML = `
-        <div class="col-md-10">
-          <input name="car_images" type="file" accept="image/*" />
-        </div>
-        <div class="col-md-2">
-          <button type="button" class="btn btn-danger btn-remove-image">Remove</button>
-        </div>
-      `;
 
-    imageUploadFieldsContainer.appendChild(newField);
-    const removeButtons = document.querySelectorAll('.btn-remove-image');
-    removeButtons.forEach((button) => {
-      button.style.display = 'block';
+    const newField = $(`
+      <div class="image-upload-field mb-2 mt-2">
+        <div class="additional-image-preview-container">
+          <img
+            class="additional-image-preview"
+            src="/assets/nice-iconly/assets/img/preview.png"
+            class="img-thumbnail"
+            alt="Additional Image Preview"
+          />
+        </div>
+        <div class="pt-2">
+          <label class="btn btn-primary btn-sm" title="Upload image">
+            <i class="icon-upload"></i>
+            <input
+              name="additional_car_images"
+              type="file"
+              class="input-additional-image"
+              accept="image/*"
+              style="display: none"
+            />
+          </label>
+          <a href="#" class="btn btn-danger btn-sm remove-additional-image" title="Remove image">
+            <i class="icon-trash-alt"></i>
+          </a>
+        </div>
+      </div>
+    `);
+
+    imageUploadFieldsContainer.append(newField);
+
+    // Handle image preview for the newly added field
+    newField.find('.input-additional-image').change(function () {
+      const input = this;
+      if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          newField
+            .find('.additional-image-preview')
+            .attr('src', e.target.result);
+        };
+        reader.readAsDataURL(input.files[0]);
+      }
+    });
+
+    // Remove additional image field
+    newField.find('.remove-additional-image').click(function (e) {
+      e.preventDefault();
+      newField.remove(); // Remove the field
     });
   });
 
-  imageUploadFieldsContainer.addEventListener('click', function (event) {
-    if (event.target && event.target.classList.contains('btn-remove-image')) {
-      const fieldToRemove = event.target.closest('.image-upload-field');
-      if (fieldToRemove) {
-        fieldToRemove.remove();
+  // Handle the first additional image preview
+  $('.input-additional-image').change(function () {
+    const input = this;
+    if (input.files && input.files[0]) {
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        $(this)
+          .closest('.image-upload-field')
+          .find('.additional-image-preview')
+          .attr('src', e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  });
 
-        if (document.querySelectorAll('.image-upload-field').length === 0) {
-          const removeButtons = document.querySelectorAll('.btn-remove-image');
-          removeButtons.forEach((button) => {
-            button.style.display = 'none';
-          });
+  const fileInputs = document.querySelectorAll('.input-additional-image');
+
+  fileInputs.forEach((input) => {
+    input.addEventListener('change', function () {
+      const id = this.getAttribute('data-id');
+      const existingHiddenInput = this.form.querySelector(
+        `input[name="existing_additional_images_ids[]"][data-id="${id}"]`
+      );
+
+      // Check if a file is uploaded
+      if (this.files.length > 0) {
+        // If a file is selected, add the ID to a hidden input
+        if (!existingHiddenInput) {
+          const newHiddenInput = document.createElement('input');
+          newHiddenInput.type = 'hidden';
+          newHiddenInput.name = 'existing_additional_images_ids[]';
+          newHiddenInput.value = id;
+          newHiddenInput.setAttribute('data-id', id);
+          this.parentElement.appendChild(newHiddenInput); // Append to the current input's parent
+        }
+      } else {
+        // If no file is selected, remove the hidden input if it exists
+        if (existingHiddenInput) {
+          existingHiddenInput.remove();
         }
       }
-    }
+    });
   });
 })();

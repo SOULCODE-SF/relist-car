@@ -77,6 +77,11 @@
         <div class="row" id="engine">
           <label for="input-engine" class="col-md-2 col-lg-2 col-form-label">Engine</label>
           <div class="col-md-6 col-lg-4">
+            <% if(data.car){%>
+              <span class="text-primary w-25"
+                ><%= data.car.engine %></span
+              >
+              <%}%>
             <select
             id="input-engine"
             name="engine"

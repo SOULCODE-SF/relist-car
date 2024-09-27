@@ -22,7 +22,7 @@ exports.getAllGenerationList = async (req, res, next) => {
       return res.render('admin/car/generation/index', {
         datas: resp,
         title: 'Generation List',
-        currentPage: 'admin-generation-list',
+        currentPage: 'list-car-generation',
         layout: './admin/layouts/layout',
       });
     });
@@ -36,7 +36,7 @@ exports.getAddGeneration = async (req, res, next) => {
     return res.render('admin/car/generation/add', {
       data: {},
       title: 'Add Generation',
-      currentPage: 'admin-genration-add',
+      currentPage: 'add-car-generation',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -100,7 +100,7 @@ exports.addGeneration = async (req, res, next) => {
       moveFile(oldPath, newFilePath, async (err) => {
         if (err) throw new Error('Error moving file');
 
-        const model_image = `/assets/images/brands/${brand_name}/${model_name}/${formattedFileName}`;
+        const model_image = `/images/brands/${brand_name}/${model_name}/${formattedFileName}`;
 
         const querystr =
           'INSERT INTO generations (title, image_path, model_id, flag) VALUES (?,?,?,?)';
@@ -132,7 +132,7 @@ exports.getEditGenaration = async (req, res, next) => {
       return res.render('admin/car/generation/edit', {
         data: onres[0],
         title: 'Edit generations',
-        currentPage: 'admin-edit-generations',
+        currentPage: 'edit-car-generation',
         layout: './admin/layouts/layout',
       });
     });
@@ -177,7 +177,7 @@ exports.editGenerations = async (req, res, next) => {
         moveFile(oldPath, newFilePath, async (err) => {
           if (err) throw new Error('Error moving file');
 
-          const generation_image = `/assets/images/brands/${brand_name}/${model_name}/${formattedFileName}`;
+          const generation_image = `/images/brands/${brand_name}/${model_name}/${formattedFileName}`;
 
           if (oldImagePath && oldImagePath !== generation_image) {
             const oldImageFullPath = path.join(
@@ -211,7 +211,7 @@ exports.editGenerations = async (req, res, next) => {
 
       const querystr =
         'UPDATE generations SET title = ?, image_path = ?, model_id = ?, flag = ? WHERE id = ?';
-      const queryvalue = [name, generation_image, brand_id, flag, id];
+      const queryvalue = [name, generation_image, model_id, flag, id];
 
       await DBquery(querystr, queryvalue);
 
@@ -219,7 +219,7 @@ exports.editGenerations = async (req, res, next) => {
         type: 'alert-success',
         message: 'Generation Update Success',
       };
-      res.redirect(`/admin/edit-generations/${id}`);
+      res.redirect(`/admin/model-generations`);
     }
   } catch (error) {
     next(error);

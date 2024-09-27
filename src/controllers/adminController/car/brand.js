@@ -19,7 +19,7 @@ exports.getAllListBrands = async (req, res, next) => {
     return res.render('admin/car/brand/index', {
       datas: brands,
       title: 'Brand List',
-      currentPage: 'admin-brand-list',
+      currentPage: 'list-car-brand',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -32,7 +32,7 @@ exports.getAddBrands = async (req, res, next) => {
     return res.render('admin/car/brand/add', {
       data: {},
       title: 'Add Brands',
-      currentPage: 'admin-brand-add',
+      currentPage: 'add-car-brand',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -98,7 +98,7 @@ exports.getEditBrands = async (req, res, next) => {
       return res.render('admin/car/brand/edit', {
         data: onres[0],
         title: 'Edit brands',
-        currentPage: 'admin-edit-brand',
+        currentPage: 'edit-car-brand',
         layout: './admin/layouts/layout',
       });
     });
@@ -154,6 +154,12 @@ exports.editBrands = async (req, res, next) => {
           const queryvalue = [name, brand_image, is_featured, id];
 
           await DBquery(querystr, queryvalue);
+
+          req.session.alert = {
+            type: 'alert-success',
+            message: 'Brands update successfully!',
+          };
+
           res.redirect('/admin/cars-brands');
         });
       });
@@ -165,6 +171,11 @@ exports.editBrands = async (req, res, next) => {
       const queryvalue = [name, brand_image, is_featured, id];
 
       await DBquery(querystr, queryvalue);
+
+      req.session.alert = {
+        type: 'alert-success',
+        message: 'Brands update successfully!',
+      };
       res.redirect('/admin/cars-brands');
     }
   } catch (error) {

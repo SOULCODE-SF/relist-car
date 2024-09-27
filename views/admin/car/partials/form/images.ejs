@@ -3,23 +3,120 @@
     <div class="card-body">
       <h5 class="card-title">Images</h5>
       <div class="form-group d-grid gap-3">
-        <div class="row g-3 mb-3" id="image-upload-container">
-          <label for="image_upload" class="col-md-2 col-form-label">Images</label>
-          <div id="image-upload-fields">
-            <div class="row g-3 mb-3 image-upload-field">
-              <div class="col-md-10">
+        <!-- Main Image Section -->
+        <div class="row g-3 mb-3" id="main-car-image">
+          <label for="main_car_image" class="col-md-2 col-form-label"
+            >Main Image</label
+          >
+          <div class="col-md-6">
+            <div id="image-preview-container">
+              <img
+                id="image-preview"
+                src="/assets/<%= data?.images?.main_image?.image_path || '/assets/nice-iconly/assets/img/preview.png' %>"
+                class="img-thumbnail"
+                alt="Image Preview"
+              />
+            </div>
+            <div class="pt-2">
+              <label
+                for="input-image"
+                class="btn btn-primary btn-sm"
+                title="Upload image"
+              >
+                <i class="icon-upload"></i>
                 <input
                   name="car_images"
                   type="file"
+                  id="input-image"
                   accept="image/*"
+                  style="display: none"
                 />
-              </div>
-              <div class="col-md-2">
-                <button type="button" class="btn btn-danger btn-remove-image" style="display: none;">Remove</button>
-              </div>
+              </label>
+              <a
+                href="#"
+                class="btn btn-danger btn-sm"
+                title="Remove image"
+                id="remove-image"
+              >
+                <i class="icon-trash-alt"></i>
+              </a>
             </div>
           </div>
-          <button type="button" id="add-image-button" class="btn btn-primary">+ Add More</button>
+        </div>
+
+        <!-- Additional Images Section -->
+        <div class="row g-3 mb-3" id="image-upload-container">
+          <label for="image_upload" class="col-md-2 col-form-label"
+            >Additional Images</label
+          >
+          <div class="col-md-6" id="image-upload-fields">
+            <% if (!data) { %>
+            <div class="image-upload-field">
+              <div class="additional-image-preview-container">
+                <img
+                  class="additional-image-preview"
+                  src="/assets/nice-iconly/assets/img/preview.png"
+                  class="img-thumbnail"
+                  alt="Additional Image Preview"
+                />
+              </div>
+              <div class="pt-2">
+                <label class="btn btn-primary btn-sm" title="Upload image">
+                  <i class="icon-upload"></i>
+                  <input
+                    name="additional_car_images"
+                    type="file"
+                    class="input-additional-image"
+                    accept="image/*"
+                    style="display: none"
+                  />
+                </label>
+                <a
+                  href="#"
+                  class="btn btn-danger btn-sm remove-additional-image"
+                  title="Remove image"
+                >
+                  <i class="icon-trash-alt"></i>
+                </a>
+              </div>
+            </div>
+            <% } %> <% if (data && data.images.additional_images) { %> <%
+            data.images.additional_images.forEach((ad) => { %>
+            <div class="image-upload-field">
+              <div class="additional-image-preview-container">
+                <img
+                  class="additional-image-preview"
+                  src="/assets<%= ad.image_path %>"
+                  class="img-thumbnail"
+                  alt="Additional Image Preview"
+                />
+              </div>
+              <div class="pt-2">
+                <label class="btn btn-primary btn-sm" title="Upload image">
+                  <i class="icon-upload"></i>
+                  <input
+                    name="existing_additional_car_images"
+                    type="file"
+                    class="input-additional-image"
+                    accept="image/*"
+                    style="display: none"
+                    data-id="<%= ad.id %>"
+                  />
+                </label>
+                <a
+                  href="#"
+                  class="btn btn-danger btn-sm remove-additional-image"
+                  title="Remove image"
+                >
+                  <i class="icon-trash-alt"></i>
+                </a>
+              </div>
+            </div>
+            <% }); %> <% } %>
+          </div>
+          <button type="button" id="add-image-button" class="btn btn-primary">
+            + Add More
+          </button>
         </div>
       </div>
     </div>

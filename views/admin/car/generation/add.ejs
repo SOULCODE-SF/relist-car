@@ -1,32 +1,37 @@
-<div class="pagetitle mb-2">
-  <div class="row align-items-center">
-    <div class="col-md-8 mt-2">
-      <h1 class="fs-4 mb-1">Generation Form</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-          <li class="breadcrumb-item">
-            <a href="/admin/model-generations">Generation List</a>
-          </li>
-          <li class="breadcrumb-item active">Generation Form</li>
-        </ol>
-      </nav>
-    </div>
-  </div>
-</div>
-
 <section class="section">
   <form
     class="row g-3"
-    id="brand-form"
+    id="generation-form"
     action="/admin/add-generations"
     method="post"
     enctype="multipart/form-data"
   >
-    <%- include('partials/form') %>
-    <div class="col-md-4 mb-2">
-      <button type="submit" class="btn btn-primary">Save</button>
-      <a href="/admin/model-generations" class="btn btn-secondary">Cancel</a>
+    <div class="pagetitle">
+      <div class="row align-items-center">
+        <div class="col-md-8 mt-2">
+          <h1 class="fs-4 mb-1">Generation Form</h1>
+          <nav>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+              <li class="breadcrumb-item active">Generation Form</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-md-4 d-flex justify-content-end mb-2">
+          <button
+            type="submit"
+            title="Save"
+            class="btn btn-primary"
+            form="generation-form"
+          >
+            Save
+          </button>
+          <a href="/admin/model-generations" class="ms-2 btn btn-secondary"
+            >Cancel</a
+          >
+        </div>
+      </div>
     </div>
+    <%- include('partials/form') %>
   </form>
 </section>

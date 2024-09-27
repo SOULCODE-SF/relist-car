@@ -68,7 +68,7 @@
     <!-- End Blogs Nav -->
     <li class="nav-item">
       <a
-        class="nav-link collapsed"
+        class="nav-link <%= currentPage.includes('car') ? 'active' : 'collapsed' %>"
         data-bs-target="#cars-nav"
         data-bs-toggle="collapse"
         href="#"
@@ -82,22 +82,26 @@
         data-bs-parent="#sidebar-nav"
       >
         <li>
-          <a href="/admin/cars">
+          <a class="nav-content <%= currentPage.includes('car-admin') ? 'active' : 'collapsed' %>" 
+          href="/admin/cars">
             <span>Cars</span>
           </a>
         </li>
         <li>
-          <a href="/admin/cars-brands">
+          <a class="nav-content <%= currentPage.includes('car-brand') ? 'active' : 'collapsed' %>" 
+          href="/admin/cars-brands">
             <span>Brands</span>
           </a>
         </li>
         <li>
-          <a href="/admin/brand-models">
+          <a class="nav-content <%= currentPage.includes('car-model') ? 'active' : 'collapsed' %>" 
+          href="/admin/brand-models">
             <span>Models</span>
           </a>
         </li>
         <li>
-          <a href="/admin/model-generations">
+          <a class="nav-content <%= currentPage.includes('car-generation') ? 'active' : 'collapsed' %>"  
+          href="/admin/model-generations">
             <span>Generations</span>
           </a>
         </li>

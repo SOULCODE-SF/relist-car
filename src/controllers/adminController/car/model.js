@@ -19,8 +19,8 @@ exports.getAllModelList = async (req, res, next) => {
 
     return res.render('admin/car/model/index', {
       datas: models,
-      title: 'Model List',
-      currentPage: 'admin-model-list',
+      title: 'List Model',
+      currentPage: 'list-car-model',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -33,7 +33,7 @@ exports.getAddModel = async (req, res, next) => {
     return res.render('admin/car/model/add', {
       data: {},
       title: 'Add Model',
-      currentPage: 'admin-model-add',
+      currentPage: 'add-car-model',
       layout: './admin/layouts/layout',
     });
   } catch (error) {
@@ -87,7 +87,7 @@ exports.addModel = async (req, res, next) => {
       moveFile(oldPath, newFilePath, async (err) => {
         if (err) throw new Error('Error moving file');
 
-        const model_image = `/assets/images/brands/${brand_name}/${formattedFileName}`;
+        const model_image = `/images/brands/${brand_name}/${formattedFileName}`;
 
         const querystr =
           'INSERT INTO models (name, image_path, brand_id) VALUES (?,?,?)';
@@ -119,7 +119,7 @@ exports.getEditModel = async (req, res, next) => {
       return res.render('admin/car/model/edit', {
         data: onres[0],
         title: 'Edit models',
-        currentPage: 'admin-edit-model',
+        currentPage: 'edit-car-model',
         layout: './admin/layouts/layout',
       });
     });
@@ -161,7 +161,7 @@ exports.editModels = async (req, res, next) => {
         moveFile(oldPath, newFilePath, async (err) => {
           if (err) throw new Error('Error moving file');
 
-          const model_image = `/assets/images/brands/${brand_name}/${formattedFileName}`;
+          const model_image = `/images/brands/${brand_name}/${formattedFileName}`;
 
           if (oldImagePath && oldImagePath !== model_image) {
             const oldImageFullPath = path.join(
@@ -203,7 +203,7 @@ exports.editModels = async (req, res, next) => {
         type: 'alert-success',
         message: 'Model Update Success',
       };
-      res.redirect(`/admin/edit-models/${id}`);
+      res.redirect(`/admin/brands-models`);
     }
   } catch (error) {
     next(error);

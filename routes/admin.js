@@ -97,7 +97,7 @@ const dynamicStorage = (type) => {
           '-' +
           Date.now() +
           path.extname(file.originalname) +
-          '.webp',
+          '.webp'
       );
     },
   });
@@ -161,10 +161,14 @@ router.get('/banner/delete/:banner_id', deleteBanner);
 
 router.get('/cars', getCarsList);
 router.get('/cars/add', getAddCar);
-const carImages = [{ name: 'car_images', maxCount: 5 }];
+const carImages = [
+  { name: 'car_images', maxCount: 1 },
+  { name: 'additional_car_images', maxCount: 5 },
+  { name: 'existing_additional_car_images', maxCount: 5 },
+];
 router.post('/cars/add', upload('temp', carImages), addCar);
 router.get('/cars/update/:id', getEditCar);
-router.post('/cars/update/:id', updateCar);
+router.post('/cars/update/:id', upload('temp', carImages), updateCar);
 router.get('/cars/delete/:id', deleteCar);
 
 //brands router
@@ -189,13 +193,13 @@ router.get('/add-generations', getAddGeneration);
 router.post(
   '/add-generations',
   upload('generations', 'generation_image'),
-  addGeneration,
+  addGeneration
 );
 router.get('/edit-generations/:id', getEditGenaration);
 router.post(
   '/edit-generations/:id',
   upload('generations', 'generation_image'),
-  editGenerations,
+  editGenerations
 );
 router.get('/delete-generations/:id', deleteGeneration);
 

@@ -1,104 +1,134 @@
-<div class="container mt-5">
-  <ul class="nav nav-tabs" id="myTab" role="tablist">
-    <li class="nav-item">
-      <a
-        class="nav-link active"
-        id="general-tab"
-        data-toggle="tab"
-        href="#general"
-        role="tab"
-        aria-controls="general"
-        aria-selected="true"
-        >General Information</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="performance-tab"
-        data-toggle="tab"
-        href="#performance"
-        role="tab"
-        aria-controls="performance"
-        aria-selected="false"
-        >Performance Specs</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="engine-specs-tab"
-        data-toggle="tab"
-        href="#engine-specs"
-        role="tab"
-        aria-controls="engine-specs"
-        aria-selected="false"
-        >Engines</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="dimensions-tab"
-        data-toggle="tab"
-        href="#dimensions"
-        role="tab"
-        aria-controls="dimensions"
-        aria-selected="false"
-        >Dimensions</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="spaces-tab"
-        data-toggle="tab"
-        href="#spaces"
-        role="tab"
-        aria-controls="spaces"
-        aria-selected="false"
-        >Spaces</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="electric-tab"
-        data-toggle="tab"
-        href="#electric"
-        role="tab"
-        aria-controls="electric"
-        aria-selected="false"
-        >Electric and Hybrid</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="drivetrain-tab"
-        data-toggle="tab"
-        href="#drivetrain"
-        role="tab"
-        aria-controls="drivetrain"
-        aria-selected="false"
-        >Drivetrain & Suspension</a
-      >
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        id="images-tab"
-        data-toggle="tab"
-        href="#images"
-        role="tab"
-        aria-controls="images"
-        aria-selected="false"
-        >Images</a
-      >
-    </li>
-  </ul>
+<form
+  id="carForm"
+  action="/admin/cars/add"
+  method="post"
+  enctype="multipart/form-data"
+  class="container"
+>
+  <div class="pagetitle">
+    <div class="row align-items-center">
+      <div class="col-md-8 mt-2">
+        <h1 class="fs-4 mb-1">Car Form</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+            <li class="breadcrumb-item active">Car Form</li>
+          </ol>
+        </nav>
+      </div>
+      <div class="col-md-4 d-flex justify-content-end mb-2">
+        <button
+          type="submit"
+          title="Save"
+          class="btn btn-primary"
+          form="carForm"
+        >
+          Save
+        </button>
+        <a href="/admin/cars" class="ms-2 btn btn-secondary">Cancel</a>
+      </div>
+    </div>
+  </div>
+  <div class="">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item">
+        <a
+          class="nav-link active"
+          id="general-tab"
+          data-toggle="tab"
+          href="#general"
+          role="tab"
+          aria-controls="general"
+          aria-selected="true"
+          >General Information</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="performance-tab"
+          data-toggle="tab"
+          href="#performance"
+          role="tab"
+          aria-controls="performance"
+          aria-selected="false"
+          >Performance Specs</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="engine-specs-tab"
+          data-toggle="tab"
+          href="#engine-specs"
+          role="tab"
+          aria-controls="engine-specs"
+          aria-selected="false"
+          >Engines</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="dimensions-tab"
+          data-toggle="tab"
+          href="#dimensions"
+          role="tab"
+          aria-controls="dimensions"
+          aria-selected="false"
+          >Dimensions</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="spaces-tab"
+          data-toggle="tab"
+          href="#spaces"
+          role="tab"
+          aria-controls="spaces"
+          aria-selected="false"
+          >Spaces</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="electric-tab"
+          data-toggle="tab"
+          href="#electric"
+          role="tab"
+          aria-controls="electric"
+          aria-selected="false"
+          >Electric and Hybrid</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="drivetrain-tab"
+          data-toggle="tab"
+          href="#drivetrain"
+          role="tab"
+          aria-controls="drivetrain"
+          aria-selected="false"
+          >Drivetrain & Suspension</a
+        >
+      </li>
+      <li class="nav-item">
+        <a
+          class="nav-link"
+          id="images-tab"
+          data-toggle="tab"
+          href="#images"
+          role="tab"
+          aria-controls="images"
+          aria-selected="false"
+          >Images</a
+        >
+      </li>
+    </ul>
 
-  <form id="carForm" action="/admin/cars/add" method="post" enctype="multipart/form-data">
     <div class="tab-content" id="myTabContent">
       <div
         class="tab-pane fade show active"
@@ -171,7 +201,5 @@
         <%- include('./partials/form/images.ejs') %>
       </div>
     </div>
-
-    <button type="submit" class="btn btn-primary mt-3">Submit</button>
-  </form>
-</div>
+  </div>
+</form>
