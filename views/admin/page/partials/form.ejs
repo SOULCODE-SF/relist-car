@@ -85,7 +85,7 @@
         <div id="image-preview-container">
           <img
             id="image-preview"
-            src="<%= data?.image_path ? '/assets/' + data.image_path : '/assets/nice-iconly/assets/img/preview.png' %>"
+            src="<%= data?.image_path ? data.image_path : '/assets/nice-iconly/assets/img/preview.png' %>"
             class="img-thumbnail"
             alt="Image Preview"
             style="max-width: 200px"

@@ -170,6 +170,10 @@ exports.updateBanner = async (req, res, next) => {
 
     await DBquery(updateBannerQuery, updateBannerValues);
 
+    const existingImage = await DBquery(
+      'SELECT image_path FROM banner_image WHERE banner_id = ? AND image_path IS NOT NULL',
+      [bannerId]
+    );
     if (ads_type === 'image' && req.file) {
       let newFilePath;
       let ads_image;
@@ -188,11 +192,6 @@ exports.updateBanner = async (req, res, next) => {
 
       fs.renameSync(oldPath, newFilePath);
       ads_image = `/assets/images/banner/${formattedFileName}`;
-
-      const existingImage = await DBquery(
-        'SELECT image_path FROM banner_image WHERE banner_id = ?',
-        [bannerId]
-      );
 
       if (existingImage.length > 0) {
         const oldImagePath = path.join(
@@ -243,6 +242,19 @@ exports.updateBanner = async (req, res, next) => {
             `;
         const insertImageValues = [ads_image, ads_url, bannerId];
         await DBquery(insertImageQuery, insertImageValues);
+      }
+    }else{
+      querystr = 'DELETE FROM banner_image WHERE banner_id = ?'
+      await DBquery(querystr, [bannerId]);
+      
+      if (existingImage.length > 0) {
+        const oldImagePath = path.join(
+          __dirname,
+          '../../../public',
+          existingImage[0].image_path
+        );
+
+        unlinkFile(oldImagePath);
       }
     }
 
