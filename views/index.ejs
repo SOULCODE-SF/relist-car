@@ -242,7 +242,8 @@
     <div class="container brand-list p-4">
       <div class="row">
         <% datas.brands.forEach(brand => { %>
-        <div class="col-lg-2 d-flex justify-content-center">
+        <div class="col-md-2 col-sm-3 col-6 d-flex justify-content-center">
+          <!-- Change col-xs-4 to col-xs-6 -->
           <a
             href="<%= brand.id === 'all-brand' ? '/brands' : '/brands/' + brand.param %>"
             class="brand-card"
@@ -255,7 +256,7 @@
             <h3 class="mt-2"><%= brand.name %></h3>
           </a>
         </div>
-        <%}) %>
+        <% }) %>
       </div>
     </div>
   </section>

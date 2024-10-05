@@ -77,7 +77,7 @@ exports.addModel = async (req, res, next) => {
     const oldPath = req.file.path;
     const newDir = path.join(
       __dirname,
-      `../../../../public/assets/images/brands/${brand_name}`
+      `../../../../public/assets/images/brands/${brand_name}`,
     );
     const newFilePath = path.join(newDir, formattedFileName);
 
@@ -135,7 +135,7 @@ exports.editModels = async (req, res, next) => {
 
     const rows = await DBquery(
       'SELECT m.image_path, b.name as b_name, m.brand_id FROM models m JOIN brands b ON m.brand_id = b.id WHERE m.id = ?',
-      [id]
+      [id],
     );
 
     if (!brand_id) {
@@ -149,7 +149,7 @@ exports.editModels = async (req, res, next) => {
     const formattedFileName = formatFileName(name, fileExtension);
     const newDir = path.join(
       __dirname,
-      `../../../../public/assets/images/brands/${brand_name}`
+      `../../../../public/assets/images/brands/${brand_name}`,
     );
     const newFilePath = path.join(newDir, formattedFileName);
 
@@ -167,7 +167,7 @@ exports.editModels = async (req, res, next) => {
             const oldImageFullPath = path.join(
               __dirname,
               '../../../../public',
-              oldImagePath
+              oldImagePath,
             );
 
             try {
@@ -235,7 +235,7 @@ exports.deleteModel = async (req, res, next) => {
       const oldImageFullPath = path.join(
         __dirname,
         '../../../../public',
-        oldImagePath
+        oldImagePath,
       );
 
       try {

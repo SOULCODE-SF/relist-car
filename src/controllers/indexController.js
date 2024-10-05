@@ -309,6 +309,8 @@ const getSpec = async (req, res, next) => {
       images: imagescar,
     };
 
+    const title = `${data.brand_name} ${data.model_name} ${data.generation_name} ${data.engine}`;
+
     console.log(jsonData);
 
     const value = {
@@ -324,7 +326,7 @@ const getSpec = async (req, res, next) => {
     res.render('cars/specs', {
       data: jsonData,
       value,
-      title: 'Spec',
+      title,
       currentPage: 'specs',
     });
   } catch (error) {

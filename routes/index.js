@@ -49,7 +49,7 @@ router.get('/brands/:brand_name', getModelByBrand);
 router.get('/brands/:brand_name/:model_name', getGenerationByModel);
 router.get(
   '/brands/:brand_name/:model_name/:generation_name',
-  getGenerationLists
+  getGenerationLists,
 );
 router.get('/car-by-engine/:engine', getCarByEngine);
 router.get('/car-by-body/:body', getCarByBody);

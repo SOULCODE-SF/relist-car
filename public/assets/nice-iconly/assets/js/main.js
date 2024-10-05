@@ -68,7 +68,7 @@
       navbarlink.classList.toggle(
         'active',
         position >= section.offsetTop &&
-          position <= section.offsetTop + section.offsetHeight
+          position <= section.offsetTop + section.offsetHeight,
       );
     });
   };
@@ -106,7 +106,7 @@
     ...document.querySelectorAll('[data-bs-toggle="tooltip"]'),
   ];
   tooltipTriggerList.forEach(
-    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl)
+    (tooltipTriggerEl) => new bootstrap.Tooltip(tooltipTriggerEl),
   );
 
   /**
@@ -151,10 +151,10 @@
     adsUrl.style.display = 'none';
 
     if (adsType === 'code') {
-      adsCode.style.display = 'inline';
+      adsCode.style.display = 'flex';
     } else if (adsType === 'image') {
-      adsImage.style.display = 'inline';
-      adsUrl.style.display = 'inline';
+      adsImage.style.display = 'flex';
+      adsUrl.style.display = 'flex';
     }
   };
 
@@ -184,7 +184,7 @@
       e.preventDefault();
       $('#image-preview').attr(
         'src',
-        '/assets/nice-iconly/assets/img/preview.png'
+        '/assets/nice-iconly/assets/img/preview.png',
       ); // Set default image
       $('#input-image').val(''); // Clear the input value
     });
@@ -249,7 +249,7 @@
 
   addImageButton.click(() => {
     const currentFieldsCount = imageUploadFieldsContainer.find(
-      '.image-upload-field'
+      '.image-upload-field',
     ).length;
 
     if (currentFieldsCount >= maxFields) {
@@ -329,7 +329,7 @@
     input.addEventListener('change', function () {
       const id = this.getAttribute('data-id');
       const existingHiddenInput = this.form.querySelector(
-        `input[name="existing_additional_images_ids[]"][data-id="${id}"]`
+        `input[name="existing_additional_images_ids[]"][data-id="${id}"]`,
       );
 
       // Check if a file is uploaded
