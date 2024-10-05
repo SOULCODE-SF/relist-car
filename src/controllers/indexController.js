@@ -124,7 +124,7 @@ const getModelByBrand = async (req, res, next) => {
 
     res.render('cars/models', {
       models: datas,
-      title: 'Models',
+      title: datas[0].brand_name,
       currentPage: 'models',
     });
   } catch (error) {
@@ -142,9 +142,11 @@ const getGenerationByModel = async (req, res, next) => {
       model_name,
     ]);
 
+    const title = `${datas[0].brand_name} - ${datas[0].model_name}`;
+
     res.render('cars/generations', {
       generations: datas,
-      title: 'Generations',
+      title: title,
       currentPage: 'generations',
     });
   } catch (error) {
@@ -160,11 +162,13 @@ const getGenerationLists = async (req, res, next) => {
 
     const datas = await DBquery(queryStore.generations.list, [generation_name]);
 
-    console.log(datas);
+    console.log(datas[0]);
+
+    const title = `${datas[0].brand_name} - ${datas[0].model_name} - Generations`;
 
     res.render('cars/generations_list', {
       datas: datas,
-      title: 'List Generation',
+      title,
       currentPage: 'list-generation',
     });
   } catch (error) {
