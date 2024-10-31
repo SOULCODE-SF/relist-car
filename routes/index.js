@@ -45,6 +45,7 @@ router.get('/', getHomePage);
 router.get('/countries', getListCountry);
 
 router.get('/brands', getAllBrands);
+router.get('/brands/:brand_name-:model_name-:generation_name-:engine', getSpec);
 router.get('/brands/:brand_name', getModelByBrand);
 router.get('/brands/:brand_name/:model_name', getGenerationByModel);
 router.get(
@@ -53,7 +54,6 @@ router.get(
 );
 router.get('/car-by-engine/:engine', getCarByEngine);
 router.get('/car-by-body/:body', getCarByBody);
-router.get('/brands/:brand_name/:model_name/:generation_name/:engine', getSpec);
 
 router.get('/others', (req, res) => {
   res.render('other', { title: 'Halaman Lain', currentPage: 'others' });

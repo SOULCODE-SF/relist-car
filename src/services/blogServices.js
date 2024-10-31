@@ -49,8 +49,9 @@ function getExcerpt(htmlString, maxLength = 156) {
 
 const getContentForMetaDescription = async (slug) => {
   try {
-    querystr = 'SELECT content FROM posts WHERE slug = ?';
-    const blog = await DBquery(querystr, [slug]);
+    console.log(slug);
+    querystr = 'SELECT content FROM posts WHERE slug = ? OR image_path = ?';
+    const blog = await DBquery(querystr, [slug, slug]);
 
     const excerptContent = getExcerpt(blog[0].content);
     console.log(excerptContent);

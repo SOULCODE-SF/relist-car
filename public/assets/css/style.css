@@ -104,17 +104,6 @@ h6 {
   transition: color 0.3s ease;
 }
 
-h1:hover,
-h2:hover,
-h3:hover,
-h4:hover,
-h5:hover,
-h6:hover {
-  font-weight: 700;
-  color: var(--primary-color);
-  cursor: pointer;
-}
-
 .img,
 img {
   max-width: 100%;
@@ -1108,17 +1097,6 @@ button:hover {
   animation: moveDecorativeBar 7s ease-in-out infinite;
 }
 
-.blog-image {
-  width: auto;
-  max-width: 30%;
-  height: auto;
-  object-fit: cover;
-}
-
-.blog-post {
-  margin-bottom: 1.5rem;
-}
-
 .badge {
   display: inline-block;
   background-color: var(--dark);
@@ -1144,6 +1122,241 @@ button:hover {
   overflow: hidden;
   text-overflow: ellipsis;
   line-height: 1.5;
+}
+
+/* search button on side, widget search */
+.search_widget form {
+  width: 100%;
+  position: relative;
+}
+.search_widget form input {
+  font-size: 15px;
+  padding: 10px;
+  width: 100%;
+}
+.search_widget form button {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 50px;
+  font-size: 18px;
+  height: 100%;
+  border: 0;
+  background-color: var(--primary-color);
+  color: #fff;
+  text-align: center;
+  -webkit-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+}
+
+.search_widget form button:hover {
+  background-color: var(--heading-color);
+}
+
+/* ====== Blog CSS ====== */
+.blog-grids {
+  padding-top: 120px;
+  padding-bottom: 80px;
+}
+
+.blog-grids.related-articles {
+  padding-top: 100px;
+}
+
+@media (max-width: 767px) {
+  .blog-grids {
+    padding-top: 80px;
+    padding-bottom: 40px;
+  }
+}
+
+.single-blog {
+  margin-bottom: 40px;
+}
+
+.single-blog .blog-image {
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 30px;
+  display: flex; /* Aktifkan flexbox */
+  justify-content: center; /* Pusatkan gambar secara horizontal */
+  align-items: center; /* Pusatkan gambar secara vertikal */
+  height: 200px; /* Atur tinggi tetap */
+}
+
+.single-blog .blog-image img {
+  width: 100%; /* Lebar gambar 100% dari container */
+  height: 100%; /* Tinggi gambar 100% dari container */
+  object-fit: cover; /* Mengisi area tanpa mengubah rasio aspek */
+  transition: all 0.3s ease-out; /* Transisi halus */
+}
+
+.single-blog:hover .blog-image img {
+  transform: scale(1.1) rotate(3deg); /* Efek hover */
+}
+
+.single-blog .blog-image a {
+  display: block;
+}
+
+.single-blog .blog-date {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 16px;
+  background: var(--primary-color);
+  color: var(--white);
+  border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.single-blog .blog-title {
+  font-weight: 600;
+  font-size: 24px;
+  line-height: 32px;
+  margin-bottom: 15px;
+}
+
+@media only screen and (min-width: 992px) and (max-width: 1199px) {
+  .single-blog .blog-title {
+    font-size: 20px;
+    line-height: 28px;
+  }
+}
+
+.single-blog .blog-title a {
+  color: inherit;
+}
+
+.single-blog .blog-title a:hover {
+  color: var(--primary-color);
+}
+
+.single-blog .blog-desc {
+  font-size: 16px;
+  line-height: 28px;
+}
+
+.blog-author {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+  background: var(--white);
+  border-radius: 10px;
+  box-shadow: var(--box-shadow);
+  margin: 50px 0;
+  padding: 20px;
+}
+.blog-author-img {
+  width: 320px;
+}
+.blog-author-img img {
+  border-radius: 15px;
+}
+.author-name {
+  font-size: 22px;
+  color: var(--theme-color);
+  margin: 8px 0;
+}
+.author-info {
+  padding: 0 20px;
+}
+.author-social {
+  margin-top: 10px;
+}
+.author-social a {
+  width: 35px;
+  height: 35px;
+  line-height: 31px;
+  text-align: center;
+  border: 2px solid var(--theme-color);
+  border-radius: 50px;
+  margin-right: 5px;
+  color: var(--theme-color);
+  transition: var(--transition);
+}
+.author-social a:hover {
+  color: var(--white);
+  background: var(--theme-color);
+}
+
+.related-articles-title {
+  font-weight: 700;
+  font-size: 28px;
+  padding-bottom: 15px;
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.related-articles-title::before {
+  position: absolute;
+  content: '';
+  width: 20px;
+  border-bottom: 3px solid var(--theme-color);
+  bottom: 0;
+  left: 0;
+}
+.related-articles-title::after {
+  position: absolute;
+  content: '';
+  width: 30px;
+  border-bottom: 3px solid var(--theme-color);
+  bottom: 0;
+  left: 30px;
+}
+
+/* blog pagination*/
+.pagination {
+  margin: 25px 0 15px 0;
+}
+.pagination,
+.pagination li a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.pagination li {
+  background: var(--primary-color);
+  list-style: none;
+}
+.pagination li a {
+  text-decoration: none;
+  color: #fdfdfd;
+  height: 50px;
+  width: 50px;
+  font-size: 18px;
+  padding-top: 1px;
+  border: 1px solid rgba(0, 0, 0, 0.25);
+  border-right-width: 0px;
+  box-shadow: inset 0px 1px 0px 0px rgba(255, 255, 255, 0.35);
+}
+.pagination li:last-child a {
+  border-right-width: 1px;
+}
+.pagination li a:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-top-color: rgba(0, 0, 0, 0.35);
+  border-bottom-color: rgba(0, 0, 0, 0.5);
+}
+.pagination li a:focus,
+.pagination li a:active {
+  padding-top: 4px;
+  border-left-width: 1px;
+  background: rgba(255, 255, 255, 0.15);
+  box-shadow: inset 0px 2px 1px 0px rgba(0, 0, 0, 0.25);
+}
+.pagination li.nav a {
+  vertical-align: middle;
+  min-width: 90px;
+}
+.pagination li:first-child span {
+  padding-right: 2px;
+}
+.pagination li:last-child span {
+  padding-left: 2px;
 }
 
 @keyframes moveDecorativeBar {

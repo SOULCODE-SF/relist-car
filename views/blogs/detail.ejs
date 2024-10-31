@@ -12,100 +12,192 @@
       </li>
     </ul>
   </div>
-  <div class="row">
-    <div class="col-8">
+  <section class="blog-details">
+    <div class="container">
       <div class="row">
-        <div class="col-12">
-          <h1 class="mt-4 text-center"><%= data.title %></h1>
+        <div class="col-lg-8">
+          <div class="blog-details-content">
+            <h2 class="blog-details-title"><%= data.title %></h2>
+
+            <div class="blog-overlay-content">
+              <div class="blog-meta">
+                <p class="author">
+                  <i class="icon-user"></i> <span>Samuyl Joshi</span>
+                </p>
+                <p class="date">
+                  <i class="icon-calendar"></i>
+                  <span><%= data.published_date %></span>
+                </p>
+                <p class="view"><i class="icon-eye"></i> <span>35</span></p>
+              </div>
+            </div>
+
+            <div class="mb-2 py-1 px-1 text-center">
+              <a href="#">
+                <img src="<%= data.image_path %>" class="img-thumbnail" /> </a
+              ><br />
+            </div>
+
+            <%- data.content %>
+
+            <div class="blog-details-action">
+              <ul class="blog-tags">
+                <li><a href="#">Design</a></li>
+                <li><a href="#">Development</a></li>
+                <li><a href="#">Info</a></li>
+              </ul>
+              <div class="blog-share">
+                <h6>Share This Post</h6>
+                <ul class="blog-share-links">
+                  <li>
+                    <a href="#" class="facebook"
+                      ><i class="icon-facebook-f"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="#" class="twitter"
+                      ><i class="icon-x-twitter"></i
+                    ></a>
+                  </li>
+                  <li>
+                    <a href="#" class="linkedin"
+                      ><i class="icon-linkedin-in"></i
+                    ></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="blog-author">
+              <div class="author-info">
+                <h6>Author</h6>
+                <h3 class="author-name">Roger D Duque</h3>
+                <p>
+                  It is a long established fact that a reader will be
+                  distracted...
+                </p>
+                <div class="author-social">
+                  <a href="#"><i class="icon-facebook-f"></i></a>
+                  <a href="#"><i class="icon-x-twitter"></i></a>
+                  <a href="#"><i class="icon-instagram"></i></a>
+                  <a href="#"><i class="icon-whatsapp"></i></a>
+                  <a href="#"><i class="icon-youtube"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="row flex-fill p-4">
-        <div class="col-12">
-          <img
-            src="<%= data.image_path %>"
-            alt="<%= data.title %>"
-            class="blog-image img-thumbnail"
-          />
-          <div class="meta-info">
-            <p><strong>Category:</strong> <%= data.category %></p>
-            <p>
-              <strong>Published on:</strong> <%= new
-              Date(data.created_at).toLocaleDateString() %>
-            </p>
-          </div>
-          <div class="content-wrap">
-            <%- data.content || 'No content available' %>
-          </div>
-          <div class="row mt-4 gap-1 px-2">
-            <% tags.forEach (tag => { %>
-            <a href="/blog/tags/<%= tag %>" class="badge"><%= tag %></a>
-            <%})%>
+
+        <div class="col-lg-4">
+          <div class="blog-sidebar">
+            <div class="articles-box">
+              <h3 class="articles-box-title">Search</h3>
+              <div class="search_widget">
+                <form action="#">
+                  <input type="text" placeholder="Search your keyword..." />
+                  <button type="submit"><i class="icon-search"></i></button>
+                </form>
+              </div>
+            </div>
+
+            <div class="articles-box">
+              <h3 class="articles-box-title">Featured Articles</h3>
+              <ul class="articles-list">
+                <% featuredArticles.forEach((article, i) => { %>
+                <li>
+                  <div class="article-image">
+                    <img src="<% article.image_path %>" alt="author" />
+                  </div>
+                  <div class="article-content">
+                    <h5 class="article-title">
+                      <a href="#"> <% article.title %> </a>
+                    </h5>
+                    <p class="article-author">Martin Fedous</p>
+                  </div>
+                </li>
+                <% }) %>
+              </ul>
+            </div>
+
+            <div class="articles-box">
+              <h3 class="articles-box-title">Categories</h3>
+              <div class="widget-categories">
+                <ul>
+                  <li>
+                    <a href="#">Consultant <span>(23)</span></a>
+                  </li>
+                  <li>
+                    <a href="#">Help <span>(24)</span></a>
+                  </li>
+                  <li>
+                    <a href="#">Education <span>(11)</span></a>
+                  </li>
+                  <li>
+                    <a href="#">Technology <span>(05)</span></a>
+                  </li>
+                  <li>
+                    <a href="#">Business <span>(06)</span></a>
+                  </li>
+                  <li>
+                    <a href="#">Events <span>(10)</span></a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="articles-box">
+              <h3 class="articles-box-title">Popular Articles</h3>
+              <ul class="articles-list">
+                <li>
+                  <div class="article-image">
+                    <img
+                      src="assets/images/blog/article-author-01.png"
+                      alt="author"
+                    />
+                  </div>
+                  <div class="article-content">
+                    <h5 class="article-title">
+                      <a href="#">The 8 best landing page builders, reviewed</a>
+                    </h5>
+                    <p class="article-author">Martin Fedous</p>
+                  </div>
+                </li>
+                <!-- Additional popular articles... -->
+              </ul>
+            </div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-4 mt-4">
-      <h2 style="font-weight: 300">Featured Articles</h2>
-      <div class="scrollable-container pt-4">
-        <% featuredArticles.forEach(fa => { %>
-        <div class="row featured-article mb-4 d-flex align-items-center">
-          <img
-            src="<%= fa.image_path %>"
-            alt="<%= fa.title %>"
-            class="col-3 img-responsive"
-            style="
-              width: 80px;
-              height: 60px;
-              border-radius: 100%;
-              filter: blur(5px);
-            "
-          />
+  </section>
 
-          <div class="col-9">
-            <a href="/blogs/<%= fa.slug %>" target="_blank" rel="noopener">
-              <h6 style="font-weight: 500"><%= fa.title %></h6>
-            </a>
+  <section class="blog-grids related-articles">
+    <div class="container">
+      <div class="row col-lg-12">
+        <div class="related-title">
+          <h2 class="related-articles-title">Related Articles</h2>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-4 col-md-6">
+          <div class="single-blog">
+            <div class="blog-image">
+              <a href="blog-details.php">
+                <img src="assets/images/blog/blog-01.jpg" alt="blog" />
+              </a>
+            </div>
+            <div class="blog-content">
+              <span class="blog-date">Dec 22, 2023</span>
+              <h3 class="blog-title">
+                <a href="blog-details.php"
+                  >Meet AutoManage, the best AI management tools</a
+                >
+              </h3>
+              <p class="blog-desc">Lorem Ipsum is simply dummy text...</p>
+            </div>
           </div>
         </div>
-        <% }) %>
-      </div>
-      <h2 style="font-weight: 300; margin-top: 100px">Categories</h2>
-      <div class="scrollable-container pt-4">
-        <% categories.forEach(c => { %>
-        <a class="row" href="/blogs?category=<%= c.slug %>">
-          <div class="col-10">
-            <h5 style="font-weight: 500"><%= c.category %></h5>
-          </div>
-          <div class="col-2">
-            <h5 style="font-weight: 500">(<%= c.count %>)</h5>
-          </div>
-        </a>
-        <% })%>
-      </div>
-      <h2 style="font-weight: 300; margin-top: 100px">Popular Articles</h2>
-      <div class="scrollable-container pt-4">
-        <% popularArticles.forEach(fa => { %>
-        <div class="row featured-article mb-4 d-flex align-items-center">
-          <img
-            src="<%= fa.image_path %>"
-            alt="<%= fa.title %>"
-            class="col-3 img-responsive"
-            style="
-              width: 80px;
-              height: 60px;
-              border-radius: 100%;
-              filter: blur(5px);
-            "
-          />
-
-          <div class="col-9">
-            <a href="/blogs/<%= fa.slug %>" target="_blank" rel="noopener">
-              <h6 style="font-weight: 500"><%= fa.title %></h6>
-            </a>
-          </div>
-        </div>
-        <% }) %>
       </div>
     </div>
-  </div>
+  </section>
 </div>

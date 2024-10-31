@@ -181,9 +181,11 @@ const getSpec = async (req, res, next) => {
     let generation = req.params.generation_name;
     generation = revertParam(generation);
     let engine = req.params.engine;
+    console.log(req.params);
 
     const datas = await DBquery('CALL get_spec(?, ?)', [engine, generation]);
     const data = datas[0][0];
+    console.log(data);
     const imagescar = await DBquery(
       'SELECT image_path FROM car_images WHERE car_id = ?',
       [data.car_id],
@@ -496,12 +498,18 @@ const getBlogs = async (req, res, next) => {
 
     let searchTerm = req.query.q || '';
     const category = req.query.category || '';
+    const page = parseInt(req.query.page) || 1; // Ambil nomor halaman dari query, default ke 1
+    const limit = 5; // Tentukan jumlah blog per halaman
+    const offset = (page - 1) * limit; // Hitung offset
 
-    querystr = `SELECT p.*, pc.name as category, DATE_FORMAT(p.date_published, '%M %e, %Y') AS published_date FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
-    status = '1' AND (p.title LIKE ? OR pc.name LIKE ?)
-    `;
+    let querystr = `SELECT p.*, IFNULL(p.image_path, '/nomodels.webp') AS image, pc.name AS category, 
+                    DATE_FORMAT(p.date_published, '%M %e, %Y') AS published_date 
+                    FROM posts p 
+                    JOIN post_categories pc ON p.category_id = pc.id 
+                    WHERE status = '1' AND (p.title LIKE ? OR pc.name LIKE ?) 
+                    LIMIT ? OFFSET ?`;
 
-    queryvalue = [`%${searchTerm}%`, `%${searchTerm}%`];
+    const queryvalue = [`%${searchTerm}%`, `%${searchTerm}%`, limit, offset];
 
     if (category) {
       querystr += ' AND pc.name LIKE ?';
@@ -514,24 +522,28 @@ const getBlogs = async (req, res, next) => {
         title: 'Blogs',
         currentPage: 'blogs',
         searchTerm: searchTerm,
+        currentPage: page,
       });
     }
 
     const blogs = await DBquery(querystr, queryvalue);
 
-    querystr = 'SELECT tags FROM  posts WHERE tags IS NOT NULL';
-    const tagValue = await DBquery(querystr);
-    let tags = [];
-    for (const tag of tagValue) {
-      const temp = JSON.parse(tag.tags);
-      for (const e of temp) {
-        tags.push(e.value);
-      }
-    }
+    // Hitung total jumlah blog untuk pagination
+    const countQuery = `SELECT COUNT(*) AS total FROM posts p JOIN post_categories pc ON p.category_id = pc.id 
+                        WHERE status = '1' AND (p.title LIKE ? OR pc.name LIKE ?)`;
+    const totalBlogs = await DBquery(countQuery, [
+      `%${searchTerm}%`,
+      `%${searchTerm}%`,
+    ]);
+    const totalCount = totalBlogs[0].total;
+    const totalPages = Math.ceil(totalCount / limit); // Hitung total halaman
 
     const data = {
       blogs,
-      tags,
+      totalCount,
+      totalPages,
+      currentPage: page,
+      tags: [], // Tambahkan tags sesuai kebutuhan
     };
 
     cache.set(key, data, 86000);
@@ -550,7 +562,7 @@ const getBlogs = async (req, res, next) => {
 const getBlogDetail = async (req, res, next) => {
   const slug = req.params.slug;
   try {
-    querystr = `SELECT p.*, pc.name as category FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
+    querystr = `SELECT p.*, DATE_FORMAT(p.date_published, '%M %e, %Y') AS published_date, pc.name as category FROM posts p JOIN post_categories pc ON p.category_id = pc.id WHERE
     status = '1' AND p.slug = ?`;
     queryvalue = [slug];
 
@@ -581,6 +593,8 @@ const getBlogDetail = async (req, res, next) => {
         tags.push(e.value);
       }
     }
+
+    console.log(data[0], featuredArticles);
 
     res.render('blogs/detail', {
       data: data[0],
